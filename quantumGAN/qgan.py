@@ -92,24 +92,24 @@ class QGAN:
 		if data is None:
 			raise QiskitMachineLearningError('Training data not given.')
 		self._data = np.array(data)
-		if bounds is None:
-			bounds_min = np.percentile(self._data, 5, axis=0)
-			bounds_max = np.percentile(self._data, 95, axis=0)
-			bounds = []  # type: ignore
-			for i, _ in enumerate(bounds_min):
-				bounds.append([bounds_min[i], bounds_max[i]])  # type: ignore
-		if np.ndim(data) > 1:
-			if len(bounds) != (len(num_qubits) or len(data[0])):
-				raise QiskitMachineLearningError(
-					'Dimensions of the data, the length of the data bounds '
-					'and the numbers of qubits per '
-					'dimension are incompatible.')
-		else:
-			if (np.ndim(bounds) or len(num_qubits)) != 1:
-				raise QiskitMachineLearningError(
-					'Dimensions of the data, the length of the data bounds '
-					'and the numbers of qubits per '
-					'dimension are incompatible.')
+		# if bounds is None:
+		#	bounds_min = np.percentile(self._data, 5, axis=0)
+		#	bounds_max = np.percentile(self._data, 95, axis=0)
+		#	bounds = []  # type: ignore
+		#	for i, _ in enumerate(bounds_min):
+		#		bounds.append([bounds_min[i], bounds_max[i]])  # type: ignore
+		# if np.ndim(data) > 1:
+		#	if len(bounds) != (len(num_qubits) or len(data[0])):
+		#		raise QiskitMachineLearningError(
+		#			'Dimensions of the data, the length of the data bounds '
+		#			'and the numbers of qubits per '
+		#			'dimension are incompatible.')
+		# else:
+		#	if (np.ndim(bounds) or len(num_qubits)) != 1:
+		#		raise QiskitMachineLearningError(
+		#			'Dimensions of the data, the length of the data bounds '
+		#			'and the numbers of qubits per '
+		#			'dimension are incompatible.')
 		self._bounds = np.array(bounds)
 		self._num_qubits = num_qubits
 		# pylint: disable=unsubscriptable-object
@@ -119,10 +119,10 @@ class QGAN:
 		else:
 			if self._num_qubits is None:
 				self._num_qubits = np.array([3])
-		self._data, self._data_grid, self._grid_elements, self._prob_data = \
-			discretize_and_truncate(self._data, self._bounds, self._num_qubits,
-			                        return_data_grid_elements=True,
-			                        return_prob=True, prob_non_zero=True)
+		# self._data, self._data_grid, self._grid_elements, self._prob_data = \
+		#	discretize_and_truncate(self._data, self._bounds, self._num_qubits,
+		#	                        return_data_grid_elements=True,
+		#	                        return_prob=True, prob_non_zero=True)
 		self._batch_size = batch_size
 		self._num_epochs = num_epochs
 		self._num_shots = num_shots
@@ -320,18 +320,6 @@ class QGAN:
 		""" Returns relative entropy between target and trained distribution """
 		return self._rel_entr
 
-	def get_rel_entr(self) -> float:
-		""" Get relative entropy between target and trained distribution """
-		samples_gen, prob_gen = self._generator.get_output(self._quantum_instance)
-		temp = np.zeros(len(self._grid_elements))
-		for j, sample in enumerate(samples_gen):
-			for i, element in enumerate(self._grid_elements):
-				if sample == element:
-					temp[i] += prob_gen[j]
-		prob_gen = [1e-8 if x == 0 else x for x in temp]
-		rel_entr = entropy(prob_gen, self._prob_data)
-		return rel_entr
-
 	def _store_params(self, e, d_loss, g_loss, rel_entr):
 		with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='a') as csv_file:
 			fieldnames = ['epoch', 'loss_discriminator',
@@ -341,73 +329,6 @@ class QGAN:
 			                 'loss_generator': np.average(g_loss), 'params_generator':
 				                 self._generator.parameter_values, 'rel_entropy': rel_entr})
 		self._discriminator.save_model(self._snapshot_dir)  # Store discriminator model
-
-	def train_v2(self):
-		"""
-				Train the qGAN
-
-				Raises:
-					QiskitMachineLearningError: Batch size bigger than the number of
-												items in the truncated data set
-				"""
-		if self._snapshot_dir is not None:
-			with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='w') as csv_file:
-				fieldnames = ['epoch', 'loss_discriminator', 'loss_generator', 'params_generator',
-				              'rel_entropy']
-				writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-				writer.writeheader()
-
-		if len(self._data) < self._batch_size:
-			raise QiskitMachineLearningError(
-				'The batch size needs to be less than the '
-				'truncated data size of {}'.format(len(self._data)))
-
-		for e in range(self._num_epochs):
-
-			algorithm_globals.random.shuffle(self._data)
-			for index in range(self._batch_size):
-				real_batch = self._data[index]
-
-				assert real_batch.flatten.shape[0] == 4
-
-				print(real_batch, 'batch number is {}'.format(index))
-				generated_batch, generated_prob = self._generator.get_output(self._quantum_instance,
-				                                                             shots=self._num_shots)
-
-				# 1. Train Discriminator
-				ret_d = self._discriminator.train([real_batch, generated_batch],
-				                                  [np.ones(len(real_batch)) / len(real_batch),
-				                                   generated_prob])
-				d_loss_min = ret_d['loss']
-
-				# 2. Train Generator
-				self._generator.discriminator = self._discriminator
-				ret_g = self._generator.train(self._quantum_instance, shots=self._num_shots)
-				g_loss_min = ret_g['loss']
-
-			self._d_loss.append(np.around(float(d_loss_min), 4))
-			self._g_loss.append(np.around(g_loss_min, 4))
-			print('Epoch:{} G_Loss:{} D_Loss:{}'.format(e, self._g_loss[e], self._d_loss[e]))
-
-			rel_entr = self.get_rel_entr()
-			self._rel_entr.append(np.around(rel_entr, 4))
-			self._ret['params_d'] = ret_d['params']
-			self._ret['params_g'] = ret_g['params']
-			self._ret['loss_d'] = np.around(float(d_loss_min), 4)
-			self._ret['loss_g'] = np.around(g_loss_min, 4)
-			self._ret['rel_entr'] = np.around(rel_entr, 4)
-
-			if self._snapshot_dir is not None:
-				self._store_params(e, np.around(d_loss_min, 4),
-				                   np.around(g_loss_min, 4), np.around(rel_entr, 4))
-			logger.debug('Epoch %s/%s...', e + 1, self._num_epochs)
-			logger.debug('Loss Discriminator: %s', np.around(float(d_loss_min), 4))
-			logger.debug('Loss Generator: %s', np.around(g_loss_min, 4))
-			logger.debug('Relative Entropy: %s', np.around(rel_entr, 4))
-
-			if self._tol_rel_ent is not None:
-				if rel_entr <= self._tol_rel_ent:
-					break
 
 	def train(self):
 		"""
@@ -432,10 +353,8 @@ class QGAN:
 		for e in range(self._num_epochs):
 
 			algorithm_globals.random.shuffle(self._data)
-			index = 0
-			while (index + self._batch_size) <= len(self._data):
-				real_batch = self._data[index: index + self._batch_size]
-				index += self._batch_size
+			for index in range(self._batch_size):
+				real_batch = self._data[index]
 				generated_batch, generated_prob = self._generator.get_output(self._quantum_instance,
 				                                                             shots=self._num_shots)
 
@@ -455,25 +374,15 @@ class QGAN:
 			self._g_loss.append(np.around(g_loss_min, 4))
 			print('Epoch:{} G_Loss:{} D_Loss:{}'.format(e, self._g_loss[e], self._d_loss[e]))
 
-			rel_entr = self.get_rel_entr()
-			self._rel_entr.append(np.around(rel_entr, 4))
 			self._ret['params_d'] = ret_d['params']
 			self._ret['params_g'] = ret_g['params']
+			self._ret['output'] = ret_g['output'][:4]
 			self._ret['loss_d'] = np.around(float(d_loss_min), 4)
 			self._ret['loss_g'] = np.around(g_loss_min, 4)
-			self._ret['rel_entr'] = np.around(rel_entr, 4)
 
-			if self._snapshot_dir is not None:
-				self._store_params(e, np.around(d_loss_min, 4),
-				                   np.around(g_loss_min, 4), np.around(rel_entr, 4))
 			logger.debug('Epoch %s/%s...', e + 1, self._num_epochs)
 			logger.debug('Loss Discriminator: %s', np.around(float(d_loss_min), 4))
 			logger.debug('Loss Generator: %s', np.around(g_loss_min, 4))
-			logger.debug('Relative Entropy: %s', np.around(rel_entr, 4))
-
-			if self._tol_rel_ent is not None:
-				if rel_entr <= self._tol_rel_ent:
-					break
 
 	def _run(self):
 		"""

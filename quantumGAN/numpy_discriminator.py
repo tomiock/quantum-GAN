@@ -166,7 +166,6 @@ class DiscriminatorNet:
 			)
 
 		pointer = 0
-
 		for layer_idx_prev, layer in reversed(list(enumerate(self.architecture))):
 			layer_idx_curr = layer_idx_prev + 1
 			activ_function_curr = layer["activation"]
@@ -305,20 +304,20 @@ class NumPyDiscriminator(DiscriminativeNetwork):
 		if weights is not None:
 			# Use weights as scaling factors for the samples and compute the sum
 			return (-1) * np.dot(
-				np.multiply(y, np.log(np.maximum(np.ones(np.shape(x)) * 1e-4, x)))
+				np.multiply(y, np.log10(np.maximum(np.ones(np.shape(x)) * 1e-4, x)))
 				+ np.multiply(
 					np.ones(np.shape(y)) - y,
-					np.log(np.maximum(np.ones(np.shape(x)) * 1e-4, np.ones(np.shape(x)) - x)),
+					np.log10(np.maximum(np.ones(np.shape(x)) * 1e-4, np.ones(np.shape(x)) - x)),
 				),
 				weights,
 			)
 		else:
 			# Compute the mean
 			return (-1) * np.mean(
-				np.multiply(y, np.log(np.maximum(np.ones(np.shape(x)) * 1e-4, x)))
+				np.multiply(y, np.log10(np.maximum(np.ones(np.shape(x)) * 1e-4, x)))
 				+ np.multiply(
 					np.ones(np.shape(y)) - y,
-					np.log(np.maximum(np.ones(np.shape(x)) * 1e-4, np.ones(np.shape(x)) - x)),
+					np.log10(np.maximum(np.ones(np.shape(x)) * 1e-4, np.ones(np.shape(x)) - x)),
 				)
 			)
 

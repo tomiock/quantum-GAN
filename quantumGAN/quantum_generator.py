@@ -344,6 +344,7 @@ class QuantumGenerator(GenerativeNetwork):
         instance_shots = shots
         q = QuantumRegister(sum(self._num_qubits), name="q")
         qc = QuantumCircuit(q)
+
         if params is None:
             params = cast(np.ndarray, self._bound_parameters)
         qc.append(self.construct_circuit(params), q)
@@ -415,9 +416,9 @@ class QuantumGenerator(GenerativeNetwork):
         """
         try:
             # pylint: disable=no-member
-            loss = (-1) * np.dot(np.log(x).transpose(), weights)
+            loss = (-1) * np.dot(np.log10(x).transpose(), weights)
         except Exception:  # pylint: disable=broad-except
-            loss = (-1) * np.dot(np.log(x), weights)
+            loss = (-1) * np.dot(np.log10(x), weights)
         return loss.flatten()
 
     def _get_objective_function(self, quantum_instance, discriminator):
@@ -493,8 +494,9 @@ class QuantumGenerator(GenerativeNetwork):
             dict: generator loss(float) and updated parameters (array).
         """
         self._shots = shots
+        self._quantum_instance = quantum_instance
 
-        # T0D0 Improve access to maxiter, say via options getter, to avoid private member access
+        # T0D_0 Improve access to maxiter, say via options getter, to avoid private member access
         # and since not all optimizers have that exact naming figure something better as well to
         # allow the checking below to not have to warn if it has something else and max iterations
         # is truly 1 anyway.
@@ -532,8 +534,8 @@ class QuantumGenerator(GenerativeNetwork):
             initial_point=self._bound_parameters,
             gradient_function=self._gradient_function,
         )
-
         self._ret["loss"] = loss
         self._ret["params"] = self._bound_parameters
+        self._ret["output"] = self.get_output(self._quantum_instance, self._bound_parameters, 4048)[0]
 
         return self._ret

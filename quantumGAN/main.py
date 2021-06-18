@@ -22,16 +22,16 @@ real_data = np.random.lognormal(mean=mu, sigma=sigma, size=N)
 ##
 
 def gen_real_data_FCNN(a, b, num_samples: int):
-	real_data = []
+	data = []
 	real_labels = []
 	x0 = np.random.default_rng().uniform(a, b, num_samples)
 	x1 = np.random.default_rng().uniform(a, b, num_samples)
 
 	for i in range(len(x1)):
 		array = np.array([[x0[i], 0], [x1[i], 0]]).reshape((2, 2))
-		real_data.append(array)
+		data.append(np.array([array, array, array, array]).flatten())
 
-	return real_data
+	return data
 
 
 seed = 71
@@ -41,10 +41,8 @@ algorithm_globals.random_seed = seed
 N = 400
 e1 = .8
 e2 = .6
-real_data = np.asarray(gen_real_data_FCNN(e1, e2, N))
-real_data = real_data.reshape(1600, )
-real_data = real_data.flatten()
-print(real_data)
+real_data = gen_real_data_FCNN(e1, e2, N)
+print(len(real_data))
 ##
 from quantumGAN.qgan import QGAN
 
@@ -57,9 +55,9 @@ k = len(num_qubits)
 
 # Set number of training epochs
 # Note: The algorithm's runtime can be shortened by reducing the number of training epochs.
-num_epochs = 20
+num_epochs = 50
 # Batch size
-batch_size = 100
+batch_size = 10
 quantum_instance = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
                                    seed_transpiler=seed,
                                    seed_simulator=seed)
@@ -79,7 +77,7 @@ entangler_map = [[0, 1], [1, 2], [2, 3]]
 init_dist = UniformDistribution(sum(num_qubits))
 
 # Set the ansatz circuit
-ansatz = TwoLocal(int(np.sum(num_qubits)), 'ry', 'cz', entanglement=entangler_map, reps=2, insert_barriers=True)
+ansatz = TwoLocal(int(np.sum(num_qubits)), 'ry', 'cz', entanglement=entangler_map, reps=3, insert_barriers=True)
 
 # Set generator's initial parameters - in order to reduce the training time and hence the
 # total running time for this notebook
@@ -90,7 +88,7 @@ init_params = np.random.rand(ansatz.num_parameters_settable) * 2 * np.pi
 print(init_params)
 
 # Set generator circuit by adding the initial distribution infront of the ansatz
-g_circuit = ansatz.compose(init_dist, front=True)
+g_circuit = ansatz  # .compose(init_dist, front=True)
 print(g_circuit)
 
 # Set quantum generator
@@ -111,7 +109,7 @@ train_results = qgan.run()
 ##
 print('Training results:')
 for key, value in train_results.items():
-	print(f'  {key} : {value}')
+	print(f'  {key} : {np.array(value)}')
 
 ##
 # Plot progress w.r.t the generator's and the discriminator's loss function
