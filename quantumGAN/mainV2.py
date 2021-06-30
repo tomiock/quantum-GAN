@@ -8,19 +8,10 @@ from qiskit_finance.circuit.library import UniformDistribution
 from qiskit.utils import QuantumInstance, algorithm_globals
 from quantumGAN.qgan import QGAN
 from quantumGAN.numpy_discriminator import NumPyDiscriminator
-
-##
-
-N = 1000
-
-# Load data samples from log-normal distribution with mean=1 and standard deviation=1
-mu = 1
-sigma = 1
-real_data = np.random.lognormal(mean=mu, sigma=sigma, size=N)
+from quantumGAN.discrimintorV2 import DiscriminatorV2
 
 
 ##
-
 def gen_real_data_FCNN(a, b, num_samples: int):
 	data = []
 	real_labels = []
@@ -55,20 +46,9 @@ k = len(num_qubits)
 
 # Set number of training epochs
 # Note: The algorithm's runtime can be shortened by reducing the number of training epochs.
-num_epochs = 30
+num_epochs = 50
 # Batch size
 batch_size = 10
-quantum_instance = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
-                                   seed_transpiler=seed,
-                                   seed_simulator=seed)
-
-# Initialize qGAN
-qgan = QGAN(real_data,
-            bounds, num_qubits, batch_size, num_epochs, snapshot_dir=None, num_shots=4048,
-            quantum_instance=quantum_instance)
-qgan.seed = 1
-# Set quantum instance to run the quantum generator
-
 
 # Set entangler map
 entangler_map = [[0, 1], [1, 2], [2, 3]]
@@ -91,27 +71,14 @@ print(init_params)
 g_circuit = ansatz  # .compose(init_dist, front=True)
 print(g_circuit)
 
-# Set quantum generator
-qgan.set_generator(generator_circuit=g_circuit, generator_init_params=init_params)
-# The parameters have an order issue that following is a temp. workaround
-qgan._generator._free_parameters = sorted(g_circuit.parameters, key=lambda p: p.name)
-# Set classical discriminator neural network
-discriminator = NumPyDiscriminator(len(num_qubits))
-qgan.set_discriminator(discriminator)
+##
+for o in range(num_epochs):
+	output_fake = gen_real_data_FCNN(.9, .8, 1)
+	generator.step()
+	discriminator.step()
 
 ##
-result = qgan.get_output(quantum_instance, shots=4048)
-print(result)
-
-##
-train_results = qgan.run()
-
-##
-print('Training results:')
-for key, value in train_results.items():
-	print(f'  {key} : {np.array(value)}')
-
-##
+exit()
 # Plot progress w.r.t the generator's and the discriminator's loss function
 t_steps = np.arange(num_epochs)
 plt.figure(figsize=(6, 5))
@@ -123,38 +90,4 @@ plt.legend(loc='best')
 plt.xlabel('time steps')
 plt.ylabel('loss')
 plt.show()
-exit()
 ##
-# Plot progress w.r.t relative entropy
-plt.figure(figsize=(6, 5))
-plt.title('Relative Entropy')
-plt.plot(np.linspace(0, num_epochs, len(qgan.rel_entr)), qgan.rel_entr, color='mediumblue', lw=4, ls=':')
-plt.grid()
-plt.xlabel('time steps')
-plt.ylabel('relative entropy')
-plt.show()
-
-##
-# Plot the CDF of the resulting distribution against the target distribution, i.e. log-normal
-log_normal = np.random.lognormal(mean=1, sigma=1, size=100000)
-log_normal = np.round(log_normal)
-log_normal = log_normal[log_normal <= bounds[1]]
-temp = []
-for i in range(int(bounds[1] + 1)):
-	temp += [np.sum(log_normal == i)]
-log_normal = np.array(temp / sum(temp))
-
-plt.figure(figsize=(6, 5))
-plt.title('CDF (Cumulative Distribution Function)')
-samples_g, prob_g = qgan.generator.get_output(qgan.quantum_instance, shots=10000)
-samples_g = np.array(samples_g)
-samples_g = samples_g.flatten()
-num_bins = len(prob_g)
-plt.bar(samples_g, np.cumsum(prob_g), color='royalblue', width=0.8, label='simulation')
-plt.plot(np.cumsum(log_normal), '-o', label='log-normal', color='deepskyblue', linewidth=4, markersize=12)
-plt.xticks(np.arange(min(samples_g), max(samples_g) + 1, 1.0))
-plt.grid()
-plt.xlabel('x')
-plt.ylabel('p(x)')
-plt.legend(loc='best')
-plt.show()
