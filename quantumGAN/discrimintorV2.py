@@ -192,8 +192,11 @@ class DiscriminatorV2:
 
         return params_values
 
-    def step(self, fake_image, real_image, nn_architecture, learning_rate, verbose=False, callback=None):
+    def step(self, fake_image, real_image, nn_architecture: Optional[None], learning_rate, verbose=False,
+             callback=None):
         # initiation of neural net parameters
+        if nn_architecture is None:
+            nn_architecture = self.architecture
         self.params_values = self.init_layers(nn_architecture, 2)
         # initiation of lists storing the history
         # of metrics calculated during the learning process

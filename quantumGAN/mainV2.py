@@ -8,6 +8,7 @@ from qiskit_finance.circuit.library import UniformDistribution
 from qiskit.utils import QuantumInstance, algorithm_globals
 from quantumGAN.qgan import QGAN
 from quantumGAN.numpy_discriminator import NumPyDiscriminator
+from quantumGAN.quantum_generator import QuantumGenerator
 from quantumGAN.discrimintorV2 import DiscriminatorV2
 
 
@@ -56,6 +57,10 @@ entangler_map = [[0, 1], [1, 2], [2, 3]]
 # Set an initial state for the generator circuit
 init_dist = UniformDistribution(sum(num_qubits))
 
+q_instance = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
+                             seed_transpiler=seed,
+                             seed_simulator=seed)
+
 # Set the ansatz circuit
 ansatz = TwoLocal(int(np.sum(num_qubits)), 'ry', 'cz', entanglement=entangler_map, reps=3, insert_barriers=True)
 
@@ -70,24 +75,26 @@ print(init_params)
 # Set generator circuit by adding the initial distribution infront of the ansatz
 g_circuit = ansatz  # .compose(init_dist, front=True)
 print(g_circuit)
+discriminator = DiscriminatorV2(16, 1)
+generator = QuantumGenerator(num_qubits=[4], generator_circuit=g_circuit)
 
 ##
 for o in range(num_epochs):
-	output_fake = gen_real_data_FCNN(.9, .8, 1)
-	generator.step()
-	discriminator.step()
-
+	output_real = gen_real_data_FCNN(.9, .8, 1)
+	output_fake = generator.get_output(quantum_instance=q_instance, params=None, shots=None)
+	generator.train()
+	discriminator.step(fake_image=output_fake, real_image=output_real, learning_rate=.01)
 ##
 exit()
 # Plot progress w.r.t the generator's and the discriminator's loss function
 t_steps = np.arange(num_epochs)
 plt.figure(figsize=(6, 5))
 plt.title("Progress in the loss function")
-plt.plot(t_steps, qgan.g_loss, label='Generator loss function', color='mediumvioletred', linewidth=2)
-plt.plot(t_steps, qgan.d_loss, label='Discriminator loss function', color='rebeccapurple', linewidth=2)
+plt.plot(t_steps, g_loss, label='Generator loss function', color='mediumvioletred', linewidth=2)
+plt.plot(t_steps, d_loss, label='Discriminator loss function', color='rebeccapurple', linewidth=2)
 plt.grid()
 plt.legend(loc='best')
 plt.xlabel('time steps')
 plt.ylabel('loss')
 plt.show()
-##
+#

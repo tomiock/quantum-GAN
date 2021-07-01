@@ -28,376 +28,377 @@ logger = logging.getLogger(__name__)
 # pylint: disable=invalid-name
 
 class QGAN:
-	"""The Quantum Generative Adversarial Network algorithm.
+    """The Quantum Generative Adversarial Network algorithm.
 
-	The qGAN [1] is a hybrid quantum-classical algorithm used for generative modeling tasks.
+    The qGAN [1] is a hybrid quantum-classical algorithm used for generative modeling tasks.
 
-	This adaptive algorithm uses the interplay of a generative
-	:class:`~qiskit_machine_learning.neural_networks.GenerativeNetwork` and a
-	discriminative :class:`~qiskit_machine_learning.neural_networks.DiscriminativeNetwork`
-	network to learn the probability distribution underlying given training data.
+    This adaptive algorithm uses the interplay of a generative
+    :class:`~qiskit_machine_learning.neural_networks.GenerativeNetwork` and a
+    discriminative :class:`~qiskit_machine_learning.neural_networks.DiscriminativeNetwork`
+    network to learn the probability distribution underlying given training data.
 
-	These networks are trained in alternating optimization steps, where the discriminator tries to
-	differentiate between training data samples and data samples from the generator and the
-	generator aims at generating samples which the discriminator classifies as training data
-	samples. Eventually, the quantum generator learns the training data's underlying probability
-	distribution. The trained quantum generator loads a quantum state which is a model of the
-	target distribution.
+    These networks are trained in alternating optimization steps, where the discriminator tries to
+    differentiate between training data samples and data samples from the generator and the
+    generator aims at generating samples which the discriminator classifies as training data
+    samples. Eventually, the quantum generator learns the training data's underlying probability
+    distribution. The trained quantum generator loads a quantum state which is a model of the
+    target distribution.
 
-	**References:**
+    **References:**
 
-	[1] Zoufal et al.,
-		`Quantum Generative Adversarial Networks for learning and loading random distributions
-		<https://www.nature.com/articles/s41534-019-0223-2>`_
-	"""
+    [1] Zoufal et al.,
+        `Quantum Generative Adversarial Networks for learning and loading random distributions
+        <https://www.nature.com/articles/s41534-019-0223-2>`_
+    """
 
-	def __init__(self, data: Union[np.ndarray, List],
-	             bounds: Optional[Union[np.ndarray, List]] = None,
-	             num_qubits: Optional[Union[np.ndarray, List]] = None,
-	             batch_size: int = 500,
-	             num_epochs: int = 3000, seed: int = 7,
-	             num_shots: int = 4048,
-	             discriminator: Optional[DiscriminativeNetwork] = None,
-	             generator: Optional[GenerativeNetwork] = None,
-	             tol_rel_ent: Optional[float] = None,
-	             snapshot_dir: Optional[str] = None,
-	             quantum_instance: Optional[
-		             Union[QuantumInstance, BaseBackend, Backend]] = None) -> None:
-		"""
+    def __init__(self, data: Union[np.ndarray, List],
+                 bounds: Optional[Union[np.ndarray, List]] = None,
+                 num_qubits: Optional[Union[np.ndarray, List]] = None,
+                 batch_size: int = 500,
+                 num_epochs: int = 3000, seed: int = 7,
+                 num_shots: int = 4048,
+                 discriminator: Optional[DiscriminativeNetwork] = None,
+                 generator: Optional[GenerativeNetwork] = None,
+                 tol_rel_ent: Optional[float] = None,
+                 snapshot_dir: Optional[str] = None,
+                 quantum_instance: Optional[
+                     Union[QuantumInstance, BaseBackend, Backend]] = None) -> None:
+        """
 
-		Args:
-			data: Training data of dimension k
-			bounds: k min/max data values [[min_0,max_0],...,[min_k-1,max_k-1]]
-				if univariate data: [min_0,max_0]
-			num_qubits: k numbers of qubits to determine representation resolution,
-				i.e. n qubits enable the representation of 2**n values
-				[num_qubits_0,..., num_qubits_k-1]
-			batch_size: Batch size, has a min. value of 1.
-			num_epochs: Number of training epochs
-			seed: Random number seed
-			discriminator: Discriminates between real and fake data samples
-			generator: Generates 'fake' data samples
-			tol_rel_ent: Set tolerance level for relative entropy.
-				If the training achieves relative entropy equal or lower than tolerance it finishes.
-			snapshot_dir: Directory in to which to store cvs file with parameters,
-				if None (default) then no cvs file is created.
-			quantum_instance: Quantum Instance or Backend
-		Raises:
-			QiskitMachineLearningError: invalid input
-		"""
-		validate_min('batch_size', batch_size, 1)
-		self._quantum_instance = None
-		if quantum_instance:
-			self.quantum_instance = quantum_instance
-		if data is None:
-			raise QiskitMachineLearningError('Training data not given.')
-		self._data = np.array(data)
-		# if bounds is None:
-		#	bounds_min = np.percentile(self._data, 5, axis=0)
-		#	bounds_max = np.percentile(self._data, 95, axis=0)
-		#	bounds = []  # type: ignore
-		#	for i, _ in enumerate(bounds_min):
-		#		bounds.append([bounds_min[i], bounds_max[i]])  # type: ignore
-		# if np.ndim(data) > 1:
-		#	if len(bounds) != (len(num_qubits) or len(data[0])):
-		#		raise QiskitMachineLearningError(
-		#			'Dimensions of the data, the length of the data bounds '
-		#			'and the numbers of qubits per '
-		#			'dimension are incompatible.')
-		# else:
-		#	if (np.ndim(bounds) or len(num_qubits)) != 1:
-		#		raise QiskitMachineLearningError(
-		#			'Dimensions of the data, the length of the data bounds '
-		#			'and the numbers of qubits per '
-		#			'dimension are incompatible.')
-		self._bounds = np.array(bounds)
-		self._num_qubits = num_qubits
-		# pylint: disable=unsubscriptable-object
-		if np.ndim(data) > 1:
-			if self._num_qubits is None:
-				self._num_qubits = np.ones[len(data[0])] * 3  # type: ignore
-		else:
-			if self._num_qubits is None:
-				self._num_qubits = np.array([3])
-		# self._data, self._data_grid, self._grid_elements, self._prob_data = \
-		#	discretize_and_truncate(self._data, self._bounds, self._num_qubits,
-		#	                        return_data_grid_elements=True,
-		#	                        return_prob=True, prob_non_zero=True)
-		self._batch_size = batch_size
-		self._num_epochs = num_epochs
-		self._num_shots = num_shots
-		self._snapshot_dir = snapshot_dir
-		self._g_loss = []  # type: List[float]
-		self._d_loss = []  # type: List[float]
-		self._rel_entr = []  # type: List[float]
-		self._tol_rel_ent = tol_rel_ent
+        Args:
+            data: Training data of dimension k
+            bounds: k min/max data values [[min_0,max_0],...,[min_k-1,max_k-1]]
+                if univariate data: [min_0,max_0]
+            num_qubits: k numbers of qubits to determine representation resolution,
+                i.e. n qubits enable the representation of 2**n values
+                [num_qubits_0,..., num_qubits_k-1]
+            batch_size: Batch size, has a min. value of 1.
+            num_epochs: Number of training epochs
+            seed: Random number seed
+            discriminator: Discriminates between real and fake data samples
+            generator: Generates 'fake' data samples
+            tol_rel_ent: Set tolerance level for relative entropy.
+                If the training achieves relative entropy equal or lower than tolerance it finishes.
+            snapshot_dir: Directory in to which to store cvs file with parameters,
+                if None (default) then no cvs file is created.
+            quantum_instance: Quantum Instance or Backend
+        Raises:
+            QiskitMachineLearningError: invalid input
+        """
+        validate_min('batch_size', batch_size, 1)
+        self._quantum_instance = None
+        if quantum_instance:
+            self.quantum_instance = quantum_instance
+        if data is None:
+            raise QiskitMachineLearningError('Training data not given.')
+        self._data = np.array(data)
+        if bounds is None:
+            bounds_min = np.percentile(self._data, 5, axis=0)
+            bounds_max = np.percentile(self._data, 95, axis=0)
+            bounds = []  # type: ignore
+            for i, _ in enumerate(bounds_min):
+                bounds.append([bounds_min[i], bounds_max[i]])  # type: ignore
+        if np.ndim(data) > 1:
+            if len(bounds) != (len(num_qubits) or len(data[0])):
+                raise QiskitMachineLearningError(
+                    'Dimensions of the data, the length of the data bounds '
+                    'and the numbers of qubits per '
+                    'dimension are incompatible.')
+        else:
+            if (np.ndim(bounds) or len(num_qubits)) != 1:
+                raise QiskitMachineLearningError(
+                    'Dimensions of the data, the length of the data bounds '
+                    'and the numbers of qubits per '
+                    'dimension are incompatible.')
 
-		self._random_seed = seed
+        self._bounds = np.array(bounds)
+        self._num_qubits = num_qubits
+        # pylint: disable=unsubscriptable-object
+        if np.ndim(data) > 1:
+            if self._num_qubits is None:
+                self._num_qubits = np.ones[len(data[0])] * 3  # type: ignore
+        else:
+            if self._num_qubits is None:
+                self._num_qubits = np.array([3])
+        # self._data, self._data_grid, self._grid_elements, self._prob_data = \
+        #	discretize_and_truncate(self._data, self._bounds, self._num_qubits,
+        #	                        return_data_grid_elements=True,
+        #	                        return_prob=True, prob_non_zero=True)
+        self._batch_size = batch_size
+        self._num_epochs = num_epochs
+        self._num_shots = num_shots
+        self._snapshot_dir = snapshot_dir
+        self._g_loss = []  # type: List[float]
+        self._d_loss = []  # type: List[float]
+        self._rel_entr = []  # type: List[float]
+        self._tol_rel_ent = tol_rel_ent
 
-		if generator is None:
-			self.set_generator()
-		else:
-			self._generator = generator
-		if discriminator is None:
-			self.set_discriminator()
-		else:
-			self._discriminator = discriminator
+        self._random_seed = seed
 
-		self.seed = self._random_seed
+        if generator is None:
+            self.set_generator()
+        else:
+            self._generator = generator
+        if discriminator is None:
+            self.set_discriminator()
+        else:
+            self._discriminator = discriminator
 
-		self._ret = {}  # type: Dict[str, Any]
+        self.seed = self._random_seed
 
-	def get_data(self):
-		return self._data
+        self._ret = {}  # type: Dict[str, Any]
 
-	def get_output(self,
-	               quantum_instance: QuantumInstance,
-	               params: Optional[np.ndarray] = None,
-	               shots: Optional[int] = None):
-		result = self._generator.get_output(quantum_instance, params, shots)
-		return result
+    def get_data(self):
+        return self._data
 
-	@property
-	def random(self):
-		"""Return a numpy random."""
-		return algorithm_globals.random
+    def get_output(self,
+                   quantum_instance: QuantumInstance,
+                   params: Optional[np.ndarray] = None,
+                   shots: Optional[int] = None):
+        result = self._generator.get_output(quantum_instance, params, shots)
+        return result
 
-	def run(self,
-	        quantum_instance: Optional[
-		        Union[QuantumInstance, Backend, BaseBackend]] = None,
-	        **kwargs) -> Dict:
-		"""Execute the algorithm with selected backend.
-		Args:
-			quantum_instance: the experimental setting.
-			kwargs (dict): kwargs
-		Returns:
-			dict: results of an algorithm.
-		Raises:
-			QiskitMachineLearningError: If a quantum instance or
-										backend has not been provided
-		"""
-		if quantum_instance is None and self.quantum_instance is None:
-			raise QiskitMachineLearningError(
-				"A QuantumInstance or Backend "
-				"must be supplied to run the quantum algorithm.")
-		if isinstance(quantum_instance, (BaseBackend, Backend)):
-			self.set_backend(quantum_instance, **kwargs)
-		else:
-			if quantum_instance is not None:
-				self.quantum_instance = quantum_instance
+    @property
+    def random(self):
+        """Return a numpy random."""
+        return algorithm_globals.random
 
-		return self._run()
+    def run(self,
+            quantum_instance: Optional[
+                Union[QuantumInstance, Backend, BaseBackend]] = None,
+            **kwargs) -> Dict:
+        """Execute the algorithm with selected backend.
+        Args:
+            quantum_instance: the experimental setting.
+            kwargs (dict): kwargs
+        Returns:
+            dict: results of an algorithm.
+        Raises:
+            QiskitMachineLearningError: If a quantum instance or
+                                        backend has not been provided
+        """
+        if quantum_instance is None and self.quantum_instance is None:
+            raise QiskitMachineLearningError(
+                "A QuantumInstance or Backend "
+                "must be supplied to run the quantum algorithm.")
+        if isinstance(quantum_instance, (BaseBackend, Backend)):
+            self.set_backend(quantum_instance, **kwargs)
+        else:
+            if quantum_instance is not None:
+                self.quantum_instance = quantum_instance
 
-	@property
-	def quantum_instance(self) -> Optional[QuantumInstance]:
-		""" Returns quantum instance. """
-		return self._quantum_instance
+        return self._run()
 
-	@quantum_instance.setter
-	def quantum_instance(self, quantum_instance: Union[QuantumInstance,
-	                                                   BaseBackend, Backend]) -> None:
-		""" Sets quantum instance. """
-		if isinstance(quantum_instance, (BaseBackend, Backend)):
-			quantum_instance = QuantumInstance(quantum_instance)
-		self._quantum_instance = quantum_instance
+    @property
+    def quantum_instance(self) -> Optional[QuantumInstance]:
+        """ Returns quantum instance. """
+        return self._quantum_instance
 
-	def set_backend(self, backend: Union[Backend, BaseBackend], **kwargs) -> None:
-		""" Sets backend with configuration. """
-		self.quantum_instance = QuantumInstance(backend)
-		self.quantum_instance.set_config(**kwargs)
+    @quantum_instance.setter
+    def quantum_instance(self, quantum_instance: Union[QuantumInstance,
+                                                       BaseBackend, Backend]) -> None:
+        """ Sets quantum instance. """
+        if isinstance(quantum_instance, (BaseBackend, Backend)):
+            quantum_instance = QuantumInstance(quantum_instance)
+        self._quantum_instance = quantum_instance
 
-	@property
-	def backend(self) -> Union[Backend, BaseBackend]:
-		""" Returns backend. """
-		return self.quantum_instance.backend
+    def set_backend(self, backend: Union[Backend, BaseBackend], **kwargs) -> None:
+        """ Sets backend with configuration. """
+        self.quantum_instance = QuantumInstance(backend)
+        self.quantum_instance.set_config(**kwargs)
 
-	@backend.setter
-	def backend(self, backend: Union[Backend, BaseBackend]):
-		""" Sets backend without additional configuration. """
-		self.set_backend(backend)
+    @property
+    def backend(self) -> Union[Backend, BaseBackend]:
+        """ Returns backend. """
+        return self.quantum_instance.backend
 
-	@property
-	def seed(self):
-		""" Returns random seed """
-		return self._random_seed
+    @backend.setter
+    def backend(self, backend: Union[Backend, BaseBackend]):
+        """ Sets backend without additional configuration. """
+        self.set_backend(backend)
 
-	@seed.setter
-	def seed(self, s):
-		"""
-		Sets the random seed for QGAN and updates the algorithm_globals seed
-		at the same time
+    @property
+    def seed(self):
+        """ Returns random seed """
+        return self._random_seed
 
-		Args:
-			s (int): random seed
-		"""
-		self._random_seed = s
-		algorithm_globals.random_seed = self._random_seed
-		self._discriminator.set_seed(self._random_seed)
+    @seed.setter
+    def seed(self, s):
+        """
+        Sets the random seed for QGAN and updates the algorithm_globals seed
+        at the same time
 
-	@property
-	def tol_rel_ent(self):
-		""" Returns tolerance for relative entropy """
-		return self._tol_rel_ent
+        Args:
+            s (int): random seed
+        """
+        self._random_seed = s
+        algorithm_globals.random_seed = self._random_seed
+        self._discriminator.set_seed(self._random_seed)
 
-	@tol_rel_ent.setter
-	def tol_rel_ent(self, t):
-		"""
-		Set tolerance for relative entropy
+    @property
+    def tol_rel_ent(self):
+        """ Returns tolerance for relative entropy """
+        return self._tol_rel_ent
 
-		Args:
-			t (float): or None, Set tolerance level for relative entropy.
-				If the training achieves relative
-				entropy equal or lower than tolerance it finishes.
-		"""
-		self._tol_rel_ent = t
+    @tol_rel_ent.setter
+    def tol_rel_ent(self, t):
+        """
+        Set tolerance for relative entropy
 
-	@property
-	def generator(self):
-		""" Returns generator """
-		return self._generator
+        Args:
+            t (float): or None, Set tolerance level for relative entropy.
+                If the training achieves relative
+                entropy equal or lower than tolerance it finishes.
+        """
+        self._tol_rel_ent = t
 
-	# pylint: disable=unused-argument
-	def set_generator(self,
-	                  generator_circuit: Optional[QuantumCircuit] = None,
-	                  generator_init_params: Optional[np.ndarray] = None,
-	                  generator_optimizer: Optional[Optimizer] = None,
-	                  generator_gradient: Optional[Union[Callable, Gradient]] = None):
+    @property
+    def generator(self):
+        """ Returns generator """
+        return self._generator
 
-		"""Initialize generator.
-		Args:
-			generator_circuit: parameterized quantum circuit which sets
-				the structure of the quantum generator
-			generator_init_params: initial parameters for the generator circuit
-			generator_optimizer: optimizer to be used for the training of the generator
-			generator_gradient: A Gradient object, or a function returning partial
-				derivatives of the loss function w.r.t. the generator variational
-				params.
-		Raises:
-			QiskitMachineLearningError: invalid input
-		"""
-		if generator_gradient:
-			if not isinstance(generator_gradient, (Gradient, FunctionType)):
-				raise QiskitMachineLearningError(
-					'Please pass either a Gradient object or a function as '
-					'the generator_gradient argument.')
-		self._generator = QuantumGenerator(self._bounds, self._num_qubits,
-		                                   generator_circuit, generator_init_params,
-		                                   generator_optimizer,
-		                                   generator_gradient,
-		                                   self._snapshot_dir)
+    # pylint: disable=unused-argument
+    def set_generator(self,
+                      generator_circuit: Optional[QuantumCircuit] = None,
+                      generator_init_params: Optional[np.ndarray] = None,
+                      generator_optimizer: Optional[Optimizer] = None,
+                      generator_gradient: Optional[Union[Callable, Gradient]] = None):
 
-	@property
-	def discriminator(self):
-		""" Returns discriminator """
-		return self._discriminator
+        """Initialize generator.
+        Args:
+            generator_circuit: parameterized quantum circuit which sets
+                the structure of the quantum generator
+            generator_init_params: initial parameters for the generator circuit
+            generator_optimizer: optimizer to be used for the training of the generator
+            generator_gradient: A Gradient object, or a function returning partial
+                derivatives of the loss function w.r.t. the generator variational
+                params.
+        Raises:
+            QiskitMachineLearningError: invalid input
+        """
+        if generator_gradient:
+            if not isinstance(generator_gradient, (Gradient, FunctionType)):
+                raise QiskitMachineLearningError(
+                    'Please pass either a Gradient object or a function as '
+                    'the generator_gradient argument.')
+        self._generator = QuantumGenerator(self._bounds, self._num_qubits,
+                                           generator_circuit, generator_init_params,
+                                           generator_optimizer,
+                                           generator_gradient,
+                                           self._snapshot_dir)
 
-	def set_discriminator(self, discriminator=None):
-		"""
-		Initialize discriminator.
+    @property
+    def discriminator(self):
+        """ Returns discriminator """
+        return self._discriminator
 
-		Args:
-			discriminator (Discriminator): discriminator
-		"""
+    def set_discriminator(self, discriminator=None):
+        """
+        Initialize discriminator.
 
-		if discriminator is None:
-			self._discriminator = NumPyDiscriminator(len(self._num_qubits))
-		else:
-			self._discriminator = discriminator
-		self._discriminator.set_seed(self._random_seed)
+        Args:
+            discriminator (Discriminator): discriminator
+        """
 
-	@property
-	def g_loss(self) -> List[float]:
-		""" Returns generator loss """
-		return self._g_loss
+        if discriminator is None:
+            self._discriminator = NumPyDiscriminator(len(self._num_qubits))
+        else:
+            self._discriminator = discriminator
+        self._discriminator.set_seed(self._random_seed)
 
-	@property
-	def d_loss(self) -> List[float]:
-		""" Returns discriminator loss """
-		return self._d_loss
+    @property
+    def g_loss(self) -> List[float]:
+        """ Returns generator loss """
+        return self._g_loss
 
-	@property
-	def rel_entr(self) -> List[float]:
-		""" Returns relative entropy between target and trained distribution """
-		return self._rel_entr
+    @property
+    def d_loss(self) -> List[float]:
+        """ Returns discriminator loss """
+        return self._d_loss
 
-	def _store_params(self, e, d_loss, g_loss, rel_entr):
-		with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='a') as csv_file:
-			fieldnames = ['epoch', 'loss_discriminator',
-			              'loss_generator', 'params_generator', 'rel_entropy']
-			writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-			writer.writerow({'epoch': e, 'loss_discriminator': np.average(d_loss),
-			                 'loss_generator': np.average(g_loss), 'params_generator':
-				                 self._generator.parameter_values, 'rel_entropy': rel_entr})
-		self._discriminator.save_model(self._snapshot_dir)  # Store discriminator model
+    @property
+    def rel_entr(self) -> List[float]:
+        """ Returns relative entropy between target and trained distribution """
+        return self._rel_entr
 
-	def train(self):
-		"""
-		Train the qGAN
+    def _store_params(self, e, d_loss, g_loss, rel_entr):
+        with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='a') as csv_file:
+            fieldnames = ['epoch', 'loss_discriminator',
+                          'loss_generator', 'params_generator', 'rel_entropy']
+            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            writer.writerow({'epoch': e, 'loss_discriminator': np.average(d_loss),
+                             'loss_generator': np.average(g_loss), 'params_generator':
+                                 self._generator.parameter_values, 'rel_entropy': rel_entr})
+        self._discriminator.save_model(self._snapshot_dir)  # Store discriminator model
 
-		Raises:
-			QiskitMachineLearningError: Batch size bigger than the number of
-										items in the truncated data set
-		"""
-		if self._snapshot_dir is not None:
-			with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='w') as csv_file:
-				fieldnames = ['epoch', 'loss_discriminator', 'loss_generator', 'params_generator',
-				              'rel_entropy']
-				writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-				writer.writeheader()
+    def train(self):
+        """
+        Train the qGAN
 
-		if len(self._data) < self._batch_size:
-			raise QiskitMachineLearningError(
-				'The batch size needs to be less than the '
-				'truncated data size of {}'.format(len(self._data)))
+        Raises:
+            QiskitMachineLearningError: Batch size bigger than the number of
+                                        items in the truncated data set
+        """
+        if self._snapshot_dir is not None:
+            with open(os.path.join(self._snapshot_dir, 'output.csv'), mode='w') as csv_file:
+                fieldnames = ['epoch', 'loss_discriminator', 'loss_generator', 'params_generator',
+                              'rel_entropy']
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                writer.writeheader()
 
-		for e in range(self._num_epochs):
+        if len(self._data) < self._batch_size:
+            raise QiskitMachineLearningError(
+                'The batch size needs to be less than the '
+                'truncated data size of {}'.format(len(self._data)))
 
-			algorithm_globals.random.shuffle(self._data)
-			for index in range(self._batch_size):
-				real_batch = self._data[index]
-				generated_batch, generated_prob = self._generator.get_output(self._quantum_instance,
-				                                                             shots=self._num_shots)
+        for e in range(self._num_epochs):
 
-				# 1. Train Discriminator
-				ret_d = self._discriminator.train([real_batch, generated_batch],
-				                                  [np.ones(len(real_batch)) / len(real_batch),
-				                                   generated_prob])
-				d_loss_min = ret_d['loss']
+            algorithm_globals.random.shuffle(self._data)
+            for index in range(self._batch_size):
+                real_batch = self._data[index]
+                generated_batch, generated_prob = self._generator.get_output(self._quantum_instance,
+                                                                             shots=self._num_shots)
 
-				# 2. Train Generator
-				self._generator.discriminator = self._discriminator
-				ret_g = self._generator.train(self._quantum_instance, shots=self._num_shots)
-				g_loss_min = ret_g['loss']
-			# print("training generator", real_batch)
+                # 1. Train Discriminator
+                ret_d = self._discriminator.train([real_batch, generated_batch],
+                                                  [np.ones(len(real_batch)) / len(real_batch),
+                                                   generated_prob])
+                d_loss_min = ret_d['loss']
 
-			self._d_loss.append(np.around(float(d_loss_min), 4))
-			self._g_loss.append(np.around(g_loss_min, 4))
-			print('Epoch:{} G_Loss:{} D_Loss:{}'.format(e, self._g_loss[e], self._d_loss[e]))
+                # 2. Train Generator
+                self._generator.discriminator = self._discriminator
+                ret_g = self._generator.train(self._quantum_instance, shots=self._num_shots)
+                g_loss_min = ret_g['loss']
+            # print("training generator", real_batch)
 
-			self._ret['params_d'] = ret_d['params']
-			self._ret['params_g'] = ret_g['params']
-			self._ret['output'] = ret_g['output'][:4]
-			self._ret['loss_d'] = np.around(float(d_loss_min), 4)
-			self._ret['loss_g'] = np.around(g_loss_min, 4)
+            self._d_loss.append(np.around(float(d_loss_min), 4))
+            self._g_loss.append(np.around(g_loss_min, 4))
+            print('Epoch:{} G_Loss:{} D_Loss:{}'.format(e, self._g_loss[e], self._d_loss[e]))
 
-			logger.debug('Epoch %s/%s...', e + 1, self._num_epochs)
-			logger.debug('Loss Discriminator: %s', np.around(float(d_loss_min), 4))
-			logger.debug('Loss Generator: %s', np.around(g_loss_min, 4))
+            self._ret['params_d'] = ret_d['params']
+            self._ret['params_g'] = ret_g['params']
+            self._ret['output'] = ret_g['output'][:4]
+            self._ret['loss_d'] = np.around(float(d_loss_min), 4)
+            self._ret['loss_g'] = np.around(g_loss_min, 4)
 
-	def _run(self):
-		"""
-		Run qGAN training
+            logger.debug('Epoch %s/%s...', e + 1, self._num_epochs)
+            logger.debug('Loss Discriminator: %s', np.around(float(d_loss_min), 4))
+            logger.debug('Loss Generator: %s', np.around(g_loss_min, 4))
 
-		Returns:
-			dict: with generator(discriminator) parameters & loss, relative entropy
-		Raises:
-			QiskitMachineLearningError: invalid backend
-		"""
-		if self._quantum_instance.backend_name == ('unitary_simulator' or 'clifford_simulator'):
-			raise QiskitMachineLearningError(
-				'Chosen backend not supported - '
-				'Set backend either to statevector_simulator, qasm_simulator'
-				' or actual quantum hardware')
-		self.train()
+    def _run(self):
+        """
+        Run qGAN training
 
-		return self._ret
+        Returns:
+            dict: with generator(discriminator) parameters & loss, relative entropy
+        Raises:
+            QiskitMachineLearningError: invalid backend
+        """
+        if self._quantum_instance.backend_name == ('unitary_simulator' or 'clifford_simulator'):
+            raise QiskitMachineLearningError(
+                'Chosen backend not supported - '
+                'Set backend either to statevector_simulator, qasm_simulator'
+                ' or actual quantum hardware')
+        self.train()
+
+        return self._ret

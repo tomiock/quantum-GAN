@@ -44,7 +44,7 @@ class QuantumGenerator(GenerativeNetwork):
 
     def __init__(
             self,
-            bounds: np.ndarray,
+            # bounds: np.ndarray,
             num_qubits: Union[List[int], np.ndarray],
             generator_circuit: Optional[QuantumCircuit] = None,
             init_params: Optional[Union[List[float], np.ndarray]] = None,
@@ -72,7 +72,7 @@ class QuantumGenerator(GenerativeNetwork):
                                         to represent multivariate data
         """
         super().__init__()
-        self._bounds = bounds
+        #self._bounds = bounds
         self._num_qubits = num_qubits
         self.generator_circuit = generator_circuit
         if generator_circuit is None:
@@ -248,76 +248,6 @@ class QuantumGenerator(GenerativeNetwork):
 
         # # return qc.copy(name='qc')
         # return qc.to_instruction()
-
-    def get_output_v2(
-            self,
-            params: Optional[np.ndarray] = None,
-            shots: Optional[int] = None,
-    ) -> List:
-
-        q = QuantumRegister(sum(self._num_qubits), name="q")
-        qc = QuantumCircuit(q)
-        if params is None:
-            params = cast(np.ndarray, self._bound_parameters)
-            print(params)
-        qc.append(self.construct_circuit(params), q)
-        # Create a Quantum Circuit
-        meas = QuantumCircuit(sum(self._num_qubits), sum(self._num_qubits))
-        meas.barrier(range(sum(self._num_qubits)))
-        # map the quantum measurement to the classical bits
-        meas.measure_all()
-
-        # The Qiskit circuit object supports composition using
-        # the addition operator.
-        qc += meas
-
-        backend_sim = Aer.get_backend('qasm_simulator')
-        # Execute the circuit on the qasm simulator.
-        job_sim = qiskit.execute(qc, backend_sim, shots=shots)
-        # Grab the results from the job.
-        result = job_sim.result()
-        counts = result.get_counts(qc)
-
-        pixels = []
-        for key in counts:
-            pixels.append(counts[key])
-
-        for index in range(len(pixels)):
-            pixels[index] /= shots
-        return pixels
-
-    def get_output_v3(self,
-                      params: Optional[np.ndarray] = None,
-                      shots: Optional[int] = None,
-                      ) -> List:
-        q = QuantumRegister(sum(self._num_qubits), name="q")
-        qc = QuantumCircuit(q)
-        if params is None:
-            params = cast(np.ndarray, self._bound_parameters)
-            print(params)
-        qc.append(self.construct_circuit(params), q)
-        # Create a Quantum Circuit
-
-        pixels = []
-        for i in range(sum(self._num_qubits)):
-            meas = QuantumCircuit(sum(self._num_qubits), sum(self._num_qubits))
-            meas.barrier(range(sum(self._num_qubits)))
-            # map the quantum measurement to the classical bits
-            meas.measure(i, i)
-
-            # The Qiskit circuit object supports composition using
-            # the addition operator.
-            qc_meas = qc + meas
-
-            backend_sim = Aer.get_backend('qasm_simulator')
-            # Execute the circuit on the qasm simulator.
-            job_sim = qiskit.execute(qc_meas, backend_sim, shots=shots)
-            # Grab the results from the job.
-            result = job_sim.result()
-            counts = result.get_counts(qc_meas)
-            pixels.append(counts['0000'] / shots)
-
-        return pixels
 
     def get_output(
             self,
