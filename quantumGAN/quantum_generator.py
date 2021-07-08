@@ -1,50 +1,23 @@
 """Quantum Generator."""
 
 from typing import Optional, List, Union, Dict, Any, Callable, cast, Tuple
-from copy import deepcopy
-import warnings
 
 import numpy as np
 import qiskit
-from qiskit import Aer
-from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit
+from qiskit import QuantumRegister, ClassicalRegister
 from qiskit.circuit.library import TwoLocal
-from qiskit.utils import algorithm_globals, QuantumInstance
-from qiskit.algorithms.optimizers import ADAM, Optimizer
-from qiskit.opflow.gradients import Gradient
-from qiskit.opflow import CircuitStateFn
-
-from qiskit_machine_learning.algorithms.distribution_learners.qgan.discriminative_network import DiscriminativeNetwork
 from qiskit.circuit import QuantumCircuit
-from qiskit.providers import Backend, BaseBackend
+
 from qiskit.utils import QuantumInstance, algorithm_globals
 from qiskit.algorithms.optimizers import Optimizer
 from qiskit.opflow.gradients import Gradient
-from qiskit.utils.validation import validate_min
-from qiskit_machine_learning.datasets.dataset_helper import discretize_and_truncate
-from qiskit_machine_learning.exceptions import QiskitMachineLearningError
-from qiskit_machine_learning.algorithms.distribution_learners.qgan.discriminative_network import DiscriminativeNetwork
-from qiskit_machine_learning.algorithms.distribution_learners.qgan.generative_network import GenerativeNetwork
-from quantumGAN.numpy_discriminator import NumPyDiscriminator
+from quantumGAN.discrimintorV2 import DiscriminatorV2
 
-
-# pylint: disable=invalid-name
-
-
-class QuantumGenerator(GenerativeNetwork):
-    """Quantum Generator.
-    The quantum generator is a parametrized quantum circuit which can be trained with the
-    :class:`~qiskit_machine_learning.algorithms.QGAN` algorithm
-    to generate a quantum state which approximates the probability
-    distribution of given training data. At the beginning of the training the parameters will
-    be set randomly, thus, the output will is random. Throughout the training the quantum
-    generator learns to represent the target distribution.
-    Eventually, the trained generator can be used for state preparation e.g. in QAE.
-    """
+class QuantumGenerator:
 
     def __init__(
             self,
-            bounds: np.ndarray,
+            # bounds: np.ndarray,
             num_qubits: Union[List[int], np.ndarray],
             generator_circuit: Optional[QuantumCircuit] = None,
             init_params: Optional[Union[List[float], np.ndarray]] = None,
@@ -52,27 +25,7 @@ class QuantumGenerator(GenerativeNetwork):
             gradient_function: Optional[Union[Callable, Gradient]] = None,
             snapshot_dir: Optional[str] = None,
     ) -> None:
-        """
-        Args:
-            bounds: k min/max data values [[min_1,max_1],...,[min_k,max_k]],
-                given input data dim k
-            num_qubits: k numbers of qubits to determine representation resolution,
-                i.e. n qubits enable the representation of 2**n values [n_1,..., n_k]
-            generator_circuit: a QuantumCircuit implementing the generator.
-            init_params: 1D numpy array or list, Initialization for
-                the generator's parameters.
-            optimizer: optimizer to be used for the training of the generator
-            gradient_function: A Gradient object, or a function returning partial
-                derivatives of the loss function w.r.t. the generator variational
-                params.
-            snapshot_dir: str or None, if not None save the optimizer's parameter after every
-                update step to the given directory
-        Raises:
-            QiskitMachineLearningError: Set multivariate variational distribution
-                                        to represent multivariate data
-        """
         super().__init__()
-        self._bounds = bounds
         self._num_qubits = num_qubits
         self.generator_circuit = generator_circuit
         if generator_circuit is None:
@@ -88,7 +41,7 @@ class QuantumGenerator(GenerativeNetwork):
 
         if init_params is None:
             init_params = (
-                    algorithm_globals.random.random(self.generator_circuit.num_parameters) * 2e-2
+                    algorithm_globals.random.random(self.generator_circuit.num_parameters) * 2e-1
             )
 
         self._bound_parameters = init_params
@@ -99,42 +52,9 @@ class QuantumGenerator(GenerativeNetwork):
 
         self._gradient_function = gradient_function
 
-        if np.ndim(self._bounds) == 1:
-            bounds = np.reshape(self._bounds, (1, len(self._bounds)))
-        else:
-            bounds = self._bounds
-        for j, prec in enumerate(self._num_qubits):
-            # prepare data grid for dim j
-            grid = np.linspace(bounds[j, 0], bounds[j, 1], (2**prec))
-            if j == 0:
-                if len(self._num_qubits) > 1:
-                    self._data_grid = [grid]
-                else:
-                    self._data_grid = grid  # type: ignore
-                self._grid_elements = grid
-            elif j == 1:
-                self._data_grid.append(grid)
-                temp = []
-                for g_e in self._grid_elements:
-                    for g in grid:
-                        temp0 = [g_e]
-                        temp0.append(g)
-                        temp.append(temp0)
-                self._grid_elements = temp  # type: ignore
-            else:
-                self._data_grid.append(grid)
-                temp = []
-                for g_e in self._grid_elements:
-                    for g in grid:
-                        temp0 = deepcopy(g_e)
-                        temp0.append(g)
-                        temp.append(temp0)
-                self._grid_elements = deepcopy(temp)  # type: ignore
-        self._data_grid = np.array(self._data_grid, dtype=object)  # type: ignore
-
         self._seed = 7
         self._shots = None
-        self._discriminator: Optional[DiscriminativeNetwork] = None
+        self._discriminator: Optional[DiscriminatorV2] = None
         self._ret: Dict[str, Any] = {}
 
     @property
@@ -172,60 +92,11 @@ class QuantumGenerator(GenerativeNetwork):
         self._seed = seed
         algorithm_globals.random_seed = seed
 
-    @property
-    def discriminator(self) -> DiscriminativeNetwork:
-        """
-        Get discriminator.
-        """
-        return self._discriminator
+    def set_discriminator(self, discriminator: DiscriminatorV2) -> None:
 
-    @discriminator.setter
-    def discriminator(self, discriminator: DiscriminativeNetwork) -> None:
-        """
-        Set discriminator.
-        Args:
-            discriminator (DiscriminativeNetwork): Discriminator used to
-                compute the loss function.
-        """
         self._discriminator = discriminator
 
-    @property
-    def optimizer(self) -> Optimizer:
-        """
-        Get optimizer.
-        """
-        return self._optimizer
-
-    @optimizer.setter
-    def optimizer(self, optimizer: Optional[Optimizer] = None) -> None:
-        """
-        Set optimizer.
-        Args:
-            optimizer (Optimizer): optimizer to use with the generator.
-        Raises:
-            QiskitMachineLearningError: invalid input.
-        """
-        if optimizer:
-            if isinstance(optimizer, Optimizer):
-                self._optimizer = optimizer
-            else:
-                raise QiskitMachineLearningError(
-                    "Please provide an Optimizer object to use as the generator optimizer."
-                )
-        else:
-            self._optimizer = ADAM(
-                maxiter=1,
-                tol=1e-6,
-                lr=1e-3,
-                beta_1=0.7,
-                beta_2=0.99,
-                noise_factor=1e-6,
-                eps=1e-6,
-                amsgrad=True,
-                snapshot_dir=self._snapshot_dir,
-            )
-
-    def construct_circuit(self, params=None):
+    def construct_circuit(self, params=Optional[None]):
         """
         Construct generator circuit.
         Args:
@@ -249,293 +120,71 @@ class QuantumGenerator(GenerativeNetwork):
         # # return qc.copy(name='qc')
         # return qc.to_instruction()
 
-    def get_output_v2(
-            self,
-            params: Optional[np.ndarray] = None,
-            shots: Optional[int] = None,
-    ) -> List:
-
-        q = QuantumRegister(sum(self._num_qubits), name="q")
-        qc = QuantumCircuit(q)
-        if params is None:
-            params = cast(np.ndarray, self._bound_parameters)
-            print(params)
-        qc.append(self.construct_circuit(params), q)
-        # Create a Quantum Circuit
-        meas = QuantumCircuit(sum(self._num_qubits), sum(self._num_qubits))
-        meas.barrier(range(sum(self._num_qubits)))
-        # map the quantum measurement to the classical bits
-        meas.measure_all()
-
-        # The Qiskit circuit object supports composition using
-        # the addition operator.
-        qc += meas
-
-        backend_sim = Aer.get_backend('qasm_simulator')
-        # Execute the circuit on the qasm simulator.
-        job_sim = qiskit.execute(qc, backend_sim, shots=shots)
-        # Grab the results from the job.
-        result = job_sim.result()
-        counts = result.get_counts(qc)
-
-        pixels = []
-        for key in counts:
-            pixels.append(counts[key])
-
-        for index in range(len(pixels)):
-            pixels[index] /= shots
-        return pixels
-
-    def get_output_v3(self,
-                      params: Optional[np.ndarray] = None,
-                      shots: Optional[int] = None,
-                      ) -> List:
-        q = QuantumRegister(sum(self._num_qubits), name="q")
-        qc = QuantumCircuit(q)
-        if params is None:
-            params = cast(np.ndarray, self._bound_parameters)
-            print(params)
-        qc.append(self.construct_circuit(params), q)
-        # Create a Quantum Circuit
-
-        pixels = []
-        for i in range(sum(self._num_qubits)):
-            meas = QuantumCircuit(sum(self._num_qubits), sum(self._num_qubits))
-            meas.barrier(range(sum(self._num_qubits)))
-            # map the quantum measurement to the classical bits
-            meas.measure(i, i)
-
-            # The Qiskit circuit object supports composition using
-            # the addition operator.
-            qc_meas = qc + meas
-
-            backend_sim = Aer.get_backend('qasm_simulator')
-            # Execute the circuit on the qasm simulator.
-            job_sim = qiskit.execute(qc_meas, backend_sim, shots=shots)
-            # Grab the results from the job.
-            result = job_sim.result()
-            counts = result.get_counts(qc_meas)
-            pixels.append(counts['0000'] / shots)
-
-        return pixels
-
     def get_output(
             self,
             quantum_instance: QuantumInstance,
             params: Optional[np.ndarray] = None,
             shots: Optional[int] = None,
-    ) -> Tuple[List, List]:
-        """
-        Get classical data samples from the generator.
-        Running the quantum generator circuit results in a quantum state.
-        To train this generator with a classical discriminator, we need to sample classical outputs
-        by measuring the quantum state and mapping them to feature space defined by the training
-        data.
-        Args:
-            quantum_instance: Quantum Instance, used to run the generator
-                circuit.
-            params: array or None, parameters which should
-                be used to run the generator, if None use self._params
-            shots: if not None use a number of shots that is different from the
-                number set in quantum_instance
-        Returns:
-            generated samples, array: sample occurrence in percentage
-        """
+    ):
+
         instance_shots = shots
-        q = QuantumRegister(sum(self._num_qubits), name="q")
-        qc = QuantumCircuit(q)
+        quantum = QuantumRegister(sum(self._num_qubits), name="q")
+        qc = QuantumCircuit(quantum)
 
         if params is None:
             params = cast(np.ndarray, self._bound_parameters)
-        qc.append(self.construct_circuit(params), q)
+        qc.append(self.construct_circuit(params), quantum)
         if quantum_instance.is_statevector:
             pass
         else:
-            c = ClassicalRegister(sum(self._num_qubits), name="c")
-            qc.add_register(c)
-            qc.measure(q, c)
+            classical = ClassicalRegister(sum(self._num_qubits), name="c")
+            qc.add_register(classical)
+            qc.measure(quantum, classical)
 
         if shots is not None:
             quantum_instance.set_config(shots=shots)
 
-        result = quantum_instance.execute(qc)
         state_vector = qiskit.quantum_info.Statevector.from_instruction(qc)
         pixels = []
         for qubit in range(sum(self._num_qubits)):
             pixels.append(state_vector.probabilities([qubit])[0])
 
-        generated_samples = []
-        if quantum_instance.is_statevector:
-            result = result.get_statevector(qc)
-            values = np.multiply(result, np.conj(result))
-            values = list(values.real)
-            keys = []
-            for j in range(len(values)):
-                keys.append(np.binary_repr(j, int(sum(self._num_qubits))))
-        else:
-            result = result.get_counts(qc)
-            keys = list(result)
-            values = list(result.values())
-            values = [float(v) / np.sum(values) for v in values]
-
-        generated_samples_weights = values
-        for i, _ in enumerate(keys):
-            index = 0
-            temp = []
-            for k, p in enumerate(self._num_qubits):
-                bin_rep = 0
-                j = 0
-                while j < p:
-                    bin_rep += int(keys[i][index]) * 2**(int(p) - j - 1)
-                    j += 1
-                    index += 1
-                if len(self._num_qubits) > 1:
-                    temp.append(self._data_grid[k][int(bin_rep)])
-                else:
-                    temp.append(self._data_grid[int(bin_rep)])
-            generated_samples.append(temp)
-
-        # self.generator_circuit._probabilities = generated_samples_weights
-        if shots is not None:
-            # Restore the initial quantum_instance configuration
-            quantum_instance.set_config(shots=instance_shots)
-
-        generated_samples = np.array(4 * pixels)
+        generated_samples = np.array(pixels)
         generated_samples.flatten()
-        assert len(generated_samples) == len(generated_samples_weights)
-        return list(generated_samples.tolist()), generated_samples_weights
+        return np.array(generated_samples)
 
-    def loss(self, x, weights):  # pylint: disable=arguments-differ
-        """
-        Loss function for training the generator's parameters.
-        Args:
-            x (numpy.ndarray): sample label (equivalent to discriminator output)
-            weights (numpy.ndarray): probability for measuring the sample
-        Returns:
-            float: loss function
-        """
+    def loss(self, prediction):  # pylint: disable=arguments-differ
         try:
             # pylint: disable=no-member
-            loss = (-1) * np.dot(np.log10(x).transpose(), weights)
+            loss = np.log10(1 - prediction).transpose()
         except Exception:  # pylint: disable=broad-except
-            loss = (-1) * np.dot(np.log10(x), weights)
+            loss = np.log10(1 - prediction)
         return loss.flatten()
 
-    def _get_objective_function(self, quantum_instance, discriminator):
-        """
-        Get objective function
-        Args:
-            quantum_instance (QuantumInstance): used to run the quantum circuit.
-            discriminator (torch.nn.Module): discriminator network to compute the sample labels.
-        Returns:
-            objective_function: objective function for quantum generator optimization
-        """
+    def step(self, quantum_instance, learning_rate, shots):
 
-        def objective_function(params):
-            """
-            Objective function
-            Args:
-                params (numpy.ndarray): generator parameters
-            Returns:
-                self.loss: loss function
-            """
-            generated_data, generated_prob = self.get_output(
-                quantum_instance, params=params, shots=self._shots
-            )
-            prediction_generated = discriminator.get_label(generated_data, detach=True)
-            return self.loss(prediction_generated, generated_prob)
+        for index in range(len(self.parameter_values)):
+            perturbation_vector = np.zeros(len(self.parameter_values))
+            perturbation_vector[index] = 1
 
-        return objective_function
+            pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
+            neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
 
-    def _convert_to_gradient_function(self, gradient_object, quantum_instance, discriminator):
-        """
-        Convert to gradient function
-        Args:
-            gradient_object (Gradient): the gradient object to be used to
-                compute analytical gradients.
-            quantum_instance (QuantumInstance): used to run the quantum circuit.
-            discriminator (torch.nn.Module): discriminator network to compute the sample labels.
-        Returns:
-            gradient_function: gradient function that takes the current
-                parameter values and returns partial derivatives of the loss
-                function w.r.t. the variational parameters.
-        """
+            pos_result = self.get_output(quantum_instance, params=pos_params, shots=shots)
+            neg_result = self.get_output(quantum_instance, params=neg_params, shots=shots)
 
-        def gradient_function(current_point):
-            """
-            Gradient function
-            Args:
-                current_point (np.ndarray): Current values for the variational parameters.
-            Returns:
-                np.ndarray: array of partial derivatives of the loss
-                    function w.r.t. the variational parameters.
-            """
-            free_params = self._free_parameters
-            generated_data, _ = self.get_output(
-                quantum_instance, params=current_point, shots=self._shots
-            )
-            prediction_generated = discriminator.get_label(generated_data, detach=True)
-            op = ~CircuitStateFn(primitive=self.generator_circuit)
-            grad_object = gradient_object.convert(operator=op, params=free_params)
-            value_dict = {free_params[i]: current_point[i] for i in range(len(free_params))}
-            analytical_gradients = np.array(grad_object.assign_parameters(value_dict).eval())
-            loss_gradients = self.loss(prediction_generated, np.transpose(analytical_gradients)).real
-            return loss_gradients
+            pos_result = self._discriminator.get_label(pos_result, self._discriminator.params_values)[0]
+            neg_result = self._discriminator.get_label(neg_result, self._discriminator.params_values)[0]
 
-        return gradient_function
+            gradient = self.loss(pos_result) - self.loss(neg_result)
+            self.parameter_values[index] -= learning_rate * gradient
+            # self.update(index, gradient, learning_rate)
 
-    def train(self, quantum_instance=None, shots=None):
-        """
-        Perform one training step w.r.t to the generator's parameters
-        Args:
-            quantum_instance (QuantumInstance): used to run the generator circuit.
-            shots (int): Number of shots for hardware or qasm execution.
-        Returns:
-            dict: generator loss(float) and updated parameters (array).
-        """
-        self._shots = shots
-        self._quantum_instance = quantum_instance
+        result_final = self.get_output(quantum_instance, self.parameter_values, shots)
+        loss_final = self.loss(result_final)
 
-        # T0D_0 Improve access to maxiter, say via options getter, to avoid private member access
-        # and since not all optimizers have that exact naming figure something better as well to
-        # allow the checking below to not have to warn if it has something else and max iterations
-        # is truly 1 anyway.
-        try:
-            if self._optimizer._maxiter != 1:
-                warnings.warn(
-                    "Please set the the optimizer maxiter argument to 1 "
-                    "to ensure that the generator "
-                    "and discriminator are updated in an alternating fashion."
-                )
-        except AttributeError:
-            maxiter = self._optimizer._options.get("maxiter")
-            if maxiter is not None and maxiter != 1:
-                warnings.warn(
-                    "Please set the the optimizer maxiter argument to 1 "
-                    "to ensure that the generator "
-                    "and discriminator are updated in an alternating fashion."
-                )
-            elif maxiter is None:
-                warnings.warn(
-                    "Please ensure the optimizer max iterations are set to 1 "
-                    "to ensure that the generator "
-                    "and discriminator are updated in an alternating fashion."
-                )
-
-        if isinstance(self._gradient_function, Gradient):
-            self._gradient_function = self._convert_to_gradient_function(
-                self._gradient_function, quantum_instance, self._discriminator
-            )
-
-        objective = self._get_objective_function(quantum_instance, self._discriminator)
-        self._bound_parameters, loss, _ = self._optimizer.optimize(
-            num_vars=len(self._bound_parameters),
-            objective_function=objective,
-            initial_point=self._bound_parameters,
-            gradient_function=self._gradient_function,
-        )
-        self._ret["loss"] = loss
+        self._ret["loss"] = loss_final
         self._ret["params"] = self._bound_parameters
-        self._ret["output"] = self.get_output(self._quantum_instance, self._bound_parameters, 4048)[0]
+        self._ret["output"] = self.get_output(quantum_instance, self._bound_parameters, 4048)[0]
 
         return self._ret

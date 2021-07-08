@@ -55,7 +55,7 @@ k = len(num_qubits)
 
 # Set number of training epochs
 # Note: The algorithm's runtime can be shortened by reducing the number of training epochs.
-num_epochs = 50
+num_epochs = 30
 # Batch size
 batch_size = 10
 quantum_instance = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
