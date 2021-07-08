@@ -15,15 +15,14 @@ from quantumGAN.discrimintorV2 import DiscriminatorV2
 ##
 def gen_real_data_FCNN(a, b, num_samples: int):
 	data = []
-	real_labels = []
-	x0 = np.random.default_rng().uniform(a, b, num_samples)
-	x1 = np.random.default_rng().uniform(a, b, num_samples)
+	x0 = np.random.uniform(a, b, num_samples)
+	x1 = np.random.uniform(a, b, num_samples)
 
 	for i in range(len(x1)):
-		array = np.array([[x0[i], 0], [x1[i], 0]]).reshape((2, 2))
-		data.append(np.array([array, array, array, array]).flatten())
+		array = [[x0[i], 0], [x1[i], 0]]
+		data.append(array)
 
-	return data
+	return np.array(data).flatten()
 
 
 seed = 71
@@ -47,7 +46,7 @@ k = len(num_qubits)
 
 # Set number of training epochs
 # Note: The algorithm's runtime can be shortened by reducing the number of training epochs.
-num_epochs = 50
+num_epochs = 500
 # Batch size
 batch_size = 10
 
@@ -75,15 +74,18 @@ print(init_params)
 # Set generator circuit by adding the initial distribution infront of the ansatz
 g_circuit = ansatz  # .compose(init_dist, front=True)
 print(g_circuit)
-discriminator = DiscriminatorV2(16, 1)
+discriminator = DiscriminatorV2(4, 1)
 generator = QuantumGenerator(num_qubits=[4], generator_circuit=g_circuit)
+generator.set_discriminator(discriminator)
 
 ##
 for o in range(num_epochs):
 	output_real = gen_real_data_FCNN(.9, .8, 1)
 	output_fake = generator.get_output(quantum_instance=q_instance, params=None, shots=None)
-	generator.train()
-	discriminator.step(fake_image=output_fake, real_image=output_real, learning_rate=.01)
+
+	print(output_real, output_fake)
+	discriminator.step(fake_image=output_fake, real_image=output_real, learning_rate=.1)
+	generator.step(q_instance, 0.1, 2024)
 ##
 exit()
 # Plot progress w.r.t the generator's and the discriminator's loss function
