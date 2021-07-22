@@ -7,11 +7,11 @@ class DiscriminatorV2:
     def __init__(self, in_features, out_features):
         self.in_features = in_features
         self.out_features = out_features
-        self._ret: Dict[str, Any] = {}
+        self._ret: Dict[str, Any] = {"loss": []}
 
         self.architecture = [
-            {"input_dim": self.in_features, "output_dim": 6, "activation": "relu"},
-            {"input_dim": 6, "output_dim": 8, "activation": "relu"},
+            {"input_dim": self.in_features, "output_dim": 64, "activation": "relu"},
+            {"input_dim": 64, "output_dim": 8, "activation": "relu"},
             {"input_dim": 8, "output_dim": self.out_features, "activation": "sigmoid"},
         ]
         self.params_values = self.init_layers()
@@ -36,9 +36,9 @@ class DiscriminatorV2:
             # initiating the values of the W matrix
             # and vector b for subsequent layers
             params_values['W' + str(layer_idx)] = np.random.randn(
-                layer_output_size, layer_input_size) * 0.1
+                layer_output_size, layer_input_size) * .1
             params_values['b' + str(layer_idx)] = np.random.randn(
-                layer_output_size, 1) * 0.1
+                layer_output_size, 1) * .1
 
         return params_values
 
@@ -111,20 +111,25 @@ class DiscriminatorV2:
     def get_label(self, image, params):
         return self.forward(image, params)
 
-    def loss(self, fake_prediction, real_prediction):
-        # number of examples
-        return (-1)*np.log10(real_prediction) + (-1)*np.log10(1 - fake_prediction)
+    def BCE(self, prediction, target):
+        return target*np.log10(prediction) + (1 - target)*np.log10(1 - prediction)
 
+    def minimax(self, real_prediction, fake_prediction):
+        return np.log10(real_prediction) + np.log10(1 - fake_prediction)
+
+    def minimax_backward(self, real_prediction, fake_prediction):
+        return (1/(real_prediction*np.log(10)) + 1/((fake_prediction - 1)*np.log(10)))
     # an auxiliary function that converts probability into class
-    def convert_prob_into_class(self, probs):
-        probs_ = np.copy(probs)
-        probs_[probs_ > 0.5] = 1
-        probs_[probs_ <= 0.5] = 0
-        return probs_
 
-    def get_accuracy_value(self, Y_hat, Y):
-        Y_hat_ = self.convert_prob_into_class(Y_hat)
-        return (Y_hat_ == Y).all(axis=0).mean()
+
+    def update(self, params_values, grads_values, learning_rate):
+
+        # iteration over network layers
+        for layer_idx, layer in enumerate(self.architecture, 1):
+            params_values["W" + str(layer_idx)] += learning_rate * grads_values["dW" + str(layer_idx)]
+            params_values["b" + str(layer_idx)] += learning_rate * grads_values["db" + str(layer_idx)]
+
+        return params_values
 
     def single_layer_backward_propagation(self, dA_curr, W_curr, b_curr, Z_curr, A_prev, activation="relu"):
         # number of examples
@@ -150,16 +155,17 @@ class DiscriminatorV2:
 
         return dA_prev, dW_curr, db_curr
 
-    def backward(self, Y_hat, Y, memory, params_values):
+    def backward(self, real_prediction, fake_prediction, memory, params_values):
         grads_values = {}
 
-        # number of examples
-        #m = Y.shape[1] (not on use)
-        # a hack ensuring the same shape of the prediction vector and labels vector
-        Y = Y.reshape(Y_hat.shape)
-
-        # initiation of gradient descent algorithm
-        dA_prev = - (np.divide(Y, Y_hat) - np.divide(1 - Y, 1 - Y_hat))
+        ## number of examples
+        #target = np.array(target)
+        ##m = Y.shape[1] (not on use)
+        #Y = Y.reshape(target.shape)
+#
+        ## initiation of gradient descent algorithm
+        dA_prev = self.minimax_backward(real_prediction, fake_prediction)
+        #dA_prev = self.loss_backward(prediction_real, prediction_fake)
 
         for layer_idx_prev, layer in reversed(list(enumerate(self.architecture))):
             # we number network layers from 1
@@ -183,17 +189,7 @@ class DiscriminatorV2:
 
         return grads_values
 
-    def update(self, params_values, grads_values, learning_rate):
-
-        # iteration over network layers
-        for layer_idx, layer in enumerate(self.architecture, 1):
-            params_values["W" + str(layer_idx)] -= learning_rate * grads_values["dW" + str(layer_idx)]
-            params_values["b" + str(layer_idx)] -= learning_rate * grads_values["db" + str(layer_idx)]
-
-        return params_values
-
-    def step(self, fake_image, real_image, learning_rate, verbose=False,
-             callback=None):
+    def step(self, real_image, fake_image, learning_rate):
 
         # initiation of lists storing the history
         # of metrics calculated during the learning process
@@ -206,16 +202,15 @@ class DiscriminatorV2:
         print(prediction_real, prediction_fake)
 
         # calculating metrics and saving them in history
-        loss = self.loss(prediction_fake, prediction_real)
-        self.cost_history.append(loss)
-        optima = np.array([0.])
 
         # step backward - calculating gradient
-        grads_values = self.backward(prediction_real, optima, cache, self.params_values)
+        grads_values = self.backward(prediction_real, prediction_fake, cache, self.params_values)
+        #grads_values_loss = self.loss_backward(prediction_real, prediction_fake, grads_values)
         # updating model stat
         self.params_values = self.update(self.params_values, grads_values, learning_rate)
+        loss_final = self.minimax(prediction_real, prediction_fake)
 
-        self._ret["loss"] = loss
+        self._ret["loss"].append(loss_final.flatten())
         self._ret["params"] = self.params_values
 
         return self._ret
