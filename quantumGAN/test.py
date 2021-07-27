@@ -1,111 +1,280 @@
+"""
+network.py
+~~~~~~~~~~f
+A module to impflement the stochastic gradient descent learning
+algorithm for fa feedforward neural network.  Gradients are calculated
+using backprofpagation.  Note that I have focused on making the code
+simple, easifly readable, and easily modifiable.  It is not optimized,
+and omits many desirable features.
+"""
+
+# Libraries
+# Standard library
+import json
+import random
+import time
 import numpy as np
-## https://medium.com/@a.mirzaei69/implement-a-neural-network-from-scratch-with-python-numpy-backpropagation-e82b70caa9bb
+import matplotlib.pyplot as plt
 
-class NeuralNetwork(object):
-    def __init__(self, layers=[2, 10, 1], activations=['sigmoid', 'sigmoid']):
-        assert (len(layers) == len(activations) + 1)
-        self.layers = layers
-        self.activations = activations
-        self.weights = []
-        self.biases = []
-        for i in range(len(layers) - 1):
-            self.weights.append(np.random.randn(layers[i + 1], layers[i]))
-            self.biases.append(np.random.randn(layers[i + 1], 1))
-
-    def feedforward(self, x):
-        # return the feedforward value for x
-        a = np.copy(x)
-        z_s = []
-        a_s = [a]
-        for i in range(len(self.weights)):
-            activation_function = self.getActivationFunction(self.activations[i])
-            z_s.append(self.weights[i].dot(a) + self.biases[i])
-            a = activation_function(z_s[-1])
-            a_s.append(a)
-        return (z_s, a_s)
+from typing import Dict, List, Tuple
 
 
-    def backpropagation(self, y, z_s, a_s):
-        dw = []  # dC/dW
-        db = []  # dC/dB
-        deltas = [None] * len(self.weights)  # delta = dC/dZ  known as error for each layer
-        # insert the last layer error
-        deltas[-1] = ((y - a_s[-1]) * (self.getDerivitiveActivationFunction(self.activations[-1]))(z_s[-1]))
-        # Perform BackPropagation
-        for i in reversed(range(len(deltas) - 1)):
-            deltas[i] = self.weights[i + 1].T.dot(deltas[i + 1]) * (
-                self.getDerivitiveActivationFunction(self.activations[i])(z_s[i]))
-            # a= [print(d.shape) for d in deltas]
-        batch_size = y.shape[1]
-        db = [d.dot(np.ones((batch_size, 1))) / float(batch_size) for d in deltas]
-        dw = [d.dot(a_s[i].T) / float(batch_size) for i, d in enumerate(deltas)]
-        # return the derivitives respect to weight matrix and biases
-        return dw, db
+def load(filename):
+    """Load a neural network from the file ``filename``.  Returns an
+    instance of Network.
+    """
+    f = open(filename, "r")
+    data = json.load(f)
+    f.close()
+    # cost = getattr(sys.modules[__name__], data["cost"])
+    net = Network(data["sizes"])
+    net.weights = [np.array(w) for w in data["weights"]]
+    net.biases = [np.array(b) for b in data["biases"]]
+    return net
 
 
-    def train(self, x, y, batch_size=10, epochs=100, lr=0.01):
-        # update weights and biases based on the output
-        for e in range(epochs):
-            i = 0
-            while (i < len(y)):
-                x_batch = x[i:i + batch_size]
-                y_batch = y[i:i + batch_size]
-                i = i + batch_size
-                z_s, a_s = self.feedforward(x_batch)
-                dw, db = self.backpropagation(y_batch, z_s, a_s)
-                self.weights = [w + lr * dweight for w, dweight in zip(self.weights, dw)]
-                self.biases = [w + lr * dbias for w, dbias in zip(self.biases, db)]
-                print("loss = {}".format(np.linalg.norm(a_s[-1] - y_batch)))
+class Network:
+
+    def __init__(self, sizes: List[int]) -> None:
+        """The list ``sizes`` contains the number of neuronfs in the
+        respective layers of the network.  For example, iff the list
+        was [2, 3, 1] then it would be a three-layer netwfork, with the
+        first layer containing 2 neurons, the second layffer 3 neurons,
+        and the third layer 1 neuron."""
+        self.num_layers = len(sizes)
+        self.sizes = sizes
+        self._ret: Dict[str, any] = {"loss": [],
+                                     "label real": [],
+                                     "label fake": [],
+                                     "label fake time": [],
+                                     "label real time": []}
+        self.biases = [np.random.randn(y, ) for y in sizes[1:]]
+        self.weights = [np.random.randn(y, x)
+                        for x, y in zip(sizes[:-1], sizes[1:])]
+
+    def feedforward(self, a):
+        """Return the output of the network if ``a`` is input."""
+        for b, w in zip(self.biases, self.weights):
+            a = sigmoid(np.dot(w, a) + b)
+        return a
+
+    def predict(self, x):
+        # feedforward
+        activation = x
+        activations = [x]  # list to store all the activations, layer by layer
+        zs = []  # list to store all the z vectors, layer by layer
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+        return activation
+
+    def evaluate(self, test_data):
+        """Return the number of test inputs for which the neural
+        network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever
+        neuron in the final layer has the highest activation."""
+        test_results = [(np.argmax(self.feedforward(x)), y)
+                        for (x, y) in test_data]
+        return sum(int(x == y) for (x, y) in test_results)
+
+    def save(self, filename):
+        """Save the neural network to the file ``filename``."""
+        data = {"sizes": self.sizes,
+                "weights": [w.tolist() for w in self.weights],
+                "biases": [b.tolist() for b in self.biases]  # ,
+                # "cost": str(self..__name__)
+                }
+        f = open(filename, "w")
+        json.dump(data, f)
+        f.close()
+
+    def MSE_derivative(self, prediction, y):
+        """Return the vector of partial derivatives \partial{C_x,a}
+         for the output activations."""
+        return 2 * (y - prediction)
+
+    def MSE(self, prediction, y):
+        return (y - prediction)**2
+
+    def BCE_derivative(self, prediction, target):
+        return -target / prediction + (1 - target) / (1 - prediction)
+
+    def BCE(self, predictions: np.ndarray, targets: np.ndarray) -> float:
+        return targets * np.log10(predictions) + (1 - targets) * np.log10(1 - predictions).mean()
+
+    def minimax_derivative(self, real_prediction, fake_prediction):
+        real_prediction = np.array(real_prediction)
+        fake_prediction = np.array(fake_prediction)
+
+        return 1 / (real_prediction * np.log(10)) + 1 / ((fake_prediction - 1) * np.log(10))
+
+    @property
+    def ret(self):
+        return self._ret
+
+    def backprop(self, x, y) -> Tuple:
+        """Return a tuple ``(nabla_b, nabla_w)`` representing the
+        gradient for the cost function C_x.  ``nabla_b`` and
+        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
+        to ``self.biases`` and ``self.weights``."""
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+        nabla_w_prev = nabla_w
+
+        # feedforward
+        activation = x
+        activations = [x]  # list to store all the activations, layer by layer
+        zs = []  # list to store all the z vectors, layer by layer
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation) + b
+            zs.append(z)
+            activation = sigmoid(z)
+            activations.append(activation)
+        self.data_for_loss = (activation, y)
+
+        # backward pass
+        delta = self.BCE_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+        nabla_b[-1] = delta
+        nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
+
+        # Note that the variable l in the loop below is used a little
+        # differently to the notation in Chapter 2 of the book.  Here,
+        # l = 1 means the last layer of neurons, l = 2 is the
+        # second-last layer, and so on.  It's a renumbering of the
+        # scheme in the book, used here to take advantage of the fact
+        # that Python can use negative indices in lists.
+
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+            delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
+                                 activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+        return (nabla_b, nabla_w)
+
+    def train_mini_batch(self, mini_batch, learning_rate):
+        """Update the network's weights and biases by applying
+        gradient descent using backpropagation to a single mini batch.
+        The ``mini_batch`` is a list of tuples ``(x, y)``"""
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        for x, y in mini_batch:
+            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
+            nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+            nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+
+        # gradient descent
+        self.weights = [w - (learning_rate / len(mini_batch)) * nw
+                        for w, nw in zip(self.weights, nabla_w)]
+        self.biases = [b - (learning_rate / len(mini_batch)) * nb
+                       for b, nb in zip(self.biases, nabla_b)]
+
+    def train_SGD(self,
+                  training_data: List[Tuple],
+                  epochs: int,
+                  mini_batch_size: int,
+                  learning_rate: float,
+                  test_data=None):
+        """Train the neural network using mini-batch stochastic
+        gradient descent.  The ``training_data`` is a list of tuples
+        ``(x, y)`` representing the training inputs and the desired
+        outputs.  The other non-optional parameters are
+        self-explanatory.  If ``test_data`` is provided then the
+        network will be evaluated against the test data after each
+        epoch, and partial progress printed out.  This is useful for
+        tracking progress, but slows things down substantially."""
+
+        global n_test
+        if test_data:
+            n_test = len(test_data)
+
+        n = len(training_data)
+        for j in range(epochs):
+            time1 = time.time()
+            random.shuffle(training_data)
+
+            mini_batches = [
+                training_data[k:k + mini_batch_size]
+                for k in range(0, n, mini_batch_size)]
+
+            for mini_batch in mini_batches:
+                self.train_mini_batch(mini_batch, learning_rate)
+            time2 = time.time()
+            loss_final = self.BCE(self.data_for_loss[0], self.data_for_loss[1])
+
+            if test_data:
+                print("Epoch {0}: {1} / {2}, xtook {3:.2f} seconds".format(
+                    j, self.evaluate(test_data), n_test, time2 - time1))
+            else:
+                print("Epoch {0} complete in {1:.2f} seconds".format(j, time2 - time1))
+
+            self._ret["loss"].append(loss_final)
+
+            if self.data_for_loss[1] == np.array([1.]):
+                self._ret["label real"].append(self.data_for_loss[0].flatten())
+                self._ret["label real time"].append(j)
+            else:
+                self._ret["label fake"].append(self.data_for_loss[0].flatten())
+                self._ret["label fake time"].append(j)
+
+        return self._ret
 
 
-    @staticmethod
-    def getActivationFunction(name):
-        if (name == 'sigmoid'):
-            return lambda x: np.exp(x) / (1 + np.exp(x))
-        elif (name == 'linear'):
-            return lambda x: x
-        elif (name == 'relu'):
-            def relu(x):
-                y = np.copy(x)
-                y[y < 0] = 0
-                return y
-
-            return relu
-        else:
-            print('Unknown activation function. linear is used')
-            return lambda x: x
+def sigmoid(z):
+    """The sigmoid function."""
+    return 1.0 / (1.0 + np.exp(-z))
 
 
-    @staticmethod
-    def getDerivitiveActivationFunction(name):
-        if (name == 'sigmoid'):
-            sig = lambda x: np.exp(x) / (1 + np.exp(x))
-            return lambda x: sig(x) * (1 - sig(x))
-        elif (name == 'linear'):
-            return lambda x: 1
-        elif (name == 'relu'):
-            def relu_diff(x):
-                y = np.copy(x)
-                y[y >= 0] = 1
-                y[y < 0] = 0
-                return y
-
-            return relu_diff
-        else:
-            print('Unknown activation function. linear is used')
-            return lambda x: 1
+def sigmoid_prime(z):
+    """Derivative of the sigmoid function."""
+    return sigmoid(z) * (1 - sigmoid(z))
 
 
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
+nn = Network([4, 16, 4, 1])
 
-    nn = NeuralNetwork([1, 100, 1], activations=['sigmoid', 'sigmoid'])
-    X = 2 * np.pi * np.random.rand(1000).reshape(1, -1)
-    y = np.sin(X)
+train_data = []
+train_data_fake, train_data_real = [], []
+for _ in range(70):
+    x1 = np.random.uniform(.8, .9, (4,))
+    x2 = np.random.uniform(.5, .4, (2,))
 
-    nn.train(X, y, epochs=10000, batch_size=64, lr=.1)
-    _, a_s = nn.feedforward(X)
-    # print(y, X)
-    plt.scatter(X.flatten(), y.flatten())
-    plt.scatter(X.flatten(), a_s[-1].flatten())
-    plt.show()
+    train_data.append((x1, np.array([0.])))
+    train_data.append((np.array([x2[1], 0., x2[0], 0]), np.array([1.])))
+
+num_epochs = 100
+nn.train_SGD(train_data, num_epochs, 10, 0.1)
+nn.save("C:/Users/usuario/qGAN/quantumGAN/nns")
+
+t_steps = np.arange(num_epochs)
+plt.figure(figsize=(6, 5))
+plt.title("Progress in the loss function")
+plt.plot(t_steps, nn.ret["loss"], label='Discriminator loss function', color='rebeccapurple', linewidth=2)
+plt.grid()
+plt.legend(loc='best')
+plt.xlabel('time steps')
+plt.ylabel('loss')
+plt.show()
+
+t_steps = np.arange(num_epochs)
+plt.figure(figsize=(6, 5))
+plt.title("Progress in labels")
+plt.scatter(nn.ret["label real time"], nn.ret["label real"], label='Label for real images', color='mediumvioletred',
+            linewidth=.1)
+plt.scatter(nn.ret["label fake time"], nn.ret["label fake"], label='Label for fake images', color='rebeccapurple',
+            linewidth=.1)
+plt.grid()
+plt.legend(loc='best')
+plt.xlabel('time steps')
+plt.ylabel('label')
+plt.show()
+
+label_1 = nn.predict(np.array([0.80417561, 0.87188567, 0.88118713, 0.82633528]))
+label_0 = nn.predict(np.array([0.40396169, 0., 0.43473614, 0.]))
+
+print(label_1, label_0)
+
+score = nn.evaluate(train_data[23:45])
+print(score)

@@ -1,11 +1,9 @@
 ##
 import numpy as np
 import matplotlib.pyplot as plt
-from qiskit import BasicAer
+import qiskit
 from qiskit.circuit.library import TwoLocal
-from qiskit_finance.circuit.library import UniformDistribution
 
-from qiskit.utils import QuantumInstance, algorithm_globals
 from quantumGAN.quantum_generator import QuantumGenerator
 from quantumGAN.discrimintorV2 import DiscriminatorV2
 
@@ -25,8 +23,6 @@ def gen_real_data_FCNN(a, b, num_samples: int):
 
 seed = 71
 np.random.seed = seed
-algorithm_globals.random_seed = seed
-
 ##
 # Set the data resolution
 # Set upper and lower data values as list of k min/max data values [[min_0,max_0],...,[min_k-1,max_k-1]]
@@ -36,24 +32,28 @@ num_qubits = [2]
 k = len(num_qubits)
 
 # Set number of training epochs
-# Note: The algorithm's runtime can be shortened by reducing the number of training epochs.
-num_epochs = 600
+num_epochs = 10000
 # Batch size
 batch_size = 10
 
 # Set entangler map
-#entangler_map = [[0, 1], [1, 2], [2, 3]]
+# entangler_map = [[0, 1], [1, 2], [2, 3]
 entangler_map = [[0, 1]]
 
 # Set an initial state for the generator circuit
-init_dist = UniformDistribution(sum(num_qubits))
 
-ansatz = TwoLocal(int(np.sum(num_qubits)), 'rx','cz', entanglement=entangler_map, reps=1, insert_barriers=True)
+randoms = np.random.normal(-np.pi * .01, np.pi * .01, 2)
+
+init_dist = qiskit.QuantumCircuit(2)
+init_dist.ry(randoms[0], 0)
+init_dist.ry(randoms[1], 1)
+
+ansatz = TwoLocal(int(np.sum(num_qubits)), 'rx', 'cz', entanglement=entangler_map, reps=2, insert_barriers=True)
 
 init_params = np.random.rand(ansatz.num_parameters_settable)
 print(init_params)
 
-g_circuit = ansatz  # .compose(init_dist, front=True)
+g_circuit = ansatz.compose(init_dist, front=True)
 print(g_circuit)
 discriminator = DiscriminatorV2(4, 1)
 generator = QuantumGenerator(num_qubits=num_qubits, generator_circuit=g_circuit)
@@ -65,9 +65,9 @@ for o in range(num_epochs):
 	output_fake = generator.get_output(params=None, shots=2048)
 
 	print(output_real, output_fake)
-	#for _ in range(10):
 	discriminator.step(output_real, output_fake, learning_rate=.1)
-	generator.step(1, 2048)
+	generator.step(.1, 2048)
+
 ##
 # Plot progress w.r.t the generator's and the discriminator's loss function
 t_steps = np.arange(num_epochs)
@@ -80,4 +80,3 @@ plt.legend(loc='best')
 plt.xlabel('time steps')
 plt.ylabel('loss')
 plt.show()
-#
