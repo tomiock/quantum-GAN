@@ -1,12 +1,13 @@
 """Quantum Generator."""
-
-from typing import Optional, List, Union, Dict, Any, Callable, cast, Tuple
+import random
+from typing import Any, Dict, List, Optional, Union, cast
 
 import numpy as np
 import qiskit
 from qiskit import QuantumRegister
-from qiskit.circuit.library import TwoLocal
 from qiskit.circuit import QuantumCircuit
+from qiskit.circuit.library import TwoLocal
+
 from quantumGAN.discrimintorV2 import DiscriminatorV2
 
 
@@ -26,13 +27,18 @@ class QuantumGenerator:
 
 	def __init__(
 			self,
+			training_data: List,
+			mini_batch_size: int,
+			shots: int,
 			num_qubits: Union[List[int], np.ndarray],
 			generator_circuit: Optional[QuantumCircuit] = None,
-			snapshot_dir: Optional[str] = None,
+			snapshot_dir: Optional[str] = None
 	) -> None:
 
 		super().__init__()
-		self._num_qubits = num_qubits
+		self.training_data = training_data
+		self.mini_batch_size = mini_batch_size
+		self.num_qubits = num_qubits
 		self.generator_circuit = generator_circuit
 
 		if generator_circuit is None:
@@ -45,47 +51,34 @@ class QuantumGenerator:
 			self.generator_circuit = circuit
 
 		self.parameter_values = np.random.rand(self.generator_circuit.num_parameters)
+		print(self.parameter_values)
 
-		# Set optimizer for updating the generator network
-		self._snapshot_dir = snapshot_dir
+		self.snapshot_dir = snapshot_dir
+		self.shots = shots
+		self.discriminator = None
+		self.ret: Dict[str, Any] = {"loss": []}
 
-		self._seed = 7
-		self._shots = None
-		self._discriminator: Optional[DiscriminatorV2] = None
-		self._ret: Dict[str, Any] = {"loss": []}
-
-	@property
-	def seed(self) -> int:
-		"""
-        Get seed.
-        """
-		return self._seed
-
-	@seed.setter
-	def seed(self, seed: int) -> None:
-		raise NotImplementedError
-
-	def set_discriminator(self, discriminator: DiscriminatorV2) -> None:
-		self._discriminator = discriminator
+	def set_discriminator(self, discriminator) -> None:
+		self.discriminator = discriminator
 
 	def construct_circuit(self, params):
 		return self.generator_circuit.assign_parameters(params)
 
 	def get_output(
 			self,
-			params: Optional[np.ndarray] = None,
-			shots: Optional[int] = None,
+			latent_space_noise,
+			params: Optional[np.ndarray] = None
 	):
 		real_keys = {"00", "10", "01", "11"}
 
-		quantum = QuantumRegister(sum(self._num_qubits), name="q")
-		qc = QuantumCircuit(sum(self._num_qubits))
+		quantum = QuantumRegister(sum(self.num_qubits), name="q")
+		qc = QuantumCircuit(sum(self.num_qubits))
 
-		randoms = np.random.normal(-np.pi * .01, np.pi * .01, 2)
+		init_dist = qiskit.QuantumCircuit(sum(self.num_qubits))
+		assert latent_space_noise.shape[0] == sum(self.num_qubits)
 
-		init_dist = qiskit.QuantumCircuit(sum(self._num_qubits))
-		for num_qubit in range(sum(self._num_qubits)):
-			init_dist.ry(randoms[num_qubit], num_qubit)
+		for num_qubit in range(sum(self.num_qubits)):
+			init_dist.ry(latent_space_noise[num_qubit], num_qubit)
 
 		if params is None:
 			params = cast(np.ndarray, self.parameter_values)
@@ -96,7 +89,7 @@ class QuantumGenerator:
 
 		simulator = qiskit.Aer.get_backend("aer_simulator")
 		final_circuit = qiskit.transpile(final_circuit, simulator)
-		result = simulator.run(final_circuit, shots=shots).result()
+		result = simulator.run(final_circuit, shots=self.shots).result()
 		counts = result.get_counts(final_circuit)
 
 		try:
@@ -114,39 +107,50 @@ class QuantumGenerator:
 
 			pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
 
-		pixels = pixels / shots
+		pixels = pixels / self.shots
 		return pixels
 
 	def loss(self, prediction_fake):
 		return np.log10(1 - prediction_fake)
 
-	def step(self, learning_rate, shots):
+	def BCE(self, predictions: np.ndarray, targets: np.ndarray) -> np.ndarray:
+		return targets * np.log10(predictions) + (1 - targets) * np.log10(1 - predictions)
 
-		global real_prediction
+	def create_mini_batches(self):
+		n = len(self.training_data)
+		random.shuffle(self.training_data)
+		mini_batches = [
+			self.training_data[k:k + self.mini_batch_size]
+			for k in range(0, n, self.mini_batch_size)]
+		return mini_batches
+
+	def train_mini_batch(self, mini_batch, learning_rate):
+		nabla_theta = np.zeros(self.parameter_values.shape)
+		new_images = []
+
+		for _, noise in mini_batch:
+			for index in range(len(self.parameter_values)):
+				perturbation_vector = np.zeros(len(self.parameter_values))
+				perturbation_vector[index] = 1
+
+				pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
+				neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
+
+				pos_result = self.get_output(noise, params=pos_params)
+				neg_result = self.get_output(noise, params=neg_params)
+
+				pos_result = self.discriminator.predict(pos_result)
+				neg_result = self.discriminator.predict(neg_result)
+				gradient = self.BCE(pos_result, np.array([1.])) - self.BCE(neg_result, np.array([1.]))
+				nabla_theta[index] += gradient
+			new_images.append(self.get_output(noise))
+
 		for index in range(len(self.parameter_values)):
-			perturbation_vector = np.zeros(len(self.parameter_values))
-			perturbation_vector[index] = 1
+			self.parameter_values[index] -= (learning_rate / self.mini_batch_size) * nabla_theta[index]
 
-			pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
-			neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
+		mini_batch = [(datapoint[0], fake_image) for datapoint, fake_image in zip(mini_batch, new_images)]
+		# result_final, _ = self._discriminator.forward(result_final, self._discriminator.params_values)
+		# loss_final = self.loss(result_final)
+		# self.ret["loss"].append(loss_final.flatten())
 
-			pos_result = self.get_output(params=pos_params, shots=shots)
-			neg_result = self.get_output(params=neg_params, shots=shots)
-
-			pos_result = self._discriminator.get_label(pos_result, self._discriminator.params_values)[0]
-			neg_result = self._discriminator.get_label(neg_result, self._discriminator.params_values)[0]
-
-			real_image = gen_real_data_FCNN(.6, .4, 1)
-			real_prediction = self._discriminator.forward(real_image, self._discriminator.params_values)[0]
-
-			gradient = self.loss(pos_result) - self.loss(neg_result)
-
-			self.parameter_values[index] -= learning_rate * gradient
-
-		result_final = self.get_output(self.parameter_values, shots)
-		result_final, _ = self._discriminator.forward(result_final, self._discriminator.params_values)
-		loss_final = self.loss(result_final)
-
-		self._ret["loss"].append(loss_final.flatten())
-
-		return self._ret
+		return mini_batch

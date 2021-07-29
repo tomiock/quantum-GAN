@@ -1,33 +1,19 @@
-"""
-network.py
-~~~~~~~~~~f
-A module to impflement the stochastic gradient descent learning
-algorithm for fa feedforward neural network.  Gradients are calculated
-using backprofpagation.  Note that I have focused on making the code
-simple, easifly readable, and easily modifiable.  It is not optimized,
-and omits many desirable features.
-"""
-
-# Libraries
-# Standard library
+"""DISCRIMINATOR WITH MINIMAX"""
 import json
 import random
 import time
-import numpy as np
-import matplotlib.pyplot as plt
+from typing import Dict, List
 
-from typing import Dict, List, Tuple
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def load(filename):
-    """Load a neural network from the file ``filename``.  Returns an
-    instance of Network.
-    """
     f = open(filename, "r")
     data = json.load(f)
     f.close()
     # cost = getattr(sys.modules[__name__], data["cost"])
-    net = Network(data["sizes"])
+    net = Network(None, None, data["sizes"], data["loss"])
     net.weights = [np.array(w) for w in data["weights"]]
     net.biases = [np.array(b) for b in data["biases"]]
     return net
@@ -35,14 +21,19 @@ def load(filename):
 
 class Network:
 
-    def __init__(self, sizes: List[int]) -> None:
-        """The list ``sizes`` contains the number of neuronfs in the
-        respective layers of the network.  For example, iff the list
-        was [2, 3, 1] then it would be a three-layer netwfork, with the
-        first layer containing 2 neurons, the second layffer 3 neurons,
-        and the third layer 1 neuron."""
+    def __init__(self,
+                 training_data: List or None,
+                 mini_batch_size: int or None,
+                 sizes: List[int],
+                 loss_BCE: bool) -> None:
+
+        self.training_data = training_data
+        self.mini_batch_size: int = mini_batch_size
         self.num_layers = len(sizes)
         self.sizes = sizes
+        self.loss_BCE = loss_BCE
+        self.data_loss = {"real": [],
+                          "fake": []}
         self._ret: Dict[str, any] = {"loss": [],
                                      "label real": [],
                                      "label fake": [],
@@ -61,20 +52,15 @@ class Network:
     def predict(self, x):
         # feedforward
         activation = x
-        activations = [x]  # list to store all the activations, layer by layer
         zs = []  # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
             z = np.dot(w, activation) + b
             zs.append(z)
             activation = sigmoid(z)
-            activations.append(activation)
         return activation
 
     def evaluate(self, test_data):
-        """Return the number of test inputs for which the neural
-        network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever
-        neuron in the final layer has the highest activation."""
+
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
@@ -83,7 +69,8 @@ class Network:
         """Save the neural network to the file ``filename``."""
         data = {"sizes": self.sizes,
                 "weights": [w.tolist() for w in self.weights],
-                "biases": [b.tolist() for b in self.biases]  # ,
+                "biases": [b.tolist() for b in self.biases],
+                "loss": self.loss_BCE  # ,
                 # "cost": str(self..__name__)
                 }
         f = open(filename, "w")
@@ -91,8 +78,6 @@ class Network:
         f.close()
 
     def MSE_derivative(self, prediction, y):
-        """Return the vector of partial derivatives \partial{C_x,a}
-         for the output activations."""
         return 2 * (y - prediction)
 
     def MSE(self, prediction, y):
@@ -101,29 +86,22 @@ class Network:
     def BCE_derivative(self, prediction, target):
         return -target / prediction + (1 - target) / (1 - prediction)
 
-    def BCE(self, predictions: np.ndarray, targets: np.ndarray) -> float:
+    def BCE(self, predictions: np.ndarray, targets: np.ndarray) -> np.ndarray:
         return targets * np.log10(predictions) + (1 - targets) * np.log10(1 - predictions).mean()
 
     def minimax_derivative(self, real_prediction, fake_prediction):
         real_prediction = np.array(real_prediction)
         fake_prediction = np.array(fake_prediction)
+        return np.nan_to_num(1 / (real_prediction * np.log(10)) + 1 / ((fake_prediction - 1) * np.log(10)))
 
-        return 1 / (real_prediction * np.log(10)) + 1 / ((fake_prediction - 1) * np.log(10))
+    def minimax(self, real_prediction, fake_prediction):
+        return np.nan_to_num(np.log10(real_prediction) + np.log10(1 - fake_prediction))
 
     @property
     def ret(self):
         return self._ret
 
-    def backprop(self, x, y) -> Tuple:
-        """Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient for the cost function C_x.  ``nabla_b`` and
-        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-        to ``self.biases`` and ``self.weights``."""
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
-        nabla_w_prev = nabla_w
-
-        # feedforward
+    def forwardprop(self, x: np.ndarray):
         activation = x
         activations = [x]  # list to store all the activations, layer by layer
         zs = []  # list to store all the z vectors, layer by layer
@@ -132,19 +110,23 @@ class Network:
             zs.append(z)
             activation = sigmoid(z)
             activations.append(activation)
-        self.data_for_loss = (activation, y)
+        return activation, activations, zs
+
+    def backprop(self, image, label):
+        """Return a tuple ``(nabla_b, nabla_w)`` representing the
+        gradient for the cost function C_x.  ``nabla_b`` and
+        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
+        to ``self.biases`` and ``self.weights``."""
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # feedforward and back error calculation depending on type of image
+        activation, activations, zs = self.forwardprop(image)
+        delta = self.BCE_derivative(activations[-1], label) * sigmoid_prime(zs[-1])
 
         # backward pass
-        delta = self.BCE_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
-
-        # Note that the variable l in the loop below is used a little
-        # differently to the notation in Chapter 2 of the book.  Here,
-        # l = 1 means the last layer of neurons, l = 2 is the
-        # second-last layer, and so on.  It's a renumbering of the
-        # scheme in the book, used here to take advantage of the fact
-        # that Python can use negative indices in lists.
 
         for l in range(2, self.num_layers):
             z = zs[-l]
@@ -152,73 +134,76 @@ class Network:
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
                                  activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
-        return (nabla_b, nabla_w)
+        return nabla_b, nabla_w, activations[-1]
 
-    def train_mini_batch(self, mini_batch, learning_rate):
-        """Update the network's weights and biases by applying
-        gradient descent using backpropagation to a single mini batch.
-        The ``mini_batch`` is a list of tuples ``(x, y)``"""
+    def train_mini_batch(self, mini_batch, learning_rate, epoch):
+        global label_real, label_fake
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-        for x, y in mini_batch:
-            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
+        for real_image, fake_image in mini_batch:
+            delta_nabla_b, delta_nabla_w, label_real = self.backprop(real_image, np.array([1.]))
             nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
+            delta_nabla_b, delta_nabla_w, label_fake = self.backprop(fake_image, np.array([0.]))
+            nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+            nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+
+        loss_real = self.BCE(label_real, np.array([1.]))
+        loss_fake = self.BCE(label_fake, np.array([0.]))
+        final_loss = 1 / 2 * (loss_real + loss_fake)
+
         # gradient descent
+        # nabla_w and nabla_b are multiplied by the learning rate
+        # and taken the mean of (dividing by the mini batch size)
         self.weights = [w - (learning_rate / len(mini_batch)) * nw
                         for w, nw in zip(self.weights, nabla_w)]
         self.biases = [b - (learning_rate / len(mini_batch)) * nb
                        for b, nb in zip(self.biases, nabla_b)]
 
+        self.ret["loss"].append(final_loss)
+        self._ret["label real"].append(label_real)
+        self._ret["label real time"].append(epoch)
+        self._ret["label fake"].append(label_fake)
+        self._ret["label fake time"].append(epoch)
+
+    def create_mini_batches(self):
+        n = len(self.training_data)
+        random.shuffle(self.training_data)
+        mini_batches = [
+            self.training_data[k:k + self.mini_batch_size]
+            for k in range(0, n, self.mini_batch_size)]
+
+        return mini_batches
+
     def train_SGD(self,
-                  training_data: List[Tuple],
                   epochs: int,
-                  mini_batch_size: int,
                   learning_rate: float,
                   test_data=None):
-        """Train the neural network using mini-batch stochastic
-        gradient descent.  The ``training_data`` is a list of tuples
-        ``(x, y)`` representing the training inputs and the desired
-        outputs.  The other non-optional parameters are
-        self-explanatory.  If ``test_data`` is provided then the
-        network will be evaluated against the test data after each
-        epoch, and partial progress printed out.  This is useful for
-        tracking progress, but slows things down substantially."""
 
         global n_test
         if test_data:
             n_test = len(test_data)
 
-        n = len(training_data)
         for j in range(epochs):
             time1 = time.time()
-            random.shuffle(training_data)
-
-            mini_batches = [
-                training_data[k:k + mini_batch_size]
-                for k in range(0, n, mini_batch_size)]
+            mini_batches = self.create_mini_batches()
 
             for mini_batch in mini_batches:
-                self.train_mini_batch(mini_batch, learning_rate)
+                self.train_mini_batch(mini_batch, learning_rate, j)
             time2 = time.time()
-            loss_final = self.BCE(self.data_for_loss[0], self.data_for_loss[1])
 
             if test_data:
-                print("Epoch {0}: {1} / {2}, xtook {3:.2f} seconds".format(
+                print("Epoch {0}: {1} / {2}, took {3:.2f} seconds".format(
                     j, self.evaluate(test_data), n_test, time2 - time1))
             else:
                 print("Epoch {0} complete in {1:.2f} seconds".format(j, time2 - time1))
 
-            self._ret["loss"].append(loss_final)
-
-            if self.data_for_loss[1] == np.array([1.]):
-                self._ret["label real"].append(self.data_for_loss[0].flatten())
-                self._ret["label real time"].append(j)
-            else:
-                self._ret["label fake"].append(self.data_for_loss[0].flatten())
-                self._ret["label fake time"].append(j)
+            self._ret["label real"].append(1)
+            self._ret["label real time"].append(j)
+            self._ret["label fake"].append(self.data_loss["fake"])
+            self._ret["label fake time"].append(j)
 
         return self._ret
 
@@ -233,48 +218,4 @@ def sigmoid_prime(z):
     return sigmoid(z) * (1 - sigmoid(z))
 
 
-nn = Network([4, 16, 4, 1])
 
-train_data = []
-train_data_fake, train_data_real = [], []
-for _ in range(70):
-    x1 = np.random.uniform(.8, .9, (4,))
-    x2 = np.random.uniform(.5, .4, (2,))
-
-    train_data.append((x1, np.array([0.])))
-    train_data.append((np.array([x2[1], 0., x2[0], 0]), np.array([1.])))
-
-num_epochs = 100
-nn.train_SGD(train_data, num_epochs, 10, 0.1)
-nn.save("C:/Users/usuario/qGAN/quantumGAN/nns")
-
-t_steps = np.arange(num_epochs)
-plt.figure(figsize=(6, 5))
-plt.title("Progress in the loss function")
-plt.plot(t_steps, nn.ret["loss"], label='Discriminator loss function', color='rebeccapurple', linewidth=2)
-plt.grid()
-plt.legend(loc='best')
-plt.xlabel('time steps')
-plt.ylabel('loss')
-plt.show()
-
-t_steps = np.arange(num_epochs)
-plt.figure(figsize=(6, 5))
-plt.title("Progress in labels")
-plt.scatter(nn.ret["label real time"], nn.ret["label real"], label='Label for real images', color='mediumvioletred',
-            linewidth=.1)
-plt.scatter(nn.ret["label fake time"], nn.ret["label fake"], label='Label for fake images', color='rebeccapurple',
-            linewidth=.1)
-plt.grid()
-plt.legend(loc='best')
-plt.xlabel('time steps')
-plt.ylabel('label')
-plt.show()
-
-label_1 = nn.predict(np.array([0.80417561, 0.87188567, 0.88118713, 0.82633528]))
-label_0 = nn.predict(np.array([0.40396169, 0., 0.43473614, 0.]))
-
-print(label_1, label_0)
-
-score = nn.evaluate(train_data[23:45])
-print(score)

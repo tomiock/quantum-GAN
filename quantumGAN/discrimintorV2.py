@@ -205,3 +205,7 @@ class DiscriminatorV2:
 		self._ret["params"] = self.params_values
 
 		return self._ret
+
+	@property
+	def ret(self):
+		return self._ret
