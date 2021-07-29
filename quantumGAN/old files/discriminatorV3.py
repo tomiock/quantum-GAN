@@ -267,7 +267,7 @@ score = nn.evaluate(train_data[23:45])
 print(score)
 
 #######################################################################
-from quantumGAN.test import Network
+from quantumGAN.discriminator import Network
 
 train_data = []
 train_data_fake, train_data_real = [], []

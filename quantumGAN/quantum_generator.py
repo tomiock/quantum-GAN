@@ -7,8 +7,7 @@ import qiskit
 from qiskit import QuantumRegister
 from qiskit.circuit import QuantumCircuit
 from qiskit.circuit.library import TwoLocal
-
-from quantumGAN.discrimintorV2 import DiscriminatorV2
+from qiskit.providers.aer import AerSimulator
 
 
 def gen_real_data_FCNN(a, b, num_samples: int):
@@ -57,6 +56,7 @@ class QuantumGenerator:
 		self.shots = shots
 		self.discriminator = None
 		self.ret: Dict[str, Any] = {"loss": []}
+		self.simulator = AerSimulator()
 
 	def set_discriminator(self, discriminator) -> None:
 		self.discriminator = discriminator
@@ -87,10 +87,8 @@ class QuantumGenerator:
 		final_circuit = qc.compose(init_dist, front=True)
 		final_circuit.measure_all()
 
-		simulator = qiskit.Aer.get_backend("aer_simulator")
-		final_circuit = qiskit.transpile(final_circuit, simulator)
-		result = simulator.run(final_circuit, shots=self.shots).result()
-		counts = result.get_counts(final_circuit)
+		result_ideal = qiskit.execute(final_circuit, self.simulator).result()
+		counts = result_ideal.get_counts()
 
 		try:
 			pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
