@@ -23,7 +23,7 @@ g_circuit = ansatz.compose(init_dist, front=True)
 parameter_values = np.random.rand(g_circuit.num_parameters)
 
 batch_noise = []
-for _ in range(100):
+for _ in range(1):
 	batch_noise.append(np.random.uniform(-np.pi * .01, np.pi * .01, (2,)))
 
 
@@ -77,7 +77,7 @@ def get_output_V1():
 from qiskit.providers.aer import AerSimulator
 
 
-def get_output_V2_5():
+def get_output_V4():
 	aersim = AerSimulator()
 
 	for noise in batch_noise:
@@ -99,7 +99,10 @@ def get_output_V2_5():
 		final_circuit.measure_all()
 		# print(final_circuit)
 
-		result_ideal = qiskit.execute(final_circuit, aersim).result()
+		result_ideal = qiskit.execute(final_circuit,
+		                              aersim,
+		                              shots=2048,
+		                              optimization_level=0).result()
 		counts = result_ideal.get_counts()
 
 		# final_circuit = qiskit.transpile(final_circuit, simulator)
@@ -126,46 +129,26 @@ def get_output_V2_5():
 
 
 def get_output_V3():
-	simulator = qiskit.Aer.get_backend("aer_simulator")
-	real_keys = {"00", "10", "01", "11"}
-
 	for noise in batch_noise:
+		quantum = QuantumRegister(sum(num_qubits), name="q")
+		qc = QuantumCircuit(sum(num_qubits))
+
 		init_dist = qiskit.QuantumCircuit(sum(num_qubits))
 		assert noise.shape[0] == sum(num_qubits)
 
 		for num_qubit in range(sum(num_qubits)):
 			init_dist.ry(noise[num_qubit], num_qubit)
 
-		params = cast(np.ndarray, parameter_values)
+		qc.append(construct_circuit(parameter_values), quantum)
 
-		quantum = QuantumRegister(sum(num_qubits), name="q")
+		state_vector = qiskit.quantum_info.Statevector.from_instruction(qc)
+		pixels = []
+		for qubit in range(sum(num_qubits)):
+			pixels.append(state_vector.probabilities([qubit])[0])
 
-		qc = QuantumCircuit(sum(num_qubits))
-		qc.append(construct_circuit(params), quantum)
-		final_circuit = qc.compose(init_dist, front=True)
-		final_circuit.measure_all()
-
-		final_circuit = qiskit.compiler.transpile(final_circuit, simulator)
-		result = simulator.run(final_circuit, shots=shots).result()
-		counts = result.get_counts(final_circuit)
-
-		try:
-			pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
-
-		except KeyError:
-			# dealing with the keys that qiskit doesn't include in the
-			# dictionary because they don't get any measurements
-
-			keys = counts.keys()
-			missing_keys = real_keys.difference(keys)
-			# we use sets to get the missing keys
-			for key_missing in missing_keys:
-				counts[key_missing] = 0
-
-			pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
-
-		pixels = pixels / shots
-		print(pixels)
+		generated_samples = np.array(pixels)
+		generated_samples.flatten()
+		print(generated_samples)
 
 
 lp = LineProfiler()
@@ -173,10 +156,10 @@ lp = LineProfiler()
 lp_wrapper_v1 = lp(get_output_V1)
 lp_wrapper_v1()
 
-lp_wrapper_v2 = lp(get_output_V2_5)
-lp_wrapper_v2()
-
 lp_wrapper_v3 = lp(get_output_V3)
 lp_wrapper_v3()
+
+lp_wrapper_v4 = lp(get_output_V4)
+lp_wrapper_v4()
 
 lp.print_stats()

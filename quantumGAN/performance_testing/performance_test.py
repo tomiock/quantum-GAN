@@ -1,72 +1,89 @@
-from line_profiler import LineProfiler
+from ctypes import cast
 
+from qiskit import IBMQ, QuantumCircuit, QuantumRegister, assemble, transpile
+from qiskit.circuit.library import TwoLocal
+from qiskit.circuit.random import random_circuit
 import numpy as np
 import qiskit
-from qiskit.circuit.library import TwoLocal
 
-from quantumGAN.performance_testing.performance_quantum_generator import PerformanceQuantumGeneratorV1
-from quantumGAN.performance_testing.performance_quantum_generator import PerformanceQuantumGeneratorV2
+import logging
 
-from quantumGAN.discriminator import Network
+from qiskit.providers.aer import AerSimulator
 
-lp = LineProfiler()
+from quantumGAN.performance_testing.performance_get_output_generator import construct_circuit
 
+shots = 2048
+num_qubits = [2]
+entangler_map = [[0, 1]]
 
-def mainV1():
-	seed = 71
-	np.random.seed = seed
+randoms = np.random.normal(-np.pi * .01, np.pi * .01, 2)
 
-	num_qubits = [2]
-	batch_size = 10
-	entangler_map = [[0, 1]]
+init_dist = qiskit.QuantumCircuit(2)
+init_dist.ry(randoms[0], 0)
+init_dist.ry(randoms[1], 1)
 
-	randoms = np.random.normal(-np.pi * .01, np.pi * .01, 2)
+ansatz = TwoLocal(int(np.sum(num_qubits)), 'rx', 'cz', entanglement=entangler_map, reps=2, insert_barriers=True)
 
-	init_dist = qiskit.QuantumCircuit(2)
-	init_dist.ry(randoms[0], 0)
-	init_dist.ry(randoms[1], 1)
+g_circuit = ansatz.compose(init_dist, front=True)
+parameter_values = np.random.rand(g_circuit.num_parameters)
 
-	ansatz = TwoLocal(int(np.sum(num_qubits)), 'rx', 'cz', entanglement=entangler_map, reps=2, insert_barriers=True)
+batch_noise = []
+for _ in range(1):
+	batch_noise.append(np.random.uniform(-np.pi * .01, np.pi * .01, (2,)))
 
-	train_data = []
-	for _ in range(15):
-		x2 = np.random.uniform(.5, .4, (2,))
-		fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (2,))
-		real_datapoint = np.array([x2[1], 0., x2[0], 0])
-		train_data.append((real_datapoint, fake_datapoint))
+aersim = AerSimulator()
+for noise in batch_noise:
+	real_keys = {"00", "10", "01", "11"}
 
-	g_circuit = ansatz.compose(init_dist, front=True)
+	quantum = QuantumRegister(sum(num_qubits), name="q")
+	qc = QuantumCircuit(sum(num_qubits))
+	init_dist = qiskit.QuantumCircuit(sum(num_qubits))
 
-	discriminator = Network(training_data=train_data,
-	                        mini_batch_size=batch_size,
-	                        sizes=[4, 16, 8, 1],
-	                        loss_BCE=True)
-	generator = PerformanceQuantumGeneratorV1(training_data=train_data,
-	                                          mini_batch_size=batch_size,
-	                                          num_qubits=num_qubits,
-	                                          generator_circuit=g_circuit,
-	                                          shots=2048,
-	                                          learning_rate=.1)
-	generator.set_discriminator(discriminator)
+	assert noise.shape[0] == sum(num_qubits)
+	for num_qubit in range(sum(num_qubits)):
+		init_dist.ry(noise[num_qubit], num_qubit)
 
-	for o in range(num_epochs):
-		mini_batches = discriminator.create_mini_batches()
-		for mini_batch in mini_batches:
-			output_real = mini_batch[0][0]
-			output_fake = generator.get_output(latent_space_noise=mini_batch[0][1],
-			                                   params=None)
-			generator.set_mini_batch(mini_batch)
-			generator.shots = 2048
-			generator.train_mini_batch()
+	qc.append(construct_circuit(parameter_values), quantum)
+	final_circuit = qc.compose(init_dist, front=True)
+	final_circuit.measure_all()
 
-			discriminator.train_mini_batch(generator.mini_batch, .1, o)
-		print("Epoch {}: Loss: {}".format(o, discriminator.ret["loss"][-1]), output_real, output_fake)
-		print(discriminator.ret["label real"][-1], discriminator.ret["label fake"][-1])
+	# print(final_circuit)
+	result_ideal = qiskit.execute(final_circuit,
+	                              aersim,
+	                              shots=2048,
+	                              optimization_level=0).result()
 
+	counts = result_ideal.get_counts()
+	# final_circuit = qiskit.transpile(final_circuit, simulator)
+	# result = simulator.run(final_circuit, shots=shots).result()
+	# counts = result.get_counts(final_circuit)
 
-num_epochs = 10
+	try:
+		pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
+	except KeyError:
+		# dealing with the keys that qiskit doesn't include in the
+		# dictionary because they don't get any measurements
+		keys = counts.keys()
+		missing_keys = real_keys.difference(keys)
 
-lp_wrapper_main_V1 = lp(mainV1)
-lp_wrapper_main_V1()
+		# we use sets to get the missing keys
+		for key_missing in missing_keys:
+			counts[key_missing] = 0
+		pixels = np.array([counts["00"], counts["10"], counts["01"], counts["11"]])
 
-lp.print_stats()
+	pixels = pixels / shots
+	print(pixels)
+
+exit()
+provider = IBMQ.enable_account(
+	"c89511dc555c9ee925932a44194e53b04a08dce77de669c241155012fae696106b98047242f6ab0a94348c6598a7338abe4a642ece374241adea384614c29f79")
+backend = provider.backend.ibmq_santiago
+qx = random_circuit(n_qubits=5, depth=4)
+
+transpiled = transpile(qx, backend=backend)
+job = backend.run(transpiled)
+retrieved_job = backend.retrieve_job(job.job_id())
+
+status = backend.status()
+is_operational = status.operational
+jobs_in_queue = status.pending_jobs

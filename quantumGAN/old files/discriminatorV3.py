@@ -267,7 +267,7 @@ score = nn.evaluate(train_data[23:45])
 print(score)
 
 #######################################################################
-from quantumGAN.discriminator import Network
+from quantumGAN.discriminator import ClassicalDiscriminator
 
 train_data = []
 train_data_fake, train_data_real = [], []
@@ -278,7 +278,7 @@ for _ in range(150):
     data_point = [real_datapoint, fake_datapoint]
     train_data.append(random.sample(data_point, 2))
 
-nn = Network(train_data, 10, [4, 128, 32, 16, 1], loss_BCE=True)
+nn = ClassicalDiscriminator(train_data, 10, [4, 128, 32, 16, 1], loss_BCE=True)
 print(train_data)
 
 num_epochs = 400

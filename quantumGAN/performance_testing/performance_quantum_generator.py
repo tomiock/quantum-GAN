@@ -148,7 +148,7 @@ class PerformanceQuantumGeneratorV1:
 # return mini_batch
 
 
-class PerformanceQuantumGeneratorV2:
+class PerformanceQuantumGeneratorV3:
 
 	def __init__(
 			self,
@@ -218,7 +218,10 @@ class PerformanceQuantumGeneratorV2:
 		final_circuit = qc.compose(init_dist, front=True)
 		final_circuit.measure_all()
 
-		result_ideal = qiskit.execute(final_circuit, self.simulator).result()
+		result_ideal = qiskit.execute(experiments=final_circuit,
+		                              backend=self.simulator,
+		                              shots=self.shots,
+		                              optimization_level=0).result()
 		counts = result_ideal.get_counts()
 
 		try:
@@ -278,8 +281,3 @@ class PerformanceQuantumGeneratorV2:
 			self.parameter_values[index] -= (self.learning_rate / self.mini_batch_size) * nabla_theta[index]
 
 		self.mini_batch = [(datapoint[0], fake_image) for datapoint, fake_image in zip(self.mini_batch, new_images)]
-	# result_final, _ = self._discriminator.forward(result_final, self._discriminator.params_values)
-	# loss_final = self.loss(result_final)
-	# self.ret["loss"].append(loss_final.flatten())
-
-# return mini_batch
