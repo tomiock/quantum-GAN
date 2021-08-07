@@ -1,6 +1,6 @@
-import numpy as np
 import itertools
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 
@@ -10,7 +10,12 @@ def save_images(image, epoch):
 	image = image.reshape(image_shape, image_shape)
 	plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
 	plt.axis('off')
+	plt.savefig('images/image_at_epoch_{:04d}.png'.format(epoch))
 
+
+def save_images_color(image, epoch):
+	plt.imshow(image.reshape(int(image.shape[0] / 3), 1, 3))
+	plt.axis('off')
 	plt.savefig('images/image_at_epoch_{:04d}.png'.format(epoch))
 
 
@@ -36,10 +41,6 @@ def create_entangler_map(num_qubits: int):
 
 		except IndexError:
 			return entangler_map
-
-
-for _ in range(1):
-	print(create_real_keys(3))
 
 
 # ACTIVATION FUNCTIONS

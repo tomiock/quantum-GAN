@@ -1,8 +1,8 @@
 import random
+import time
 
 import numpy as np
 import pandas as pd
-import time
 
 train_data = []
 d = {"real datapoint": [], "fake datapoint": []}
@@ -28,9 +28,7 @@ time1 = time.time()
 def create_mini_batches(training_data, mini_batch_size):
 	n = len(training_data)
 	random.shuffle(training_data)
-	mini_batches = [
-		training_data[k:k + mini_batch_size]
-		for k in range(0, n, mini_batch_size)]
+	mini_batches = [training_data[k:k + mini_batch_size] for k in range(0, n, mini_batch_size)]
 
 	return mini_batches[0]
 

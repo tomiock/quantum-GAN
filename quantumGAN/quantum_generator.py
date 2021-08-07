@@ -1,5 +1,4 @@
 """QUANTUM GENERATOR"""
-import itertools
 from typing import Any, Dict, List, Optional, cast
 
 import numpy as np
@@ -33,7 +32,7 @@ class QuantumGenerator:
 
 		if generator_circuit is None:
 			circuit = QuantumCircuit(num_qubits)
-			randoms = np.random.normal(-np.pi * .01, np.pi * .01, num_qubits)
+			randoms = np.random.uniform(0, .1, num_qubits)
 
 			for index in range(len(randoms)):
 				circuit.ry(randoms[index], index)
@@ -44,8 +43,7 @@ class QuantumGenerator:
 			# Set generator circuit
 			self.generator_circuit = circuit
 
-		self.parameter_values = np.random.rand(self.generator_circuit.num_parameters)
-		print(self.parameter_values)
+		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
 
 		self.snapshot_dir = snapshot_dir
 		self.shots = shots
@@ -70,7 +68,7 @@ class QuantumGenerator:
 		qc = QuantumCircuit(self.num_qubits)
 
 		init_dist = qiskit.QuantumCircuit(self.num_qubits)
-		assert latent_space_noise.shape[0] == self.num_qubits
+		# assert latent_space_noise.shape[0] == self.num_qubits
 
 		for num_qubit in range(self.num_qubits):
 			init_dist.ry(latent_space_noise[num_qubit], num_qubit)
@@ -123,6 +121,7 @@ class QuantumGenerator:
 			params = cast(np.ndarray, self.parameter_values)
 
 		qc.append(self.construct_circuit(params), quantum)
+		print(qc)
 
 		state_vector = qiskit.quantum_info.Statevector.from_instruction(qc)
 		pixels = []
@@ -179,11 +178,11 @@ class QuantumGenerator:
 
 				pos_result = self.get_output(noise, params=pos_params)
 				neg_result = self.get_output(noise, params=neg_params)
+				#print(pos_result, neg_result)
 
 				pos_result = qcolor_to_image(pos_result)
 				neg_result = qcolor_to_image(neg_result)
-
-				print(pos_result)
+				#print(pos_result.shape, neg_result.shape)
 
 				pos_result = self.discriminator.predict(pos_result.flatten())
 				neg_result = self.discriminator.predict(neg_result.flatten())

@@ -1,18 +1,18 @@
-import numpy as np
+import glob
+
+import imageio
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import qiskit
-import imageio
-import glob
 from qiskit.circuit.library import TwoLocal
 
-from quantumGAN.functions import BCE, create_entangler_map, minimax, save_images
-from quantumGAN.quantum_generator import QuantumGenerator
 from quantumGAN.discriminator import ClassicalDiscriminator
-from discriminato_minimax import ClassicalDiscriminatorMINIMAX
+from quantumGAN.functions import create_entangler_map, minimax, save_images_color
+from quantumGAN.quantum_generator import QuantumGenerator
 from quantumGAN.rgb_functions import qcolor_to_image
 
-num_qubits = 4
+num_qubits = 2
 
 # Set number of training epochs
 num_epochs = 500
@@ -28,7 +28,7 @@ init_dist = qiskit.QuantumCircuit(num_qubits)
 for index in range(num_qubits):
     init_dist.ry(randoms[index], index)
 
-ansatz = TwoLocal(num_qubits, 'ry', 'cz', entanglement=entangler_map, reps=1, insert_barriers=True)
+ansatz = TwoLocal(num_qubits, 'ry', 'cx', entanglement=entangler_map, reps=1, insert_barriers=True)
 
 init_params = np.random.rand(ansatz.num_parameters_settable)
 
@@ -36,8 +36,7 @@ train_data = []
 for _ in range(800):
     x2 = np.random.uniform(255, 253, (6,))
     fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (num_qubits,))
-    real_datapoint = np.array([[[x2[0], x2[1], x2[2]], [0, x2[3], 0]],
-                               [[x2[4], 0, 0], [0, 0, x2[5]]]]).flatten()
+    real_datapoint = np.array([50, 168, 82]).flatten()
     train_data.append((real_datapoint.flatten(), fake_datapoint))
 
 g_circuit = ansatz.compose(init_dist, front=True)
@@ -45,7 +44,7 @@ print(g_circuit)
 
 discriminator = ClassicalDiscriminator(training_data=train_data,
                                        mini_batch_size=batch_size,
-                                       sizes=[12, 64, 16, 1],
+                                       sizes=[3, 64, 16, 1],
                                        type_loss="minimax")
 generator = QuantumGenerator(training_data=train_data,
                              mini_batch_size=batch_size,
@@ -65,19 +64,18 @@ for o in range(num_epochs):
     mini_batches = discriminator.create_mini_batches()
 
     for mini_batch in mini_batches:
-        mini_batch = generator.train_mini_batch(mini_batch, .1)
+        mini_batch = generator.train_mini_batch_color(mini_batch, .1)
         index = 0
         for image in mini_batch:
-            mini_batch[index] = qcolor_to_image(image).flatten()
+            mini_batch[index] = (mini_batch[index][0], qcolor_to_image(image[1]).flatten())
             index += 1
-            print(mini_batch)
-            exit()
+
         discriminator.train_mini_batch(mini_batch, .1)
 
     output_real = mini_batches[0][0][0]
     output_fake = generator.get_output(latent_space_noise=mini_batches[0][0][1], params=None)
     output_fake = qcolor_to_image(output_fake).flatten()
-    save_images(generator.get_output(latent_space_noise=noise, params=None), o)
+    save_images_color(output_fake, 0)
 
     label_real, label_fake = discriminator.predict(output_real), discriminator.predict(output_fake)
     loss_final = 1 / 2 * (minimax(label_real, label_fake) + minimax(label_real, label_fake))
@@ -86,7 +84,7 @@ for o in range(num_epochs):
     label_real_series.append(label_real)
     label_fake_series.append(label_fake)
 
-    print("Epoch {}: Loss: {}".format(o, loss_final), output_real, output_fake)
+    print("Epoch {}: Loss: {}".format(o, loss_final), output_fake)
     print(label_real[-1], label_fake[-1])
 
 loss = pd.Series(loss_series)

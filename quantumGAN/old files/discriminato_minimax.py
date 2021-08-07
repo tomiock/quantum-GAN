@@ -5,7 +5,7 @@ from typing import Dict, List
 
 import numpy as np
 
-from quantumGAN.functions import BCE_derivative, minimax_derivative_fake, minimax_derivative_real, sigmoid, \
+from quantumGAN.functions import minimax_derivative_fake, minimax_derivative_real, sigmoid, \
     sigmoid_prime
 
 
