@@ -1,12 +1,12 @@
 """DISCRIMINATOR"""
 import json
 import random
-from typing import Dict, List
+from typing import Any, Dict, List
 
 import numpy as np
 
 from quantumGAN.functions import BCE_derivative, minimax_derivative_fake, minimax_derivative_real, sigmoid, \
-    sigmoid_prime
+    sigmoid_prime, relu, relu_prime
 
 
 def load(filename):
@@ -26,6 +26,7 @@ class ClassicalDiscriminator:
                  training_data: List or None,
                  mini_batch_size: int or None,
                  sizes: List[int],
+                 functions: List[Any],
                  type_loss: str) -> None:
 
         self.training_data = training_data
@@ -35,34 +36,47 @@ class ClassicalDiscriminator:
         self.type_loss = type_loss
         self.data_loss = {"real": [],
                           "fake": []}
+
+        # the first neuron/last doesn't require an activation function
+        assert len(functions) == len(sizes)-1
+
         self.ret: Dict[str, any] = {"loss": [],
                                     "label real": [],
                                     "label fake": [],
                                     "label fake time": [],
                                     "label real time": []}
+
+        self.functions = functions
         self.biases = [np.random.randn(y, ) for y in sizes[1:]]
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
 
-    def feedforward(self, a):
-        """Return the output of the network if ``a`` is input."""
-        for b, w in zip(self.biases, self.weights):
-            a = sigmoid(np.dot(w, a) + b)
-        return a
+        # take the activation functions from the strings
+        # and create a list of the function objects
+        # and the list of the derivatives of the functions
+        self.functions_prime = []
+        for function, index in zip(self.functions, range(len(self.functions))):
+            if function == "sigmoid":
+                self.functions[index] = sigmoid
+                self.functions_prime.append(sigmoid_prime)
+            elif function == "relu":
+                self.functions[index] = relu
+                self.functions_prime.append(relu_prime)
+            else:
+                raise Exception(UnicodeError("enter a valid nonlinear function (relu or sigmoid)"))
 
     def predict(self, x):
         # feedforward
         activation = x
         zs = []  # list to store all the z vectors, layer by layer
-        for b, w in zip(self.biases, self.weights):
+        for b, w, function in zip(self.biases, self.weights, self.functions):
             z = np.dot(w, activation) + b
             zs.append(z)
-            activation = sigmoid(z)
+            activation = function(z)
         return activation
 
     def evaluate(self, test_data):
-
-        test_results = [(np.argmax(self.feedforward(x)), y)
+        test_results = [(np.argmax(self.predict(x)), y)
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
 
@@ -71,6 +85,7 @@ class ClassicalDiscriminator:
         data = {"sizes": self.sizes,
                 "weights": [w.tolist() for w in self.weights],
                 "biases": [b.tolist() for b in self.biases],
+                "functions": self.functions,
                 "loss": self.type_loss  # ,
                 # "cost": str(self..__name__)
                 }
@@ -82,11 +97,13 @@ class ClassicalDiscriminator:
         activation = x
         activations = [x]  # list to store all the activations, layer by layer
         zs = []  # list to store all the z vectors, layer by layer
-        for b, w in zip(self.biases, self.weights):
+        index = 0
+        for b, w, function in zip(self.biases, self.weights, self.functions):
             z = np.dot(w, activation) + b
             zs.append(z)
-            activation = sigmoid(z)
+            activation = function(z)
             activations.append(activation)
+            index += 1
         return activation, activations, zs
 
     def backprop_bce(self, image, label):
@@ -99,7 +116,7 @@ class ClassicalDiscriminator:
 
         # feedforward and back error calculation depending on type of image
         activation, activations, zs = self.forwardprop(image)
-        delta = BCE_derivative(activations[-1], label) * sigmoid_prime(zs[-1])
+        delta = BCE_derivative(activations[-1], label) * self.functions[0](zs[-1])
 
         # backward pass
         nabla_b[-1] = delta

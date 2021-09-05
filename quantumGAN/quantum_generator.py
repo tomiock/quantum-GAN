@@ -1,14 +1,15 @@
 """QUANTUM GENERATOR"""
+
 from typing import Any, Dict, List, Optional, cast
 
 import numpy as np
 import qiskit
-from qiskit import QuantumRegister
+from qiskit import ClassicalRegister, QuantumRegister
 from qiskit.circuit import QuantumCircuit
 from qiskit.circuit.library import TwoLocal
 from qiskit.providers.aer import AerSimulator
 
-from quantumGAN.functions import create_real_keys, minimax_generator
+from quantumGAN.functions import create_entangler_map, create_real_keys, minimax_generator
 from quantumGAN.rgb_functions import qcolor_to_image
 
 
@@ -16,71 +17,85 @@ class QuantumGenerator:
 
 	def __init__(
 			self,
-			training_data: List,
-			mini_batch_size: int,
 			shots: int,
 			num_qubits: int,
+			num_qubits_ancilla: int,
 			generator_circuit: Optional[QuantumCircuit] = None,
 			snapshot_dir: Optional[str] = None
 	) -> None:
 
 		super().__init__()
-		self.training_data = training_data
-		self.mini_batch_size = mini_batch_size
-		self.num_qubits = num_qubits
+		self.num_qubits_total = num_qubits
+		self.num_qubits_ancilla = num_qubits_ancilla
 		self.generator_circuit = generator_circuit
-
-		if generator_circuit is None:
-			circuit = QuantumCircuit(num_qubits)
-			randoms = np.random.uniform(0, .1, num_qubits)
-
-			for index in range(len(randoms)):
-				circuit.ry(randoms[index], index)
-
-			ansatz = TwoLocal(sum([num_qubits]), "ry", "cz", reps=1, entanglement="circular")
-			circuit.compose(ansatz, inplace=True)
-
-			# Set generator circuit
-			self.generator_circuit = circuit
-
-		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
-
 		self.snapshot_dir = snapshot_dir
 		self.shots = shots
 		self.discriminator = None
 		self.ret: Dict[str, Any] = {"loss": []}
 		self.simulator = AerSimulator()
 
+	def init_parameters(self):
+		self.generator_circuit = self.construct_circuit(latent_space_noise=None,
+		                                                to_measure=False)
+		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
+
+
+
+	def construct_circuit(self,
+	                      latent_space_noise,
+	                      to_measure: bool):
+
+		qr = QuantumRegister(self.num_qubits_total - self.num_qubits_ancilla, 'q')
+		anc = QuantumRegister(self.num_qubits_ancilla, 'ancilla')
+		cr = ClassicalRegister(self.num_qubits_total - self.num_qubits_ancilla, 'c')
+		qc = QuantumCircuit(anc, qr, cr)
+
+		if latent_space_noise is None:
+			randoms = np.random.normal(-np.pi * .01, np.pi * .01, self.num_qubits_total)
+			init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+
+			for index in range(self.num_qubits_total):
+				init_dist.ry(randoms[index], index)
+		else:
+			init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+
+			for index in range(self.num_qubits_total):
+				init_dist.ry(latent_space_noise[index], index)
+
+		entangler_map = create_entangler_map(self.num_qubits_total - self.num_qubits_ancilla)
+
+		ansatz = TwoLocal(int(self.num_qubits_total), 'ry', 'cz', entanglement=entangler_map, reps=1,
+		                  insert_barriers=True)
+
+		qc = qc.compose(init_dist, front=True)
+		qc = qc.compose(ansatz, front=False)
+
+		if to_measure:
+			qc.measure(qr, cr)
+
+		return qc
+
 	def set_discriminator(self, discriminator) -> None:
 		self.discriminator = discriminator
-
-	def construct_circuit(self, params):
-		return self.generator_circuit.assign_parameters(params)
 
 	def get_output(
 			self,
 			latent_space_noise,
-			params: Optional[np.ndarray] = None
+			parameters: Optional[np.ndarray] = None
 	):
-		real_keys_set, real_keys_list = create_real_keys(self.num_qubits)
+		real_keys_set, real_keys_list = create_real_keys(self.num_qubits_total - self.num_qubits_ancilla)
 
-		quantum = QuantumRegister(self.num_qubits, name="q")
-		qc = QuantumCircuit(self.num_qubits)
+		if parameters is None:
+			parameters = cast(np.ndarray, self.parameter_values)
 
-		init_dist = qiskit.QuantumCircuit(self.num_qubits)
-		# assert latent_space_noise.shape[0] == self.num_qubits
+		qc = self.construct_circuit(latent_space_noise, True)
 
-		for num_qubit in range(self.num_qubits):
-			init_dist.ry(latent_space_noise[num_qubit], num_qubit)
+		parameter_binds = {parameter_id: parameter_value for parameter_id, parameter_value in
+		                   zip(qc.parameters, parameters)}
 
-		if params is None:
-			params = cast(np.ndarray, self.parameter_values)
+		qc = qc.bind_parameters(parameter_binds)
 
-		qc.append(self.construct_circuit(params), quantum)
-		final_circuit = qc.compose(init_dist, front=True)
-		final_circuit.measure_all()
-
-		result_ideal = qiskit.execute(experiments=final_circuit,
+		result_ideal = qiskit.execute(experiments=qc,
 		                              backend=self.simulator,
 		                              shots=self.shots,
 		                              optimization_level=0).result()
@@ -108,33 +123,28 @@ class QuantumGenerator:
 			latent_space_noise,
 			params: Optional[np.ndarray] = None
 	):
-		quantum = QuantumRegister(self.num_qubits, name="q")
-		qc = QuantumCircuit(self.num_qubits)
+		qc = QuantumCircuit(self.num_qubits_total)
 
-		init_dist = qiskit.QuantumCircuit(self.num_qubits)
-		assert latent_space_noise.shape[0] == self.num_qubits
+		init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+		assert latent_space_noise.shape[0] == self.num_qubits_total
 
-		for num_qubit in range(self.num_qubits):
+		for num_qubit in range(self.num_qubits_total):
 			init_dist.ry(latent_space_noise[num_qubit], num_qubit)
 
 		if params is None:
 			params = cast(np.ndarray, self.parameter_values)
 
-		qc.append(self.construct_circuit(params), quantum)
-		print(qc)
+		qc.assign_parameters(params)
 
 		state_vector = qiskit.quantum_info.Statevector.from_instruction(qc)
 		pixels = []
-		for qubit in range(self.num_qubits):
+		for qubit in range(self.num_qubits_total):
 			pixels.append(state_vector.probabilities([qubit])[0])
 
 		generated_samples = np.array(pixels)
 		generated_samples.flatten()
 
 		return generated_samples
-
-	def accuracy(self):
-		pass
 
 	def train_mini_batch(self, mini_batch, learning_rate):
 		nabla_theta = np.zeros(self.parameter_values.shape)
@@ -148,11 +158,12 @@ class QuantumGenerator:
 				pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
 				neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
 
-				pos_result = self.get_output(noise, params=pos_params)
-				neg_result = self.get_output(noise, params=neg_params)
+				pos_result = self.get_output(noise, parameters=pos_params)
+				neg_result = self.get_output(noise, parameters=neg_params)
 
 				pos_result = self.discriminator.predict(pos_result)
 				neg_result = self.discriminator.predict(neg_result)
+
 				gradient = minimax_generator(pos_result) - minimax_generator(neg_result)
 				nabla_theta[index] += gradient
 			new_images.append(self.get_output(noise))
@@ -176,13 +187,11 @@ class QuantumGenerator:
 				pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
 				neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
 
-				pos_result = self.get_output(noise, params=pos_params)
-				neg_result = self.get_output(noise, params=neg_params)
-				#print(pos_result, neg_result)
+				pos_result = self.get_output(noise, parameters=pos_params)
+				neg_result = self.get_output(noise, parameters=neg_params)
 
 				pos_result = qcolor_to_image(pos_result)
 				neg_result = qcolor_to_image(neg_result)
-				#print(pos_result.shape, neg_result.shape)
 
 				pos_result = self.discriminator.predict(pos_result.flatten())
 				neg_result = self.discriminator.predict(neg_result.flatten())
