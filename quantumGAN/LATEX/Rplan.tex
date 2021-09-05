@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 
+=======
+%\documentclass{report}
+%\documentclass{book}
+>>>>>>> ae09839 (LATEX FILES)
 \documentclass[a4paper,12pt,arial,numbered,print,index,oneside]{book}
 
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
+<<<<<<< HEAD
 \usepackage{fancyhdr}
 %\fancypagestyle{empty}{%
 %	\fancyhf{}% removes h/f
@@ -23,6 +29,21 @@
 %\rfoot{}
 %\renewcommand{\headrulewidth}{0.4pt}
 %\renewcommand{\footrulewidth}{0.4pt}
+=======
+
+\iffalse
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{}
+\chead{}
+\rhead{}
+%\lfoot{}º
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+>>>>>>> ae09839 (LATEX FILES)
 
 \renewcommand{\chaptermark}[1]{%
 	\markboth{#1}{}}
@@ -53,10 +74,20 @@
 \usepackage{setspace}
 \usepackage{tikz}
 \usepackage{gantt}
+<<<<<<< HEAD
 \usepackage[margin=3cm]{geometry}
 \usepackage{xspace}
 \usepackage{booktabs}
 \usepackage{glossaries}
+=======
+\usepackage{graphicx}
+\usepackage[margin=3cm]{geometry}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{glossaries}
+\usepackage{multirow}
+>>>>>>> ae09839 (LATEX FILES)
 \usepackage{physics}
 \usepackage[toc,page]{appendix}
 \usepackage{fontawesome}
@@ -68,6 +99,10 @@
 \newcommand{\todoREV}[1]{\todo[color=green!25]{REVIEWED: #1}}
 
 \usepackage{afterpage}
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae09839 (LATEX FILES)
 \newcommand\blankpage{%
 	\null
 	\thispagestyle{empty}%
@@ -99,6 +134,10 @@
 }
 
 
+<<<<<<< HEAD
+=======
+\usepackage{mathtools}
+>>>>>>> ae09839 (LATEX FILES)
 %\DeclarePairedDelimiter\bra{\langle}{\rvert}
 %\DeclarePairedDelimiter\ket{\lvert}{\rangle}
 
@@ -112,7 +151,10 @@
 }
 
 \onecolumn
+<<<<<<< HEAD
 \usepackage[margin=2cm]{caption}
+=======
+>>>>>>> ae09839 (LATEX FILES)
 
 
 \renewcommand\thesection{%
@@ -137,8 +179,14 @@
 \newcommand{\mc}{\textcolor{green}{}\textcolor{green}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 
+<<<<<<< HEAD
 \newcommand{\tikzmark}[2]{
 	\tikz[overlay,remember picture,baseline]
+=======
+\usepackage{tikz}
+\newcommand{\tikzmark}[2]{
+	\tikz[overlay,remember picture,baseline] 
+>>>>>>> ae09839 (LATEX FILES)
 	\node[anchor=base] (#1) {$#2$};
 }
 
@@ -157,7 +205,10 @@
 	\csname #2\endcsname
 }
 
+<<<<<<< HEAD
 \usepackage{xcolor}
+=======
+>>>>>>> ae09839 (LATEX FILES)
 
 \begin{document}
 	
