@@ -1,0 +1,454 @@
+\subsection{Linear Algebra}\label{algebra}
+When I start looking into quantum computation, I realized quickly that I needed more mathematical knowledge to understand the mathematical notation and concepts that were on the QC textbooks. By that time I came across the wonderful video lectures on lineal algebra -which is the branch of mathematics that is the background for QC- by Prof. Gilbert Strang at MIT. I watched nearly all of them along a part of the complementary videos that went through the homework. 
+
+Those lectures really helped me to understand the math on \tocite and \tocite. And little by little I learned the math notation used in quantum mechanics, the Dirac notation.
+
+In the current section I will be going through the basic concepts of linear algebra, to form the mathematical background used along this work. 
+
+	\subsubsection{Vectors and Vector Spaces}
+The basic objects of linear algebra are vector spaces. A vector space is the set of all the vectors that have the same dimensions. For example $\mathbb{R}^{3}$ would be the vector space of all 3 dimensional vectors that can be used to represent all possible coordinates on a 3D space. In QC and QI a special kind of vector spaces are used: Hilbert spaces, in other words, an inner product space. Hilbert spaces follow a set of products and have certain properties, on section \ref{algebra} I'll be going through a part of those products and properties, the amount that is compulsory. Keep in mind that Hilbert spaces are much more complicated than what is presented here. Keep in mind that when mentioning a vector space in this work, that vector space is a complex Hilbert space, unless it's specified otherwise.
+
+Vector spaces are defined by their bases, a set of vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ is a valid base for a vector space $V$ if any vector $\ket{v}$ in it, can be written as $\ket{v} = \sum_i a_i \ket{v_i}$ for $\ket{v_i} \in B$. Every vector in $B$ are linearly independent to each other.
+
+
+The standard notation for linear algebra concepts in quantum mechanics is the Dirac notation, which represents a vector as $ \ket{\psi} $. Where $\psi$ is the label of the vector. A vector $ \ket{\psi} $ with $n$ dimensions can be also represented as a column matrix with the form of:
+$$
+\ket{\psi} = 
+\begin{bmatrix}
+	z_{1} \\
+	z_{2} \\
+	\vdots \\
+	z_{n-1} \\
+	z_{n}
+\end{bmatrix}
+$$
+
+With the complex numbers $(z_{1}, z_{2}, \dots , z_{n-1}, z_{n} )$ as its elements. A vector written as $\ket{\psi}$ is named \textit{ket}.
+
+Addition of a pair of the vectors on a Hilbert space it defined by \footnote{The vectors on this definition have their elements represented with their label and a subscript e.g. the vector $\ket{\psi}$ as an element $\psi_{i}$ in it and its first element is $\psi_{1}$. This notation is followed from now on.}: 
+$$
+\ket{\psi} + \ket{\varphi} = \begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} +
+\begin{bmatrix} \varphi_{1} \\ \vdots \\ \varphi_{n} \end{bmatrix}
+$$
+
+Moreover, there is a scalar multiplication defined by:
+$$
+  z\ket{\psi} = z\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} = \begin{bmatrix} z \psi_{1} \\ \vdots \\ z \psi_{n} \end{bmatrix}
+$$
+Where $z$ is a scalar and $\ket{\psi}$ a vector. Note that each element of the vector is multiplied by the scalar. 
+
+Because Hilbert spaces are complex spaces they have a conjugate defined for scalars as:
+For a complex scalar $z = a +bi$ its conjugate $z^*$ is equal to $a -bi$. This notion can be extended for both vectors and matrices taking the conjugate of all the entries:
+$$
+\ket{\psi}^{*} = 
+	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
+$$
+$$
+A^{*} = 
+	\begin{bmatrix} 
+	A_{11} & \cdots & A_{1n}\\ 
+	\vdots & \ddots & \vdots \\ 
+	A_{m1} & \cdots & A_mn
+\end{bmatrix}^* 
+= \begin{bmatrix} 
+	A_{11}^* & \dots & A_{1n}^*\\ 
+	\vdots & \ddots & \vdots \\ 
+	A_{m1}^* & \cdots & A_mn^*
+\end{bmatrix}
+$$
+With $\ket{\psi}$ being a vector and $A$ being a matrix of dimension $m \times n$.
+
+
+Another important concept is the transpose represented with a superscript $T$ that 'flips' a vector or a matrix. A column vector with dimension $n,1$ becomes a row vector with dimension $1,n$ \footnote{In reality column vectors are matrices of dimension n,1 but I have been omitting the 1. When referring to the dimensions of any vector I am going to say just a number, nonetheless, I will also specify the type of vector -a column or a row one-.}:
+$$
+\ket{\psi}^{T} = 
+	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^T = \begin{bmatrix} \psi_{1} & \dots & \psi_{n} \end{bmatrix}
+$$
+
+The same holds for matrices, a transposed $m\times n$ matrix becomes a $n \times m$ matrix. For example:
+$$
+A^T = \begin{bmatrix}
+	 2 & 3 \\
+	 6 & 4 \\
+	 2 & 5 
+\end{bmatrix}^T = \begin{bmatrix}
+ 2 & 6 & 2 \\
+ 3 & 4 & 5
+\end{bmatrix}
+$$
+
+The combination of the complex conjugate and the transpose is named the Hermitian conjugate, written as a superscript $\dagger$. For a vector $\ket{\psi}$ its Hermitian conjugate $\ket{\psi}^\dagger$ is:
+$$
+\ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \dots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
+$$
+This equivalence works both ways: $\ket{\psi}^\dagger = \bra{\psi}$ and $\bra{\psi}^\dagger = \ket{\psi}$.
+
+The Hermitian conjugate of a column vector $\ket{\psi}$ is named \textit{bra} or dual vector. On Dirac notation is written as $\bra{\psi}$. 
+
+\subsubsection{Linear Operators}
+To operate with vectors and do operations on them matrices are used. Matrices are also named linear maps or linear operators, which are names that illustrate better what they do. The formal definition of a linear operator can be quite complicated, thus, in this section I am going to explained in more mundane terms.
+
+Put it simply, a linear operator transforms a vector onto another vector, those two vectors can be on different spaces or not. More formally, for a vector $\ket{v}$ on the space $V$ and a vector $\ket{w}$ on the space $W$, a linear operator $A$ between this two vectors, performs the action:
+$$
+A \ket{v} = \ket{w}
+$$
+In other words, it maps an element of the vector space $V$ to an element of the vector space $W$. Linear operators must preserve the following operations:
+\begin{enumerate}
+	\item Vector addition: \\
+	For the vectors $\ket{\psi}$ and $\ket{\varphi}$ on the same vector space, and the linear operator $A$:
+	$$ A(\ket{\psi} + \ket{\varphi}) = A\ket{\psi} + A\ket{\varphi}$$ 
+	\item Scalar multiplication:\\
+	For the vector $\ket{\psi}$, the scalar $z$ and the linear operator $A$:
+	$$ A(z\ket{\psi}) = z A \ket{\psi}$$
+\end{enumerate}
+
+These affirmations have to be true for all vectors and all scalars on the spaces that the linear operator acts upon. Note that a linear operator doesn't have to be a matrix necessarily, for example, derivatives and integrals are linear operators, you can check easily that they follow the criteria specified above. However, they are usually applied to functions, although, it is possible to make derivatives and integrals with matrices.\footnote{Don't you worry, I am definitely going to do that, and I hope you are as excited as I am :D .}
+
+Matrices are just the matrix representation of a linear operator 
+
+\paragraph{Types of linear operators}
+On the current section, I am going to cover the basic types of linear operators that are indispensable for the following theory on this chapter and the experimental work.
+
+\begin{enumerate}
+	\item \textbf{Zero operator} \\
+	The zero operator Every vector space has a zero vector that in Dirac notation is represented by $0$, since, $\ket{0}$ is belong to something completely different on QC and QI. The zero vector is such that for any other vector $\ket{\psi}$ and any scalar $z$:
+	$\ket{\psi} + 0 = \ket{\psi} $ and $z0 = 0$. 
+	Note that the zero operator is also represented as 0 and its defined as the operator that maps all vectors to the zero vector: $0\ket{\psi} = 0 $.  
+	
+	\item \textbf{Inverse matrix} \\
+	A squared matrix\footnote{A square matrix is a matrix with dimensions $n\times n$.} $A$ is called invertible if there exist a matrix $A^{-1}$ such that $AA^{-1}=A^{-1}A$. $A^{-1}$ is the inverse matrix of $A$. The fastest way to see if a square matrix is invertible is to check if it has a non-zero determinant.  
+	
+	\item \textbf{Identity operator} \\
+	For any vector space $V$ there exist an identity operator $I$ that is defined as $I\ket{\psi} = \ket{\psi}$, this operator doesn't do anything to the vectors that it is applied to. Note that for any matrix $A$ and its inverse $A^{-1}$ is true that $AA^{-1} = I$.
+	
+	\item \textbf{Unitary operator} \\
+	A unitary operator is any operator that doesn't change the norm of the vectors that it is applied to, moreover, a matrix $A$ is unitary if $AA^\dagger = I$. 
+	To convert any operator to unitary all its entries are divided by the norm of the operator. 
+	
+	\item \textbf{Hermitian operators} \\
+	A Hermitian operator or self-adjoint operator is any operator that its Hermitian conjugate is itself $A = A^\dagger$. Another thing to point out, is that there exist a unique operator $A$ on a Hilbert space. Such that for any vectors $\ket{\psi}$ and $\ket{\varphi}$:
+	$$
+	\bra{\psi} (A \ket{\varphi}) = (A^\dagger\bra{\psi})\ket{\varphi}
+	$$ 
+	This operator is known as the adjoint or Hermitian conjugate of $A$.
+	
+\end{enumerate}
+
+\subsubsection{Inner Product and Outer Product}
+
+\paragraph{Inner product}
+A dual vector $\bra{\psi}$ and a vector $\ket{\varphi}$ combined form the inner product $\bra{\psi}\ket{\varphi}$ which is an operation that 
+%The more notable property of a Hilbert space is its inner product $\bra{\psi}\ket{\varphi}$. This product 
+takes two vectors of the same space as input and produces a complex number as output:
+$$
+\bra{a}\ket{b} = a_1 b_1 + a_2 b_2 + ... + a_{n-1} b_{n-1} + a_n b_n = z
+$$
+With $z, a_i, b_i \in \mathbb{C}$. When referring to an inner product I will often say 'the inner product of two vectors' when in reality is an operation between a dual vector and a vector.
+
+The equivalent to this product on a 2 dimensional real space $\mathbb{R}^2$ is the dot product, which is also expressed as: 
+\begin{equation}
+	\bra{a}\ket{b} = \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta 
+	\label{eq:dot_product}
+\end{equation}
+
+
+With $\norm{\cdot}_2$ being the $\ell^2$  norm defined by $\norm{\ket{\psi}}_2 = \sqrt{\psi_{1}^2 + ... + \psi_{n}^2}$ and $\theta$ being the angle between the vectors $\ket{a}$ and $\ket{b}$. As I said the equation \eqref{eq:dot_product} is equivalent to the inner product, however, from what I have seen, it is not widely used when working in high dimensional spaces because interpreting $\theta$ as an angle doesn't make sense when referring to vectors that have more than 2 dimensions. Instead, I have seen more often the inner product presented in its geometrical representation\footnote{The exact details of the geometrical representation of matrices and vectors are out of the scope of this work, even so, it gives a clear and intuitive way of looking at vectors and vector spaces \tocite.} as the product between one row vector and one column vector: 
+% The Geometry of Linear Equations: https://www.youtube.com/watch?v=ZK3O402wf1c&list=PL3CCC70370BD3FD48&index=1
+% The four Fundamental Subspaces: https://www.youtube.com/watch?v=nHlE7EgJFds
+$$
+\bra{a}\ket{b} = \begin{bmatrix}a_1  ...  a_n \end{bmatrix} \begin{bmatrix} b_{1} \\ \vdots \\ b_{n} \end{bmatrix}
+$$
+
+
+I have already defined the $\ell_2$ norm as the square root of the sum of the squared entries of a vector: 
+$$
+\norm{\ket{a}}_2 = \sqrt{\sum_{i} a_{i}^2}
+$$
+Nonetheless, the more common definition is based upon the inner product. As you can see the inner product of a vector by itself is the sum of the squared entries: 
+$$
+\bra{a}\ket{a} = a_1 a_1 + ... + a_n a_n = a_1^2 + ... +  a_n^2 \\= \sum_{i} a_i^2
+$$
+Thus, the norm can be defined as the square root of the inner product of a vector:
+\begin{equation}
+\norm{\ket{a}}_2 = \sqrt{\bra{a}\ket{a}}
+\label{eq:norm}
+\end{equation}
+When the norm is applied to a 2 dimensional vector you can see that is the same as the length of that vector, that is because norm and length are the same concepts, however, the norm is the generalized length that can be applied to a vector of any dimension. 
+
+
+From what I understand some properties of the length of a two dimensional vector do not hold with the norm of a vector that has more than 2 dimensions. In other words, the norm behaves in similar ways like the distance from the origin (which is the length), thus they are not the exact same thing. Moreover, there are different types of norm\footnote{But not different types of length, that I know of at least.} that are used in different types of scenarios. That is why I am referring to a $\ell^2$ norm, a specific type of norm that is also named Euclidean norm which is used to define the $\ell^2$ distance or Euclidean distance, widely used to measure the distance of two points in a 2D space or a 3D space in high school. \tocite \\
+%https://en.wikipedia.org/wiki/Norm_(mathematics)
+\paragraph{Properties of the Inner Product}
+The basic properties of the inner product are as follows:
+\begin{enumerate}
+	\item Is linear in the second argument $ (z_1\bra{a}+ z_2\bra{c})\ket{b} = z_1\bra{a}\ket{b} + z_2\bra{c}\ket{b}$
+	\item Conjugate symmetry $\bra{a}\ket{b} = (\bra{b}\ket{a})^*$
+	\item $\bra{a}\ket{a}$ is non-negative and real, except in the case of $\bra{a}\ket{a} = 0 \Leftrightarrow \ket{a} = 0$
+\end{enumerate}
+
+ 
+\paragraph{Orthonormal and orthogonal vectors}
+From the concept of norm comes the concepts a pair of orthogonal vectors and a pair of orthonormal vectors\footnote{Funny note, when I encountered these two terms for the first time in QC and QI \tocite, I taught they were the same thing and a week passed until I realized. It was such a difficult mess to understand everything else with these two terms confused.}. \\
+Looking at the equation \eqref{eq:norm} we can see that if the inner product of a vector is one, the norm of this vector is also one. A vector that has norm one is named a unit vector. Therefore, if the inner product of a vector is one, that vector is a unit vector.
+
+A pair of non-zero vectors are orthogonal if their inner product is zero. For two non-zero 2 dimensional vectors, if their inner product is equal to zero, you can see that they are perpendicular to each other by looking at equation \eqref{eq:dot_product}:
+\begin{multline*}
+	 \text{For }\ket{a} \text{and} \ket{b}\neq 0 : \\
+	\text{If }\bra{a}\ket{b} = 0 \text{ then: } \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta = 0 \\
+	 \text{Because $\ket{a}$ and $\ket{b}$ are non-zero vectors, their norms can't be zero.} \\
+	 \text{Thus the remainder term } \cos\theta \text{ is equal to zero.} \\
+	 \text{Therefore, the angle $\theta$ as to be } \frac{\pi}{2}. \\
+\end{multline*}
+However, thinking that perpendicularity and orthogonality are the same concepts is a mistake, since, it only holds when looking at 2 dimensional vectors. As with norm and length, orthogonality is the generalized concept of perpendicularity that works for high dimensional vectors. \\
+When we mix the concepts of unit vector and orthogonal vectors we arrive at the term orthonormality \tocite. A pair of non-zero vectors are orthonormal when both are unit vectors and there are orthogonal to each other: 
+$$
+\ket{a} \text{and } \ket{b} \text{ are othornormal if} \left\{
+	\begin{array}{ll}
+		\bra{a}\ket{b} = 0 \\
+		\bra{a}\ket{a} = 1 \\
+		\bra{b}\ket{b} = 1 \\
+	\end{array}
+\right.
+$$
+Orthonormal vectors are important, they are broadly used in quantum computation as well as quantum mechanics because they form the basis for the vector spaces on which the quantum states are located. \todo{maybe introduce them before if you talk about basis later on} \\
+One thing to point out is that I have been talking about a pair of vectors when referring to orthonormal vectors, however, orthonormality can be extended to a set of vectors. If a set has all unit vectors and the vectors are orthogonal to each other, the set is orthonormal. The set of vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ is
+orthonormal if $\bra{\beta_i}\ket{\beta_i} = \delta_{ij}  \forall i, j$ \tocite\space where $\delta_{ij}$ is the Kronecker delta defined as 
+% a gentle intro to QC
+: 
+$$
+\delta_{ij} =
+\begin{cases}
+	1 & \text{if } i=j\\
+	0 & \text{if } i\neq j
+\end{cases}
+$$
+
+\paragraph{Outer product}
+The outer product is a function that takes two vectors -expressed as $\ket{a}\bra{b}$, with $\ket{a}$ and $\ket{b}$ being vectors- and produces an linear operator as output. Unlike the inner product, there is no analog for the outer product on the mathematics taught in high school\footnote{The analog of the inner product would be the dot product.}, and it is a bit difficult to understand it as it can take two vectors from different spaces as input. It is defined as follows:
+
+
+%For a vector $\ket{v}$ and $\ket{v'}$ in the Hilbert space $V$ and a vector $\ket{w}$ in the Hilbert space $W$. The output is a linear operator of dimensions $m \times n$ in the space $M_{m\times n}$:
+%$$\ket{v}\bra{w} : V,W \mapsto M_{m\times n} \\ $$
+For a vector $\ket{v}$ and $\ket{v'}$ of dimensions $m$ and a vector $\ket{w}$ of dimension $n$. The output is a linear operator $A$ of dimensions $m \times n$ in the space $M_{m\times n}$:
+$$
+\ket{v}\bra{w} = A \text{ with } A\in \mathrm{Mat}_{m\times n} .
+$$ 
+%In other words, that takes a vector from $\mathbb{C}_i$ to $\mathbb{C}_j$. 
+Whose action is defined by: 
+\begin{equation}
+	(\ket{v}\bra{w})\ket{v'} \equiv \ket{w}\bra{v}\ket{v'} = \bra{v}\ket{v'}\ket{w}
+	\label{eq:outer_def}
+\end{equation}
+
+
+From equation \eqref{eq:outer_def} the usefulness and meaning of the outer product are hard to comprehend, so I will look at the way to compute it next to clarify how it works. For two vectors $\ket{a}$ and $\ket{b}$ of dimensions $m$ and $n$ respectively, their outer product is computed multiplying each element of $\ket{a}$ by each element of $\ket{b}$ forming a matrix of size $ m \times n$:
+$$
+\ket{a}\bra{b} = \begin{bmatrix}
+	a_1 b_1 & a_1 b_2 & \cdots & a_1 b_n \\
+	a_2 b_1 & a_2 b_2 & \cdots & a_2 b_n \\
+	\vdots  & \vdots  & \ddots& \vdots  \\
+	a_m b_1 & a_m b_2 & \cdots & a_m b_n \\
+\end{bmatrix}
+$$
+The usefulness of the outer product will be shown in future sections.
+
+\subsubsection{Tensor product}
+The last product to mention is the tensor product, represented with the symbol $\otimes$. This product is used to create larger vector spaces by combining smaller vector spaces. The formal explanation of this concept is quite difficult, so I will focus on explaining the way to compute it by using the matrix representation of this product, named the Kronecker product. 
+
+For a $m \times n$ matrix  $A$ and a $p \times q$ matrix  $B$ the output of their Kronecker product is a $pm \times qn$ matrix:
+\begin{multline*}
+A \otimes B = \begin{bmatrix}
+	a_{11} B & a_{12} B & \cdots & a_{1n}B \\
+	a_{21} B & a_{22} B & \cdots & a_{2n}B \\
+	\vdots & \vdots & \ddots &           \vdots \\
+	a_{m1} B & a_{m2} B & \cdots & a_{mn} B
+\end{bmatrix} \\
+= \begin{bmatrix}
+a_{11} b_{11} & a_{11} b_{12} & \cdots & a_{11} b_{1q} &
+\cdots & \cdots & a_{1n} b_{11} & a_{1n} b_{12} & \cdots & a_{1n} b_{1q} \\
+a_{11} b_{21} & a_{11} b_{22} & \cdots & a_{11} b_{2q} &
+\cdots & \cdots & a_{1n} b_{21} & a_{1n} b_{22} & \cdots & a_{1n} b_{2q} \\
+\vdots & \vdots & \ddots & \vdots & & & \vdots & \vdots & \ddots & \vdots \\
+a_{11} b_{p1} & a_{11} b_{p2} & \cdots & a_{11} b_{pq} &
+\cdots & \cdots & a_{1n} b_{p1} & a_{1n} b_{p2} & \cdots & a_{1n} b_{pq} \\
+\vdots & \vdots & & \vdots & \ddots & & \vdots & \vdots & & \vdots \\
+\vdots & \vdots & & \vdots & & \ddots & \vdots & \vdots & & \vdots \\
+a_{m1} b_{11} & a_{m1} b_{12} & \cdots & a_{m1} b_{1q} &
+\cdots & \cdots & a_{mn} b_{11} & a_{mn} b_{12} & \cdots & a_{mn} b_{1q} \\
+a_{m1} b_{21} & a_{m1} b_{22} & \cdots & a_{m1} b_{2q} &
+\cdots & \cdots & a_{mn} b_{21} & a_{mn} b_{22} & \cdots & a_{mn} b_{2q} \\
+\vdots & \vdots & \ddots & \vdots & & & \vdots & \vdots & \ddots & \vdots \\
+a_{m1} b_{p1} & a_{m1} b_{p2} & \cdots & a_{m1} b_{pq} &
+\cdots & \cdots & a_{mn} b_{p1} & a_{mn} b_{p2} & \cdots & a_{mn} b_{pq}
+\end{bmatrix}
+\end{multline*}
+
+Note that $a_{ij}B$ is a scalar multiplication by a matrix, with $a_{ij}$ being the scalar and $B$ being the matrix.
+
+Here is a clearer example with two $2\times2$ matrices, note that each entry of the first matrix is multiplied by the second matrix:
+\begin{equation*}
+\begin{bmatrix}
+	1 & 2 \\
+	3 & 4 \\
+\end{bmatrix} \otimes
+\begin{bmatrix}
+	0 & 5 \\
+	6 & 7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 \begin{bmatrix}
+	0 & 5 \\
+	6 & 7 \\
+\end{bmatrix} & 
+2 \begin{bmatrix}
+	0 & 5 \\
+	6 & 7 \\
+\end{bmatrix} \vspace{6pt} \\ 
+
+3 \begin{bmatrix}
+	0 & 5 \\
+	6 & 7 \\
+\end{bmatrix} & 
+4 \begin{bmatrix}
+	0 & 5 \\
+	6 & 7 \\
+\end{bmatrix}
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+	= 
+\begin{bmatrix}
+1\times 0 & 1\times 5 & 2\times 0 & 2\times 5 \\
+1\times 6 & 1\times 7 & 2\times 6 & 2\times 7 \\
+3\times 0 & 3\times 5 & 4\times 0 & 4\times 5 \\
+3\times 6 & 3\times 7 & 4\times 6 & 4\times 7 \\
+\end{bmatrix} \\
+= 
+\begin{bmatrix}
+0 &  5 &  0 & 10 \\
+6 &  7 & 12 & 14 \\
+0 & 15 &  0 & 20 \\
+18 & 21 & 24 & 28
+\end{bmatrix}
+\end{equation*}
+
+One important piece of notation to take into account is $\bigotimes$, used to represent the equivalent of the sum (noted with $\sum$), but instead of addition the Kronecker product is used. In other words $\bigotimes$ denotes the Kronecker product of a finite number of terms. To clarify here's an example with the identity matrix:
+
+
+With $\mathbb{I}$ as the matrix $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$ and $n$ as a power of $2$:
+$$
+\mathbb{I}_n = \bigotimes^{\log_{2} n} \mathbb{I}  
+$$
+	
+Here is the case for $n=8$: 
+$$\mathbb{I}_8 =  \bigotimes^{\log_{2} 8} \mathbb{I} =\bigotimes^3 \mathbb{I} = \mathbb{I} \otimes \mathbb{I} \otimes \mathbb{I} =
+	\begin{bmatrix}
+		1 &0 &0 &0 &0 &0 &0 &0 \\
+		0 &1 &0 &0 &0 &0 &0 &0 \\
+		0 &0 &1 &0 &0 &0 &0 &0 \\
+		0 &0 &0 &1 &0 &0 &0 &0 \\
+		0 &0 &0 &0 &1 &0 &0 &0 \\
+		0 &0 &0 &0 &0 &1 &0 &0 \\
+		0 &0 &0 &0 &0 &0 &1 &0 \\
+		0 &0 &0 &0 &0 &0 &0 &1 \\
+	\end{bmatrix} 
+$$
+
+
+The Kronecker product also works for vectors in the same way, with a scalar-vector multiplication:
+
+For the vectors $\ket{\psi}$ and $\ket{\varphi}$ of dimensions $n$ and $m$ respectively:
+$$
+\ket{\psi} \otimes \ket{\varphi} = \begin{bmatrix}
+	\psi_{1} \ket{\varphi} \\
+	\psi_2 \ket{\varphi} \\
+	\vdots \\
+	\psi_{m} \ket{\varphi}
+\end{bmatrix} = 
+\begin{bmatrix}
+\psi_{1} \varphi_1 \\
+\psi_{1} \varphi_{2} \\
+\vdots \\
+\psi_{1} \varphi_{m} \\
+\vdots \\
+\vdots \\
+\psi_{n} \varphi_1 \\
+\psi_{n} \varphi_{2} \\
+\vdots \\
+\psi_{n} \varphi_{m} \\
+\end{bmatrix}
+$$
+
+Note that the Kronecker product can also be taken between a vector and a matrix or vise-versa, however this form isn't as common as the other two.
+%With $V$ and $W$ being vector spaces of dimension $m$ and $n$ respectively, the tensor product between them $V \otimes W$ is a vector spaces of dimension $mn$. The elements on the space $V \otimes W$ are 
+%For the orthonormal basis $\ket{i}$ and $\ket{j}$ of $V$ and $W$ respectively the orthonormal basis for $V\otimes W$ would be $\ket{i}\otimes\ket{j}$.
+
+
+\paragraph{Properties of the Tensor Product}
+The basic properties of the tensor product are as follows:
+\begin{enumerate}
+	\item Associativity: \\ $A \otimes (B + C) = A \otimes B + A \otimes C$ \\
+	$ (zA) \otimes B = A \otimes (zB) = z(A \otimes B)$\\
+	$ (A \otimes B) \otimes C = A \otimes (B\otimes C)$ \\
+	$A \otimes 0 = 0 \otimes A = 0 $
+	\item Non-commutative \footnote{One cool thing is that $A \otimes B$ and $B \otimes A$ are permutation equivalent: \\ $\exists P, Q \Rightarrow A \otimes B = P (  B \otimes A )Q$ where $P$ and $Q$ are permutation matrices.  }: \\
+	$A \otimes B \neq B \otimes A $
+\end{enumerate}
+
+
+
+%$$
+%f: \mathbb{R} \rightarrow \mathbb{R} \text{ or } \mathbb{R} \stackrel{f}{\to} \mathbb{R} 
+%$$
+%Where $\mathbb{R}$ is the space of all real number, and $\rightarrow$ is 
+
+
+\subsubsection{Trace}
+The trace of a matrix is just the sum of the elements on the main diagonal, the one that goes from top to bottom and left to right.
+
+Here's a matrix $A$ with its main diagonal marked:
+$$A = 
+	\begin{bmatrix}
+		\tikzmark{top}{1} & \tikzmark{top2}{1} & 0 \\
+		0 & 1 & \tikzmark{bottom2}{1} \\
+		\tikzmark{end}{1} & 0 & \tikzmark{bottom}{1}\\
+	\end{bmatrix}
+$$
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[opacity=.4,line width=3mm,line cap=round] (top.center) -- (bottom.center);
+\end{tikzpicture}
+
+And its trace, denoted by $\Tr[A]$ is:
+$$
+\Tr[A] = 1 + 1 + 1 = 3
+$$
+More formally, the trace of a $n$-dimensional squared matrix $A$ is:
+$$
+\Tr[A] = \sum_{i=1}^{n} a_{ii} = a_{11} + a_{22} + \cdots + a_{nn}
+$$
+
+
+The trace of a matrix as the following properties:
+\begin{enumerate}
+	\item Linear operator: \\
+	Because the trace is a linear mapping, it follows that:\\
+	$\Tr[A+B] = \Tr[A] + \Tr[B]$ and $\Tr[zA] = z \Tr[A]$, for all squared matrices $A$ and $B$ and all scalars $z$.
+	\item Trace of a Kronecker product: \\
+	$\Tr[A \otimes B] = \Tr[A]\Tr[B]$
+	\item Transpose has the same trace: \\
+	$\Tr[A]=\Tr[A^T]$
+	\item Trace of a product is cyclic: \\
+	For a $m \times n$ matrix $A$ and a $n \times m$ matrix $B$:\\
+	$\Tr[AB]=\Tr[BA]$
+\end{enumerate}
+
+One very useful way to compute the trace of an operator is through the Gram-Schmidt procedure\footnote{See \ref{gram} for the definition of the Gram-Schmidt procedure.} and an outer product. 
+Using Gram-Schmidt to represent the unit vector $\ket{\psi}$ with an orthonormal basis $\ket{i}$ which includes $\ket{\psi}$ as the first element, is true that:
+$$
+\Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
+$$
+
+
+\subsection{Quantum Computation}
+

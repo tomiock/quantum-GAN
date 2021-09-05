@@ -1,0 +1,268 @@
+%\documentclass{report}
+%\documentclass{book}
+\documentclass[a4paper,12pt,arial,numbered,print,index,oneside]{book}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\iffalse
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{}
+\chead{}
+\rhead{}
+%\lfoot{}º
+\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\renewcommand{\chaptermark}[1]{%
+	\markboth{#1}{}}
+\fi
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{mathtools}
+%\usepackage{balance}
+\usepackage{epsfig}
+%\usepackage[all]{xy}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage{epstopdf}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{gantt}
+\usepackage{graphicx}
+\usepackage[margin=3cm]{geometry}
+\usepackage{xspace}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{glossaries}
+\usepackage{multirow}
+\usepackage{physics}
+\usepackage[toc,page]{appendix}
+\usepackage{fontawesome}
+
+\usepackage[colorinlistoftodos,textwidth=2.7cm]{todonotes}
+
+\newcommand{\todoCITE}[1]{\todo[color=blue!25]{CITE: #1}}
+\newcommand{\todoIMPORTANT}[1]{\todo[color=red!25]{IMPORTANT: #1}}
+\newcommand{\todoREV}[1]{\todo[color=green!25]{REVIEWED: #1}}
+
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
+\lstset{ %
+	%basicstyle=\scriptsize,          % the size of the fonts that are used for the code
+	breakatwhitespace=false,          % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                  % sets automatic line breaking
+	%commentstyle=\color{mygreen},    % comment style
+	%escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	%frame=single,                    % adds a frame around the code
+	keepspaces=true,                  % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},        % keyword style
+	language=Python,                  % the language of the code
+	morekeywords={},                  % if you want to add more keywords to the set
+	numbers=none,                     % where to put the line-numbers; possible values are (none, left, right)
+	%numbersep=5pt,                   % how far the line-numbers are from the code
+	%numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	%rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                 % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,           % underline spaces within strings only
+	showtabs=false,                   % show tabs within strings adding particular underscores
+	%stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	%stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,                        % sets default tabsize to 2 spaces
+	%title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+\usepackage{mathtools}
+%\DeclarePairedDelimiter\bra{\langle}{\rvert}
+%\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=red,
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\onecolumn
+
+
+\renewcommand\thesection{%
+	\ifnum\value{section}<1{\thechapter.\arabic{section}}%
+	\else{\thechapter.\arabic{section}}\fi}
+
+\renewcommand\thesubsection{%
+	\ifnum\value{subsection}<1{\thechapter.\arabic{subsection}}%
+	\else{\thechapter.\arabic{subsection}}\fi}
+
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\\\}
+\newcommand{\mysubparagraph}[1]{\subparagraph{#1}\mbox{}\\\\}
+
+
+\newcommand{\toask}[1]{\textcolor{red}{(Q): #1}}
+%\newcommand{\todo_old}[1]{\textcolor{red}{(ToDo): #1}}
+\newcommand{\tocite}{\textcolor{blue}{[citation]}}
+\newcommand{\rpm}{\raisebox{.2ex}{$\scriptstyle\pm$}}
+
+\newcommand{\dc}{\textcolor{red}{DC:}\textcolor{red}}
+\newcommand{\mm}{\textcolor{blue}{}\textcolor{blue}}
+\newcommand{\mc}{\textcolor{green}{}\textcolor{green}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\usepackage{tikz}
+\newcommand{\tikzmark}[2]{
+	\tikz[overlay,remember picture,baseline] 
+	\node[anchor=base] (#1) {$#2$};
+}
+
+\let\LaTeXStandardTableOfContents\tableofcontents
+\renewcommand{\contentsname}{Index}
+\renewcommand{\tableofcontents}{%
+	\begingroup%
+	\renewcommand{\bfseries}{\relax}%
+	\LaTeXStandardTableOfContents%
+	\endgroup%
+}%
+\usepackage{titlesec}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+	\IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+	\csname #2\endcsname
+}
+
+
+\begin{document}
+	
+	
+	\begin{titlepage}
+		
+		\center % Center everything on the page
+		
+		%----------------------------------------------------------------------------------------
+		%	TITLE SECTION
+		%----------------------------------------------------------------------------------------
+
+		
+		\HRule \\[0.4cm]
+		{ \Huge \bfseries Generating images with a quantum computer}\\[0.1cm] 
+		\HRule \\[1.5cm]
+		
+		\textsc{\Large \textbf{Batxillerat's Research Work}}\\[.3cm]
+		
+		\textsc{\large \textbf{IES Miquel Tarradell}}\\[2cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	AUTHOR & ADVISOR(S) SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\vspace{8.3cm}
+		\begin{minipage}{0.48\textwidth}
+			\begin{flushleft} \large
+				\Large \textbf{Author:}\\[0.1cm]
+				\Large Tomàs Ockier Poblet \\ 2nd Batxillerat \\ \href{mailto:ockier1@gmail.com}{ockier1@gmail.com}
+			\end{flushleft}
+		\end{minipage}
+		~
+		\begin{minipage}{0.48\textwidth}
+			\begin{flushright} \large
+				\Large \textbf{Tutor:} \\[0.1cm]
+				\Large Tomàs Ockier Poblet 
+			\end{flushright}
+		\end{minipage}\\[1.5cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	LOGO SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\begin{minipage}{0.85\textwidth}
+			\begin{center}
+								\includegraphics[scale=0.2]{Figures/Cover/logo-tarradell.jpg}
+			\end{center}
+		\end{minipage}
+		
+		
+		\vspace{.5cm}
+		
+		%----------------------------------------------------------------------------------------
+		%	DATE SECTION
+		%----------------------------------------------------------------------------------------
+		
+		{\large \today} \\
+		\large Barcelona, Barcelona  
+		
+		%----------------------------------------------------------------------------------------
+		
+		\vfill % Fill the rest of the page with whitespace
+		
+	\end{titlepage}
+
+	
+	\onehalfspacing
+	\setlength{\parskip}{0.5cm plus4mm minus3mm}
+	\afterpage{\blankpage}
+	
+	\tableofcontents
+	%\listoftables
+	%\listoffigures
+	
+	\clearpage
+	
+	\thispagestyle{plain}
+	
+	\chapter{Introduction}
+	\label{chap:intro}
+	\input{introduction}
+	
+	\chapter{Theoretical Framework}
+	\label{chap:theoretical_framework}
+	\input{theoretical_framework}
+	
+	\chapter{Experimental Work}
+	\label{chap:experimental_work}
+	\input{experimental_work}
+
+	
+	\chapter{Conclusions}
+	\label{chap:conclusions}
+	\input{conclusions}
+
+	
+	\bibliographystyle{abbrv}
+	%\balance
+	\bibliography{ref}
+	
+	\printglossaries
+	%\chapter{appendix}
+	
+	\begin{appendices}
+		\input{appendices}
+	\end{appendices}
+	
+	
+\end{document}

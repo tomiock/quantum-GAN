@@ -1,0 +1,22 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Theoretical Framework}{}% 2
+\BOOKMARK [1][-]{subsection.2.0.1}{Linear Algebra}{chapter.2}% 3
+\BOOKMARK [2][-]{subsubsection.2.0.1.1}{Vectors and Vector Spaces}{subsection.2.0.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.0.1.2}{Linear Operators}{subsubsection.2.0.1.1}% 5
+\BOOKMARK [4][-]{paragraph.2.0.1.2.1}{Types of linear operators}{subsubsection.2.0.1.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.0.1.3}{Inner Product and Outer Product}{subsubsection.2.0.1.1}% 7
+\BOOKMARK [4][-]{paragraph.2.0.1.3.1}{Inner product}{subsubsection.2.0.1.3}% 8
+\BOOKMARK [4][-]{paragraph.2.0.1.3.2}{Properties of the Inner Product}{subsubsection.2.0.1.3}% 9
+\BOOKMARK [4][-]{paragraph.2.0.1.3.3}{Orthonormal and orthogonal vectors}{subsubsection.2.0.1.3}% 10
+\BOOKMARK [4][-]{paragraph.2.0.1.3.4}{Outer product}{subsubsection.2.0.1.3}% 11
+\BOOKMARK [3][-]{subsubsection.2.0.1.4}{Tensor product}{subsubsection.2.0.1.1}% 12
+\BOOKMARK [4][-]{paragraph.2.0.1.4.1}{Properties of the Tensor Product}{subsubsection.2.0.1.4}% 13
+\BOOKMARK [3][-]{subsubsection.2.0.1.5}{Trace}{subsubsection.2.0.1.1}% 14
+\BOOKMARK [2][-]{subsection.2.0.2}{Quantum Computation}{subsection.2.0.1}% 15
+\BOOKMARK [0][-]{chapter.3}{Experimental Work}{}% 16
+\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 17
+\BOOKMARK [0][-]{section*.4}{Appendices}{}% 18
+\BOOKMARK [0][-]{appendix.a.A}{More Linear Algebra}{}% 19
+\BOOKMARK [1][-]{section.a.A.1}{Gram\205Schmidt Procedure}{appendix.a.A}% 20
+\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 21
+\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 22
