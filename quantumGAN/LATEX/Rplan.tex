@@ -1,22 +1,28 @@
-%\documentclass{report}
-%\documentclass{book}
+
 \documentclass[a4paper,12pt,arial,numbered,print,index,oneside]{book}
 
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
+\usepackage{fancyhdr}
+%\fancypagestyle{empty}{%
+%	\fancyhf{}% removes h/f
+%	\fancyhead[c]{\Huge{Instituion}}% Your inst name
+%	\fancyfoot[r]{Town and year}
+%}
+%\renewcommand{\headrulewidth}{0pt}% removes header line
+
 
 \iffalse
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{}
-\chead{}
-\rhead{}
+
+%\pagestyle{fancy}
+%\fancyhf{}
+%\lhead{}
+%\chead{}
+%\rhead{}
 %\lfoot{}º
-\cfoot{}
-\rfoot{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+%\rfoot{}
+%\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\footrulewidth}{0.4pt}
 
 \renewcommand{\chaptermark}[1]{%
 	\markboth{#1}{}}
@@ -47,13 +53,10 @@
 \usepackage{setspace}
 \usepackage{tikz}
 \usepackage{gantt}
-\usepackage{graphicx}
 \usepackage[margin=3cm]{geometry}
 \usepackage{xspace}
-\usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{glossaries}
-\usepackage{multirow}
 \usepackage{physics}
 \usepackage[toc,page]{appendix}
 \usepackage{fontawesome}
@@ -65,7 +68,6 @@
 \newcommand{\todoREV}[1]{\todo[color=green!25]{REVIEWED: #1}}
 
 \usepackage{afterpage}
-
 \newcommand\blankpage{%
 	\null
 	\thispagestyle{empty}%
@@ -97,7 +99,6 @@
 }
 
 
-\usepackage{mathtools}
 %\DeclarePairedDelimiter\bra{\langle}{\rvert}
 %\DeclarePairedDelimiter\ket{\lvert}{\rangle}
 
@@ -111,6 +112,7 @@
 }
 
 \onecolumn
+\usepackage[margin=2cm]{caption}
 
 
 \renewcommand\thesection{%
@@ -135,9 +137,8 @@
 \newcommand{\mc}{\textcolor{green}{}\textcolor{green}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 
-\usepackage{tikz}
 \newcommand{\tikzmark}[2]{
-	\tikz[overlay,remember picture,baseline] 
+	\tikz[overlay,remember picture,baseline]
 	\node[anchor=base] (#1) {$#2$};
 }
 
@@ -156,6 +157,7 @@
 	\csname #2\endcsname
 }
 
+\usepackage{xcolor}
 
 \begin{document}
 	

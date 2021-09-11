@@ -449,6 +449,91 @@ $$
 \Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
 $$
 
-
 \subsection{Quantum Computation}
+After some amount of math theory, it is time to start talking about quantum mechanics, in this chapter I am going to introduce the basic concepts of quantum computation and quantum information.
 
+Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
+
+\subsubsection{Quantum State}
+To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system.
+
+Imagine that you have a pen, however, you do not know which color is it, but you know that it can be red or blue. To figure out the color, you would do a measurement, in other words, write something to see the color of the ink. You also know that there is a 50\% change of being blue, and a 50\% of being red\footnote{This is starting to sound a lot like US politics.}. So far you have your quantum system (the pen), a way to measured it (writing), and a list of all the possible outcomes (50\% blue and 50\% red). Now you need your quantum state, the way to represent everything mathematically. Let's try to store the information that we know about the pen in a vector.
+
+If we put the probability of each possible outcome in an entry, we have the following vector:
+$$
+\begin{bmatrix}
+	0.5 \\
+	0.5
+\end{bmatrix}
+$$
+Where the first entry is the probability of painting blue and the second one of painting red, to make it more easy let me color the numbers:
+$$
+\begin{bmatrix}
+	\textcolor{blue}{0.5} \\
+	\textcolor{red}{0.5}
+\end{bmatrix}
+$$
+Note that this vector is normalized went using the $\ell_1$ norm, defined as the sum of the entries of a vectors\footnote{With $\ket{a}$ being a vector, the $\ell_1$ norm, denoted as $\norm{\cdot}_1$ is $\norm{\ket{a}}_1 = \sum_i a_i$.}, in other words, the $\ell_1$ norm of this vector is $1$.
+
+So, how can we extract the probability about a possible outcome from the vectors, by a mathematical operation; I mean. We how that we need to get a real number out of this operation, so let's try with an inner product.
+As we know a vector in a space is a linear combination of space basis:
+$$
+\textcolor{blue}{0.5}\ket{0} + \textcolor{red}{0.5}\ket{1} = \begin{bmatrix}
+	\textcolor{blue}{0.5} \\
+	\textcolor{red}{0.5}
+\end{bmatrix}
+$$
+Where $\ket{0}$ is the vector $\begin{bmatrix} 1 \\ 0\end{bmatrix}$, and, $\ket{1}$ is the vector $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$. Thus to get the scalar, you take the inner product between the basis corresponding to that scalar and the vector, like so:
+$$
+\bra{0}\ket{v} =
+\begin{bmatrix}
+	1 &
+	0
+\end{bmatrix}
+\begin{bmatrix}
+	\textcolor{blue}{0.5} \\
+	\textcolor{red}{0.5}
+\end{bmatrix}
+= \textcolor{blue}{0.5}
+$$
+$$
+\bra{1}\ket{v} =
+	\begin{bmatrix}
+		0 &
+		1
+	\end{bmatrix}
+	\begin{bmatrix}
+		\textcolor{blue}{0.5} \\
+		\textcolor{red}{0.5}
+	\end{bmatrix}
+	= \textcolor{red}{0.5}
+$$
+You can see that this is quite easy. For example, to represent a pen with 6 colors with a random possibility of writing in a specific color, a valid vector to represent this pen would be\footnote{The entries in the vector are colored for clarity, but don't take it to seriously.}:
+$$
+\ket{w} =
+\begin{bmatrix}
+	\textcolor{red}{0.25} \\
+	\textcolor{blue}{0.3 }\\
+	\textcolor{green}{0.1 }\\
+	\textcolor{magenta}{0.1 }\\
+	\textcolor{black}{0.1 }\\
+	\textcolor{brown}{0.05}
+\end{bmatrix}
+$$
+Then we can measure the state with an inner product:
+$$
+\begin{bmatrix}
+	0 & 0 & 1 & 0 & 0 & 0\\
+\end{bmatrix}
+\begin{bmatrix}
+	\textcolor{red}{0.25} \\
+	\textcolor{blue}{0.3 }\\
+	\textcolor{green}{0.1 }\\
+	\textcolor{magenta}{0.1 }\\
+	\textcolor{black}{0.1 }\\
+	\textcolor{brown}{0.05}
+\end{bmatrix} = \textcolor{green}{0.1 }
+$$
+Note that we use the corresponding basis for the 3th element, the green number.
+
+Leaving the pens aside, now we are going to substitute the pens by quantum systems, for example, a photon. Photons have certain properties that can be measured, like polarization\footnote{More concretely, its a property of traverse ways, which photons are.}, when looking at photon as waves in the electromagnetic field, the polarization is the geometrical orientation of the oscillation of the mentioned wave.
