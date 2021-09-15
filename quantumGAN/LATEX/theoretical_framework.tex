@@ -532,7 +532,7 @@ $$
 	\textcolor{magenta}{0.1 }\\
 	\textcolor{black}{0.1 }\\
 	\textcolor{brown}{0.05}
-\end{bmatrix} = \textcolor{green}{0.1 }
+\end{bmatrix} = 1
 $$
 Note that we use the corresponding basis for the 3th element, the green number.
 
@@ -544,12 +544,14 @@ $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
 $$
 Where $\alpha$ and $\beta$ are complex numbers.
-The superpose state simply is an angle that is not $0$ nor $\frac{\pi}{2}$. Note that we do not have to worry about the exact math of all these vectors\footnote{The mathematical description of the polarization of the photon is not necessary to know went talking about quantum computation, unless you are working with a quantum computer that represents the quantum states as photons (through their polarization or something else.). Then you would be talking about quantum optics which is itself a complex part of quantum mechanics, that I do not want to learn about yet.}, because we are only worry about the information that they carry. Which is taken through the measurements, like with the pen. To know\footnote{Kind of, you will see later.} the state of polarization, e.i. to measure it, you need to pass the photon through several polarizing filters, which let a photon pass completely through it or absorbed completely on a probabilistic matter. 
+The superpose state simply is an angle that is not $0$ nor $\frac{\pi}{2}$. Note that we do not have to worry about the exact math of all these vectors\footnote{The mathematical description of the polarization of the photon is not necessary to know went talking about quantum computation, unless you are working with a quantum computer that represents the quantum states as photons (using their polarization or something else.). Then you would be talking about quantum optics which is itself a complex part of quantum mechanics, that I do not want to learn about yet.}, because we are only worry about the information that they carry. Which is taken through the measurements, like with the pen. To know\footnote{Kind of, you will see later.} the state of polarization, e.i. to measure it, you need to pass the photon through several polarizing filters, which let a photon pass completely through it or absorbed completely on a probabilistic matter. 
 
 Let me explain, what the filter does is to collapse the photon in two possible states of polarization in either the state on which the filter is oriented or on the state that is perpendicular to it. For example, a filter oriented in the horizontal direction will either pass a photon oriented vertically or block entirely.  The matter on which the collapse is decided is probabilistic, a photon oriented on the horizontal direction has a 100\% probability of being absorbed, while a photon polarized vertically has a 0\% chance of being absorbed, and finally, a photon that has a $\frac{\pi}{4}$ angle of polarization respect to the filter, meaning that is exactly in between these two perpendicular states, has a 50\% probability of being absorbed by the filter, thus it has a 50\% chance of passing through. 
 
+However, the polarization of the photons are a concrete physical system, but they are not pure information. You can encode information on the angle of polarization, for example. A more useful and easy way to express quantum information through quantum states is with qubits. 
+
 \subsubsection{Quantum Measurement}
-To predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
+Turning back to the photons and their polarization, to predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
 
 Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state:
 $$

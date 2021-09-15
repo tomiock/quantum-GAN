@@ -31,6 +31,7 @@ We can see that the vector $\ket{u_2}$ is defined by the subtraction of the vect
 		\draw[line width=2pt,blue,-stealth](0,0)--(-0.7,-0.7) node[anchor=north west]{$\boldsymbol{\ket{u_2}}$};
 	\end{tikzpicture}
 \end{figure}
+\todo{finish the graph}
 
 
 The proof that is an orthonormal basis is quite simple: 
@@ -97,10 +98,51 @@ On quantum mechanics the more general way to represent quantum state, like the o
 \section{Normalizing}
 Because the probabilistic interpretation of both statevectors and wavefunctions, these two objects have to be normalize upon measurement, thus making the total sum of probabilities $1$. How to normalize these objects is a perfect example to illustrate the difference in complexity that I see between quantum mechanics and quantum computation. 
 
-They way to get compute the probabilities of a measurement out of a wavefunctions is by squared it. For a wavefunction $\Psi$ that represents a particle, the probability of finding the particle in a point $x$ is $\abs{\Psi(x,t)}^2$. Then, the wavefunction has to be normalized like the following:
-$$
+ For a wavefunction $\Psi$ that represents a particle, the probability of finding the particle in a point $x$ is $\abs{\Psi(x,t)}^2$. Then, the wavefunction has to be normalized like the following:
+\begin{equation}
 \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 1
+\label{eq:norm_wave}
+\end{equation}
+
+Since the wavefunctions evolves over time with the Schrödinger equation, see Fig.\ref{fig:schro}, any solution this equation has to be normalized. Luckily, if the wavefunction is normalized at time $t=0$ it stays this way, in other words, the Schrödinger equations preserves the normalization of the wavefunction. 
+
+\begin{figure}
+	$$
+	i\hslash \pdv{\Psi}{t} = -\frac{\hslash^2}{2m}\pdv[2]{\Psi}{x}+V\Psi
+	$$
+	\caption{\textbf{Schrödinger's Equation}. Where $\hslash$ is $h/2\pi$, and $V$ is the potential energy function.}
+	\label{fig:schro}
+\end{figure}
+
+We can prove that the equation, preserves \ref{eq:norm_wave}, starting from the trivial equality:
 $$
+\dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = \pdv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx
+$$
+By the product rule we have that\footnote{From now on I am going to write $\Psi(x,t)$ as simply $\Psi$ to not make the equations to complicated.}:
+$$
+\pdv{t}\abs{\Psi}^2 = \pdv{t}(\Psi\Psi^*) = \Psi^*\pdv{\Psi}{t} + \pdv{\Psi^*}{t}\Psi
+$$
+Now the Schrödinger equation says that 
+$$
+\pdv{\Psi}{t} = \frac{i\hslash}{2m}\pdv[2]{\Psi}{x} -  \frac{i}{\hslash}V\Psi
+$$
+then by taking the complex conjugate we have that 
+$$
+\pdv{\Psi^*}{t} = - \frac{i\hslash}{2m}\pdv[2]{\Psi^*}{x} + \frac{i}{\hslash}V\Psi^*
+$$
+so
+$$
+\pdv{t}\abs{\Psi}^2 = \frac{i\hslash}{2m} \left( \Psi^*\pdv[2]{\Psi}{x} - \pdv[2]{\Psi^*}{x}\Psi \right) = \pdv{x} \left[ \frac{i\hslash}{2m} \left(\Psi^*\pdv{\Psi}{x} - \pdv{\Psi^*}{x}\Psi\right)\right]
+$$
+finally we can evaluate the integral from the start:
+$$
+\dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = \frac{i\hslash}{2m} \left( \Psi^*\pdv{\Psi}{x} - \pdv{\Psi^*}{x}\Psi \right) \Big|_{-\infty}^{+\infty}
+$$
+Because $\Psi(x,t)$ has to go to zero when x goes to either infinity, is true that:
+$$
+\dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 0
+$$
+Thus the integral is constant and went $\Psi$ is normalized at $t=0$, it stays that way for any $t$ (positive of course).
 
 \chapter{Polarization of a photon}
 \label{appendix:optics}
@@ -109,23 +151,23 @@ On equation \ref{eq:photon_state} I have excluded the concept of phase, which de
 	\item \textbf{Linear:}
 	A photon is linear polarized when the phase angles $\alpha_x$, $\alpha_y$ of both basis $\ket{x},\ket{y}$ states are equal:
 	\begin{align*}
-		\ket{\nearrow} &= \cos\theta\exp(i\alpha_x)\ket{x} + \cos\theta\exp(i\alpha_y)\ket{y} \\
-		&= [\cos\theta\ket{x} + \sin\theta\ket{y}]\exp(i\alpha)
+		\ket{\nearrow} &= \cos(\theta) e^{i\alpha_x}\ket{x} + \cos(\theta)e^{i\alpha_y}\ket{y} \\
+		&= [\cos(\theta)\ket{x} + \sin(\theta)\ket{y}]e^{i\alpha}
 	\end{align*}
 	Where $\alpha=\alpha_x=\alpha_y$.
 	
 	\item \textbf{Circular:}
 	Where the angles $\alpha_x$, $\alpha_y$ are apart exactly $\frac{\pi}{2}$ and the amplitude of both basis states is the same:
 	\begin{align*}
-		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos\theta\exp(i\alpha_x)\ket{x} \pm i\frac{1}{\sqrt{2}}\sin\theta\exp(i\alpha_y)\ket{y} \\
-					   &= [\cos\theta\exp(i\alpha_x)\ket{x} \pm i\sin\theta\exp(i\alpha_y)\ket{y}]\frac{1}{\sqrt{2}}
+		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\frac{1}{\sqrt{2}}\sin(\theta)e^{i\alpha_y}\ket{y} \\
+					   &= [\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\sin(\theta)e^{i\alpha_y}\ket{y}]\frac{1}{\sqrt{2}}
 	\end{align*}
 Where the $\pm$ sign indicates the difference between right and left circular polarization, $+$ and $-$, respectively. 
 
 	\item \textbf{Elliptical:}
 	Where just the phase angles $\alpha_x$, $\alpha_y$ differ in some amount:
 	$$
-	\ket{\nearrow} = \cos\theta\exp(i\alpha_x)\ket{x} + \cos\theta\exp(i\alpha_y)\ket{y}
+	\ket{\nearrow} = \cos(\theta)e^{i\alpha_x}\ket{x} + \sin(\theta)e^{i\alpha_y}\ket{y}
 	$$
 	This is the more general case.
 	
