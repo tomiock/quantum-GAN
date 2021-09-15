@@ -87,5 +87,46 @@ On the following table there is a quick summary important mathematical concepts 
 	$ \mathbb{C}_1$ or $\mathbb{C} $ & Complex number space \\
 	
 \end{tabular}
-
 \section{More on the Partial Trace}
+
+\chapter{Quantum Computation vs Quantum Mechanics}
+On the introduction I mentioned that one of the reasons for with I started learning and researching quantum computing is because it is easy, on this appendix I am going to present why this is the case with a practical example.
+
+On quantum mechanics the more general way to represent quantum state, like the orbitals of an atom of hydrogen, are wavefunctions, not statevectors. Wavefunctions are extremely useful, however, working with them adds a hole new level of complexity because they are continuous functions that are dependent on time. Compare them with vectors, which are discrete packets of information that evolve through discrete amounts of time.
+
+\section{Normalizing}
+Because the probabilistic interpretation of both statevectors and wavefunctions, these two objects have to be normalize upon measurement, thus making the total sum of probabilities $1$. How to normalize these objects is a perfect example to illustrate the difference in complexity that I see between quantum mechanics and quantum computation. 
+
+They way to get compute the probabilities of a measurement out of a wavefunctions is by squared it. For a wavefunction $\Psi$ that represents a particle, the probability of finding the particle in a point $x$ is $\abs{\Psi(x,t)}^2$. Then, the wavefunction has to be normalized like the following:
+$$
+\int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 1
+$$
+
+\chapter{Polarization of a photon}
+\label{appendix:optics}
+On equation \ref{eq:photon_state} I have excluded the concept of phase, which determinates the type of polarization that the photon has. There are three types of polarization:
+\begin{enumerate}
+	\item \textbf{Linear:}
+	A photon is linear polarized when the phase angles $\alpha_x$, $\alpha_y$ of both basis $\ket{x},\ket{y}$ states are equal:
+	\begin{align*}
+		\ket{\nearrow} &= \cos\theta\exp(i\alpha_x)\ket{x} + \cos\theta\exp(i\alpha_y)\ket{y} \\
+		&= [\cos\theta\ket{x} + \sin\theta\ket{y}]\exp(i\alpha)
+	\end{align*}
+	Where $\alpha=\alpha_x=\alpha_y$.
+	
+	\item \textbf{Circular:}
+	Where the angles $\alpha_x$, $\alpha_y$ are apart exactly $\frac{\pi}{2}$ and the amplitude of both basis states is the same:
+	\begin{align*}
+		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos\theta\exp(i\alpha_x)\ket{x} \pm i\frac{1}{\sqrt{2}}\sin\theta\exp(i\alpha_y)\ket{y} \\
+					   &= [\cos\theta\exp(i\alpha_x)\ket{x} \pm i\sin\theta\exp(i\alpha_y)\ket{y}]\frac{1}{\sqrt{2}}
+	\end{align*}
+Where the $\pm$ sign indicates the difference between right and left circular polarization, $+$ and $-$, respectively. 
+
+	\item \textbf{Elliptical:}
+	Where just the phase angles $\alpha_x$, $\alpha_y$ differ in some amount:
+	$$
+	\ket{\nearrow} = \cos\theta\exp(i\alpha_x)\ket{x} + \cos\theta\exp(i\alpha_y)\ket{y}
+	$$
+	This is the more general case.
+	
+\end{enumerate}

@@ -449,13 +449,12 @@ $$
 \Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
 $$
 
-<<<<<<< HEAD
 \subsection{Quantum Computation}
 After some amount of math theory, it is time to start talking about quantum mechanics, in this chapter I am going to introduce the basic concepts of quantum computation and quantum information.
 
 Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
 
-\subsubsection{Quantum State}
+\subsubsection{Quantum State and Superpositions}
 To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system.
 
 Imagine that you have a pen, however, you do not know which color is it, but you know that it can be red or blue. To figure out the color, you would do a measurement, in other words, write something to see the color of the ink. You also know that there is a 50\% change of being blue, and a 50\% of being red\footnote{This is starting to sound a lot like US politics.}. So far you have your quantum system (the pen), a way to measured it (writing), and a list of all the possible outcomes (50\% blue and 50\% red). Now you need your quantum state, the way to represent everything mathematically. Let's try to store the information that we know about the pen in a vector.
@@ -537,4 +536,40 @@ $$
 $$
 Note that we use the corresponding basis for the 3th element, the green number.
 
-Leaving the pens aside, now we are going to substitute the pens by quantum systems, for example, a photon. Photons have certain properties that can be measured, like polarization\footnote{More concretely, its a property of traverse ways, which photons are.}, when looking at photon as waves in the electromagnetic field, the polarization is the geometrical orientation of the oscillation of the mentioned wave.
+Leaving the pens aside, now we are going to substitute the pens by quantum systems, for example, with a photon. Photons have certain properties that can be measured, like polarization\footnote{More concretely, its a property of traverse waves, which electromagnetic waves are.}, when looking at photon as waves in the electromagnetic field, the polarization is the geometrical orientation of the oscillation of the wave. This can be interpreted as an angle respect to the propagation direction. \todo{insert figure here}
+
+We can set the basis states of the polarization as vertical and horizontal, denoted with the vectors $\ket{\text{\textrightarrow}}$ and $\ket{\text{\textuparrow}}$, respectively. And we can set a state that is a superposition of both, denoted as $\ket{\nearrow}$. 
+The superposed state will be: 
+$$
+\ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
+$$
+Where $\alpha$ and $\beta$ are complex numbers.
+The superpose state simply is an angle that is not $0$ nor $\frac{\pi}{2}$. Note that we do not have to worry about the exact math of all these vectors\footnote{The mathematical description of the polarization of the photon is not necessary to know went talking about quantum computation, unless you are working with a quantum computer that represents the quantum states as photons (through their polarization or something else.). Then you would be talking about quantum optics which is itself a complex part of quantum mechanics, that I do not want to learn about yet.}, because we are only worry about the information that they carry. Which is taken through the measurements, like with the pen. To know\footnote{Kind of, you will see later.} the state of polarization, e.i. to measure it, you need to pass the photon through several polarizing filters, which let a photon pass completely through it or absorbed completely on a probabilistic matter. 
+
+Let me explain, what the filter does is to collapse the photon in two possible states of polarization in either the state on which the filter is oriented or on the state that is perpendicular to it. For example, a filter oriented in the horizontal direction will either pass a photon oriented vertically or block entirely.  The matter on which the collapse is decided is probabilistic, a photon oriented on the horizontal direction has a 100\% probability of being absorbed, while a photon polarized vertically has a 0\% chance of being absorbed, and finally, a photon that has a $\frac{\pi}{4}$ angle of polarization respect to the filter, meaning that is exactly in between these two perpendicular states, has a 50\% probability of being absorbed by the filter, thus it has a 50\% chance of passing through. 
+
+\subsubsection{Quantum Measurement}
+To predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
+
+Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state:
+$$
+\ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
+$$
+The probability of being absorbed is $\alpha^2$, note that $\alpha$ is the coefficient that corresponds to the basis $\ket{\text{\textrightarrow}}$, which is the polarization of the filter. In other words, $\alpha^2$ indicates the probability of the collapse of the polarization onto the state $\ket{\text{\textrightarrow}}$. 
+
+The coefficients $\alpha$ and $\beta$ can be expressed as function of an angle $\theta$\footnote{For more information on the polarization of a photon, see appendix \ref{appendix:optics}.}:
+\begin{equation}
+	\ket{\nearrow} = \cos\theta\ket{\text{\textrightarrow}} + \sin\theta\ket{\text{\textuparrow}}
+	\label{eq:photon_state}
+\end{equation}
+And the expected probabilities become $\cos^2\theta$ and  $\sin^2\theta$, respectively. Now we can prove the previous statements. In the case of a $\pi/2$ angle we see that:
+\begin{align*}
+	p(\ket{\text{\textrightarrow}}) &= \cos^2\theta 
+	= \cos^2 \frac{\pi}{2}
+	= \left( \frac{1}{\sqrt{2}} \right) ^2 \\
+	&= 0.5 \\
+	p(\ket{\text{\textuparrow}}) &= \sin^2\theta 
+	= \sin^2 \frac{\pi}{2}
+	= \left( \frac{1}{\sqrt{2}} \right) ^2 \\
+	&= 0.5 \\	
+\end{align*} 
