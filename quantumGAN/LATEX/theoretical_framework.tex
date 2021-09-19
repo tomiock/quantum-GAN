@@ -1,12 +1,12 @@
 \subsection{Linear Algebra}\label{algebra}
-When I start looking into quantum computation, I realized quickly that I needed more mathematical knowledge to understand the mathematical notation and concepts that were on the QC textbooks. By that time I came across the wonderful video lectures on lineal algebra -which is the branch of mathematics that is the background for QC- by Prof. Gilbert Strang at MIT. I watched nearly all of them along a part of the complementary videos that went through the homework. 
+When I start looking into quantum computation, I realized quickly that I needed more mathematical knowledge to understand the mathematical notation and concepts that were on the quantum computation textbooks. By that time I came across the wonderful video lectures on lineal algebra -which is the branch of mathematics that is the background for quantum computing- by Prof. Gilbert Strang at MIT \cite{LA_OCW_strang, LA2_OCW_strang}. I watched nearly all of them along a part of the complementary videos that went through the homework. 
 
-Those lectures really helped me to understand the math on \tocite and \tocite. And little by little I learned the math notation used in quantum mechanics, the Dirac notation.
+Those lectures really helped me to understand the math on \textit{Quantum Computation and Quantum Information} \cite{QCandQI} and \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro}. Little by little I learned the math notation used in quantum mechanics, the Dirac notation.
 
 In the current section I will be going through the basic concepts of linear algebra, to form the mathematical background used along this work. 
 
 	\subsubsection{Vectors and Vector Spaces}
-The basic objects of linear algebra are vector spaces. A vector space is the set of all the vectors that have the same dimensions. For example $\mathbb{R}^{3}$ would be the vector space of all 3 dimensional vectors that can be used to represent all possible coordinates on a 3D space. In QC and QI a special kind of vector spaces are used: Hilbert spaces, in other words, an inner product space. Hilbert spaces follow a set of products and have certain properties, on section \ref{algebra} I'll be going through a part of those products and properties, the amount that is compulsory. Keep in mind that Hilbert spaces are much more complicated than what is presented here. Keep in mind that when mentioning a vector space in this work, that vector space is a complex Hilbert space, unless it's specified otherwise.
+The basic objects of linear algebra are vector spaces. A vector space is the set of all the vectors that have the same dimensions. For example $\mathbb{R}^{3}$ would be the vector space of all 3 dimensional vectors that can be used to represent all possible coordinates on a 3D space. In quantum computing I a special kind of vector spaces are used: Hilbert spaces, in other words, an inner product space \cite{QCandQI:GramSchmidt}. Hilbert spaces follow a set of products and have certain properties, on section \ref{algebra} I'll be going through a part of those products and properties, the amount that is compulsory. Keep in mind that Hilbert spaces are much more complicated than what is presented here. Keep in mind that when mentioning a vector space in this work, that vector space is a complex Hilbert space, unless it's specified otherwise.
 
 Vector spaces are defined by their bases, a set of vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ is a valid base for a vector space $V$ if any vector $\ket{v}$ in it, can be written as $\ket{v} = \sum_i a_i \ket{v_i}$ for $\ket{v_i} \in B$. Every vector in $B$ are linearly independent to each other.
 
@@ -88,7 +88,7 @@ The Hermitian conjugate of a column vector $\ket{\psi}$ is named \textit{bra} or
 \subsubsection{Linear Operators}
 To operate with vectors and do operations on them matrices are used. Matrices are also named linear maps or linear operators, which are names that illustrate better what they do. The formal definition of a linear operator can be quite complicated, thus, in this section I am going to explained in more mundane terms.
 
-Put it simply, a linear operator transforms a vector onto another vector, those two vectors can be on different spaces or not. More formally, for a vector $\ket{v}$ on the space $V$ and a vector $\ket{w}$ on the space $W$, a linear operator $A$ between this two vectors, performs the action:
+Put it simply, a linear operator transforms a vector onto another vector, those two vectors can be on different spaces or not \cite{LR_done_right:linear_map}. More formally, for a vector $\ket{v}$ on the space $V$ and a vector $\ket{w}$ on the space $W$, a linear operator $A$ between this two vectors, performs the action:
 $$
 A \ket{v} = \ket{w}
 $$
@@ -104,7 +104,7 @@ In other words, it maps an element of the vector space $V$ to an element of the 
 
 These affirmations have to be true for all vectors and all scalars on the spaces that the linear operator acts upon. Note that a linear operator doesn't have to be a matrix necessarily, for example, derivatives and integrals are linear operators, you can check easily that they follow the criteria specified above. However, they are usually applied to functions, although, it is possible to make derivatives and integrals with matrices.\footnote{Don't you worry, I am definitely going to do that, and I hope you are as excited as I am :D .}
 
-Matrices are just the matrix representation of a linear operator 
+Matrices are just the matrix representation of a linear operator \cite{LR_done_right:matrix}.
 
 \paragraph{Types of linear operators}
 On the current section, I am going to cover the basic types of linear operators that are indispensable for the following theory on this chapter and the experimental work.
@@ -176,8 +176,8 @@ Thus, the norm can be defined as the square root of the inner product of a vecto
 When the norm is applied to a 2 dimensional vector you can see that is the same as the length of that vector, that is because norm and length are the same concepts, however, the norm is the generalized length that can be applied to a vector of any dimension. 
 
 
-From what I understand some properties of the length of a two dimensional vector do not hold with the norm of a vector that has more than 2 dimensions. In other words, the norm behaves in similar ways like the distance from the origin (which is the length), thus they are not the exact same thing. Moreover, there are different types of norm\footnote{But not different types of length, that I know of at least.} that are used in different types of scenarios. That is why I am referring to a $\ell^2$ norm, a specific type of norm that is also named Euclidean norm which is used to define the $\ell^2$ distance or Euclidean distance, widely used to measure the distance of two points in a 2D space or a 3D space in high school. \tocite \\
-%https://en.wikipedia.org/wiki/Norm_(mathematics)
+From what I understand some properties of the length of a two dimensional vector do not hold with the norm of a vector that has more than 2 dimensions. In other words, the norm behaves in similar ways like the distance from the origin (which is the length), thus they are not the exact same thing. Moreover, there are different types of norm\footnote{But not different types of length, that I know of at least.} that are used in different types of scenarios. That is why I am referring to a $\ell^2$ norm, a specific type of norm that is also named Euclidean norm which is used to define the $\ell^2$ distance or Euclidean distance, widely used to measure the distance of two points in a 2D space or a 3D space in high school \cite{wolfram:2norm}.
+
 \paragraph{Properties of the Inner Product}
 The basic properties of the inner product are as follows:
 \begin{enumerate}
@@ -199,8 +199,9 @@ A pair of non-zero vectors are orthogonal if their inner product is zero. For tw
 	 \text{Thus the remainder term } \cos\theta \text{ is equal to zero.} \\
 	 \text{Therefore, the angle $\theta$ as to be } \frac{\pi}{2}. \\
 \end{multline*}
-However, thinking that perpendicularity and orthogonality are the same concepts is a mistake, since, it only holds when looking at 2 dimensional vectors. As with norm and length, orthogonality is the generalized concept of perpendicularity that works for high dimensional vectors. \\
-When we mix the concepts of unit vector and orthogonal vectors we arrive at the term orthonormality \tocite. A pair of non-zero vectors are orthonormal when both are unit vectors and there are orthogonal to each other: 
+However, thinking that perpendicularity and orthogonality are the same concepts is a mistake, since, it only holds when looking at 2 dimensional vectors. As with norm and length, orthogonality is the generalized concept of perpendicularity that works for high dimensional vectors.
+
+When we mix the concepts of unit vector and orthogonal vectors we arrive at the term orthonormality \cite{QCandQI:GramSchmidt}. A pair of non-zero vectors are orthonormal when both are unit vectors and there are orthogonal to each other: 
 $$
 \ket{a} \text{and } \ket{b} \text{ are othornormal if} \left\{
 	\begin{array}{ll}
@@ -212,7 +213,7 @@ $$
 $$
 Orthonormal vectors are important, they are broadly used in quantum computation as well as quantum mechanics because they form the basis for the vector spaces on which the quantum states are located. \todo{maybe introduce them before if you talk about basis later on} \\
 One thing to point out is that I have been talking about a pair of vectors when referring to orthonormal vectors, however, orthonormality can be extended to a set of vectors. If a set has all unit vectors and the vectors are orthogonal to each other, the set is orthonormal. The set of vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ is
-orthonormal if $\bra{\beta_i}\ket{\beta_i} = \delta_{ij}  \forall i, j$ \tocite\space where $\delta_{ij}$ is the Kronecker delta defined as 
+orthonormal if $\bra{\beta_i}\ket{\beta_i} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} where $\delta_{ij}$ is the Kronecker delta defined as 
 % a gentle intro to QC
 : 
 $$
@@ -255,7 +256,7 @@ The usefulness of the outer product will be shown in future sections.
 \subsubsection{Tensor product}
 The last product to mention is the tensor product, represented with the symbol $\otimes$. This product is used to create larger vector spaces by combining smaller vector spaces. The formal explanation of this concept is quite difficult, so I will focus on explaining the way to compute it by using the matrix representation of this product, named the Kronecker product. 
 
-For a $m \times n$ matrix  $A$ and a $p \times q$ matrix  $B$ the output of their Kronecker product is a $pm \times qn$ matrix:
+For a $m \times n$ matrix  $A$ and a $p \times q$ matrix  $B$ the output of their Kronecker product \cite{QCandQI:kronecker} is a $pm \times qn$ matrix:
 \begin{multline*}
 A \otimes B = \begin{bmatrix}
 	a_{11} B & a_{12} B & \cdots & a_{1n}B \\
@@ -386,7 +387,7 @@ Note that the Kronecker product can also be taken between a vector and a matrix 
 
 
 \paragraph{Properties of the Tensor Product}
-The basic properties of the tensor product are as follows:
+The basic properties of the tensor product are as follows \cite{QCandQI:tensor_product, wiki:tensor_product}:
 \begin{enumerate}
 	\item Associativity: \\ $A \otimes (B + C) = A \otimes B + A \otimes C$ \\
 	$ (zA) \otimes B = A \otimes (zB) = z(A \otimes B)$\\
@@ -452,10 +453,10 @@ $$
 \subsection{Quantum Computation}
 After some amount of math theory, it is time to start talking about quantum mechanics, in this chapter I am going to introduce the basic concepts of quantum computation and quantum information.
 
-Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
+Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere \cite{QCandQI:QM_postulates}. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
 
 \subsubsection{Quantum State and Superpositions}
-To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system.
+To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system \cite{QT_concepts:q_systems}.
 
 Imagine that you have a pen, however, you do not know which color is it, but you know that it can be red or blue. To figure out the color, you would do a measurement, in other words, write something to see the color of the ink. You also know that there is a 50\% change of being blue, and a 50\% of being red\footnote{This is starting to sound a lot like US politics.}. So far you have your quantum system (the pen), a way to measured it (writing), and a list of all the possible outcomes (50\% blue and 50\% red). Now you need your quantum state, the way to represent everything mathematically. Let's try to store the information that we know about the pen in a vector.
 
@@ -538,7 +539,7 @@ Note that we use the corresponding basis for the 3th element, the green number.
 
 Leaving the pens aside, now we are going to substitute the pens by quantum systems, for example, with a photon. Photons have certain properties that can be measured, like polarization\footnote{More concretely, its a property of traverse waves, which electromagnetic waves are.}, when looking at photon as waves in the electromagnetic field, the polarization is the geometrical orientation of the oscillation of the wave. This can be interpreted as an angle respect to the propagation direction. \todo{insert figure here}
 
-We can set the basis states of the polarization as vertical and horizontal, denoted with the vectors $\ket{\text{\textrightarrow}}$ and $\ket{\text{\textuparrow}}$, respectively. And we can set a state that is a superposition of both, denoted as $\ket{\nearrow}$. 
+We can set the basis states of the polarization as vertical and horizontal, denoted with the vectors $\ket{\text{\textrightarrow}}$ and $\ket{\text{\textuparrow}}$, respectively. And we can set a state that is a superposition of both, denoted as $\ket{\nearrow}$ \cite{QC_intro:photon}. 
 The superposed state will be: 
 $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
@@ -548,12 +549,15 @@ The superpose state simply is an angle that is not $0$ nor $\frac{\pi}{2}$. Note
 
 Let me explain, what the filter does is to collapse the photon in two possible states of polarization in either the state on which the filter is oriented or on the state that is perpendicular to it. For example, a filter oriented in the horizontal direction will either pass a photon oriented vertically or block entirely.  The matter on which the collapse is decided is probabilistic, a photon oriented on the horizontal direction has a 100\% probability of being absorbed, while a photon polarized vertically has a 0\% chance of being absorbed, and finally, a photon that has a $\frac{\pi}{4}$ angle of polarization respect to the filter, meaning that is exactly in between these two perpendicular states, has a 50\% probability of being absorbed by the filter, thus it has a 50\% chance of passing through. 
 
-However, the polarization of the photons are a concrete physical system, but they are not pure information. You can encode information on the angle of polarization, for example. A more useful and easy way to express quantum information through quantum states is with qubits. 
+However, the polarization of the photons are a concrete physical system, in quantum information everyone works with qubits, instead of physical systems\footnote{Unless you are working with a concrete quantum system, and you want to represent the information in the system's terms.}. Went presenting algorithms for example, researchers use qubits. 
+
+\subsubsection{Qubits}
+Modern computers represent information through strings of zeros and ones named bits. We encode and decode bits using binary code, through standards like UTF-8 \cite{wiki:utf8} that can encode any character from the Unicode standard, that is all letters and emojis that exist. 
 
 \subsubsection{Quantum Measurement}
 Turning back to the photons and their polarization, to predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
 
-Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state:
+Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state \cite{QC_intro:photon}:
 $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
 $$
@@ -564,7 +568,7 @@ The coefficients $\alpha$ and $\beta$ can be expressed as function of an angle $
 	\ket{\nearrow} = \cos\theta\ket{\text{\textrightarrow}} + \sin\theta\ket{\text{\textuparrow}}
 	\label{eq:photon_state}
 \end{equation}
-And the expected probabilities become $\cos^2\theta$ and  $\sin^2\theta$, respectively. Now we can prove the previous statements. In the case of a $\pi/2$ angle we see that:
+And the expected probabilities become $\cos^2\theta$ and  $\sin^2\theta$, respectively \cite{QC_intro:photon}. Now we can prove the previous statements. In the case of a $\pi/2$ angle we see that:
 \begin{align*}
 	p(\ket{\text{\textrightarrow}}) &= \cos^2\theta 
 	= \cos^2 \frac{\pi}{2}

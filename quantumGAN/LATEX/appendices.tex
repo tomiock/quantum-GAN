@@ -2,7 +2,7 @@
 I have wrote many pages of linear algebra theory, but that wasn't enough. So here we go, I guess.
 
 \section{Gram–Schmidt Procedure}\label{gram}
-The Gram–Schmidt procedure is a method used to produce orthonormal basis for a vectors space. For a $d$-dimensional inner product vector space $V$ with a basis vectors set $\ket{v_1}, \cdots, \ket{v_d}$, we can define a new orthonormal basis set $\{\ket{u}\}$. The first element of that set is $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, with the following element $\ket{v_{k+1}}$  being:
+The Gram–Schmidt procedure is a method used to produce orthonormal basis for a vectors space \cite{QCandQI:GramSchmidt}. For a $d$-dimensional inner product vector space $V$ with a basis vectors set $\ket{v_1}, \cdots, \ket{v_d}$, we can define a new orthonormal basis set $\{\ket{u}\}$. The first element of that set is $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, with the following element $\ket{v_{k+1}}$  being:
 $$
 \ket{u_{k+1}} = \frac{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}{\norm{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}}
 $$
@@ -65,7 +65,7 @@ All of this doesn't seem straightforward at first but remember that the inner pr
 
 \section{Dirac Notation Crash Course}
 
-On the following table there is a quick summary important mathematical concepts of linear algebra expressed in Dirac Notation\footnote{The notation used for the complex vector spaces and complex number space are not standard Dirac Notation, but I included them in the table to explain what they mean.}. 
+On the following table there is a quick summary important mathematical concepts of linear algebra \cite{QCandQI:dirac_notation} expressed in Dirac Notation\footnote{The notation used for the complex vector spaces and complex number space are not standard Dirac Notation, but I included them in the table to explain what they mean.}. 
 %Along the text you may encounter more complicated use of this notation. 
 
 \begin{tabular}{ p{2cm}|p{12cm} }
@@ -93,7 +93,7 @@ On the following table there is a quick summary important mathematical concepts 
 \chapter{Quantum Computation vs Quantum Mechanics}
 On the introduction I mentioned that one of the reasons for with I started learning and researching quantum computing is because it is easy, on this appendix I am going to present why this is the case with a practical example.
 
-On quantum mechanics the more general way to represent quantum state, like the orbitals of an atom of hydrogen, are wavefunctions, not statevectors. Wavefunctions are extremely useful, however, working with them adds a hole new level of complexity because they are continuous functions that are dependent on time. Compare them with vectors, which are discrete packets of information that evolve through discrete amounts of time.
+On quantum mechanics the more general way to represent quantum state, like the orbitals of an atom of hydrogen, are wavefunctions, not statevectors. Wavefunctions are extremely useful, however, working with them adds a hole new level of complexity because they are continuous functions that depend on time. Compare them with vectors, which are discrete packets of information that evolve through discrete amounts of time.
 
 \section{Normalizing}
 Because the probabilistic interpretation of both statevectors and wavefunctions, these two objects have to be normalize upon measurement, thus making the total sum of probabilities $1$. How to normalize these objects is a perfect example to illustrate the difference in complexity that I see between quantum mechanics and quantum computation. 
@@ -104,7 +104,7 @@ Because the probabilistic interpretation of both statevectors and wavefunctions,
 \label{eq:norm_wave}
 \end{equation}
 
-Since the wavefunctions evolves over time with the Schrödinger equation, see Fig.\ref{fig:schro}, any solution this equation has to be normalized. Luckily, if the wavefunction is normalized at time $t=0$ it stays this way, in other words, the Schrödinger equations preserves the normalization of the wavefunction. 
+Since the wavefunctions evolves over time with the Schrödinger equation, see Fig.\ref{fig:schro}, any solution this equation has to be normalized. Luckily, if the wavefunction is normalized at time $t=0$ it stays this way, in other words, the Schrödinger equations preserves the normalization of the wavefunction \cite{IntroQM:normalizing}. 
 
 \begin{figure}
 	$$
@@ -142,7 +142,7 @@ Because $\Psi(x,t)$ has to go to zero when x goes to either infinity, is true th
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 0
 $$
-Thus the integral is constant and went $\Psi$ is normalized at $t=0$, it stays that way for any $t$ (positive of course).
+Thus the integral is constant and went $\Psi$ is normalized at $t=0$, it stays that way for any $t$ (positive of course). \todo{falta la prueba para la normalización de un statevector}
 
 \chapter{Polarization of a photon}
 \label{appendix:optics}

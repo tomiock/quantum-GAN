@@ -13,10 +13,16 @@
 \BOOKMARK [4][-]{paragraph.2.0.1.4.1}{Properties of the Tensor Product}{subsubsection.2.0.1.4}% 13
 \BOOKMARK [3][-]{subsubsection.2.0.1.5}{Trace}{subsubsection.2.0.1.1}% 14
 \BOOKMARK [2][-]{subsection.2.0.2}{Quantum Computation}{subsection.2.0.1}% 15
-\BOOKMARK [0][-]{chapter.3}{Experimental Work}{}% 16
-\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 17
-\BOOKMARK [0][-]{section*.4}{Appendices}{}% 18
-\BOOKMARK [0][-]{appendix.a.A}{More Linear Algebra}{}% 19
-\BOOKMARK [1][-]{section.a.A.1}{Gram\205Schmidt Procedure}{appendix.a.A}% 20
-\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 21
-\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 22
+\BOOKMARK [3][-]{subsubsection.2.0.2.1}{Quantum State and Superpositions}{subsection.2.0.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.0.2.2}{Qubits}{subsection.2.0.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.0.2.3}{Quantum Measurement}{subsection.2.0.2}% 18
+\BOOKMARK [0][-]{chapter.3}{Experimental Work}{}% 19
+\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 20
+\BOOKMARK [0][-]{section*.4}{Appendices}{}% 21
+\BOOKMARK [0][-]{appendix.a.A}{More Linear Algebra}{}% 22
+\BOOKMARK [1][-]{section.a.A.1}{Gram\205Schmidt Procedure}{appendix.a.A}% 23
+\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 24
+\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 25
+\BOOKMARK [0][-]{appendix.a.B}{Quantum Computation vs Quantum Mechanics}{}% 26
+\BOOKMARK [1][-]{section.a.B.1}{Normalizing}{appendix.a.B}% 27
+\BOOKMARK [0][-]{appendix.a.C}{Polarization of a photon}{}% 28
