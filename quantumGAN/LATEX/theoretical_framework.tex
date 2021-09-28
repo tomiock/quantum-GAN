@@ -1,17 +1,16 @@
-\subsection{Linear Algebra}\label{algebra}
-When I start looking into quantum computation, I realized quickly that I needed more mathematical knowledge to understand the mathematical notation and concepts that were on the quantum computation textbooks. By that time I came across the wonderful video lectures on lineal algebra -which is the branch of mathematics that is the background for quantum computing- by Prof. Gilbert Strang at MIT \cite{LA_OCW_strang, LA2_OCW_strang}. I watched nearly all of them along a part of the complementary videos that went through the homework. 
+\chapter{Àlgebra Lineal}\label{algebra}
+Quan vaig començar a buscar informació sobre computació quàntica, en vaig ràpidament donar compte que necessitava molt més coneixement matemàtic, degut a que no entenia gairebé res dels llibres sobre computació quàntica. Arran aquell temps, una serie de vídeos sobre àlgebra lineal en va captar l’atenció, que es justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Els vídeos son les lliçons que dona el Professor Gilbert Strang al Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos. 
 
-Those lectures really helped me to understand the math on \textit{Quantum Computation and Quantum Information} \cite{QCandQI} and \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro}. Little by little I learned the math notation used in quantum mechanics, the Dirac notation.
+Aquelles lliçons es van ajudar a entendre les matemàtiques de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} i \textit{Quantum Computing: A Gentle Introduction}. A poc a poc, vaig anar aprenent els fundaments matemàtics de la computació quàntica i mecànica quàntica.
 
-In the current section I will be going through the basic concepts of linear algebra, to form the mathematical background used along this work. 
+En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lienal, per formar els coneixements en matemàtiques necessaris per poder comprendre aquest treball. 
 
-	\subsubsection{Vectors and Vector Spaces}
-The basic objects of linear algebra are vector spaces. A vector space is the set of all the vectors that have the same dimensions. For example $\mathbb{R}^{3}$ would be the vector space of all 3 dimensional vectors that can be used to represent all possible coordinates on a 3D space. In quantum computing I a special kind of vector spaces are used: Hilbert spaces, in other words, an inner product space \cite{QCandQI:GramSchmidt}. Hilbert spaces follow a set of products and have certain properties, on section \ref{algebra} I'll be going through a part of those products and properties, the amount that is compulsory. Keep in mind that Hilbert spaces are much more complicated than what is presented here. Keep in mind that when mentioning a vector space in this work, that vector space is a complex Hilbert space, unless it's specified otherwise.
+\section{Vectors i Espais Vectorials}
+Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial es el conjunt de tots els vectors que tenen les mateixes dimensions. Per exemple  $\mathbb{R}^{3}$ seria el espai vectorial de tots els vectors de 3 dimensions, aquests vectors normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica un tipus d'espais vectorials en concret són utilitzats: Els espais de Hilbert, en altres paraules, un espai vectorial amb un producte interior \cite{QCandQI:GramSchmidt}. Els espais de Hilbert segueixen un conjunt de productes i compleixen unes certes normes, en aquest capítol presentaré una part d'aquestes normes i productes, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, també que d'aquí en endavant, quan mencioni espai vectorial hem referiré a un espai de Hilbert, d'ha no ser que s'especifiqui el contrari. 
 
-Vector spaces are defined by their bases, a set of vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ is a valid base for a vector space $V$ if any vector $\ket{v}$ in it, can be written as $\ket{v} = \sum_i a_i \ket{v_i}$ for $\ket{v_i} \in B$. Every vector in $B$ are linearly independent to each other.
+Els espais vectorial estan definits per les seves bases, un set de vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ es una base vàlida per l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$. Els vectors en $B$ són linealment independent entre ells.
 
-
-The standard notation for linear algebra concepts in quantum mechanics is the Dirac notation, which represents a vector as $ \ket{\psi} $. Where $\psi$ is the label of the vector. A vector $ \ket{\psi} $ with $n$ dimensions can be also represented as a column matrix with the form of:
+La notació estàndard pels conceptes de  àlgebra lienal en mecànica quàntica es la notació de Dirac, en la qual es representa un vector com $ \ket{\psi} $. On $\psi$ es la etiqueta del vector. Un vector $ \ket{\psi} $ amb $n$ dimensions també pot ser representat com una matriu columna que te la forma: 
 $$
 \ket{\psi} = 
 \begin{bmatrix}
@@ -23,22 +22,23 @@ $$
 \end{bmatrix}
 $$
 
-With the complex numbers $(z_{1}, z_{2}, \dots , z_{n-1}, z_{n} )$ as its elements. A vector written as $\ket{\psi}$ is named \textit{ket}.
+On els nombres complexes $(z_{1}, z_{2}, \dots , z_{n-1}, z_{n} )$ són els seus elements. Un vector escrit com a $\ket{\psi}$ també s'anomena \textit{ket}.
 
-Addition of a pair of the vectors on a Hilbert space it defined by \footnote{The vectors on this definition have their elements represented with their label and a subscript e.g. the vector $\ket{\psi}$ as an element $\psi_{i}$ in it and its first element is $\psi_{1}$. This notation is followed from now on.}: 
+La adició d'un par de vectors en un espai de Hilbert es definida per \footnote{Els vectors d'aquesta definició tenen els seus elements representats per la seva etiqueta i un subscrit e.g. el vector $\ket{\psi}$ te un element qualsevol $\psi_{1}$ i el seu primer element es $\psi_{1}$. Aquesta notació es seguirà utilitzant al llarg del treball.}:
 $$
 \ket{\psi} + \ket{\varphi} = \begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} +
 \begin{bmatrix} \varphi_{1} \\ \vdots \\ \varphi_{n} \end{bmatrix}
 $$
 
-Moreover, there is a scalar multiplication defined by:
+A més a més, hi ha una multiplicació per un escalar\footnote{Un numero qualsevol en $\mathbb{R}$.} definida per:
 $$
   z\ket{\psi} = z\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} = \begin{bmatrix} z \psi_{1} \\ \vdots \\ z \psi_{n} \end{bmatrix}
 $$
-Where $z$ is a scalar and $\ket{\psi}$ a vector. Note that each element of the vector is multiplied by the scalar. 
+On $z$ es un escalar i $\ket{\psi}$ un vector. Cal que notar que cada element del vector es multiplicar per el escalar.
 
-Because Hilbert spaces are complex spaces they have a conjugate defined for scalars as:
-For a complex scalar $z = a +bi$ its conjugate $z^*$ is equal to $a -bi$. This notion can be extended for both vectors and matrices taking the conjugate of all the entries:
+Degut a que els espais de Hilbert son complexos tenen un conjugat complex definit per escalar com a: Per un escalar complex $z=a +bi$, el seu conjugat $z^*$ es igual a $a-bi$. 
+
+Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes les seves entrades/elements:
 $$
 \ket{\psi}^{*} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
@@ -56,16 +56,15 @@ A^{*} =
 	A_{m1}^* & \cdots & A_mn^*
 \end{bmatrix}
 $$
-With $\ket{\psi}$ being a vector and $A$ being a matrix of dimension $m \times n$.
+Amb $\ket{\psi}$ sent un vector de dimensions $n$, i $A$ sent una matriu de dimensions $m \times n$.
 
-
-Another important concept is the transpose represented with a superscript $T$ that 'flips' a vector or a matrix. A column vector with dimension $n,1$ becomes a row vector with dimension $1,n$ \footnote{In reality column vectors are matrices of dimension n,1 but I have been omitting the 1. When referring to the dimensions of any vector I am going to say just a number, nonetheless, I will also specify the type of vector -a column or a row one-.}:
+Un altre concepte important es la transposada, representada per el supercrit $T$ que "rota" un vector o una matriu. Un vector columna amb una dimensió $n,1$ es transforma amb un vector fila amb una dimensió $1,n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
 $$
 \ket{\psi}^{T} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^T = \begin{bmatrix} \psi_{1} & \dots & \psi_{n} \end{bmatrix}
 $$
 
-The same holds for matrices, a transposed $m\times n$ matrix becomes a $n \times m$ matrix. For example:
+El mateix és veritat per les matrius, una matriu $m\times n$ transposada es converteix en una matriu $n \times m$. Per exemple:
 $$
 A^T = \begin{bmatrix}
 	 2 & 3 \\
@@ -77,96 +76,97 @@ A^T = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-The combination of the complex conjugate and the transpose is named the Hermitian conjugate, written as a superscript $\dagger$. For a vector $\ket{\psi}$ its Hermitian conjugate $\ket{\psi}^\dagger$ is:
+La combinació de un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació es una $\dagger$ supercrita. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
 $$
 \ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \dots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
 $$
-This equivalence works both ways: $\ket{\psi}^\dagger = \bra{\psi}$ and $\bra{\psi}^\dagger = \ket{\psi}$.
+El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\psi}^\dagger = \ket{\psi}$.
 
-The Hermitian conjugate of a column vector $\ket{\psi}$ is named \textit{bra} or dual vector. On Dirac notation is written as $\bra{\psi}$. 
+El conjugat Hermitià de un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
 
-\subsubsection{Linear Operators}
-To operate with vectors and do operations on them matrices are used. Matrices are also named linear maps or linear operators, which are names that illustrate better what they do. The formal definition of a linear operator can be quite complicated, thus, in this section I am going to explained in more mundane terms.
+\section{Operadors Lineals}
+Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son denominades mapes lineal o operadors lineals, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
 
-Put it simply, a linear operator transforms a vector onto another vector, those two vectors can be on different spaces or not \cite{LR_done_right:linear_map}. More formally, for a vector $\ket{v}$ on the space $V$ and a vector $\ket{w}$ on the space $W$, a linear operator $A$ between this two vectors, performs the action:
+Bàsicament, un operador lineal transforma un vector en un altre vector, aquest vector poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
+
 $$
 A \ket{v} = \ket{w}
 $$
-In other words, it maps an element of the vector space $V$ to an element of the vector space $W$. Linear operators must preserve the following operations:
+En altres paraules, l'operador mapa un element del espai vectorial $V$ cap a un espai vectorial $W$.
+Els operadors lineals han de complir les següents operacions:
 \begin{enumerate}
-	\item Vector addition: \\
-	For the vectors $\ket{\psi}$ and $\ket{\varphi}$ on the same vector space, and the linear operator $A$:
+	\item Adició de Vectors: \\
+	Per els vectors $\ket{\psi}$ i $\ket{\varphi}$ en un mateix espai vectorial, i un operador lienal $A$:
 	$$ A(\ket{\psi} + \ket{\varphi}) = A\ket{\psi} + A\ket{\varphi}$$ 
-	\item Scalar multiplication:\\
-	For the vector $\ket{\psi}$, the scalar $z$ and the linear operator $A$:
+	\item Multiplicació Escalar:\\
+	Per el vector $\ket{\psi}$, el escalar $z$ i el operador lienal $A$:
 	$$ A(z\ket{\psi}) = z A \ket{\psi}$$
 \end{enumerate}
 
-These affirmations have to be true for all vectors and all scalars on the spaces that the linear operator acts upon. Note that a linear operator doesn't have to be a matrix necessarily, for example, derivatives and integrals are linear operators, you can check easily that they follow the criteria specified above. However, they are usually applied to functions, although, it is possible to make derivatives and integrals with matrices.\footnote{Don't you worry, I am definitely going to do that, and I hope you are as excited as I am :D .}
+Aquestes afirmacions tenen que ser veritat per tots els vectors i tots els escalars en els espais on els operadors actuen. Cal notar que un operador lineal no te perquè ser una matriu necessàriament, fer exemple, les derivades i les integrals son operadors lienals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
 
-Matrices are just the matrix representation of a linear operator \cite{LR_done_right:matrix}.
+Les matrius només son la representació matricial del operadors lienals \cite{LR_done_right:matrix}.
 
-\paragraph{Types of linear operators}
-On the current section, I am going to cover the basic types of linear operators that are indispensable for the following theory on this chapter and the experimental work.
+	\subsection{Tipus d'Operadors Lineals}
+En la secció actual, exposaré els tipus bàsics d'operadors lienals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
 
 \begin{enumerate}
-	\item \textbf{Zero operator} \\
-	The zero operator Every vector space has a zero vector that in Dirac notation is represented by $0$, since, $\ket{0}$ is belong to something completely different on QC and QI. The zero vector is such that for any other vector $\ket{\psi}$ and any scalar $z$:
-	$\ket{\psi} + 0 = \ket{\psi} $ and $z0 = 0$. 
-	Note that the zero operator is also represented as 0 and its defined as the operator that maps all vectors to the zero vector: $0\ket{\psi} = 0 $.  
+	\item \textbf{Operador Zero} \\
+	Qualsevol espai vectorial té un vector zero expressat en notació de Dirac com a $0$, degut a que $\ket{0}$ es un altre concepte totalment diferent en CQ i IQ\footnote{Computació Quàntica i Informació Quàntica.}. El vector zero es aquell vector que per qualsevol vector $\ket{\psi}$ i qualsevol escalar $z$, es compleix que:	
+	$\ket{\psi} + 0 = \ket{\psi} $ i $z0 = 0$. \\
+	El operador zero també s'escriu com a $0$ i es defineix com l'operador que mapa qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
 	
-	\item \textbf{Inverse matrix} \\
-	A squared matrix\footnote{A square matrix is a matrix with dimensions $n\times n$.} $A$ is called invertible if there exist a matrix $A^{-1}$ such that $AA^{-1}=A^{-1}A$. $A^{-1}$ is the inverse matrix of $A$. The fastest way to see if a square matrix is invertible is to check if it has a non-zero determinant.  
+	\item \textbf{Matriu inversa} \\
+	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A$. $A^{-1}$ es la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero.
+
+	\item \textbf{Operador Identitat} \\
+	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera. Cal notar també que per qualsevol matriu $A$ i la seva inversa és veritat que $AA^{-1} = I$
 	
-	\item \textbf{Identity operator} \\
-	For any vector space $V$ there exist an identity operator $I$ that is defined as $I\ket{\psi} = \ket{\psi}$, this operator doesn't do anything to the vectors that it is applied to. Note that for any matrix $A$ and its inverse $A^{-1}$ is true that $AA^{-1} = I$.
+	\item \textbf{Operador Unitari} \\
+	Un operador unitari es qualsevol operador que no altera la norma dels vectors al quals es aplicat, per tant, una matriu es unitària si $AA^\dagger = I$
+	Per convertir qualsevol operador en unitari, es divideix les seves entrades entre la norma del operador. 
 	
-	\item \textbf{Unitary operator} \\
-	A unitary operator is any operator that doesn't change the norm of the vectors that it is applied to, moreover, a matrix $A$ is unitary if $AA^\dagger = I$. 
-	To convert any operator to unitary all its entries are divided by the norm of the operator. 
-	
-	\item \textbf{Hermitian operators} \\
-	A Hermitian operator or self-adjoint operator is any operator that its Hermitian conjugate is itself $A = A^\dagger$. Another thing to point out, is that there exist a unique operator $A$ on a Hilbert space. Such that for any vectors $\ket{\psi}$ and $\ket{\varphi}$:
+	\item \textbf{Operadors Hermitians} \\
+	Un operador Hermitià o \textit{self-adjoint operator} en anglès, es qualsevol operador que el seu conjugat Hermitià es ell mateix: $A = A^\dagger$ \\
+	Una altre cosa a tenir en compte es que existeix un operador únic $A$ en un espai de Hilbert, de manera que per qualsevol vectors $\ket{\psi}$ i $\ket{\varphi}$, es compleix que:
 	$$
 	\bra{\psi} (A \ket{\varphi}) = (A^\dagger\bra{\psi})\ket{\varphi}
 	$$ 
-	This operator is known as the adjoint or Hermitian conjugate of $A$.
+	Aquest operador es conegut com el \textit{adjoint} o conjugat Hermitià de $A$.
 	
 \end{enumerate}
 
-\subsubsection{Inner Product and Outer Product}
+\section{Producte Interior i Producte Exterior}
 
-\paragraph{Inner product}
-A dual vector $\bra{\psi}$ and a vector $\ket{\varphi}$ combined form the inner product $\bra{\psi}\ket{\varphi}$ which is an operation that 
-%The more notable property of a Hilbert space is its inner product $\bra{\psi}\ket{\varphi}$. This product 
-takes two vectors of the same space as input and produces a complex number as output:
+\subsection{Producte Interior}
+Un vector dual $\bra{\psi}$ i un vector $\ket{\varphi}$ combinats formen el producte interior $\bra{\psi}\ket{\varphi}$, el qual efectua una operació que agafa els dos vectors com a input i produeix un nombre complex com a output:
 $$
 \bra{a}\ket{b} = a_1 b_1 + a_2 b_2 + ... + a_{n-1} b_{n-1} + a_n b_n = z
 $$
-With $z, a_i, b_i \in \mathbb{C}$. When referring to an inner product I will often say 'the inner product of two vectors' when in reality is an operation between a dual vector and a vector.
+Amb $z, a_i, b_i \in \mathbb{C}$. Quan hem refereixo a un producte interior, normalment diré "el producte interior de dos vectors", quan en realitat es una operació entre un vector dual i un vector.
 
-The equivalent to this product on a 2 dimensional real space $\mathbb{R}^2$ is the dot product, which is also expressed as: 
+El equivalent d'aquest producte en un espai real de dos dimensions $\mathbb{R}^2$ es el producte escalar, que es expressat com a :
 \begin{equation}
 	\bra{a}\ket{b} = \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta 
 	\label{eq:dot_product}
 \end{equation}
 
 
-With $\norm{\cdot}_2$ being the $\ell^2$  norm defined by $\norm{\ket{\psi}}_2 = \sqrt{\psi_{1}^2 + ... + \psi_{n}^2}$ and $\theta$ being the angle between the vectors $\ket{a}$ and $\ket{b}$. As I said the equation \eqref{eq:dot_product} is equivalent to the inner product, however, from what I have seen, it is not widely used when working in high dimensional spaces because interpreting $\theta$ as an angle doesn't make sense when referring to vectors that have more than 2 dimensions. Instead, I have seen more often the inner product presented in its geometrical representation\footnote{The exact details of the geometrical representation of matrices and vectors are out of the scope of this work, even so, it gives a clear and intuitive way of looking at vectors and vector spaces \tocite.} as the product between one row vector and one column vector: 
+Amb $\norm{\cdot}_2$ sent la norma $\ell^2$  definida com a $\norm{\ket{\psi}}_2 = \sqrt{\psi_{1}^2 + \cdots + \psi_{n}^2}$ amb $\theta$ sent l'angle entre els vectors $\ket{a}$ i $\ket{b}$. Com he dit l'equació \eqref{eq:dot_product} és equivalent al producte interior, no obstant, segons el que he vist, no es usada àmpliament ja que interpretar $\theta$ com un angle entre vectors de dimensions altes no té molt de sentit. En contrast, he vist aquest producte presentat en la seva interpretació geomètrica\footnote{Els detalls exactes de l'interpretació geomètrica estan fora del domini d'aquest treball, malgrat que m'agradaria molt parlar sobre el tema.} com el producte entre un vector fila i un vector columna: 
 % The Geometry of Linear Equations: https://www.youtube.com/watch?v=ZK3O402wf1c&list=PL3CCC70370BD3FD48&index=1
 % The four Fundamental Subspaces: https://www.youtube.com/watch?v=nHlE7EgJFds
 $$
-\bra{a}\ket{b} = \begin{bmatrix}a_1  ...  a_n \end{bmatrix} \begin{bmatrix} b_{1} \\ \vdots \\ b_{n} \end{bmatrix}
+\bra{a}\ket{b} = \begin{bmatrix}a_1  \cdots  a_n \end{bmatrix} \begin{bmatrix} b_{1} \\ \vdots \\ b_{n} \end{bmatrix}
 $$
 
-
+Ja he definit la norma 
 I have already defined the $\ell_2$ norm as the square root of the sum of the squared entries of a vector: 
 $$
-\norm{\ket{a}}_2 = \sqrt{\sum_{i} a_{i}^2}
+\norm{\ket{a}}_2 = \sqrt{\sum_{i} \abs{a_{i}}^2}
 $$
 Nonetheless, the more common definition is based upon the inner product. As you can see the inner product of a vector by itself is the sum of the squared entries: 
 $$
-\bra{a}\ket{a} = a_1 a_1 + ... + a_n a_n = a_1^2 + ... +  a_n^2 \\= \sum_{i} a_i^2
+\bra{a}\ket{a} = a_1 a_1 + \cdots + a_n a_n = a_1^2 + \cdots +  a_n^2 \\= \sum_{i} a_i^2
 $$
 Thus, the norm can be defined as the square root of the inner product of a vector:
 \begin{equation}
@@ -178,7 +178,7 @@ When the norm is applied to a 2 dimensional vector you can see that is the same 
 
 From what I understand some properties of the length of a two dimensional vector do not hold with the norm of a vector that has more than 2 dimensions. In other words, the norm behaves in similar ways like the distance from the origin (which is the length), thus they are not the exact same thing. Moreover, there are different types of norm\footnote{But not different types of length, that I know of at least.} that are used in different types of scenarios. That is why I am referring to a $\ell^2$ norm, a specific type of norm that is also named Euclidean norm which is used to define the $\ell^2$ distance or Euclidean distance, widely used to measure the distance of two points in a 2D space or a 3D space in high school \cite{wolfram:2norm}.
 
-\paragraph{Properties of the Inner Product}
+\subsubsection{Properties of the Inner Product}
 The basic properties of the inner product are as follows:
 \begin{enumerate}
 	\item Is linear in the second argument $ (z_1\bra{a}+ z_2\bra{c})\ket{b} = z_1\bra{a}\ket{b} + z_2\bra{c}\ket{b}$
@@ -187,7 +187,7 @@ The basic properties of the inner product are as follows:
 \end{enumerate}
 
  
-\paragraph{Orthonormal and orthogonal vectors}
+\subsection{Orthonormal and orthogonal vectors}
 From the concept of norm comes the concepts a pair of orthogonal vectors and a pair of orthonormal vectors\footnote{Funny note, when I encountered these two terms for the first time in QC and QI \tocite, I taught they were the same thing and a week passed until I realized. It was such a difficult mess to understand everything else with these two terms confused.}. \\
 Looking at the equation \eqref{eq:norm} we can see that if the inner product of a vector is one, the norm of this vector is also one. A vector that has norm one is named a unit vector. Therefore, if the inner product of a vector is one, that vector is a unit vector.
 
@@ -224,7 +224,7 @@ $$
 \end{cases}
 $$
 
-\paragraph{Outer product}
+\subsection{Outer product}
 The outer product is a function that takes two vectors -expressed as $\ket{a}\bra{b}$, with $\ket{a}$ and $\ket{b}$ being vectors- and produces an linear operator as output. Unlike the inner product, there is no analog for the outer product on the mathematics taught in high school\footnote{The analog of the inner product would be the dot product.}, and it is a bit difficult to understand it as it can take two vectors from different spaces as input. It is defined as follows:
 
 
@@ -253,7 +253,7 @@ $$
 $$
 The usefulness of the outer product will be shown in future sections.
 
-\subsubsection{Tensor product}
+\section{Tensor product}
 The last product to mention is the tensor product, represented with the symbol $\otimes$. This product is used to create larger vector spaces by combining smaller vector spaces. The formal explanation of this concept is quite difficult, so I will focus on explaining the way to compute it by using the matrix representation of this product, named the Kronecker product. 
 
 For a $m \times n$ matrix  $A$ and a $p \times q$ matrix  $B$ the output of their Kronecker product \cite{QCandQI:kronecker} is a $pm \times qn$ matrix:
@@ -386,7 +386,7 @@ Note that the Kronecker product can also be taken between a vector and a matrix 
 %For the orthonormal basis $\ket{i}$ and $\ket{j}$ of $V$ and $W$ respectively the orthonormal basis for $V\otimes W$ would be $\ket{i}\otimes\ket{j}$.
 
 
-\paragraph{Properties of the Tensor Product}
+\subsection{Properties of the Tensor Product}
 The basic properties of the tensor product are as follows \cite{QCandQI:tensor_product, wiki:tensor_product}:
 \begin{enumerate}
 	\item Associativity: \\ $A \otimes (B + C) = A \otimes B + A \otimes C$ \\
@@ -405,7 +405,7 @@ The basic properties of the tensor product are as follows \cite{QCandQI:tensor_p
 %Where $\mathbb{R}$ is the space of all real number, and $\rightarrow$ is 
 
 
-\subsubsection{Trace}
+\section{Trace}
 The trace of a matrix is just the sum of the elements on the main diagonal, the one that goes from top to bottom and left to right.
 
 Here's a matrix $A$ with its main diagonal marked:
@@ -450,12 +450,12 @@ $$
 \Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
 $$
 
-\subsection{Quantum Computation}
+\chapter{Quantum Computation}
 After some amount of math theory, it is time to start talking about quantum mechanics, in this chapter I am going to introduce the basic concepts of quantum computation and quantum information.
 
 Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere \cite{QCandQI:QM_postulates}. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
 
-\subsubsection{Quantum State and Superpositions}
+\section{Quantum State and Superpositions}
 To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system \cite{QT_concepts:q_systems}.
 
 Imagine that you have a pen, however, you do not know which color is it, but you know that it can be red or blue. To figure out the color, you would do a measurement, in other words, write something to see the color of the ink. You also know that there is a 50\% change of being blue, and a 50\% of being red\footnote{This is starting to sound a lot like US politics.}. So far you have your quantum system (the pen), a way to measured it (writing), and a list of all the possible outcomes (50\% blue and 50\% red). Now you need your quantum state, the way to represent everything mathematically. Let's try to store the information that we know about the pen in a vector.
@@ -533,7 +533,7 @@ $$
 	\textcolor{magenta}{0.1 }\\
 	\textcolor{black}{0.1 }\\
 	\textcolor{brown}{0.05}
-\end{bmatrix} = 1
+\end{bmatrix} = \textcolor{green}{0.1 }
 $$
 Note that we use the corresponding basis for the 3th element, the green number.
 
@@ -551,12 +551,70 @@ Let me explain, what the filter does is to collapse the photon in two possible s
 
 However, the polarization of the photons are a concrete physical system, in quantum information everyone works with qubits, instead of physical systems\footnote{Unless you are working with a concrete quantum system, and you want to represent the information in the system's terms.}. Went presenting algorithms for example, researchers use qubits. 
 
-\subsubsection{Qubits}
-Modern computers represent information through strings of zeros and ones named bits. We encode and decode bits using binary code, through standards like UTF-8 \cite{wiki:utf8} that can encode any character from the Unicode standard, that is all letters and emojis that exist. 
+\section{Qubits}
+Modern computers represent information through strings of zeros and ones named bits. Everything, from images to letters, characters and instructions. For example, the letter t is represented by the bitstring $01110100$. Everything you do on a computer is on binary code.
 
-\subsubsection{Quantum Measurement}
+Since we are so used to binary code, in the field of quantum computing is also used, however, instead of bits, qubits are used. A qubit is the analog of a bit, in other words the information unit used by quantum computers. We can apply quantum superposition and quantum entanglement to qubits. If a bit has two states $0$ and $1$, a qubit has a state that is a linear combination of the two fundamental states $\ket{0}$ and $\ket{1}$:
+$$
+\ket{\psi} = \alpha\ket{0} + \beta\ket{1}
+$$
+Where $\alpha$ and $\beta$ are complex numbers and $\ket{\psi}$ is a vector in a 2-dimensional Hilbert space\footnote{A space with an inner product.}.
+The vectors $\ket{0}$ and $\ket{1}$ are called the computation basis vectors. They are represented as follows:
+$$
+\ket{0} = \begin{bmatrix}
+	1 \\ 0
+\end{bmatrix} \;
+\ket{1} = \begin{bmatrix}
+	0 \\ 1
+\end{bmatrix}
+$$
+Thus the vector $\ket{\psi}$ is:
+$$
+\ket{\psi} 
+= \alpha 
+\begin{bmatrix}
+	1 \\ 0
+\end{bmatrix} + \beta 
+\begin{bmatrix}
+0 \\ 1
+\end{bmatrix}= 
+\begin{bmatrix}
+	\alpha \\ \beta
+\end{bmatrix}
+$$
+This vector is a valid quantum state to represent a qubit, however, there is an important factor to take into account. The vector has to be normalized according to the $\ell_2$ norm, therefore $\alpha$ and $\beta$ can not be any complex number, they need to form a vector that a norm of $1$:
+$$
+\norm{\ket{\psi}} = 1 
+$$
+Therefore:
+\begin{align*}
+	\norm{\psi} &= \sqrt{\abs{\alpha}^2 + \abs{\beta}^2} = 1 \\
+	&\Rightarrow \abs{\alpha}^2 + \abs{\beta}^2 = 1
+\end{align*}
+
+Saying that a qubit is "is a linear combination of the two fundamental states" is not that meaningful, so let me elaborate more on that:
+A $n$-bitstring can represent just one possible combination at a time, while a $n$-qubit system can represent a combination of all the possible combinations. Consider a qubit as a mixture of the possible states, each coefficient on the linear combination is the number that indicates how much a state is part of that mixture. For example, if you want an equal mixture of the states $\ket{0}$ and $\ket{1}$ 
+
+
+
+
+Something interesting happens as you increase the number of qubits, the "amount of information" increases exponentially. When you go from a $7$-bitstring to a $8$-string the amount of numbers\footnote{Binary numbers.} that can be represent increases by one, from $7$ to $8$.
+But $n$ qubits can represent $2^n$ complex numbers. Note that the qubit represented before represents two complex numbers. All this is because the computational basis used by the qubits, it grows exponentially with the number of qubits. 
+
+Two qubits are represented by the vector:
+\begin{align*}
+	\ket{\psi} &= \alpha_1\ket{00} + \alpha_2\ket{01} + \alpha_3\ket{10} + \alpha_4\ket{11}\\
+			&= \alpha_1\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \alpha_2 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} + \alpha_3 \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} + \alpha_4\begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
+			= \begin{bmatrix} \alpha_1 \\ \alpha_2 \\ \alpha_3 \\ \alpha_4 \end{bmatrix}
+\end{align*}
+Note that the computational basis vectors are the columns of an identity matrix of dimensions $2^n\times 2^n$, where $n$ is the number of qubits.
+
+The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
+
+
+
+\section{Quantum Measurement}
 Turning back to the photons and their polarization, to predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
-
 Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state \cite{QC_intro:photon}:
 $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}

@@ -1,28 +1,27 @@
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
-\BOOKMARK [0][-]{chapter.2}{Theoretical Framework}{}% 2
-\BOOKMARK [1][-]{subsection.2.0.1}{Linear Algebra}{chapter.2}% 3
-\BOOKMARK [2][-]{subsubsection.2.0.1.1}{Vectors and Vector Spaces}{subsection.2.0.1}% 4
-\BOOKMARK [3][-]{subsubsection.2.0.1.2}{Linear Operators}{subsubsection.2.0.1.1}% 5
-\BOOKMARK [4][-]{paragraph.2.0.1.2.1}{Types of linear operators}{subsubsection.2.0.1.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.0.1.3}{Inner Product and Outer Product}{subsubsection.2.0.1.1}% 7
-\BOOKMARK [4][-]{paragraph.2.0.1.3.1}{Inner product}{subsubsection.2.0.1.3}% 8
-\BOOKMARK [4][-]{paragraph.2.0.1.3.2}{Properties of the Inner Product}{subsubsection.2.0.1.3}% 9
-\BOOKMARK [4][-]{paragraph.2.0.1.3.3}{Orthonormal and orthogonal vectors}{subsubsection.2.0.1.3}% 10
-\BOOKMARK [4][-]{paragraph.2.0.1.3.4}{Outer product}{subsubsection.2.0.1.3}% 11
-\BOOKMARK [3][-]{subsubsection.2.0.1.4}{Tensor product}{subsubsection.2.0.1.1}% 12
-\BOOKMARK [4][-]{paragraph.2.0.1.4.1}{Properties of the Tensor Product}{subsubsection.2.0.1.4}% 13
-\BOOKMARK [3][-]{subsubsection.2.0.1.5}{Trace}{subsubsection.2.0.1.1}% 14
-\BOOKMARK [2][-]{subsection.2.0.2}{Quantum Computation}{subsection.2.0.1}% 15
-\BOOKMARK [3][-]{subsubsection.2.0.2.1}{Quantum State and Superpositions}{subsection.2.0.2}% 16
-\BOOKMARK [3][-]{subsubsection.2.0.2.2}{Qubits}{subsection.2.0.2}% 17
-\BOOKMARK [3][-]{subsubsection.2.0.2.3}{Quantum Measurement}{subsection.2.0.2}% 18
-\BOOKMARK [0][-]{chapter.3}{Experimental Work}{}% 19
-\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 20
-\BOOKMARK [0][-]{section*.4}{Appendices}{}% 21
-\BOOKMARK [0][-]{appendix.a.A}{More Linear Algebra}{}% 22
-\BOOKMARK [1][-]{section.a.A.1}{Gram\205Schmidt Procedure}{appendix.a.A}% 23
-\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 24
-\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 25
-\BOOKMARK [0][-]{appendix.a.B}{Quantum Computation vs Quantum Mechanics}{}% 26
-\BOOKMARK [1][-]{section.a.B.1}{Normalizing}{appendix.a.B}% 27
-\BOOKMARK [0][-]{appendix.a.C}{Polarization of a photon}{}% 28
+\BOOKMARK [-1][-]{part.1}{I Marc Te\362ric}{}% 1
+\BOOKMARK [0][-]{chapter.1}{\300lgebra Lineal}{part.1}% 2
+\BOOKMARK [1][-]{section.1.1}{Vectors i Espais Vectorials}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{Operadors Lineals}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.2.1}{Tipus d'Operadors Lineals}{section.1.2}% 5
+\BOOKMARK [1][-]{section.1.3}{Producte Interior i Producte Exterior}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.3.1}{Producte Interior}{section.1.3}% 7
+\BOOKMARK [3][-]{subsubsection.1.3.1.1}{Properties of the Inner Product}{subsection.1.3.1}% 8
+\BOOKMARK [2][-]{subsection.1.3.2}{Orthonormal and orthogonal vectors}{section.1.3}% 9
+\BOOKMARK [2][-]{subsection.1.3.3}{Outer product}{section.1.3}% 10
+\BOOKMARK [1][-]{section.1.4}{Tensor product}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.4.1}{Properties of the Tensor Product}{section.1.4}% 12
+\BOOKMARK [1][-]{section.1.5}{Trace}{chapter.1}% 13
+\BOOKMARK [0][-]{chapter.2}{Quantum Computation}{part.1}% 14
+\BOOKMARK [1][-]{section.2.1}{Quantum State and Superpositions}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.2}{Qubits}{chapter.2}% 16
+\BOOKMARK [1][-]{section.2.3}{Quantum Measurement}{chapter.2}% 17
+\BOOKMARK [-1][-]{part.2}{II Part Experimental}{}% 18
+\BOOKMARK [-1][-]{part.3}{III Conclusions}{}% 19
+\BOOKMARK [0][-]{section*.5}{Appendices}{part.3}% 20
+\BOOKMARK [0][-]{appendix.a.A}{More Linear Algebra}{part.3}% 21
+\BOOKMARK [1][-]{section.a.A.1}{Gram\205Schmidt Procedure}{appendix.a.A}% 22
+\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 23
+\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 24
+\BOOKMARK [0][-]{appendix.a.B}{Quantum Computation vs Quantum Mechanics}{part.3}% 25
+\BOOKMARK [1][-]{section.a.B.1}{Normalizing}{appendix.a.B}% 26
+\BOOKMARK [0][-]{appendix.a.C}{Polarization of a photon}{part.3}% 27

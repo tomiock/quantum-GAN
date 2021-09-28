@@ -4,7 +4,7 @@
 Maria Schuld, Ilya Sinayskiy, and Francesco Petruccione.
 \newblock The quest for a quantum neural network.
 \newblock {\em Quantum Information Processing}, 13:2567–2586, 2014.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://arxiv.org/abs/1408.7005}{Link}].
 
 \bibitem{tfq}
@@ -18,13 +18,13 @@ Michael Broughton, Guillaume Verdon, Trevor McCourt, Antonio~J. Martinez,
 \newblock Tensorflow quantum: A software framework for quantum machine
   learning.
 \newblock 2021.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://arxiv.org/abs/1408.7005}{Link}].
 
 \bibitem{IBM_Q}
 IBM.
 \newblock Ibm quantum experience, 2021.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://www.ibm.com/quantum-computing/}{Link}].
 
 \bibitem{GAN2014}
@@ -32,7 +32,7 @@ Ian~J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David
   Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio.
 \newblock Generative adversarial networks.
 \newblock 2014.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://arxiv.org/abs/1406.2661}{Link}].
 
 \bibitem{QGAN_exp}
@@ -41,31 +41,26 @@ He-Liang Huang, Yuxuan Du, Ming Gong, Youwei Zhao, Yulin Wu, Chaoyue Wang,
 \newblock Experimental quantum generative adversarial networks for image
   generation.
 \newblock {\em Physical Review Applied}, 16(2), 2021.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://arxiv.org/abs/2010.06201}{Link}].
 
 \bibitem{LA_OCW_strang}
 Gilbert Strang.
 \newblock Linear algebra mit ocw, 2011.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/index.htm}{Link}].
 
 \bibitem{LA2_OCW_strang}
 Gilbert Strang.
 \newblock Matrix methods in data analysis, signal processing, and machine
   learning mit ocw, 2018.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://ocw.mit.edu/courses/mathematics/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/}{Link}].
 
 \bibitem{QCandQI}
 Michael~A. Nielsen and Isaac~L. Chuang.
 \newblock {\em Quantum Computation and Quantum Information}.
 \newblock Cambrindge University Press, 10 edition, 2010.
-
-\bibitem{QC_intro}
-Eleanor Rieffel and Wolfgang Polak.
-\newblock {\em Quantum Computing: A Gentle Introduction}.
-\newblock MIT Press, 1 edition, 2011.
 
 \bibitem{QCandQI:GramSchmidt}
 Michael~A. Nielsen and Isaac~L. Chuang.
@@ -86,7 +81,7 @@ Sheldon Axler.
 \bibitem{wolfram:2norm}
 Wolfram MathWorld.
 \newblock L2-norm, 2021.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://mathworld.wolfram.com/L2-Norm.html}{Link}].
 
 \bibitem{QCandQI:kronecker}
@@ -104,7 +99,7 @@ Michael~A. Nielsen and Isaac~L. Chuang.
 \bibitem{wiki:tensor_product}
 Wikipedia.
 \newblock Tensor product, 2021.
-\newblock [Online; accessed 19/09/2021:
+\newblock [Online; accedit en 19/09/2021:
   \href{https://en.wikipedia.org/wiki/Tensor_product}{Link}].
 
 \bibitem{QCandQI:QM_postulates}
@@ -123,12 +118,6 @@ Eleanor Rieffel and Wolfgang Polak.
 \newblock {\em Quantum Computing: A Gentle Introduction}, chapter~2, pages
   12--13.
 \newblock MIT Press, 1 edition, 2011.
-
-\bibitem{wiki:utf8}
-Wikipedia.
-\newblock Utf-8, 2021.
-\newblock [Online; accessed 19/09/2021:
-  \href{https://en.wikipedia.org/wiki/UTF-8}{Link}].
 
 \bibitem{QCandQI:dirac_notation}
 Michael~A. Nielsen and Isaac~L. Chuang.
