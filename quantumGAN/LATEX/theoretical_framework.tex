@@ -456,35 +456,35 @@ After some amount of math theory, it is time to start talking about quantum mech
 Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere \cite{QCandQI:QM_postulates}. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
 
 \section{Quantum State and Superpositions}
-To describe how physical systems evolution through time, you need to represent them in some way. On quantum computing those quantum physical systems are represented through quantum states, which are some form of probably distribution for the possible outcomes of a measurement on a quantum system \cite{QT_concepts:q_systems}.
+Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica és representen per estats quàntics, els quals són algun tipus de distribucions de probabilitat per els possibles resultats d'una mesura on un sistema quàntic \cite{QT_concepts:q_systems}.
 
-Imagine that you have a pen, however, you do not know which color is it, but you know that it can be red or blue. To figure out the color, you would do a measurement, in other words, write something to see the color of the ink. You also know that there is a 50\% change of being blue, and a 50\% of being red\footnote{This is starting to sound a lot like US politics.}. So far you have your quantum system (the pen), a way to measured it (writing), and a list of all the possible outcomes (50\% blue and 50\% red). Now you need your quantum state, the way to represent everything mathematically. Let's try to store the information that we know about the pen in a vector.
+Imaginat que tens un boli, però que no saps de quin color és, no obstant, saps que pot ser vermell o blau. Per esbrinar de quin color és, pots provar a escriure amb el boli per veure el color de la pinta, o en altres paraules, fer una mesura. Saps que hi ha un 50\% de probabilitat de que sigui vermell i un 50\% de que sigui blau. En aquesta situació hipotètica tindries el teu sistema quàntic (el boli), una manera de mesurar-lo (escriure alguna cosa) i una llista amb els possibles resultats (50\% vermell, 50\% blau), només et falta una manera de representar-lo tot matemàticament, el estat quàntic. Per tant, per què no intentem guardar la informació que sabem del boli en un vector?
 
-If we put the probability of each possible outcome in an entry, we have the following vector:
+Si posem cada probabilitat de treure un resultat en un vector tenim que:
 $$
 \begin{bmatrix}
 	0.5 \\
 	0.5
 \end{bmatrix}
 $$
-Where the first entry is the probability of painting blue and the second one of painting red, to make it more easy let me color the numbers:
+On la primera entrada és la possibilitat de que el boli sigui vermell i la segona entrada de que sigui blau, per fer-ho més senzill aquí està en colors:
 $$
 \begin{bmatrix}
-	\textcolor{blue}{0.5} \\
-	\textcolor{red}{0.5}
+	\textcolor{red}{0.5} \\
+	\textcolor{blue}{0.5}
 \end{bmatrix}
 $$
-Note that this vector is normalized went using the $\ell_1$ norm, defined as the sum of the entries of a vectors\footnote{With $\ket{a}$ being a vector, the $\ell_1$ norm, denoted as $\norm{\cdot}_1$ is $\norm{\ket{a}}_1 = \sum_i a_i$.}, in other words, the $\ell_1$ norm of this vector is $1$.
+Cal remarcar que aquest vector està normalitzat amb la norma $\ell_1$, definida com la suma de les entrades d'un vector\footnote{Amb $\ket{a}$ sent un vector, la norma $\ell_1$, denotada per $\norm{\cdot}_1$ és $\norm{\ket{a}}_1 = \sum_i a_i$.}, en altres paraules la norma $\ell_1$ d'aquest vector és $1$.
 
-So, how can we extract the probability about a possible outcome from the vectors, by a mathematical operation; I mean. We how that we need to get a real number out of this operation, so let's try with an inner product.
-As we know a vector in a space is a linear combination of space basis:
+Llavors, hem d'escollir una operació matemàtica per poder extreure la informació del vector, com que el output ha de ser un número, podem provar a utilitzar un producte interior. Però primer s'ha de representar el vector com una combinació lineal de les seves bases:
 $$
-\textcolor{blue}{0.5}\ket{0} + \textcolor{red}{0.5}\ket{1} = \begin{bmatrix}
-	\textcolor{blue}{0.5} \\
-	\textcolor{red}{0.5}
+\textcolor{red}{0.5}\ket{0} + \textcolor{blue}{0.5}\ket{1} = \begin{bmatrix}
+	\textcolor{red}{0.5} \\
+	\textcolor{blue}{0.5}
 \end{bmatrix}
 $$
-Where $\ket{0}$ is the vector $\begin{bmatrix} 1 \\ 0\end{bmatrix}$, and, $\ket{1}$ is the vector $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$. Thus to get the scalar, you take the inner product between the basis corresponding to that scalar and the vector, like so:
+On $\ket{0}$ és el vector $\begin{bmatrix} 1 \\ 0\end{bmatrix}$, i, $\ket{1}$ és el vector $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$.
+Per tant, per trobar la probabilitat, s'agafa el producte interior del vector amb la base corresponent a la probabilitat, com a continuació:
 $$
 \bra{0}\ket{v} =
 \begin{bmatrix}
@@ -492,10 +492,10 @@ $$
 	0
 \end{bmatrix}
 \begin{bmatrix}
-	\textcolor{blue}{0.5} \\
-	\textcolor{red}{0.5}
+	\textcolor{red}{0.5} \\
+	\textcolor{blue}{0.5}
 \end{bmatrix}
-= \textcolor{blue}{0.5}
+= \textcolor{red}{0.5}
 $$
 $$
 \bra{1}\ket{v} =
@@ -504,12 +504,12 @@ $$
 		1
 	\end{bmatrix}
 	\begin{bmatrix}
-		\textcolor{blue}{0.5} \\
-		\textcolor{red}{0.5}
+		\textcolor{red}{0.5} \\
+		\textcolor{blue}{0.5}
 	\end{bmatrix}
-	= \textcolor{red}{0.5}
+	= \textcolor{blue}{0.5}
 $$
-You can see that this is quite easy. For example, to represent a pen with 6 colors with a random possibility of writing in a specific color, a valid vector to represent this pen would be\footnote{The entries in the vector are colored for clarity, but don't take it to seriously.}:
+Aquest procediment és bastant senzill, com a un altre exemple, per representar un boli amb 6 colors possibles amb una possibilitat aleatòria d'escriure amb un color del 6 possibles, l'estat d'aquest boli és\footnote{Le posat colors a els elements per claredat.}:
 $$
 \ket{w} =
 \begin{bmatrix}
@@ -521,7 +521,7 @@ $$
 	\textcolor{brown}{0.05}
 \end{bmatrix}
 $$
-Then we can measure the state with an inner product:
+Ara veure la probabilitat de per exemple treure el color verd, utilitzant la tercera base, la que correspon al color verd:
 $$
 \begin{bmatrix}
 	0 & 0 & 1 & 0 & 0 & 0\\
@@ -535,31 +535,28 @@ $$
 	\textcolor{brown}{0.05}
 \end{bmatrix} = \textcolor{green}{0.1 }
 $$
-Note that we use the corresponding basis for the 3th element, the green number.
+Deixant els bolis a una banda, ara els podem substituir per un sistema físic quàntic, com per exemple un fotó. Els fotons tenen certes propietats que poden ser mesurades, com la seva polarització\footnote{Concretament, són una propietat que les ones transversals tenen, el tipus d'ona de les ones electromagnètiques, que són els fotons en realitat.}. Al mirar als fotons com ones en que oscil·len en el camps electromagnètic, la polarització és l'orientació geomètrica de l'ona. La polarització pot ser interpretada com un angle respecte a la direcció de propagació. \todo{posar una figura aquí}
 
-Leaving the pens aside, now we are going to substitute the pens by quantum systems, for example, with a photon. Photons have certain properties that can be measured, like polarization\footnote{More concretely, its a property of traverse waves, which electromagnetic waves are.}, when looking at photon as waves in the electromagnetic field, the polarization is the geometrical orientation of the oscillation of the wave. This can be interpreted as an angle respect to the propagation direction. \todo{insert figure here}
-
-We can set the basis states of the polarization as vertical and horizontal, denoted with the vectors $\ket{\text{\textrightarrow}}$ and $\ket{\text{\textuparrow}}$, respectively. And we can set a state that is a superposition of both, denoted as $\ket{\nearrow}$ \cite{QC_intro:photon}. 
-The superposed state will be: 
+Al definir les bases del estat de polarització com vertical i horitzontal, denotades per els vectors $\ket{\text{\textrightarrow}}$ i $\ket{\text{\textuparrow}}$, respectivament. Podem definir un estat de superposició entre les bases, representat com $\ket{\nearrow}$ \cite{QC_intro:photon}: 
 $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
 $$
-Where $\alpha$ and $\beta$ are complex numbers.
-The superpose state simply is an angle that is not $0$ nor $\frac{\pi}{2}$. Note that we do not have to worry about the exact math of all these vectors\footnote{The mathematical description of the polarization of the photon is not necessary to know went talking about quantum computation, unless you are working with a quantum computer that represents the quantum states as photons (using their polarization or something else.). Then you would be talking about quantum optics which is itself a complex part of quantum mechanics, that I do not want to learn about yet.}, because we are only worry about the information that they carry. Which is taken through the measurements, like with the pen. To know\footnote{Kind of, you will see later.} the state of polarization, e.i. to measure it, you need to pass the photon through several polarizing filters, which let a photon pass completely through it or absorbed completely on a probabilistic matter. 
+On $\alpha$ i $\beta$ són números complexos. 
+Un estat en superposició es simplement un estat on l'angle de polarització no és $0$ ni $\frac{\pi}{2}$. No ens tenim que preocupar de la descripció matemàtica exacte de la polarització dels fotons al parlar de computació quàntica perquè el que importa és l'informació que porten aquests estat, no la física dels sistemes que representen. Aquesta informació s'ha d'agafar mitjançant mesures, com amb els bolis. Aquestes mesures en el cas de la polarització dels fotons seria passar-los per diversos filtres de polarització, els quals deixen passar el fotó o l'absorbeixen, tot això d'una manera probabilística, es a dir, dependent de quin sigui l'estat tenen certa possibilitat de ser absorbits o no.
 
-Let me explain, what the filter does is to collapse the photon in two possible states of polarization in either the state on which the filter is oriented or on the state that is perpendicular to it. For example, a filter oriented in the horizontal direction will either pass a photon oriented vertically or block entirely.  The matter on which the collapse is decided is probabilistic, a photon oriented on the horizontal direction has a 100\% probability of being absorbed, while a photon polarized vertically has a 0\% chance of being absorbed, and finally, a photon that has a $\frac{\pi}{4}$ angle of polarization respect to the filter, meaning that is exactly in between these two perpendicular states, has a 50\% probability of being absorbed by the filter, thus it has a 50\% chance of passing through. 
+Per clarificar, el filtre lo que fa es col·lapsar el fotó en els dos possibles estats de polarització, l'estat en el quan el filtre es orientat o l'estat perpendicular a aquest. Si col·lapsa en l'estat del filtre el fotó passa pel el filtre, en cas de col·lapsar en l'altre estat, es absorbit. La manera en la que els fotons col·lapsen és probabilística, si agafen un filtre que està orientat horitzontalment respecte al fotons que li arriben, un fotó orientat en horitzontalment té un 100\% de poder passar, mentre que un fotó polaritzat verticalment té un 0\% de probabilitat de poder passar. I si un fotó està polaritzat en un angle just entre vertical i horitzontal, es a dir a 45º, tindrà un 50\% de possibilitats de passar i un 50\% de no poder-hi. 
 
-However, the polarization of the photons are a concrete physical system, in quantum information everyone works with qubits, instead of physical systems\footnote{Unless you are working with a concrete quantum system, and you want to represent the information in the system's terms.}. Went presenting algorithms for example, researchers use qubits. 
+Aquesta és la manera amb la qual els sistemes quàntics es comporten, a través de la probabilitat, on els estats que els representen tenen la informació sobre quines són aquestes possibilitats. 
+No obstant, la, polarització dels fotons són un sistema físic concret, quan es parla de computació quàntica és millor treballar amb conceptes més generals per poder expressar tants algoritmes com sigui possible i poder implementar aquests algoritmes en tants ordinadors quàntics com sigui possible. Per saqueta raó, en la branca de la informació quàntica i la computació quàntica es treballa amb qubits, en comptes de diversos sistemes físics. 
 
 \section{Qubits}
-Modern computers represent information through strings of zeros and ones named bits. Everything, from images to letters, characters and instructions. For example, the letter t is represented by the bitstring $01110100$. Everything you do on a computer is on binary code.
+Ordinadors modern representen informació a través de cadenes de zeros i uns, anomenats bits. Tot, des de imatges a lletres o instruccions electròniques. Per exemple, la lletra t és representada per la cadena de bits $01110100$, codificat a través de codi binari. Tot el que fas en un ordinador es codifica i representa en codi binari. 
 
-Since we are so used to binary code, in the field of quantum computing is also used, however, instead of bits, qubits are used. A qubit is the analog of a bit, in other words the information unit used by quantum computers. We can apply quantum superposition and quantum entanglement to qubits. If a bit has two states $0$ and $1$, a qubit has a state that is a linear combination of the two fundamental states $\ket{0}$ and $\ket{1}$:
+Degut a que estem molt acostumats a codi binari, en el camp de la computació quàntica també s'utilitza, no obstant, en comptes de bits s'utilitzen qubits. Un qubit es l'anàleg d'un bit, en altres paraules, és la unitat mínima d'informació utilitzada pels ordinadors quàntics. En els qubits podem aplicar propietats quàntiques com la superposició o l'entrellaçament\footnote{Ja he parlat de la primera amb la polarització del fotons, del entrellaçament parlaré més endavant.}. Si un bit pot estar en l'estat $1$ o en l'estat $1$, un qubit pot estar en una combinació d'aquests estats, en un estat enmig del $1$ o el $0$. És una combinació lienal dels vectors que representen aquests estats, $\ket{0}$ i $\ket{1}$:
 $$
 \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
 $$
-Where $\alpha$ and $\beta$ are complex numbers and $\ket{\psi}$ is a vector in a 2-dimensional Hilbert space\footnote{A space with an inner product.}.
-The vectors $\ket{0}$ and $\ket{1}$ are called the computation basis vectors. They are represented as follows:
+On $\alpha$ i $\beta$ són nombres complexos i $\ket{\psi}$ és un vector en un bidimensional espai de Hilbert\footnote{Un espai vectorial amb un producte interior.}. Els vectors $\ket{0}$ i $\ket{1}$ són anomenats els vectors de la base computacionals, representats com:
 $$
 \ket{0} = \begin{bmatrix}
 	1 \\ 0
@@ -568,7 +565,7 @@ $$
 	0 \\ 1
 \end{bmatrix}
 $$
-Thus the vector $\ket{\psi}$ is:
+Per tant el vector $\ket{\psi}$ és:
 $$
 \ket{\psi} 
 = \alpha 
@@ -582,51 +579,49 @@ $$
 	\alpha \\ \beta
 \end{bmatrix}
 $$
-This vector is a valid quantum state to represent a qubit, however, there is an important factor to take into account. The vector has to be normalized according to the $\ell_2$ norm, therefore $\alpha$ and $\beta$ can not be any complex number, they need to form a vector that a norm of $1$:
+Aquest vector és un estat quàntic vàlid per representar un qubit, no obstant, hi ha un important factor a tenir en compte. El vector ha d'estar normalitzat amb la norma $\ell_2$, per tant, els nombres $\alpha$ i $\beta$ no poden ser qualsevol nombre, necessiten ser els coeficients que formin un vector amb una norma de $1$.   
 $$
 \norm{\ket{\psi}} = 1 
 $$
-Therefore:
+Llavors:
 \begin{align*}
 	\norm{\psi} &= \sqrt{\abs{\alpha}^2 + \abs{\beta}^2} = 1 \\
 	&\Rightarrow \abs{\alpha}^2 + \abs{\beta}^2 = 1
 \end{align*}
 
-Saying that a qubit is "is a linear combination of the two fundamental states" is not that meaningful, so let me elaborate more on that:
-A $n$-bitstring can represent just one possible combination at a time, while a $n$-qubit system can represent a combination of all the possible combinations. Consider a qubit as a mixture of the possible states, each coefficient on the linear combination is the number that indicates how much a state is part of that mixture. For example, if you want an equal mixture of the states $\ket{0}$ and $\ket{1}$ 
+Definir un qubit com una "combinació lienal dels estats fundamentals" no és de molta ajuda, per això, elaboraré més sobre aquesta definició: 
+Una cadena de $n$-bit pot només representar una única combinació d'uns i zeros, mentres que una cadena de $n$-qubits representa una combinació de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
 
+Una cosa molt interessant passa quan s'augmenta el nombre qubits, la 'quantitat d'informació' creix exponencialment. Quan passes d'una cadena de $7$ qubits a una cadena de $8$ qubits la quantitat d'informació creix per només un número. Però per una cadena de $n$ qubits la quantitat d'informació que té, en altres paraules la quantitat de números que representa és $2^n$, on aquests números son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinació creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions en la combinació lineal. El qubits al ser una combinació de possibles estats necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
 
-
-
-Something interesting happens as you increase the number of qubits, the "amount of information" increases exponentially. When you go from a $7$-bitstring to a $8$-string the amount of numbers\footnote{Binary numbers.} that can be represent increases by one, from $7$ to $8$.
-But $n$ qubits can represent $2^n$ complex numbers. Note that the qubit represented before represents two complex numbers. All this is because the computational basis used by the qubits, it grows exponentially with the number of qubits. 
-
-Two qubits are represented by the vector:
+Per il·lustrar tot això, 2 qubits es representen amb el vector:
 \begin{align*}
 	\ket{\psi} &= \alpha_1\ket{00} + \alpha_2\ket{01} + \alpha_3\ket{10} + \alpha_4\ket{11}\\
 			&= \alpha_1\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \alpha_2 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} + \alpha_3 \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} + \alpha_4\begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
 			= \begin{bmatrix} \alpha_1 \\ \alpha_2 \\ \alpha_3 \\ \alpha_4 \end{bmatrix}
 \end{align*}
-Note that the computational basis vectors are the columns of an identity matrix of dimensions $2^n\times 2^n$, where $n$ is the number of qubits.
-
-The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
+Cal remarcar que els vectors de la base computacional serien les columnes d'una matriu identitat amb dimensions $2^n\times 2^n$, on $n$ és el nombre de qubits. 
 
 
 
-\section{Quantum Measurement}
-Turning back to the photons and their polarization, to predict on which basis the photon is going to collapse, we need to employ quantum measurements. On this case to know the probability of the collapse to a specific basis is enough. 
-Where the vector $\ket{\text{\textrightarrow}}$ expresses the polarization of the filter and $\ket{\text{\textuparrow}}$ its perpendicular complement. A photon that is polarized in the following state \cite{QC_intro:photon}:
+%The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
+
+
+
+\section{Mesurament quàntic}
+Tornant als fotons i la seva polarització, per prediu-re en quina base col·lapsa, necessitem utilitzar els mesuraments quàntics. Aquests mesuraments ens donen la probabilitat que té un fotó de col·lapsar en una certa base. 
+On el vector $\ket{\text{\textrightarrow}}$ expressa la polarització d'un filtre i $\ket{\text{\textuparrow}}$ és el seu complement perpendicular, un fotó polaritzat té el estat següent \cite{QC_intro:photon}: 
 $$
 \ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
 $$
-The probability of being absorbed is $\alpha^2$, note that $\alpha$ is the coefficient that corresponds to the basis $\ket{\text{\textrightarrow}}$, which is the polarization of the filter. In other words, $\alpha^2$ indicates the probability of the collapse of the polarization onto the state $\ket{\text{\textrightarrow}}$. 
+La probabilitat de ser absorbit és $\alpha^2$, cal notar que $\alpha$ és el coeficient que correspon a la base $\ket{\text{\textrightarrow}}$, la base en la qual el filtre es orientat. En altres paraules, $\alpha^2$ indica la probabilitat del col·lapse de la polarització en l'estat $\ket{\text{\textrightarrow}}$. 
 
-The coefficients $\alpha$ and $\beta$ can be expressed as function of an angle $\theta$\footnote{For more information on the polarization of a photon, see appendix \ref{appendix:optics}.}:
+Els coeficients $\alpha$ i $\beta$ poden ser expressats com una funció del angle $\theta$\footnote{Per més informació sobre la polarització dels fotons, veure l'apèndix \ref{appendix:optics}.}
 \begin{equation}
 	\ket{\nearrow} = \cos\theta\ket{\text{\textrightarrow}} + \sin\theta\ket{\text{\textuparrow}}
 	\label{eq:photon_state}
 \end{equation}
-And the expected probabilities become $\cos^2\theta$ and  $\sin^2\theta$, respectively \cite{QC_intro:photon}. Now we can prove the previous statements. In the case of a $\pi/2$ angle we see that:
+I les probabilitats expectades es converteixen en $\cos^2\theta$ i $\sin^2\theta$, respectivament \cite{QC_intro:photon}. Ara podem mirar que els coeficients són la probabilitat, al veure el cas per $\theta = \pi/2$:
 \begin{align*}
 	p(\ket{\text{\textrightarrow}}) &= \cos^2\theta 
 	= \cos^2 \frac{\pi}{2}
