@@ -14,15 +14,18 @@
 \contentsline {section}{\numberline {{1.5}}Trace}{19}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Quantum Computation}{21}{chapter.2}%
 \contentsline {section}{\numberline {{2.1}}Quantum State and Superpositions}{21}{section.2.1}%
-\contentsline {section}{\numberline {{2.2}}Qubits}{24}{section.2.2}%
-\contentsline {section}{\numberline {{2.3}}Quantum Measurement}{26}{section.2.3}%
-\contentsline {part}{II\hspace {1em}Part Experimental}{28}{part.2}%
-\contentsline {part}{III\hspace {1em}Conclusions}{29}{part.3}%
-\contentsline {chapter}{Appendices}{31}{section*.5}%
-\contentsline {chapter}{\numberline {A}More Linear Algebra}{32}{appendix.a.A}%
-\contentsline {section}{\numberline {{A.1}}Gram–Schmidt Procedure}{32}{section.a.A.1}%
-\contentsline {section}{\numberline {{A.2}}Dirac Notation Crash Course}{34}{section.a.A.2}%
-\contentsline {section}{\numberline {{A.3}}More on the Partial Trace}{35}{section.a.A.3}%
-\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{36}{appendix.a.B}%
-\contentsline {section}{\numberline {{B.1}}Normalizing}{36}{section.a.B.1}%
-\contentsline {chapter}{\numberline {C}Polarization of a photon}{39}{appendix.a.C}%
+\contentsline {section}{\numberline {{2.2}}Qubits i operacions quàntiques}{24}{section.2.2}%
+\contentsline {subsection}{\numberline {{2.1}}Representació geomètrica d'un qubit}{26}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {{2.2}}Operacions per a només un qubit}{27}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {{2.3}}Operacions per a múltiples qubits}{28}{subsection.2.2.3}%
+\contentsline {section}{\numberline {{2.3}}Mesurament quàntic}{28}{section.2.3}%
+\contentsline {part}{II\hspace {1em}Part Experimental}{30}{part.2}%
+\contentsline {part}{III\hspace {1em}Conclusions}{31}{part.3}%
+\contentsline {chapter}{Appendices}{33}{section*.6}%
+\contentsline {chapter}{\numberline {A}More Linear Algebra}{34}{appendix.a.A}%
+\contentsline {section}{\numberline {{A.1}}Gram–Schmidt Procedure}{34}{section.a.A.1}%
+\contentsline {section}{\numberline {{A.2}}Dirac Notation Crash Course}{36}{section.a.A.2}%
+\contentsline {section}{\numberline {{A.3}}More on the Partial Trace}{37}{section.a.A.3}%
+\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{38}{appendix.a.B}%
+\contentsline {section}{\numberline {{B.1}}Normalizing}{38}{section.a.B.1}%
+\contentsline {chapter}{\numberline {C}Polarization of a photon}{41}{appendix.a.C}%

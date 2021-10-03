@@ -1,7 +1,9 @@
-This is BibTeX, Version 0.99d (MiKTeX 2.9.7350 64-bit)
-Capacity: max_strings=4000, hash_size=5000, hash_prime=4253
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Rplan.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
+Reallocating 'name_of_file' (item size: 1) to 4 items.
 Database file #1: ref.bib
 Repeated entry---line 178 of file ref.bib
  : @inbook{QCandQI:GramSchmidt
@@ -9,45 +11,45 @@ Repeated entry---line 178 of file ref.bib
 I'm skipping whatever remains of this entry
 Warning--empty journal in tfq
 Warning--empty journal in GAN2014
-You've used 22 entries,
+You've used 20 entries,
             1791 wiz_defined-function locations,
-            551 strings with 6813 characters,
-and the built_in function-call counts, 5307 in all, are:
-= -- 423
-> -- 265
+            546 strings with 6720 characters,
+and the built_in function-call counts, 5008 in all, are:
+= -- 398
+> -- 253
 < -- 20
-+ -- 99
-- -- 77
-* -- 308
-:= -- 794
-add.period$ -- 70
-call.type$ -- 22
-change.case$ -- 20
++ -- 94
+- -- 74
+* -- 300
+:= -- 748
+add.period$ -- 64
+call.type$ -- 20
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 265
-empty$ -- 529
-format.name$ -- 77
-if$ -- 1254
+cite$ -- 22
+duplicate$ -- 250
+empty$ -- 492
+format.name$ -- 74
+if$ -- 1183
 int.to.chr$ -- 0
-int.to.str$ -- 22
-missing$ -- 28
-newline$ -- 117
-num.names$ -- 22
-pop$ -- 128
+int.to.str$ -- 20
+missing$ -- 26
+newline$ -- 107
+num.names$ -- 20
+pop$ -- 115
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 146
+skip$ -- 140
 stack$ -- 0
 substring$ -- 169
-swap$ -- 92
+swap$ -- 90
 text.length$ -- 20
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 39
-width$ -- 24
-write$ -- 250
+while$ -- 37
+width$ -- 22
+write$ -- 229
 (There was 1 error message)
