@@ -647,11 +647,7 @@ $$
 \begin{bmatrix} 0\times\alpha & 1\times\beta \\
 	1\times\alpha & 0\times\beta \\
 \end{bmatrix}
- \begin{bmatrix} \beta \\ \alpha \end{bmatrix}
-
-				1\times\alpha & 0\times\beta \\
-\end{bmatrix}
- \begin{bmatrix} \beta \\ \alpha \end{bmatrix}
+= \begin{bmatrix} \beta \\ \alpha \end{bmatrix}
 $$
 Es pot veure que aquesta matriu lo que fa és donar la volta als coeficients d'un vector, per tant:
 $$
@@ -709,12 +705,67 @@ Aquesta porta lògica forma part d'un grup important, les matrius de Pauli. Hi h
 	\begin{bmatrix} 1 & 0\\ 0 & -1\\ \end{bmatrix}
 	$
 \end{enumerate}
+Aquestes matrius són molt important en la mecànica quàntica\footnote{Al ser Hermitianes són observables, concretament ho són dels que corresponen al spin d'una partícula amb spin $\frac{1}{2}$ bàsicament estan relacionades amb els operadors del moment angular.} i són utilitzades àmpliament per descompondre i com a portes lògiques quàntiques.
 
-Aquestes matrius corresponen a ractacioe s 
-
+A partir d'elles podem elaborar matrius que facin una rotació de qualsevol angle  en un del eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}: 
+\begin{align}
+	& R_x(\theta) =  e^{-i\theta X/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}X = 
+	\begin{bmatrix}
+		\cos \frac{\theta}{2} & -i \sin \frac{\theta}{2} \\
+		-i\sin \frac{\theta}{2} & \cos\frac{\theta}{2} \\
+	\end{bmatrix} \label{eq:rx}\\
+	& R_y(\theta) =  e^{-i\theta Y/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}Y = 
+	\begin{bmatrix}
+		\cos \frac{\theta}{2} & -\sin \frac{\theta}{2} \\
+		\sin \frac{\theta}{2} & \cos\frac{\theta}{2} \\
+	\end{bmatrix} \label{eq:ry}\\
+	& R_y(\theta) =  e^{-i\theta Z/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}Z = 
+	\begin{bmatrix}
+		e^{-i\theta/2} & 0 \\
+		0 & e^{i\theta/2} \\
+	\end{bmatrix} \label{eq:rz}
+\end{align}
+Per exemple la matriu $R_y(\cdot)$ (Eq.\ref{eq:ry}) correspon a una rotació en el eix $\hat{\mathbf{y}}$ de la esfera de la figura \ref{fig:677px-blochsphere}. 
 %The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
 
+Aquestes operacions poden resultar en superposicions si es fan rotacions amb certs angles. Però hi ha una porta lògica especial per poder fer una rotació que resulta en una superposició uniforme. Es a dir una superposició que tingui les mateixes probabilitats de resultar en $\ket{0}$ o $\ket{1}$\footnote{Un 50\% cada una.}. Aquesta és la porta de Hadamard, denotada per $H$:
+\begin{equation}
+	H = \frac{1}{\sqrt{2}}\begin{bmatrix}
+		1 & 1 \\ 1 & -1
+	\end{bmatrix}
+\end{equation}
+Podem comprovar que és una superposició uniforme al aplicar-la al estat $\ket{0}$:
+$$
+H\ket{0} = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix}
+$$
+
+L'estat resultant és un estat especial que s'escriu com $\ket{+}$\footnote{Un altre estat similar és $\frac{\ket{0} - \ket{1}}{\sqrt{2}}$, quan la matriu $H$ s'aplica al estat $\ket{1}$.} La probabilitat de que un estat col·lapsi en una determinada base és el coeficient de la seva base elevat al quadrat. Com que l'estat és:
+$$
+\ket{+} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix} = \frac{\ket{0} + \ket{1}}{\sqrt{2}} =  \frac{1}{\sqrt{2}}\ket{0} +  \frac{1}{\sqrt{2}}\ket{1}
+$$
+Al elevar al quadrat qualsevol del coeficients es pot veure que dona $\frac{1}{2}$:
+$$
+\left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2}
+$$
+Llavors tenim que la probabilitat per obtindre ambos estats és la mateixa, es a dir que si mesurem l'estat $\ket{+}$ hi ha la mateixa probabilitat de que surti $\ket{0}$ o $\ket{1}$. La porta lògica de Hadamard és molt important ja que s'utilitza per crear distribucions uniformes, ja sigui en un qubit o en diversos \footnote{S'aplica aquesta operació a cada qubit del sistema.}.
+
+Altres operacions importants de només un qubit són les portes $S$ i $T$:
+$$
+S=\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \; T=\begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{bmatrix}
+$$
 \subsection{Operacions per a múltiples qubits}
+Lo realment interessant es quan s'apliquen portes a diversos qubits, perquè d'aquesta manera és pot arribar a tindre qubits entrellaçats. La porta més útil per entrellaçar qubits és la $\mathrm{CNOT}$ o \textit{Controlled NOT}:
+\begin{equation}
+	\mathrm{CNOT} = 
+	\begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 0 & 1 \\
+		0 & 0 & 1 & 0 \\
+	\end{bmatrix}
+\end{equation}
+%The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
+
 
 \section{Mesurament quàntic}
 Tornant als fotons i la seva polarització, per prediu-re en quina base col·lapsa, necessitem utilitzar els mesuraments quàntics. Aquests mesuraments ens donen la probabilitat que té un fotó de col·lapsar en una certa base. 
@@ -762,7 +813,7 @@ Es pot veure que només hi han dos estats possibles $\ket{00}$ i $\ket{11}$ que 
 
 Matemàticament un sistema quàntic, e.i. un conjunt de qubits, està entrellaçant quan aquest sistema no es pot descriure amb un producte tensorial de les parts. Per exemple estat $\ket{00}$ es pot escriure com $\ket{0}\otimes\ket{0}$, mentre que l'estat $\frac{\ket{00} + \ket{11}}{\sqrt{2}}$, no. Per tant el primer no és sistema amb qubits entrellaçats i el segon si ho és.
 
-A partir del entrellaçament i la superposició és com els ordinadors quàntics arribem a tenir avantatges en complexitat sobre els ordinadors clàssics, per més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques veure l'apèndix \ref{label}. \todo{appendix lol}
+A partir del entrellaçament i la superposició és com els ordinadors quàntics arribem a tenir avantatges en complexitat sobre els ordinadors clàssics, per més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques veure l'apèndix \ref{complexity}. 
 
 \section{Circuit quàntics}
 
@@ -789,5 +840,5 @@ A partir del entrellaçament i la superposició és com els ordinadors quàntics
 %	= \sin^2 \frac{\pi}{2}
 %	= \left( \frac{1}{\sqrt{2}} \right) ^2 \\
 %	&= 0.5 \\	
-%\end{align*} 
+%\end{align*}
 
