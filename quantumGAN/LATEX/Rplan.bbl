@@ -119,6 +119,12 @@ Eleanor Rieffel and Wolfgang Polak.
   12--13.
 \newblock MIT Press, 1 edition, 2011.
 
+\bibitem{wiki:NOT_gate}
+Wikipedia.
+\newblock Inverter (logic gate), 2021.
+\newblock [Online; accedit en 04/10/2021:
+  \href{https://en.wikipedia.org/wiki/Inverter_(logic_gate)}{Link}].
+
 \bibitem{QCandQI:dirac_notation}
 Michael~A. Nielsen and Isaac~L. Chuang.
 \newblock {\em Quantum Computation and Quantum Information}, chapter~2,
@@ -129,5 +135,12 @@ Michael~A. Nielsen and Isaac~L. Chuang.
 David~J. Griffiths.
 \newblock {\em Introduction to Quantum Mechanics}, chapter~1, pages 11--12.
 \newblock Prentice Hall, 1995.
+
+\bibitem{Grover_96}
+Lov~K. Grover.
+\newblock A fast quantum mechanical algorithm for database search.
+\newblock 1966.
+\newblock [Online; accedit en 05/10/2021:
+  \href{https://arxiv.org/abs/quant-ph/9605043}{Link}].
 
 \end{thebibliography}
