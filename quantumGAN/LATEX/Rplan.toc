@@ -11,24 +11,24 @@
 \contentsline {subsection}{\numberline {{1.3}}Producte exterior}{15}{subsection.1.3.3}%
 \contentsline {section}{\numberline {{1.4}}Producte tensorial}{16}{section.1.4}%
 \contentsline {subsection}{\numberline {{1.1}}Propietats del producte tensorial}{19}{subsection.1.4.1}%
-\contentsline {section}{\numberline {{1.5}}Trace}{19}{section.1.5}%
+\contentsline {section}{\numberline {{1.5}}Traça}{19}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Computació quàntica}{21}{chapter.2}%
 \contentsline {section}{\numberline {{2.1}}Quantum State and Superpositions}{21}{section.2.1}%
 \contentsline {section}{\numberline {{2.2}}Qubits i operacions quàntiques}{24}{section.2.2}%
 \contentsline {subsection}{\numberline {{2.1}}Representació geomètrica d'un qubit}{27}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {{2.2}}Operacions per a només un qubit}{27}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {{2.3}}Operacions per a múltiples qubits}{30}{subsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {{2.3}.1}Entrellaçament quàntic}{30}{subsubsection.2.2.3.1}%
-\contentsline {section}{\numberline {{2.3}}Circuit quàntics}{31}{section.2.3}%
-\contentsline {part}{II\hspace {1em}Part Experimental}{32}{part.2}%
-\contentsline {part}{III\hspace {1em}Conclusions}{33}{part.3}%
-\contentsline {chapter}{Appendices}{35}{section*.7}%
-\contentsline {chapter}{\numberline {A}Més àlgebra lienal}{36}{appendix.a.A}%
-\contentsline {section}{\numberline {{A.1}}Procediment de Gram–Schmidt}{36}{section.a.A.1}%
-\contentsline {section}{\numberline {{A.2}}Dirac Notation Crash Course}{38}{section.a.A.2}%
-\contentsline {section}{\numberline {{A.3}}More on the Partial Trace}{38}{section.a.A.3}%
-\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{39}{appendix.a.B}%
-\contentsline {section}{\numberline {{B.1}}Normalizing}{39}{section.a.B.1}%
-\contentsline {chapter}{\numberline {C}Polarització d'un fotó}{42}{appendix.a.C}%
+\contentsline {subsection}{\numberline {{2.3}}Operacions per a múltiples qubits}{31}{subsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {{2.3}.1}Entrellaçament quàntic}{31}{subsubsection.2.2.3.1}%
+\contentsline {section}{\numberline {{2.3}}Circuit quàntics}{32}{section.2.3}%
+\contentsline {part}{II\hspace {1em}Part Experimental}{33}{part.2}%
+\contentsline {part}{III\hspace {1em}Conclusions}{34}{part.3}%
+\contentsline {chapter}{Appendices}{36}{section*.6}%
+\contentsline {chapter}{\numberline {A}Més àlgebra lineal}{37}{appendix.a.A}%
+\contentsline {section}{\numberline {{A.1}}Procediment de Gram–Schmidt}{37}{section.a.A.1}%
+\contentsline {section}{\numberline {{A.2}}Curs ràpid de la notació de Dirac}{39}{section.a.A.2}%
+\contentsline {section}{\numberline {{A.3}}Més on la traça parcial}{39}{section.a.A.3}%
+\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{40}{appendix.a.B}%
+\contentsline {section}{\numberline {{B.1}}Normalizing}{40}{section.a.B.1}%
+\contentsline {chapter}{\numberline {C}Polarització d'un fotó}{43}{appendix.a.C}%
 \contentsline {chapter}{\numberline {D}Complexitat i algoritmes quàntics}{44}{appendix.a.D}%
 \contentsline {section}{\numberline {{D.1}}Algoritme de Grover}{45}{section.a.D.1}%

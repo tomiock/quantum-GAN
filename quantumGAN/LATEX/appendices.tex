@@ -1,28 +1,28 @@
-\chapter{Més àlgebra lienal}
+\chapter{Més àlgebra lineal}
 Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren les suficients perquè estic content amb el treball\footnote{Hi han moltes coses guays i interessants que vull explicar.}, així que aquí hi ha més àlgebra lineal.
 
 
 \section{Procediment de Gram–Schmidt}\label{gram}
-The Gram–Schmidt procedure is a method used to produce orthonormal basis for a vectors space \cite{QCandQI:GramSchmidt}. For a $d$-dimensional inner product vector space $V$ with a basis vectors set $\ket{v_1}, \cdots, \ket{v_d}$, we can define a new orthonormal basis set $\{\ket{u}\}$. The first element of that set is $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, with the following element $\ket{v_{k+1}}$  being:
+El procediment de Gram-Schmidt és un mètode utilitzat per produir bases per a espais vectorials \cite{QCandQI:GramSchmidt}. Per un espai $V$ amb producte interior de $d$ dimensions amb el set de vectors ${\ket{v_1}, \cdots, \ket{v_d}}$, podem definir una nova base de vectors ortonormals $\{\ket{u}\}$. El primer element d'aquest set és $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, amb el següent element $\ket{v_{k+1}}$ sent:
 $$
 \ket{u_{k+1}} = \frac{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}{\norm{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}}
 $$
-For $k$ in the interval $1 \leq k \leq d-1$.
+Per $k$ en el interval $1 \leq k \leq d-1$.
 
-If we follow the above for each $k$ in $1 \leq k \leq d-1$, we obtain the new vector set $\ket{u_1}, \cdots , \ket{u_d}$ that is a valid orthonormal basis for the space $V$. The created vector set must have the same span\footnote{The span of a set of vectors is all the possible linear combinations that come from those vectors.} as the previous one to be a valid basis for the space $V$:
+Si seguim per $k$ en $1 \leq k \leq d-1$, obtenim el set de vectors ${\ket{u_1}, \cdots , \ket{u_d}}$ que es una base vàlida per l'espai ortonormal per l'estai $V$. Els vectors creats han de tindre el mateix span\footnote{L'span d'un set de vectors són totes les combinacions lineals possibles amb aquests vectors.} que el dels vectors que originalment eren la base per $V$:
 $$
 \text{span}(\{\ket{v}\}) = \text{span}(\{\ket{v}\}) = V
 $$
-Note that the span of the basis set is the definition of the space. In other words, every vector in $V$ can be represented as a linear combination of the basis vectors. 
+Cal notar que l'span de del set base és la definició del espai. En altres paraules, cada vector en $V$ pot ser representat per una combinació del vectors base. 
 
-The proof that is an orthonormal basis is quite simple: 
-We can see immediately that the components of $\{ \ket{u} \}$ are unit vectors because they are normalized (the vectors $\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}$ are divided by their norm). And we can se that they are orthogonal by checking that the inner product of non-equal vectors in the set is 0: 
+La prova de que és una base ortonormal és bastant simple:
+Podem veure immediatament que els elements  de $\{ \ket{u} \}$ són vectors unitaris perquè estan normalitzats (els vectors $\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}$ estan dividits per la seva norma). També podem veure que són ortogonals els uns als altres mirant que el producte interior entre els doni 0:
 
-For $k=1$:
+Per $k=1$:
 $$
 \ket{u_2} = \frac{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}{\norm{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}}
 $$
-Then the inner product with $\ket{v_1}$ is:
+Per tant el producte interior amb $\ket{v_1}$ és:
 $$
 \begin{aligned}
 \bra{u_1}\ket{u_2} 
@@ -31,7 +31,7 @@ $$
 &= 0
 \end{aligned}
 $$
-By induction we can see that for $j \leq d$, with $d$ being the dimension of the vector space:
+Per inducció podem veure que per $j \leq d$, amb $d$ sent la dimensió del espai vectorial:
 $$
 \begin{aligned}
 	\bra{u_j}\ket{u_{n+1}} 
@@ -42,34 +42,32 @@ $$
 	& = 0	\\
 \end{aligned}
 $$
-All of this doesn't seem straightforward at first but remember that the inner product of two orthogonal vectors is zero, and the inner product between the same unit vector is one. 
+Tot això no és veu molt clar al principi però cal recordar que el producte interior de dos vectors ortonormals és zero, i que el producte interior entre el mateix vector unitari és un.
 
-\section{Dirac Notation Crash Course}
-
-On the following table there is a quick summary important mathematical concepts of linear algebra \cite{QCandQI:dirac_notation} expressed in Dirac Notation\footnote{The notation used for the complex vector spaces and complex number space are not standard Dirac Notation, but I included them in the table to explain what they mean.}. 
-%Along the text you may encounter more complicated use of this notation. 
+\section{Curs ràpid de la notació de Dirac}
+A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac\footnote{La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.} \cite{QCandQI:dirac_notation}
 
 \begin{tabular}{ p{2cm}|p{12cm} }
 	\hline
-	Notation & Description \\
+	Notació & Descripció\\
 	\hline
 	\hline
-	$z$ & Complex number    \\
-	$z^{*}$ & Complex conjugate of the a complex number $z$. $(a+ bi)^{*} = (a -bi)$\\
-	$\ket{\psi} $ & Vector with label $\psi$. Known as \textit{ket}\\
-	$\ket{\psi}^T$ & Transpose of vector $\ket{\psi}$ \\
-	$\ket{\psi}^\dag $ &  Hermitian conjugate of vector. $\ket{\psi}^\dag = (\ket{\psi}^T)^* $\\
-	$\bra{\psi} $ & Dual vector to $\ket{\psi}$. $ \ket{\psi} = \bra{\psi}^{\dag}$ and $\bra{\psi} = \ket{\psi}^\dag$. Known as \textit{bra}\\
-	$ \bra{\varphi}\ket{\psi} $ & Inner product of vectors $\bra{\varphi}$ and $\ket{\psi}$ \\
-	$ \ket{\varphi}\bra{\psi} $ & Outer product of vectors $\bra{\varphi}$ and $\ket{\psi}$ \\
-	$ \ket{\psi}\otimes\ket{\varphi}$ & Tensor product of vectors $\ket{\varphi}$ and $\ket{\psi}$ \\
-	$ 0 $ & Zero vector and zero operator \\
-	$ \mathbb{I}_n $ & Identity matrix of dimension $n$ \\
-	$ \mathbb{C}_n $ & Complex vector space of dimension $n$ \\
-	$ \mathbb{C}_1$ or $\mathbb{C} $ & Complex number space \\
+	$z$ & Nombre complex    \\
+	$z^{*}$ & Conjugat complex d'un nombre complex $z$. $(a+ bi)^{*} = (a -bi)$\\
+	$\ket{\psi} $ & Vector amb una etiqueta $\psi$. Conegut com \textit{ket}\\
+	$\ket{\psi}^T$ & Transposada d'un vector $\ket{\psi}$ \\
+	$\ket{\psi}^\dag $ &  Conjugat Hermitià d'un vector. $\ket{\psi}^\dag = (\ket{\psi}^T)^* $\\
+	$\bra{\psi} $ & Vector dual a $\ket{\psi}$. $ \ket{\psi} = \bra{\psi}^{\dag}$ i $\bra{\psi} = \ket{\psi}^\dag$. Conegut com \textit{bra}\\
+	$ \bra{\varphi}\ket{\psi} $ & Producte interior dels vectors $\bra{\varphi}$ i $\ket{\psi}$ \\
+	$ \ket{\varphi}\bra{\psi} $ & Producte exterior del vectors $\bra{\varphi}$ i $\ket{\psi}$ \\
+	$ \ket{\psi}\otimes\ket{\varphi}$ & Producte tensorial del vectors $\ket{\varphi}$ i $\ket{\psi}$ \\
+	$ 0 $ & Vector zero i operador zero \\
+	$ \mathbb{I}_n $ & Matriu identitat de dimensions $n\times n$ \\
+	$ \mathbb{C}_n $ & Espai vectorial complex de dimensió $n$ \\
+	$ \mathbb{C}_1$ o $\mathbb{C} $ & Espai del nombres complexos \\
 	
 \end{tabular}
-\section{More on the Partial Trace}
+\section{Més on la traça parcial}
 
 \chapter{Quantum Computation vs Quantum Mechanics}
 On the introduction I mentioned that one of the reasons for with I started learning and researching quantum computing is because it is easy, on this appendix I am going to present why this is the case with a practical example.
@@ -99,7 +97,7 @@ We can prove that the equation, preserves \ref{eq:norm_wave}, starting from the 
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = \pdv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx
 $$
-By the product rule we have that\footnote{From now on I am going to write $\Psi(x,t)$ as simply $\Psi$ to not make the equations to complicated.}:
+By the product rule we have that\footnote{A partir d'ara escriuré  $\Psi(x,t)$ simplement com $\Psi$ per no fer les equacions tan enrevessades.}:
 $$
 \pdv{t}\abs{\Psi}^2 = \pdv{t}(\Psi\Psi^*) = \Psi^*\pdv{\Psi}{t} + \pdv{\Psi^*}{t}\Psi
 $$
@@ -136,21 +134,19 @@ En l'equació \ref{eq:photon_state} he exclusit el concepte de fase, que determi
 		&= [\cos(\theta)\ket{x} + \sin(\theta)\ket{y}]e^{i\alpha}
 	\end{align*}
 	On $\alpha=\alpha_x=\alpha_y$.
-	
 	\item \textbf{Circular:}
 	Quan els angles $\alpha_x$, $\alpha_y$ son separats per exactament $\frac{\pi}{2}$ i la amplitud per les dos bases és la mateixa:
 	\begin{align*}
 		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\frac{1}{\sqrt{2}}\sin(\theta)e^{i\alpha_y}\ket{y} \\
 					   &= [\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\sin(\theta)e^{i\alpha_y}\ket{y}]\frac{1}{\sqrt{2}}
 	\end{align*}
-On el signe $\pm$ indica la diferencia entre la diferencia entre la polarització circular cap a la dreta o la esquerra, amb $+$ i $-$, respectivament.
-
+	On el signe $\pm$ indica la diferencia entre la diferencia entre la polarització circular cap a la dreta o la esquerra, amb $+$ i $-$, respectivament.
 	\item \textbf{El·líptica:}
 	On els angles $\alpha_x$, $\alpha_y$ son diferents per una quantitat arbitraria\footnote{Però que no sigui la quantitat que dona a terme la polarització circular.}:
 	$$
 	\ket{\nearrow} = \cos(\theta)e^{i\alpha_x}\ket{x} + \sin(\theta)e^{i\alpha_y}\ket{y}
 	$$
-	Aquest és el cas més general, és a dir la equació que s'utilitza per expressar qualsevol fase.
+	Aquest és el cas més general.
 	
 \end{enumerate}
 
