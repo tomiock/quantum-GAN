@@ -1,33 +1,35 @@
-\BOOKMARK [-1][-]{part.1}{I Marc Te\362ric}{}% 1
-\BOOKMARK [0][-]{chapter.1}{\300lgebra Lineal}{part.1}% 2
-\BOOKMARK [1][-]{section.1.1}{Vectors i Espais Vectorials}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.2}{Operadors Lineals}{chapter.1}% 4
-\BOOKMARK [2][-]{subsection.1.2.1}{Tipus d'Operadors Lineals}{section.1.2}% 5
-\BOOKMARK [1][-]{section.1.3}{Producte Interior i Producte Exterior}{chapter.1}% 6
-\BOOKMARK [2][-]{subsection.1.3.1}{Producte Interior}{section.1.3}% 7
-\BOOKMARK [3][-]{subsubsection.1.3.1.1}{Propietats del Producte Interior}{subsection.1.3.1}% 8
-\BOOKMARK [2][-]{subsection.1.3.2}{Vectors ortonormals i ortogonals}{section.1.3}% 9
-\BOOKMARK [2][-]{subsection.1.3.3}{Producte exterior}{section.1.3}% 10
-\BOOKMARK [1][-]{section.1.4}{Producte tensorial}{chapter.1}% 11
-\BOOKMARK [2][-]{subsection.1.4.1}{Propietats del producte tensorial}{section.1.4}% 12
-\BOOKMARK [1][-]{section.1.5}{Trace}{chapter.1}% 13
-\BOOKMARK [0][-]{chapter.2}{Computaci\363 qu\340ntica}{part.1}% 14
-\BOOKMARK [1][-]{section.2.1}{Quantum State and Superpositions}{chapter.2}% 15
-\BOOKMARK [1][-]{section.2.2}{Qubits i operacions qu\340ntiques}{chapter.2}% 16
-\BOOKMARK [2][-]{subsection.2.2.1}{Representaci\363 geom\350trica d'un qubit}{section.2.2}% 17
-\BOOKMARK [2][-]{subsection.2.2.2}{Operacions per a nom\351s un qubit}{section.2.2}% 18
-\BOOKMARK [2][-]{subsection.2.2.3}{Operacions per a m\372ltiples qubits}{section.2.2}% 19
-\BOOKMARK [3][-]{subsubsection.2.2.3.1}{Entrella\347ament qu\340ntic}{subsection.2.2.3}% 20
-\BOOKMARK [1][-]{section.2.3}{Circuit qu\340ntics}{chapter.2}% 21
-\BOOKMARK [-1][-]{part.2}{II Part Experimental}{}% 22
-\BOOKMARK [-1][-]{part.3}{III Conclusions}{}% 23
-\BOOKMARK [0][-]{section*.7}{Appendices}{part.3}% 24
-\BOOKMARK [0][-]{appendix.a.A}{M\351s \340lgebra lienal}{part.3}% 25
-\BOOKMARK [1][-]{section.a.A.1}{Procediment de Gram\205Schmidt}{appendix.a.A}% 26
-\BOOKMARK [1][-]{section.a.A.2}{Dirac Notation Crash Course}{appendix.a.A}% 27
-\BOOKMARK [1][-]{section.a.A.3}{More on the Partial Trace}{appendix.a.A}% 28
-\BOOKMARK [0][-]{appendix.a.B}{Quantum Computation vs Quantum Mechanics}{part.3}% 29
-\BOOKMARK [1][-]{section.a.B.1}{Normalizing}{appendix.a.B}% 30
-\BOOKMARK [0][-]{appendix.a.C}{Polaritzaci\363 d'un fot\363}{part.3}% 31
-\BOOKMARK [0][-]{appendix.a.D}{Complexitat i algoritmes qu\340ntics}{part.3}% 32
-\BOOKMARK [1][-]{section.a.D.1}{Algoritme de Grover}{appendix.a.D}% 33
+\BOOKMARK [-1][-]{part.1}{\376\377\000I\000\040\000M\000a\000r\000c\000\040\000T\000e\000\362\000r\000i\000c}{}% 1
+\BOOKMARK [0][-]{chapter.1}{\376\377\000\300\000l\000g\000e\000b\000r\000a\000\040\000L\000i\000n\000e\000a\000l}{part.1}% 2
+\BOOKMARK [1][-]{section.1.1}{\376\377\000V\000e\000c\000t\000o\000r\000s\000\040\000i\000\040\000E\000s\000p\000a\000i\000s\000\040\000V\000e\000c\000t\000o\000r\000i\000a\000l\000s}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{\376\377\000O\000p\000e\000r\000a\000d\000o\000r\000s\000\040\000L\000i\000n\000e\000a\000l\000s}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.2.1}{\376\377\000T\000i\000p\000u\000s\000\040\000d\000'\000O\000p\000e\000r\000a\000d\000o\000r\000s\000\040\000L\000i\000n\000e\000a\000l\000s}{section.1.2}% 5
+\BOOKMARK [1][-]{section.1.3}{\376\377\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000I\000n\000t\000e\000r\000i\000o\000r\000\040\000i\000\040\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000E\000x\000t\000e\000r\000i\000o\000r}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.3.1}{\376\377\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000I\000n\000t\000e\000r\000i\000o\000r}{section.1.3}% 7
+\BOOKMARK [3][-]{subsubsection.1.3.1.1}{\376\377\000P\000r\000o\000p\000i\000e\000t\000a\000t\000s\000\040\000d\000e\000l\000\040\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000I\000n\000t\000e\000r\000i\000o\000r}{subsection.1.3.1}% 8
+\BOOKMARK [2][-]{subsection.1.3.2}{\376\377\000V\000e\000c\000t\000o\000r\000s\000\040\000o\000r\000t\000o\000n\000o\000r\000m\000a\000l\000s\000\040\000i\000\040\000o\000r\000t\000o\000g\000o\000n\000a\000l\000s}{section.1.3}% 9
+\BOOKMARK [2][-]{subsection.1.3.3}{\376\377\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000e\000x\000t\000e\000r\000i\000o\000r}{section.1.3}% 10
+\BOOKMARK [1][-]{section.1.4}{\376\377\000P\000r\000o\000d\000u\000c\000t\000e\000\040\000t\000e\000n\000s\000o\000r\000i\000a\000l}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.4.1}{\376\377\000P\000r\000o\000p\000i\000e\000t\000a\000t\000s\000\040\000d\000e\000l\000\040\000p\000r\000o\000d\000u\000c\000t\000e\000\040\000t\000e\000n\000s\000o\000r\000i\000a\000l}{section.1.4}% 12
+\BOOKMARK [1][-]{section.1.5}{\376\377\000T\000r\000a\000c\000e}{chapter.1}% 13
+\BOOKMARK [0][-]{chapter.2}{\376\377\000C\000o\000m\000p\000u\000t\000a\000c\000i\000\363\000\040\000q\000u\000\340\000n\000t\000i\000c\000a}{part.1}% 14
+\BOOKMARK [1][-]{section.2.1}{\376\377\000Q\000u\000a\000n\000t\000u\000m\000\040\000S\000t\000a\000t\000e\000\040\000a\000n\000d\000\040\000S\000u\000p\000e\000r\000p\000o\000s\000i\000t\000i\000o\000n\000s}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.2}{\376\377\000Q\000u\000b\000i\000t\000s\000\040\000i\000\040\000o\000p\000e\000r\000a\000c\000i\000o\000n\000s\000\040\000q\000u\000\340\000n\000t\000i\000q\000u\000e\000s}{chapter.2}% 16
+\BOOKMARK [2][-]{subsection.2.2.1}{\376\377\000R\000e\000p\000r\000e\000s\000e\000n\000t\000a\000c\000i\000\363\000\040\000g\000e\000o\000m\000\350\000t\000r\000i\000c\000a\000\040\000d\000'\000u\000n\000\040\000q\000u\000b\000i\000t}{section.2.2}% 17
+\BOOKMARK [2][-]{subsection.2.2.2}{\376\377\000O\000p\000e\000r\000a\000c\000i\000o\000n\000s\000\040\000p\000e\000r\000\040\000a\000\040\000n\000o\000m\000\351\000s\000\040\000u\000n\000\040\000q\000u\000b\000i\000t}{section.2.2}% 18
+\BOOKMARK [2][-]{subsection.2.2.3}{\376\377\000O\000p\000e\000r\000a\000c\000i\000o\000n\000s\000\040\000p\000e\000r\000\040\000a\000\040\000m\000\372\000l\000t\000i\000p\000l\000e\000s\000\040\000q\000u\000b\000i\000t\000s}{section.2.2}% 19
+\BOOKMARK [1][-]{section.2.3}{\376\377\000M\000e\000s\000u\000r\000a\000m\000e\000n\000t\000\040\000q\000u\000\340\000n\000t\000i\000c}{chapter.2}% 20
+\BOOKMARK [2][-]{subsection.2.3.1}{\376\377\000O\000p\000e\000r\000a\000c\000i\000o\000n\000s\000\040\000p\000e\000r\000\040\000a\000\040\000m\000\372\000l\000t\000i\000p\000l\000e\000s\000\040\000q\000u\000b\000i\000t\000s}{section.2.3}% 21
+\BOOKMARK [3][-]{subsubsection.2.3.1.1}{\376\377\000E\000n\000t\000r\000e\000l\000l\000a\000\347\000a\000m\000e\000n\000t\000\040\000q\000u\000\340\000n\000t\000i\000c}{subsection.2.3.1}% 22
+\BOOKMARK [1][-]{section.2.4}{\376\377\000C\000i\000r\000c\000u\000i\000t\000\040\000q\000u\000\340\000n\000t\000i\000c\000s}{chapter.2}% 23
+\BOOKMARK [-1][-]{part.2}{\376\377\000I\000I\000\040\000P\000a\000r\000t\000\040\000E\000x\000p\000e\000r\000i\000m\000e\000n\000t\000a\000l}{}% 24
+\BOOKMARK [-1][-]{part.3}{\376\377\000I\000I\000I\000\040\000C\000o\000n\000c\000l\000u\000s\000i\000o\000n\000s}{}% 25
+\BOOKMARK [0][-]{section*.6}{\376\377\000A\000p\000p\000e\000n\000d\000i\000c\000e\000s}{part.3}% 26
+\BOOKMARK [0][-]{appendix.a.A}{\376\377\000M\000\351\000s\000\040\000\340\000l\000g\000e\000b\000r\000a\000\040\000l\000i\000e\000n\000a\000l}{part.3}% 27
+\BOOKMARK [1][-]{section.a.A.1}{\376\377\000P\000r\000o\000c\000e\000d\000i\000m\000e\000n\000t\000\040\000d\000e\000\040\000G\000r\000a\000m\040\023\000S\000c\000h\000m\000i\000d\000t}{appendix.a.A}% 28
+\BOOKMARK [1][-]{section.a.A.2}{\376\377\000D\000i\000r\000a\000c\000\040\000N\000o\000t\000a\000t\000i\000o\000n\000\040\000C\000r\000a\000s\000h\000\040\000C\000o\000u\000r\000s\000e}{appendix.a.A}% 29
+\BOOKMARK [1][-]{section.a.A.3}{\376\377\000M\000o\000r\000e\000\040\000o\000n\000\040\000t\000h\000e\000\040\000P\000a\000r\000t\000i\000a\000l\000\040\000T\000r\000a\000c\000e}{appendix.a.A}% 30
+\BOOKMARK [0][-]{appendix.a.B}{\376\377\000Q\000u\000a\000n\000t\000u\000m\000\040\000C\000o\000m\000p\000u\000t\000a\000t\000i\000o\000n\000\040\000v\000s\000\040\000Q\000u\000a\000n\000t\000u\000m\000\040\000M\000e\000c\000h\000a\000n\000i\000c\000s}{part.3}% 31
+\BOOKMARK [1][-]{section.a.B.1}{\376\377\000N\000o\000r\000m\000a\000l\000i\000z\000i\000n\000g}{appendix.a.B}% 32
+\BOOKMARK [0][-]{appendix.a.C}{\376\377\000P\000o\000l\000a\000r\000i\000t\000z\000a\000c\000i\000\363\000\040\000d\000'\000u\000n\000\040\000f\000o\000t\000\363}{part.3}% 33
+\BOOKMARK [0][-]{appendix.a.D}{\376\377\000C\000o\000m\000p\000l\000e\000x\000i\000t\000a\000t\000\040\000i\000\040\000a\000l\000g\000o\000r\000i\000t\000m\000e\000s\000\040\000q\000u\000\340\000n\000t\000i\000c\000s}{part.3}% 34
+\BOOKMARK [1][-]{section.a.D.1}{\376\377\000A\000l\000g\000o\000r\000i\000t\000m\000e\000\040\000d\000e\000\040\000G\000r\000o\000v\000e\000r}{appendix.a.D}% 35

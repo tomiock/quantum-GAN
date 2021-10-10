@@ -17,18 +17,20 @@
 \contentsline {section}{\numberline {{2.2}}Qubits i operacions quàntiques}{24}{section.2.2}%
 \contentsline {subsection}{\numberline {{2.1}}Representació geomètrica d'un qubit}{27}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {{2.2}}Operacions per a només un qubit}{27}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {{2.3}}Operacions per a múltiples qubits}{30}{subsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {{2.3}.1}Entrellaçament quàntic}{30}{subsubsection.2.2.3.1}%
-\contentsline {section}{\numberline {{2.3}}Circuit quàntics}{31}{section.2.3}%
-\contentsline {part}{II\hspace {1em}Part Experimental}{32}{part.2}%
-\contentsline {part}{III\hspace {1em}Conclusions}{33}{part.3}%
-\contentsline {chapter}{Appendices}{35}{section*.7}%
-\contentsline {chapter}{\numberline {A}Més àlgebra lienal}{36}{appendix.a.A}%
-\contentsline {section}{\numberline {{A.1}}Procediment de Gram–Schmidt}{36}{section.a.A.1}%
-\contentsline {section}{\numberline {{A.2}}Dirac Notation Crash Course}{38}{section.a.A.2}%
-\contentsline {section}{\numberline {{A.3}}More on the Partial Trace}{38}{section.a.A.3}%
-\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{39}{appendix.a.B}%
-\contentsline {section}{\numberline {{B.1}}Normalizing}{39}{section.a.B.1}%
-\contentsline {chapter}{\numberline {C}Polarització d'un fotó}{42}{appendix.a.C}%
-\contentsline {chapter}{\numberline {D}Complexitat i algoritmes quàntics}{44}{appendix.a.D}%
-\contentsline {section}{\numberline {{D.1}}Algoritme de Grover}{45}{section.a.D.1}%
+\contentsline {subsection}{\numberline {{2.3}}Operacions per a múltiples qubits}{31}{subsection.2.2.3}%
+\contentsline {section}{\numberline {{2.3}}Mesurament quàntic}{31}{section.2.3}%
+\contentsline {subsection}{\numberline {{2.1}}Operacions per a múltiples qubits}{32}{subsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {{2.1}.1}Entrellaçament quàntic}{33}{subsubsection.2.3.1.1}%
+\contentsline {section}{\numberline {{2.4}}Circuit quàntics}{33}{section.2.4}%
+\contentsline {part}{II\hspace {1em}Part Experimental}{34}{part.2}%
+\contentsline {part}{III\hspace {1em}Conclusions}{35}{part.3}%
+\contentsline {chapter}{Appendices}{37}{section*.6}%
+\contentsline {chapter}{\numberline {A}Més àlgebra lienal}{38}{appendix.a.A}%
+\contentsline {section}{\numberline {{A.1}}Procediment de Gram–Schmidt}{38}{section.a.A.1}%
+\contentsline {section}{\numberline {{A.2}}Dirac Notation Crash Course}{40}{section.a.A.2}%
+\contentsline {section}{\numberline {{A.3}}More on the Partial Trace}{40}{section.a.A.3}%
+\contentsline {chapter}{\numberline {B}Quantum Computation vs Quantum Mechanics}{41}{appendix.a.B}%
+\contentsline {section}{\numberline {{B.1}}Normalizing}{41}{section.a.B.1}%
+\contentsline {chapter}{\numberline {C}Polarització d'un fotó}{44}{appendix.a.C}%
+\contentsline {chapter}{\numberline {D}Complexitat i algoritmes quàntics}{46}{appendix.a.D}%
+\contentsline {section}{\numberline {{D.1}}Algoritme de Grover}{47}{section.a.D.1}%

@@ -1,7 +1,9 @@
-This is BibTeX, Version 0.99d (MiKTeX 2.9.7350 64-bit)
-Capacity: max_strings=4000, hash_size=5000, hash_prime=4253
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Rplan.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
+Reallocating 'name_of_file' (item size: 1) to 4 items.
 Database file #1: ref.bib
 Repeated entry---line 195 of file ref.bib
  : @inbook{QCandQI:GramSchmidt
