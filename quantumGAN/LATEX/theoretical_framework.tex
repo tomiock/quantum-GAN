@@ -8,7 +8,7 @@ En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lienal, 
 \section{Vectors i Espais Vectorials}
 Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial es el conjunt de tots els vectors que tenen les mateixes dimensions. Per exemple  $\mathbb{R}^{3}$ seria el espai vectorial de tots els vectors de 3 dimensions, aquests vectors normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica un tipus d'espais vectorials en concret són utilitzats: Els espais de Hilbert, en altres paraules, un espai vectorial amb un producte interior \cite{QCandQI:GramSchmidt}. Els espais de Hilbert segueixen un conjunt de productes i compleixen unes certes normes, en aquest capítol presentaré una part d'aquestes normes i productes, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, també que d'aquí en endavant, quan mencioni espai vectorial hem referiré a un espai de Hilbert, d'ha no ser que s'especifiqui el contrari. 
 
-Els espais vectorial estan definits per les seves bases, un set de vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ es una base vàlida per l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$. Els vectors en $B$ són linealment independent entre ells.
+Els espais vectorial estan definits per les seves bases, un set de vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ es una base vàlida per l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$. Els vectors de la base $B$ són linealment independent entre ells.
 
 La notació estàndard pels conceptes de  àlgebra lienal en mecànica quàntica es la notació de Dirac, en la qual es representa un vector com $ \ket{\psi} $. On $\psi$ es la etiqueta del vector. Un vector $ \ket{\psi} $ amb $n$ dimensions també pot ser representat com una matriu columna que te la forma: 
 $$
@@ -38,7 +38,7 @@ On $z$ es un escalar i $\ket{\psi}$ un vector. Cal que notar que cada element de
 
 Degut a que els espais de Hilbert son complexos tenen un conjugat complex definit per escalar com a: Per un escalar complex $z=a +bi$, el seu conjugat $z^*$ es igual a $a-bi$. 
 
-Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes les seves entrades/elements:
+Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes elss seus elements:
 $$
 \ket{\psi}^{*} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
@@ -46,25 +46,25 @@ $$
 $$
 A^{*} = 
 	\begin{bmatrix} 
-	A_{11} & \cdots & A_{1n}\\ 
+	a_{11} & \cdots & a_{1n}\\ 
 	\vdots & \ddots & \vdots \\ 
-	A_{m1} & \cdots & A_mn
+	a_{m1} & \cdots & a_mn
 \end{bmatrix}^* 
 = \begin{bmatrix} 
-	A_{11}^* & \dots & A_{1n}^*\\ 
+	a_{11}^* & \dots & a_{1n}^*\\ 
 	\vdots & \ddots & \vdots \\ 
-	A_{m1}^* & \cdots & A_mn^*
+	a_{m1}^* & \cdots & a_mn^*
 \end{bmatrix}
 $$
 Amb $\ket{\psi}$ sent un vector de dimensions $n$, i $A$ sent una matriu de dimensions $m \times n$.
 
-Un altre concepte important es la transposada, representada per el supercrit $T$ que "rota" un vector o una matriu. Un vector columna amb una dimensió $n,1$ es transforma amb un vector fila amb una dimensió $1,n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
+Un altre concepte important es la transposada, representada per el superindex $T$ que 'rota' un vector o una matriu. Un vector columna amb una dimensió $n\times 1$ es transforma amb un vector fila amb una dimensió $1\times n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
 $$
 \ket{\psi}^{T} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^T = \begin{bmatrix} \psi_{1} & \dots & \psi_{n} \end{bmatrix}
 $$
 
-El mateix és veritat per les matrius, una matriu $m\times n$ transposada es converteix en una matriu $n \times m$. Per exemple:
+El mateix és cert per les matrius, una matriu $m\times n$ transposada es converteix en una matriu $n \times m$. Per exemple:
 $$
 A^T = \begin{bmatrix}
 	 2 & 3 \\
@@ -76,51 +76,51 @@ A^T = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-La combinació de un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació es una $\dagger$ supercrita. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
+La compusició d'un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació es una $\dagger$ superindexada. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
 $$
 \ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \dots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
 $$
 El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\psi}^\dagger = \ket{\psi}$.
 
-El conjugat Hermitià de un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
+El conjugat Hermitià d'un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
 
 \section{Operadors Lineals}
-Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son denominades mapes lineal o operadors lineals, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
+Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades mapes lineal o operadors lineal\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
 
-Bàsicament, un operador lineal transforma un vector en un altre vector, aquest vector poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
+Bàsicament, un operador lineal transforma un vector en un altre vector, aquests vectors poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
 
 $$
 A \ket{v} = \ket{w}
 $$
-En altres paraules, l'operador mapa un element del espai vectorial $V$ cap a un espai vectorial $W$.
-Els operadors lineals han de complir les següents operacions:
+En altres paraules, l'operador transforma un element del espai vectorial $V$ en un vector del espai vectorial $W$.
+Els operadors lineals han de complir les següents propietats:
 \begin{enumerate}
-	\item Adició de Vectors: \\
-	Per els vectors $\ket{\psi}$ i $\ket{\varphi}$ en un mateix espai vectorial, i un operador lienal $A$:
+	\item Addició de vectors: \\
+	Donats els vectors $\ket{\psi}$ i $\ket{\varphi}$ en un mateix espai vectorial, i un operador lineal $A$:
 	$$ A(\ket{\psi} + \ket{\varphi}) = A\ket{\psi} + A\ket{\varphi}$$ 
-	\item Multiplicació Escalar:\\
-	Per el vector $\ket{\psi}$, el escalar $z$ i el operador lienal $A$:
+	\item Producte escalar:\\
+	Donats els vectors $\ket{\psi}$, l'escalar $z$ i l'operador lienal $A$, es certs que:
 	$$ A(z\ket{\psi}) = z A \ket{\psi}$$
 \end{enumerate}
 
-Aquestes afirmacions tenen que ser veritat per tots els vectors i tots els escalars en els espais on els operadors actuen. Cal notar que un operador lineal no te perquè ser una matriu necessàriament, fer exemple, les derivades i les integrals son operadors lienals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
+Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars en els espais on els operadors actuen. Cal notar que un operador lineal no te perquè ser una matriu necessàriament, per exemple, les derivades i les integrals son operadors lineals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
 
 Les matrius només son la representació matricial del operadors lienals \cite{LR_done_right:matrix}.
 
 	\subsection{Tipus d'Operadors Lineals}
-En la secció actual, exposaré els tipus bàsics d'operadors lienals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
+En la secció actual, exposaré els tipus bàsics d'operadors lineals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
 
 \begin{enumerate}
-	\item \textbf{Operador Zero} \\
+	\item \textbf{Operador zero} \\
 	Qualsevol espai vectorial té un vector zero expressat en notació de Dirac com a $0$, degut a que $\ket{0}$ es un altre concepte totalment diferent en CQ i IQ\footnote{Computació Quàntica i Informació Quàntica.}. El vector zero es aquell vector que per qualsevol vector $\ket{\psi}$ i qualsevol escalar $z$, es compleix que:	
 	$\ket{\psi} + 0 = \ket{\psi} $ i $z0 = 0$. \\
-	El operador zero també s'escriu com a $0$ i es defineix com l'operador que mapa qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
+	El operador zero també s'escriu com a $0$ i es defineix com l'operador que tranforma qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
 	
 	\item \textbf{Matriu inversa} \\
-	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A$. $A^{-1}$ es la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero.
+	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A$. $A^{-1} = I$ és la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero. En altres paraules, és l'element neutre per la suma i l'element null per la multiplicació. 
 
 	\item \textbf{Operador Identitat} \\
-	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera. Cal notar també que per qualsevol matriu $A$ i la seva inversa és veritat que $AA^{-1} = I$
+	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera. Cal notar també que per qualsevol matriu $A$ i la seva inversa és veritat que $AA^{-1} = I$. 
 	
 	\item \textbf{Operador Unitari} \\
 	Un operador unitari es qualsevol operador que no altera la norma dels vectors al quals es aplicat, per tant, una matriu es unitària si $AA^\dagger = I$
