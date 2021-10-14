@@ -38,7 +38,7 @@ On $z$ es un escalar i $\ket{\psi}$ un vector. Cal que notar que cada element de
 
 Degut a que els espais de Hilbert son complexos tenen un conjugat complex definit per escalar com a: Per un escalar complex $z=a +bi$, el seu conjugat $z^*$ es igual a $a-bi$. 
 
-Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes elss seus elements:
+Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes els seus elements:
 $$
 \ket{\psi}^{*} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
@@ -87,8 +87,12 @@ El conjugat Hermitià d'un vector columna $\ket{\psi}$ s'anomena \textit{bra} o 
 \section{Operadors Lineals}
 Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades mapes lineal o operadors lineal\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
 
+<<<<<<< Updated upstream
 Bàsicament, un operador lineal transforma un vector en un altre vector, aquests vectors poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
 
+=======
+Bàsicament, un operador lineal transforma un vector en un altre vector, aquest vector poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
+>>>>>>> Stashed changes
 $$
 A \ket{v} = \ket{w}
 $$
@@ -213,13 +217,13 @@ $$
 Els vectors ortonormals són importants, àmpliament utilitzats tant en computació quàntica com en mecànica quàntica perquè serveixen per crear bases vectorials molt útils. 
 
 Una altre cosa que remarcar i no he dit es que al dir un par de vectors, aquest par també pot ser un set de vectors. Si un set té tots els vectors unitaris i ortogonals entre tots ells, és un set de vectors ortonormals. 
-El set de vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ és ortonormal si $\bra{\beta_i}\ket{\beta_i} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} on $\delta_{ij}$ és el Kronecker delta, definit com:
+El set de vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ és ortonormal si $\bra{\beta_i}\ket{\beta_j} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} on $\delta_{ij}$ és el Kronecker delta, definit com:
 : 
 $$
 \delta_{ij} =
 \begin{cases}
-	1 & \text{if } i=j\\
-	0 & \text{if } i\neq j
+	1 &\text{si } i=j\\
+	0 &\text{si } i\neq j
 \end{cases}
 $$
 
@@ -409,9 +413,9 @@ La traça d'una matriu és tal sols la suma dels seus elements en la diagonal pr
 Aquí hi ha una matriu $A$ amb la seva diagonal principal marcada:
 $$A = 
 	\begin{bmatrix}
-		\tikzmark{top}{1} & \tikzmark{top2}{1} & 0 \\
-		0 & 1 & \tikzmark{bottom2}{1} \\
-		\tikzmark{end}{1} & 0 & \tikzmark{bottom}{1}\\
+		\tikzmarktrace{top}{1} & \tikzmarktrace{top2}{1} & 0 \\
+		0 & 1 & \tikzmarktrace{bottom2}{1} \\
+		\tikzmarktrace{end}{1} & 0 & \tikzmarktrace{bottom}{1}\\
 	\end{bmatrix}
 $$
 \begin{tikzpicture}[overlay,remember picture]
@@ -587,7 +591,7 @@ $$
 	\alpha \\ \beta
 \end{bmatrix}
 $$
-Aquest vector és un estat quàntic vàlid per representar un qubit, no obstant, hi ha un important factor a tenir en compte. El vector ha d'estar normalitzat amb la norma $\ell_2$, per tant, els nombres $\alpha$ i $\beta$ no poden ser qualsevol nombre, necessiten ser els coeficients que formin un vector amb una norma de $1$.   
+Aquest vector és un estat quàntic vàlid per representar un qubit, anomenat \textit{statevector} o vector d'estat. No obstant, hi ha un important factor a tenir en compte. El vector ha d'estar normalitzat amb la norma $\ell_2$, per tant, els nombres $\alpha$ i $\beta$ no poden ser qualsevol nombre, necessiten ser els coeficients que formin un vector amb una norma de $1$.   
 $$
 \norm{\ket{\psi}} = 1 
 $$
@@ -604,7 +608,7 @@ Una cadena de $n$-bit pot només representar una única combinació d'uns i zero
 
 Una cosa molt interessant passa quan s'augmenta el nombre qubits, la 'quantitat d'informació' creix exponencialment. Per una cadena de $n$ qubits la quantitat d'informació que té, en altres paraules la quantitat de números que representa és $2^n$, on aquests números son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
 
-Per il·lustrar tot això, 2 qubits es representen amb el vector:
+Per il·lustrar tot això, 2 qubits es representen amb el \textit{statevector}:
 \begin{align*}
 	\ket{\psi} &= \alpha_1\ket{00} + \alpha_2\ket{00} + \alpha_3\ket{00} + \alpha_4\ket{00}\\
 	&= \alpha_1\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \alpha_2 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} + \alpha_3 \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} + \alpha_4\begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
@@ -625,6 +629,7 @@ Una aspecte que sempre m'agradat del qubits és la seva representació geomètri
 
 %Glosser.ca, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons
 \subsection{Operacions per a només un qubit}
+\label{only_one_qubit}
 Una vegada es té la informació representada, estaria bé poder operar amb aquella informació, aquest es justament lo que fa que els ordinadors siguin ordinadors, poder operar amb la informació. En computació quàntica els qubits al poder ser representats amb vectors que tenen els seus coeficients són operats per les anomenades portes lògiques quàntiques, que són matrius. Per exemple, si es vol passar de tindre un qubit en l'estat $\ket{0}$ al estat $\ket{1}$, s'utilitza la porta lògica $X$ representada a continuació:
 $$
 X = \begin{bmatrix}
@@ -681,51 +686,6 @@ A partir d'elles podem elaborar matrius que facin una rotació de qualsevol angl
 Per exemple la matriu $R_y(\cdot)$ (Eq.\ref{eq:ry}) correspon a una rotació en el eix $\hat{\mathbf{y}}$ de la esfera de la figura \ref{fig:677px-blochsphere}. 
 %The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
 
-Aquestes operacions poden resultar en superposicions si es fan rotacions amb certs angles. Però hi ha una porta lògica especial per poder fer una rotació que resulta en una superposició \textit{no sé}. Es a dir una superposició que tingui les mateixes probabilitats de resultar en $\ket{0}$ o $\ket{1}$\footnote{Un 50\% cada una.}. Aquesta és la porta de Hadamard, denotada per $H$:
-\begin{equation}
-	H = \frac{1}{\sqrt{2}}\begin{bmatrix}
-		1 & 1 \\ 1 & -1
-	\end{bmatrix}
-\end{equation}
-Podem comprovar que és una superposició \textit{no sé} al aplicar-la al estat $\ket{0}$:
-
-Aquesta porta lògica forma part d'un grup important, les matrius de Pauli. Hi han 3 d'aquestes la X, la Y i la Z, usualment representades per $X$, $Y$, $Z$ o per $\sigma_x, \sigma_y, \sigma_z$. Aquestes matrius són les següents:
-\begin{enumerate}
-	\item \textbf{Pauli-X:}
-	$
-	\begin{bmatrix} 0 & 1\\ 1 & 0\\ \end{bmatrix}
-	$
-	\item \textbf{Pauli-Y:}
-	$
-	\begin{bmatrix} i & 0\\ 0 & -i\\ \end{bmatrix}
-	$
-	\item \textbf{Pauli-Z:} 
-	$
-	\begin{bmatrix} 1 & 0\\ 0 & -1\\ \end{bmatrix}
-	$
-\end{enumerate}
-Aquestes matrius són molt important en la mecànica quàntica\footnote{Al ser Hermitianes són observables, concretament ho són dels que corresponen al spin d'una partícula amb spin $\frac{1}{2}$ bàsicament estan relacionades amb els operadors del moment angular.} i són utilitzades àmpliament per descompondre i com a portes lògiques quàntiques.
-
-A partir d'elles podem elaborar matrius que facin una rotació de qualsevol angle  en un del eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}: 
-\begin{align}
-	& R_x(\theta) =  e^{-i\theta X/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}X = 
-	\begin{bmatrix}
-		\cos \frac{\theta}{2} & -i \sin \frac{\theta}{2} \\
-		-i\sin \frac{\theta}{2} & \cos\frac{\theta}{2} \\
-	\end{bmatrix} \label{eq:rx}\\
-	& R_y(\theta) =  e^{-i\theta Y/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}Y = 
-	\begin{bmatrix}
-		\cos \frac{\theta}{2} & -\sin \frac{\theta}{2} \\
-		\sin \frac{\theta}{2} & \cos\frac{\theta}{2} \\
-	\end{bmatrix} \label{eq:ry}\\
-	& R_y(\theta) =  e^{-i\theta Z/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}Z = 
-	\begin{bmatrix}
-		e^{-i\theta/2} & 0 \\
-		0 & e^{i\theta/2} \\
-	\end{bmatrix} \label{eq:rz}
-\end{align}
-Per exemple la matriu $R_y(\cdot)$ (Eq.\ref{eq:ry}) correspon a una rotació en el eix $\hat{\mathbf{y}}$ de la esfera de la figura \ref{fig:677px-blochsphere}. 
-
 Aquestes operacions poden resultar en superposicions si es fan rotacions amb certs angles. Però hi ha una porta lògica especial per poder fer una rotació que resulta en una superposició uniforme. Es a dir una superposició que tingui les mateixes probabilitats de resultar en $\ket{0}$ o $\ket{1}$\footnote{Un 50\% cada una.}. Aquesta és la porta de Hadamard, denotada per $H$:
 \begin{equation}
 	H = \frac{1}{\sqrt{2}}\begin{bmatrix}
@@ -750,6 +710,45 @@ Altres operacions importants de només un qubit són les portes $S$ i $T$:
 $$
 S=\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \; T=\begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{bmatrix}
 $$
+
+
+\subsection{Circuit quàntics}
+Aquestes operacions usualment es representen a través de circuits quàntics. Són representacions gràfiques que indiquen de quines operacions s'apliquen a quins qubits i en quin ordre\footnote{A mi em semblen semblats a les partitures musicals.}. 
+
+La forma de representar una porta $H$ aplica a un qubit és amb el circuit quàntic:
+\begin{center}
+	\begin{quantikz}
+		\lstick{$\ket{0}$} & \gate{H} & \qw
+	\end{quantikz}
+\end{center}
+
+El qubit es representat per la línea que comença amb $\ket{0}$, amb $\ket{0}$ sent el seu estat inicial. Aquests diagrames es llegeixen d'esquerra a dreta, la mateixa forma en la qual s'apliquen les operacions. 
+
+Un qubit en el qual se li aplica una porta $H$ i després una porta $X$, es representat com:
+\begin{center}
+	\begin{quantikz}
+		\lstick{$\ket{0}$} & \gate{H} & \gate{X} & \qw
+	\end{quantikz}
+\end{center}
+
+Múltiples qubits son simplement més línies, aquí estan representat dos qubits amb portes $X$ aplicades a cada un: 
+\begin{center}
+	\begin{quantikz}
+		\lstick{$\ket{0}$} & \gate{X} & \qw \\
+		\lstick{$\ket{0}$} & \gate{X} & \qw 
+	\end{quantikz}
+\end{center}
+
+Amb múltiples qubits també hi han un ordre en el qual les portes s'han d'aplicar, un circuit en el qual es representa que s'aplica una porta Hadamard al primer, al principi, i una rotació\footnote{D'un angle $\theta$.} en l'eix $x$ en el segon qubit a continuació, seria:
+\begin{center}
+	\begin{quantikz}
+		\lstick{$\ket{0}$} & \gate{H} & \qw& \qw \\
+		\lstick{$\ket{0}$} & \qw & \gate{R_x(\theta)} & \qw
+	\end{quantikz}
+\end{center}
+
+
+
 \subsection{Operacions per a múltiples qubits}
 Lo realment interessant es quan s'apliquen portes a diversos qubits, perquè d'aquesta manera és pot arribar a tindre qubits entrellaçats. La porta més útil per entrellaçar qubits és la $\mathrm{CNOT}$ o \textit{Controlled NOT}:
 \begin{equation}
@@ -762,7 +761,17 @@ Lo realment interessant es quan s'apliquen portes a diversos qubits, perquè d'a
 	\end{bmatrix}
 \end{equation}
 
-És bàsicament una porta $X$\footnote{També anomenada porta $\mathrm{NOT}$ degut al paral·lelisme que es fa amb la porta lògica del ordinadors clàssics NOT \cite{wiki:NOT_gate} que simplement inverteix els bits d'1 a 0 (i viceversa), igual que $X$ que inverteix els qubits $\ket{1}$ a $\ket{0}$ i viceversa.} que està controlada per un altre qubit, si l'altre qubit és $\ket{1}$ s'aplica la porta $X$ al altre qubit. Però si l'altre qubit està en superposició, per exemple en $\ket{+}$, aquesta superposició es passa també al qubit controlat, i al mesurar el qubit, la probabilitat de que s'apliqui la porta $X$ és la probabilitat de mesurar l'estat $\ket{1}$. Es considera que aquests qubits estan entrellaçats, una mesura a un d'ells afecta a la mesura del altre. 
+És bàsicament una porta $X$\footnote{També anomenada porta $\mathrm{NOT}$ degut al paral·lelisme que es fa amb la porta lògica del ordinadors clàssics NOT \cite{wiki:NOT_gate} que simplement inverteix els bits d'1 a 0 (i viceversa), igual que $X$ que inverteix els qubits $\ket{1}$ a $\ket{0}$ i viceversa.} que està controlada per un altre qubit, si l'altre qubit és $\ket{1}$ s'aplica la porta $X$ al altre qubit. Però si l'altre qubit està en superposició, per exemple en $\ket{+}$, aquesta superposició es passa també al qubit controlat, i al mesurar el qubit, la probabilitat de que s'apliqui la porta $X$ és la probabilitat de mesurar l'estat $\ket{1}$. Es considera que aquests qubits estan entrellaçats, una mesura a un d'ells afecta a la mesura del altre. El qubit al qual se li aplica la porta $X$ es diu \textit{target} i el qubit sobre el qual depèn el \textit{target} és el \textit{control}. 
+
+Aquesta porta representa en un circuit s'escriu com:
+\begin{center}
+	\begin{quantikz}
+		& \ctrl{1} & \qw \\
+		& \targ{} & \qw
+	\end{quantikz}
+\end{center}
+On el qubit \textit{control} és el primer i on el segon és el \textit{target}, el qubit que té el símbol $\oplus$\footnote{A vegades escriure els circuits quàntics sense especificar l'estat inicial degut a que no és necessari.}. 
+
 
 \subsubsection{Entrellaçament quàntic}
 L'exemple més senzill d'un entrellaçament quàntic en la computació quàntica son els parells de Bell, que es creen al aplicar a dos qubits una porta $H$ al primer i després una porta $\mathrm{CNOT}$ als dos creant l'estat:
@@ -775,30 +784,115 @@ Matemàticament un sistema quàntic, e.i. un conjunt de qubits, està entrellaç
 
 A partir del entrellaçament i la superposició és com els ordinadors quàntics arribem a tenir avantatges en complexitat sobre els ordinadors clàssics, per més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques veure l'apèndix \ref{complexity}. 
 
-\section{Circuit quàntics}
+\subsubsection{Operacions controlades}
+A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment és pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot podem haver-hi diversos qubits \textit{control} i \textit{target}. 
 
-%\section{Mesurament quàntic}
-%Tornant als fotons i la seva polarització, per prediu-re en quina base col·lapsa, necessitem utilitzar els mesuraments quàntics. Aquests ens donen la probabilitat que té un fotó de col·lapsar en una certa base. 
-%On el vector $\ket{\text{\textrightarrow}}$ expressa la polarització d'un filtre i $\ket{\text{\textuparrow}}$ és el seu complement perpendicular, un fotó polaritzat té el estat següent \cite{QC_intro:photon}: 
-%$$
-%\ket{\nearrow} = \alpha\ket{\text{\textrightarrow}} + \beta\ket{\text{\textuparrow}}
-%$$
-%La probabilitat de ser absorbit és $\alpha^2$, cal notar que $\alpha$ és el coeficient que correspon a la base $\ket{\text{\textrightarrow}}$, la base en la qual el filtre es orientat. En altres paraules, $\alpha^2$ indica la probabilitat del col·lapse de la polarització en l'estat $\ket{\text{\textrightarrow}}$. 
+Per exemple existeix la porta Toffoli\footnote{Inventada per Tommaso Toffoli XD}:
+\begin{center}
+	\begin{quantikz}
+		& \ctrl{1} & \qw \\
+		& \ctrl{1} & \qw \\
+		& \targ{} & \qw
+	\end{quantikz}
+\end{center}
+Que en la seva forma matricial és:
+$$
+\begin{bmatrix}
+	1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix}
+$$
+Aquesta porta aplica una porta $X$ al últim qubit en cas de que els dos primers siguin $\ket{0}$. 
 
-%Els coeficients $\alpha$ i $\beta$ poden ser expressats com una funció del angle $\theta$\footnote{Per més informació sobre la polarització dels fotons, veure l'apèndix \ref{appendix:optics}.}
-%\begin{equation}
-%	\ket{\nearrow} = \cos\theta\ket{\text{\textrightarrow}} + \sin\theta\ket{\text{\textuparrow}}
-%	\label{eq:photon_state}
-%\end{equation}
-%I les probabilitats expectades es converteixen en $\cos^2\theta$ i $\sin^2\theta$, respectivament \cite{QC_intro:photon}. Ara podem mirar que els coeficients són la probabilitat, al veure el cas per $\theta = \pi/2$:
-%\begin{align*}
-%	p(\ket{\text{\textrightarrow}}) &= \cos^2\theta 
-%	= \cos^2 \frac{\pi}{2}
-%	= \left( \frac{1}{\sqrt{2}} \right) ^2 \\
-%	&= 0.5 \\
-%	p(\ket{\text{\textuparrow}}) &= \sin^2\theta 
-%	= \sin^2 \frac{\pi}{2}
-%	= \left( \frac{1}{\sqrt{2}} \right) ^2 \\
-%	&= 0.5 \\	
-%\end{align*}
+Tornant a dos qubits, al veure la matriu per la porta $\mathrm{CNOT}$, es pot apreciar que està comporta per una una matriu identitat i una porta $X$\footnote{La matriu identitat es troba a la cantonada superior esquerra, mentre que la porta $X$ es troba al altre extrem.}:
+$$
+\begin{bmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 \\
+	0 & 0 & 0 & 1 \\
+	0 & 0 & 1 & 0 \\
+\end{bmatrix}
+$$
+També al veure la porta $Z$ controlada ($\mathrm{CZ}$), es pot apreciar el mateix patró:
+$$
+\begin{bmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 \\
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & -1 \\
+\end{bmatrix}
+$$
+Amb la matriu de la porta $Z$ a la cantonada inferior dreta.
+
+On obstant, una operació controlada de qualsevol unitària $U$ es forma a través del següent circuit: 
+\begin{center}
+	\begin{quantikz}
+		& \ctrl{1} & \qw \\
+		& \gate{U} & \qw
+	\end{quantikz}
+	=
+	\begin{quantikz}[align equals at=1.5, column sep=0.3cm]
+		& \qw & \ctrl{1} & \qw & \ctrl{1} & \gate{\begin{bmatrix}
+				1 & 0 \\
+				0 & e^{i\alpha}
+		\end{bmatrix}}\\
+		& \gate{C} & \targ{} & \gate{B} & \targ{} & \gate{A}
+	\end{quantikz}
+\end{center}
+
+On $U, \alpha, A, B$ i $C$ son tals que $U = e^{i\alpha}AXBXC$ i  $ABC = I$.
+
+\section{Mesurament quàntic}
+Com ja s'ha esmentat a la secció \ref{only_one_qubit} al elevar al quadrat el coeficient d'un estat base que forma part d'un estat, s'obté la probabilitat d'obtenir l'estat base quan es mesura. 
+
+Aquesta és la forma més simple de poder predir el mesurament d'un estat quàntic. Però hi han més coses a dir que son útils. 
+
+Els mesuraments quàntics són un conjunt d'operadors de mesura ${M_m}$, la probabilitat del estat $m$ associat a un operador $M_m$, és:
+\begin{equation}
+	\mathrm{prob}(m)=\bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
+\end{equation}
+\label{eq:Mm}
+On l'estat després de la mesura, és:
+$$
+\frac{M_{m}\ket{\psi}}{\sqrt{\bra{\psi}M_{m}^\dagger M_{m} \ket{\psi}}}
+$$
+Els operadors ${M_m}$ han de complir que las suma de les seves probabilitats sigui u:
+$$
+1 = \sum_m \mathrm{prob}(m) = \sum_m \bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
+$$
+
+La diferencia entre aquesta manera de fer les mesures i elevar els coeficients al quadrat, és que l'equació \ref{eq:Mm} és una forma més general, on en comptes de mesurar en la base computacional, és pot mesurar en qualsevol base. A més a més, utilitzant aquest mètode no es necessari saber la composició\footnote{Els coeficients del estats base que descomponen el vector.} del estat que vols mesurar. 
+
+Per mesurar en la base computacional un \textit{statevector} s'utilitzen operadors de mesura derivats de la base computacional amb productes exteriors. Per crear l'operador ${M_i}$ associat a la base computacional $\ket{i}$ s'agafa el producte exterior de la base:
+$$
+M_i = \ket{i}\bra{i}
+$$
+Per tant la probabilitat que la mesura del estat $\ket{\psi}$ resulti en $\ket{0}$, és:
+$$
+\mathrm{prob}(\ket{0} = \bra{\psi}\ket{0}\bra{0}^\dagger \ket{0}\bra{0}\ket{\psi}
+$$
+Per $\ket{\psi} = \ket{0}$ tenim que\footnote{Cal notar que $\ket{0}\bra{0}^\dagger =) \ket{0}\bra{0}$ i que $\ket{0}$ és un vector unitari.}:
+\begin{align*}
+	\mathrm{prob}(\ket{0}) &= \bra{0}\ket{0}\bra{0}^\dagger \ket{0}\bra{0}\ket{0} \\
+	&= \bra{0}\ket{0}\bra{0} \ket{0}\bra{0}\ket{0} \\
+	&= \bra{0}\ket{0}\bra{0}\ket{0} \\
+	&= 1
+\end{align*}
+El resultat té sentit degut a que si mesurem $\ket{0}$ en la base $\ket{0}$, esperem que el resultat sigui $1$. 
+
+Pero 
+
+\section{Matriu de Densitat}
+Una serie de qubits es pot representar tant per un vector com per una matriu, anomenats \textit{statevector} i \textit{density matrix}, respectivament.
+En aquesta secció aniré ràpidament sobre el concepte de la matriu de densitat. 
+
+\subsection{Mesurament parcial}
+
+\subsubsection{Traça parcial}
 

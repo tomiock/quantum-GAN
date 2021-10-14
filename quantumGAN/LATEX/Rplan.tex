@@ -29,6 +29,22 @@
 
 \usepackage[catalan]{babel}
 \usepackage{mathtools}
+
+%	TIKZ PACKAGE
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\usetikzlibrary{fit}
+\tikzset{%
+	highlight/.style={rectangle,rounded corners,fill=red!15,draw,fill opacity=0.5,thick,inner sep=0pt}
+}
+\newcommand{\tikzmark}[2]{\tikz[overlay,remember picture,baseline=(#1.base)] \node (#1) {#2};}
+%
+\newcommand{\Highlight}[1][submatrix]{%
+	\tikz[overlay,remember picture]{
+		\node[highlight,fit=(left.north west) (right.south east)] (#1) {};}
+}
+
 %\usepackage{balance}
 \usepackage{epsfig}
 %\usepackage[all]{xy}
@@ -136,7 +152,7 @@
 
 
 \usepackage{tikz}
-\newcommand{\tikzmark}[2]{
+\newcommand{\tikzmarktrace}[2]{
 	\tikz[overlay,remember picture,baseline] 
 	\node[anchor=base] (#1) {$#2$};
 }
