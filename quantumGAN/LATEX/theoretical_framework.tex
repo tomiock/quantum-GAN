@@ -1,11 +1,11 @@
-\chapter{Àlgebra Lineal}\label{algebra}
+\chapter{Àlgebra lineal}\label{algebra}
 Quan vaig començar a buscar informació sobre computació quàntica, en vaig ràpidament donar compte que necessitava molt més coneixement matemàtic, degut a que no entenia gairebé res dels llibres sobre computació quàntica. Arran aquell temps, una serie de vídeos sobre àlgebra lineal en va captar l’atenció, que es justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Els vídeos son les lliçons que dona el Professor Gilbert Strang al Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos. 
 
 Aquelles lliçons es van ajudar a entendre les matemàtiques de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} i \textit{Quantum Computing: A Gentle Introduction}. A poc a poc, vaig anar aprenent els fundaments matemàtics de la computació quàntica i mecànica quàntica.
 
 En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lienal, per formar els coneixements en matemàtiques necessaris per poder comprendre aquest treball. 
 
-\section{Vectors i Espais Vectorials}
+\section{Vectors i espais vectorials}
 Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial es el conjunt de tots els vectors que tenen les mateixes dimensions. Per exemple  $\mathbb{R}^{3}$ seria el espai vectorial de tots els vectors de 3 dimensions, aquests vectors normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica un tipus d'espais vectorials en concret són utilitzats: Els espais de Hilbert, en altres paraules, un espai vectorial amb un producte interior \cite{QCandQI:GramSchmidt}. Els espais de Hilbert segueixen un conjunt de productes i compleixen unes certes normes, en aquest capítol presentaré una part d'aquestes normes i productes, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, també que d'aquí en endavant, quan mencioni espai vectorial hem referiré a un espai de Hilbert, d'ha no ser que s'especifiqui el contrari. 
 
 Els espais vectorial estan definits per les seves bases, un set de vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ es una base vàlida per l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$. Els vectors de la base $B$ són linealment independent entre ells.
@@ -58,7 +58,7 @@ A^{*} =
 $$
 Amb $\ket{\psi}$ sent un vector de dimensions $n$, i $A$ sent una matriu de dimensions $m \times n$.
 
-Un altre concepte important es la transposada, representada per el superindex $T$ que 'rota' un vector o una matriu. Un vector columna amb una dimensió $n\times 1$ es transforma amb un vector fila amb una dimensió $1\times n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
+Un altre concepte important es la transposada, representada per el superíndex $T$ que 'rota' un vector o una matriu. Un vector columna amb una dimensió $n\times 1$ es transforma amb un vector fila amb una dimensió $1\times n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
 $$
 \ket{\psi}^{T} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^T = \begin{bmatrix} \psi_{1} & \dots & \psi_{n} \end{bmatrix}
@@ -76,7 +76,7 @@ A^T = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-La compusició d'un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació es una $\dagger$ superindexada. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
+La composició d'un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació es una $\dagger$ superindexada. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
 $$
 \ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \dots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
 $$
@@ -84,15 +84,12 @@ El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\ps
 
 El conjugat Hermitià d'un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
 
-\section{Operadors Lineals}
+\section{Operadors lineals}
 Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades mapes lineal o operadors lineal\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
 
-<<<<<<< Updated upstream
 Bàsicament, un operador lineal transforma un vector en un altre vector, aquests vectors poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
 
-=======
 Bàsicament, un operador lineal transforma un vector en un altre vector, aquest vector poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
->>>>>>> Stashed changes
 $$
 A \ket{v} = \ket{w}
 $$
@@ -111,7 +108,7 @@ Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars 
 
 Les matrius només son la representació matricial del operadors lienals \cite{LR_done_right:matrix}.
 
-	\subsection{Tipus d'Operadors Lineals}
+	\subsection{Tipus d'operadors lineals}
 En la secció actual, exposaré els tipus bàsics d'operadors lineals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
 
 \begin{enumerate}
@@ -140,9 +137,9 @@ En la secció actual, exposaré els tipus bàsics d'operadors lineals que són i
 	
 \end{enumerate}
 
-\section{Producte Interior i Producte Exterior}
+\section{Producte interior i producte exterior}
 
-\subsection{Producte Interior}
+\subsection{Producte interior}
 Un vector dual $\bra{\psi}$ i un vector $\ket{\varphi}$ combinats formen el producte interior $\bra{\psi}\ket{\varphi}$, el qual efectua una operació que agafa els dos vectors com a input i produeix un nombre complex com a output:
 $$
 \bra{a}\ket{b} = a_1 b_1 + a_2 b_2 + ... + a_{n-1} b_{n-1} + a_n b_n = z
@@ -180,7 +177,7 @@ Quan la norma es aplicada a un vector bidimensional, es pot veure que es lo mate
 
 Pel el que jo entenc algunes propietats de la longitud d'un vector bidimensional no es mantenen amb la norma d'un vector que te més de 2 dimensions. En altres paraules, la norma es comporta en certes maneres com la distancia des de d'origen (que es la definició de la longitud), per tant, no són exactament lo mateix. A més d’això, hi han diferents tipus de normes que s'utilitzen en diversos escenaris. Aquesta es la raó per la qual en refereixo a la norma, com la norma $\ell^2$. A aquesta norma també se li diu norma Euclidiana \cite{wolfram:2norm}.
 
-\subsubsection{Propietats del Producte Interior}
+\subsubsection{Propietats del producte interior}
 Les propietats bàsiques del producte interior són les següents:
 \begin{enumerate}
 	\item És lineal en el segon argument $ (z_1\bra{a}+ z_2\bra{c})\ket{b} = z_1\bra{a}\ket{b} + z_2\bra{c}\ket{b}$
@@ -456,7 +453,7 @@ Després de bastant teoria matemàtica, ha arribat el temps de parlar sobre mec�
 
 Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere \cite{QCandQI:QM_postulates}. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
 
-\section{Quantum State and Superpositions}
+\section{Estats quàntics i superposicions}
 Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica és representen per estats quàntics, els quals són algun tipus de distribucions de probabilitat per els possibles resultats d'una mesura on un sistema quàntic \cite{QT_concepts:q_systems}.
 
 Imaginat que tens un boli, però que no saps de quin color és, no obstant, saps que pot ser vermell o blau. Per esbrinar de quin color és, pots provar a escriure amb el boli per veure el color de la pinta, o en altres paraules, fer una mesura. Saps que hi ha un 50\% de probabilitat de que sigui vermell i un 50\% de que sigui blau. En aquesta situació hipotètica tindries el teu sistema quàntic (el boli), una manera de mesurar-lo (escriure alguna cosa) i una llista amb els possibles resultats (50\% vermell, 50\% blau), només et falta una manera de representar-lo tot matemàticament, el estat quàntic. Per tant, per què no intentem guardar la informació que sabem del boli en un vector?
@@ -886,13 +883,100 @@ Per $\ket{\psi} = \ket{0}$ tenim que\footnote{Cal notar que $\ket{0}\bra{0}^\dag
 \end{align*}
 El resultat té sentit degut a que si mesurem $\ket{0}$ en la base $\ket{0}$, esperem que el resultat sigui $1$. 
 
-Pero 
+\section{Matriu de densitat}
+Una serie de qubits es pot representar tant per un vector com per una matriu, anomenats \textit{statevector} i \textit{density matrix}, respectivament \cite{QCandQI}.
+En aquesta secció aniré ràpidament sobre el concepte de la matriu de densitat i com les operacions que s'apliquen a un \textit{statevector} poden ser aplicades a una \textit{density matrix}. Desprès parlaré del mesuraments parcial d'un sistema, un concepte que es important per la part experimental del treball. 
 
-\section{Matriu de Densitat}
-Una serie de qubits es pot representar tant per un vector com per una matriu, anomenats \textit{statevector} i \textit{density matrix}, respectivament.
-En aquesta secció aniré ràpidament sobre el concepte de la matriu de densitat. 
+Una matriu densitat és la representació matemàtica d'un estat quàntic a partir de d'un matriu, es a dir, d'un operador. Aquesta representació serveix descriure sistemes quàntics que no són completament coneguts. Concretament aquests operadors són conjunts de estats quàntics, per un sistema que es descriu amb el estats $\ket{\psi_i}$ que tenen probabilitats $p_i$\footnote{$i$ és l'índex que relaciona un estat a un probabilitat.} la matriu densitat del sistema $\rho$ \cite{QCandQI:density_matrix}:
+$$
+\rho = \sum_i p_i\ket{\psi_i}\bra{\psi_i}
+$$
+Cal matriu densitat pot ser simplement $\ket{\psi}\bra{\psi}$ per un estat qualsevol $\ket{\psi}$, per exemple la matriu que representa $\ket{0}$ és:
+$$
+\rho = \ket{0}\bra{0} = \begin{bmatrix}
+	1 & 0 \\
+	0 & 0 
+\end{bmatrix}
+$$
+
+L'evolució d'un estat $\rho$ que descriu un sistema quàntic, al igual que amb els vectors, s'efectua a partir d'operadors unitaris\footnote{Recorda que han de preservar la norma del vector, i en el cas de les matrius la seva traça.}, d'aquesta manera tenim que la evolució d'un operador densitat és:
+$$
+\sum_i p_i U \ket{\psi_i}\bra{\psi_i} U^\dagger = U\rho U^\dagger 
+$$
+
+Al igual que es fan mesures en \textit{statevectors}, les podem amb les \textit{density matrices}. Per operadors de mesura $M_m$, tenim que la probabilitat de tindre l'estat $m$ és:
+\begin{align*}
+	\mathrm{prob}(m) &= \bra{\psi_i}M_m^\dagger M_m\ket{\psi_i} = \tr(M_m^\dagger M_m \ket{\psi_i}\bra{\psi_i})\\ &= \tr(M_m^\dagger M_m \rho)
+\end{align*}
+També tenim que l'estat $\ket{\psi_i}$ després de la mesura $m$ és \cite{QCandQI:density_matrix}:
+\begin{equation}
+	\ket{\psi_i} = \frac{M_m\ket{\psi_i}}{\sqrt{\bra{\psi_i}M_m^\dagger M_m \ket{\psi_i}}} = \frac{M_m\ket{\psi_i}}{\sqrt{\tr(M_m^\dagger M_m \rho)}}
+	\label{eq:post_state_rho}
+\end{equation}
+
+La equació \ref{eq:post_state_rho} es pot reescriure en termes d'una matriu de densitat després d'una mesura:
+\begin{align*}
+	\rho_m &= \sum_i p_i \frac{M_m\ket{\psi_i}\bra{\psi_i}M_m^\dagger}{\tr(M_m^\dagger M_m \rho)} \\
+	&= \frac{M_m\rho M_m^\dagger }{\tr(M_m^\dagger M_m\rho)}
+\end{align*}
+Perquè això sigui cert els operadors de mesura $M_m$, ha'n de satisfer: 
+$$
+\sum_m M_m^\dagger M_m = I
+$$
+Per a tots els estats possibles $m$.
+
+Per últim s'ha de recordar que les matrius densitat al igual que els vectors d'estat han de tenir certes característiques: 
+\begin{enumerate}
+	\item La traça de $\rho$ ha d'equivaler $1$.
+	\item $\rho$ ha de ser un operador positiu\footnote{Un operador positiu $A$ es aquell que $\bra{\psi}A\ket{\psi}\geq0, \forall \ket{\psi}$.}.
+\end{enumerate}
+\subsection{Operador de densitat reduït}
+Una aplicació important dels operadors de densitat és la descripció d'estats parcials amb el operador de densitat reduït, i per tant la descripció dels mesuraments parcials. 
+
+Al tindre un sistema físic compost de dos sistemes $A$ i $B$ que es descriu per un operador de densitat $\rho^{AB}$, l'operador de densitat reduït del sistema $A$ és:
+\begin{equation}
+\rho^A = \tr_B(\rho^{AB})
+	\label{eq:partial_trace}
+\end{equation}
+On $\tr_B$ és la traça parcial sobre el sistema $B$, que es defineix per l'equació següent \cite{QCandQI:partial_trace}: 
+\begin{equation*}
+	\tr_B(\ket{a_1}\bra{a_2}\otimes\ket{b_1}\bra{b_2}) = \ket{a_1}\bra{a_2}\tr(\ket{b_1}\bra{b_2})
+\end{equation*}
+Amb $\ket{a_1}$ i $\bra{a_2}$ sent estats vàlid pel sistema $A$, i $\ket{b_1}$ i $\bra{b_2}$ sent-ho per $B$. El terme $\tr(\ket{b_1}\bra{b_2})$ s'omet quan els els vectors del producte exterior son iguals i formen un operador de densitat vàlid, el qual la traça ha de donar $1$.
+
+No obstant aquesta definició no es pot utilitzar quan no saps com representar l'operador $\rho$ com a un producte vectorial, en el qual un dels termes és l'estat que es traça afora. En altres paraules, en la equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.  
+
+Degut a això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altre manera més general, on només s'ha de saber les bases del sistemes $A$ i $B$ i un operador vàlid per el sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa el sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
+$$
+\tr_B \rho^{AB} = \sum_i \bra{\beta_i}\rho^{AB}\ket{\beta_i}
+$$
+On el conjunt ${\beta_i}$ són les bases del sistema $B$. Les entrades de la matriu $\tr_B \rho^{AB}$ representades en termes de les bases ${\ket{\alpha_i}}$ i ${\ket{\beta_j}} $del sistemes $A$ i $B$ respectivament, són:
+$$
+(\tr\rho^{AB})_{ij} = \sum_{k=0}^{M-1} \bra{a_i}\bra{\beta_k}\rho^{AB}\ket{\alpha_j}\ket{\beta_k}
+$$
+Amb la matriu sent:
+$$
+\tr\rho^{AB} = 
+\sum_{i,j=0}^{N-1}\left(\sum_{k=0}^{M-1} \bra{a_i}\bra{\beta_k}\rho^{AB}\ket{\alpha_j}\ket{\beta_k}\right) \ket{\alpha_i}\bra{\alpha_j}
+$$
+On $N$ és la dimensió del sistema $A$ i $M$ és la dimensió del sistema $B$. 
+
+Es pot comprovar que aquestes definicions són correctes degut a que en els dos llibres utilitzen les seves definicions per tractar el mateix cas i obtenen el mateix resultat \cite{QCandQI:example_partial, QC_intro:example_partial}.
 
 \subsection{Mesurament parcial}
+\subsubsection{Mesurament parcial}
+Es pot arribar a treure una mesura parcial sobre un sistema de qubits amb la traça parcial i operadors de mesura. En el paper fet per Huang et.al. \cite{QGAN_exp} es descriu un estat $\rho$ després d'un mesurament parcial $\Pi_A$ sobre un sistema $A$ del estat $\ket{\psi}$ com:
+$$
+\rho = \frac{\tr_A(\Pi_A \ket{\psi}\bra{\psi})}{\tr(\Pi_A\otimes I_{2^N-2^{N_A}}\ket{\psi}\bra{\psi})}
+$$
+El sistema $A$ està compost per $N_A$ qubits per tant la resta del estat $\ket{\psi}$ té $N-N_A$, on $N$ és el nombre total de qubits del estat $\ket{\psi}$. D'aquesta manera $\Pi_A\otimes I_{2^N-2^{N_A}}$ té $2^N\times 2^N$ dimensions i pot ser multiplicat per la matriu $\ket{\psi}\bra{\psi}$ que té les mateixes dimensions. No obstant sorgeix un problema amb el numerador de l'equació perquè $\Pi_A$ no té les mateixes dimensions que $\ket{\psi}\bra{\psi}$, encara no he pogut utilitzar aquesta equació adequadament. No sé com computar-la. Parlaré d'això més endavant en la part experimental d'aquest treball.
 
-\subsubsection{Traça parcial}
+En el mateix paper es planteja la mateixa equació però per l'estat post-mesura expressat en forma de vector d'estat, molt semblat a l'equació \ref{eq:post_state_rho}. L'única diferencia es que en l'equació del paper no s'expressa el operador de mesura en la forma $M_m^\dagger M_m$, en canvi el autors ho expressen tan sols com $\Pi_A$, més concretament  $I_{2^N-2^{N_A}}\otimes \Pi_A$. Potser la forma plantejada per els autors té en compte el conjugat hermitià, però no estic segur.
+L'equació esmentada en el paper es la següent:
+$$
+\ket{\psi_m} = \frac{I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}}{\sqrt{\tr(I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}\bra{\psi})}}
+$$
+Al igual que l'equació per les matrius de densitat parlaré d'aquesta contradicció en la part experimental.
+
+\chapter{Inteligencia artificial}
 
