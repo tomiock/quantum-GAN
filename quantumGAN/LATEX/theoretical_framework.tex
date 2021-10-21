@@ -963,7 +963,6 @@ On $N$ és la dimensió del sistema $A$ i $M$ és la dimensió del sistema $B$.
 
 Es pot comprovar que aquestes definicions són correctes degut a que en els dos llibres utilitzen les seves definicions per tractar el mateix cas i obtenen el mateix resultat \cite{QCandQI:example_partial, QC_intro:example_partial}.
 
-\subsection{Mesurament parcial}
 \subsubsection{Mesurament parcial}
 Es pot arribar a treure una mesura parcial sobre un sistema de qubits amb la traça parcial i operadors de mesura. En el paper fet per Huang et.al. \cite{QGAN_exp} es descriu un estat $\rho$ després d'un mesurament parcial $\Pi_A$ sobre un sistema $A$ del estat $\ket{\psi}$ com:
 $$
@@ -978,5 +977,34 @@ $$
 $$
 Al igual que l'equació per les matrius de densitat parlaré d'aquesta contradicció en la part experimental.
 
-\chapter{Inteligencia artificial}
+\section{Ordinadors quàntics}
+Tota aquesta teoria és aplicada a través de qubits físics que s'ubiquen al ordenadors quàntics. Hi han diversos tipus d'ordinadors quàntics, degut a que els qubits poden ser diversos sistemes. Poden ser fotons, chips de silici superconductors o ions atrapats per imants. No elaboraré més sobre aquest tema degut a que no és el tema central d'aquest treball, m'he centrat molt més en la teoria. 
+
+Però si vull generar imatges amb un ordinador quàntic, no necessito un? No, perquè puc simular l'evolució dels estats quàntics amb un ordinador, pensa que tot ser expressat amb àlgebra lienal. No obstant, quan s'intenta simular un sistema quàntic de molt qubits\footnote{Més de 50 per exemple.} un ordinador de sobretaula tardaria molt de temps i realment no és viable. Per més informació sobre algoritmes quàntics i com s'executen en ordinadors i en simuladors, es pot llegir l'apèndix \ref{complexity}.  
+
+
+\chapter{Intel·ligència artificial}
+
+Segurament has sentit parlar de l'intel·ligènica artificial o de les xarxes neuronals, són conceptes que semblen abstractes però jo penso que son bastant intuïtius, intentaré que tú et sentis de la mateixa manera al final d'aquest capítol. 
+
+Intel·ligència artificial és un mot una mica ambigu, que és refereix a qualsevol algoritme que entra dintre del camps del \textit{machine learning} o aprenentatge automàtic\footnote{No obstant, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'ha li ha designat, no importa quin és el objectiu o com ho aconseguix, lo que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria ven bé una intel·ligència o un algoritme de \textit{machine learning}. 
+
+La manera que tenen aquests algoritmes d'alterar-se a si mateixos usualment es canviant els paràmetres de les operacions dels quals estan compostos. Per exemple, en una regressió lineal, s'ajusten els paràmetres de la recta que s'ajusta a les dades per veure la tendència de les dades. Fig \ref{fig:leastsquares}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Figures/least_squares}
+	\caption{Exemple d'una regressió lineal de dades generades al atzar. Veure el codi a \ref{lst:linear_regression}.}
+	\label{fig:leastsquares}
+\end{figure}
+
+Hi han diversos mètodes per ajustar els paràmetres
+
+
+\chapter{Generació d'imatges amb un ordinador quàntic}
+
+
+
+
+
 
