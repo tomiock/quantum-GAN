@@ -128,3 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /quantumGAN/images/
+/quantumGAN/LATEX/Rplan.toc
+/quantumGAN/LATEX/Rplan.synctex.gz
+/quantumGAN/LATEX/Rplan.out
+/quantumGAN/LATEX/Rplan.aux
+/quantumGAN/LATEX/Rplan.bcf
+/quantumGAN/LATEX/Rplan.blg
+/quantumGAN/LATEX/Rplan.run.xml
+/quantumGAN/LATEX/Rplan.bbl
