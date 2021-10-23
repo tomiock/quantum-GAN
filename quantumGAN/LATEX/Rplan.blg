@@ -5,52 +5,51 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
 Reallocating 'name_of_file' (item size: 1) to 4 items.
 Database file #1: ref.bib
-Repeated entry---line 195 of file ref.bib
+Repeated entry---line 197 of file ref.bib
  : @inbook{QCandQI:GramSchmidt
  :                            ,
 I'm skipping whatever remains of this entry
 Warning--empty journal in tfq
 Warning--empty journal in GAN2014
-Warning--empty journal in Grover_96
 You've used 22 entries,
             1791 wiz_defined-function locations,
-            556 strings with 7038 characters,
-and the built_in function-call counts, 5272 in all, are:
-= -- 420
+            558 strings with 7122 characters,
+and the built_in function-call counts, 5457 in all, are:
+= -- 445
 > -- 261
-< -- 20
+< -- 21
 + -- 98
 - -- 76
-* -- 304
-:= -- 792
+* -- 315
+:= -- 809
 add.period$ -- 71
 call.type$ -- 22
 change.case$ -- 20
 chr.to.int$ -- 0
-cite$ -- 25
-duplicate$ -- 263
-empty$ -- 524
+cite$ -- 24
+duplicate$ -- 273
+empty$ -- 539
 format.name$ -- 76
-if$ -- 1242
+if$ -- 1292
 int.to.chr$ -- 0
 int.to.str$ -- 22
 missing$ -- 27
 newline$ -- 118
 num.names$ -- 22
-pop$ -- 126
+pop$ -- 124
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 146
+skip$ -- 158
 stack$ -- 0
-substring$ -- 169
-swap$ -- 91
-text.length$ -- 20
+substring$ -- 201
+swap$ -- 101
+text.length$ -- 21
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 3
-while$ -- 39
+warning$ -- 2
+while$ -- 42
 width$ -- 24
-write$ -- 250
+write$ -- 252
 (There was 1 error message)

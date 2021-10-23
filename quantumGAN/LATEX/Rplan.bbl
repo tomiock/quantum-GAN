@@ -137,9 +137,10 @@ David~J. Griffiths.
 \newblock Prentice Hall, 1995.
 
 \bibitem{Grover_96}
-Lov~K. Grover.
+Lov~K Grover.
 \newblock A fast quantum mechanical algorithm for database search.
-\newblock 1966.
+\newblock {\em Proceedings of the twenty-eighth annual ACM symposium on Theory
+  of computing}, pages 212--219, 1996.
 \newblock [Online; accedit en 05/10/2021:
   \href{https://arxiv.org/abs/quant-ph/9605043}{Link}].
 
