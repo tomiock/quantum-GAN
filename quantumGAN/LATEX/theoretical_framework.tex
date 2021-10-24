@@ -998,8 +998,24 @@ La manera que tenen aquests algoritmes d'alterar-se a si mateixos usualment es c
 	\label{fig:leastsquares}
 \end{figure}
 
-Hi han diversos mètodes per ajustar els paràmetres
+Hi han diversos mètodes per ajustar els paràmetres, el més comú es ajustar-los segons la derivada d'una funció anomenada funció de pèrdua o \textit{loss function}, usualment representada per la lletra $\mathcal{L}$. Aquesta funció representa els objectius del programa i pot ser minimitzada o maximitzada, per exemple, en una regressió lienal es vol reduir la distancia entre els \textit{data points} o dades i la línia que prediu la tendència, Fig. \ref{fig:leastsquares}. 
 
+Degut a que es poden realitzar molts tipus de funcions de pèrdua, ja sigui per la forma de la funció en si o per els paràmetres de la funció. Per conseqüència, el programes de \textit{machine learning} són extremadament versàtils, la màxima expressió d'això es pot veure en les xarxes neuronals o \textit{neural networks}. Aquests algoritmes són els més potents, complexos i polivalents. Precisament utilitzo un d'aquests per generar les imatges. Són àmpliament utilitzats pel reconeixement d'imatges, traducció i sintetització de textos, conducció automàtica, algoritmes de recomanació i es clar, generació d'imatges \tocite. 
+
+\section{Xarxes neuronals}
+Aquests tipus d'algoritmes que entren dintre de la categoria de \textit{machine learning} no tenen un nombre que fa recordar a les xarxes de neuronals que formen part del nostre sistema nerviós central per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa. Segons la variació del tipus de neurona i la estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. 
+
+Una neurona consisteix simplement en una suma ponderada, una altra suma i una funció no lineal que s'aplica al resultat. Les neurones tenen com input i output vectors. Per tant, una neurona es pot definit com:
+$$
+\sigma \left(\sum_{i=1}^n w_i x_i + b\right) = \sigma \left( w_1x_1 + w_2x_2 + \cdots + w_nx_n + b 
+\right) 
+$$
+Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Però per acabar de desenvolupar l'equació s'ha de tenir en compte la interconnectivitat de les neurones, estan connectades entre si, i una neurona pot tenir inputs de diverses persones. D'aquesta manera es formen les xarxes. Si poden tindre diversos inputs es pot representar els \textit{weights} com una matriu, com es pot veure en la següent equació:
+$$
+\sigma(WX + B)
+$$
+
+ 	
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
 
