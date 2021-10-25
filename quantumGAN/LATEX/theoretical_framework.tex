@@ -1009,12 +1009,96 @@ $$
 \sigma \left(\sum_{i=1}^n w_i x_i + b\right) = \sigma \left( w_1x_1 + w_2x_2 + \cdots + w_nx_n + b 
 \right) 
 $$
-Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Després de deixar clara l'equació s'ha d'ilustrar la interconnectivitat que tenen les neurones entre si. 
+Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
 
-Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix pasa amb els outputs. Depen de com es conectin entre si o de quina operació adicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Usualment l'aquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquetes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 pixels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
+Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Usualment l'arquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
 
-En canvi, les \textit{hidden layers}, es a dir les capes ocultes, no tenen una mida determinades, el mateix pasa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas, la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb el diversos tipus de capa és el que dona la versatilitat d'aquests algoritmes, com ja he comentat. 
+En canvi, les \textit{hidden layers}, es a dir les capes ocultes, no tenen una mida determinades, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas, la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb el diversos tipus de capa és el que dona la versatilitat d'aquests algoritmes, com ja he comentat. 
  
- Entran dintre del tipus de capes que ponen tindre les xarxes neuronals, el més comú i simple d'aquestes és una \textit{fully connected layer}, o una capa completament conectada. Les neurones que formen aquesta capa estan conectades a totes les neurones de la capa anterior i asi mateix a totes les neurones de la capa següent. La forma que tenen aquestes capes de variar es mitjançant la mida que tenen, es a dir, la quantitat de neurones que tenen. Però també poden variar en la funció d'activació que tenen, que ha de ser una funció no lineal.
+Entre els diferents tipus de capes que ponen tindre les xarxes neuronals, el més comú i simple d'aquestes és una \textit{fully connected layer}, o una capa completament connectada, veure la figura \ref{fig:560px-artificialneuralnetwork}. Les neurones que formen aquesta capa estan connectades a totes les neurones de la capa anterior i així mateix a totes les neurones de la capa següent. La forma que tenen aquestes capes de variar es mitjançant la mida que tenen, es a dir, la quantitat de neurones que tenen. \begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Figures/560px-Artificial_neural_network.svg}
+	\caption{Usualment les xarxes neuronals es representen d'aquesta forma, amb fletxes i boles. Les boles representarien cada neurona i les fletxes mostren com estan connectades. La \textit{hidden layer} d'aquesta representació es pot veure que és una \textit{fully connected layer} degut a com està connectada a les altres capes, rebent cada neurona el output de cada neurona anterior.}
+	\label{fig:560px-artificialneuralnetwork}
+	% en:User:Cburnett, CC BY-SA 3.0 \href{http://creativecommons.org/licenses/by-sa/3.0/}, via Wikimedia Commons
+\end{figure}
+No obstant, també poden variar en la funció d'activació que tenen, que ha de ser una funció no lineal. A continuació estan les funcions d'activació més utilitzades:
+\begin{enumerate}
+	\item \textbf{Sigmoid:}
+	$$
+	f(x) = \frac{1}{1+e^{-x}}
+	$$
+	Una sigmoide de tota la vida.
+	\item \textbf{ReLU:}
+	\textit{Rectified Linear Unit (ReLU)}
+	$$
+	f(x) =\max(x,0)
+	$$
+	Per tant és una funció que dona zero si $x$ es més petita que zero i $x$ de lo contrari. Hi han diverses versions d'aquesta funció, per exemple, parametritzada $f(x) = \max(x,ax)$, on $a$ és un 
+	paràmetre i la \textit{Leaky ReLU} on dona $x$ en cas de $x>0$ i $0.01x$ en cas contrari.
+	\item \textbf{Tangent hiperbòlica:}
+	$$
+	\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-z}}
+	$$
+	Una tangent hiperbòlica de tota la vida\footnote{Però en realitat no se el que realment significa, se que hi han unes versions hiperbòliques de les funcions trigonomètriques, suposo que són el mateix per per un espai hiperbòlic.}.
+	\item \textbf{Softmax:}
+	Aquesta funció té com a input un vector de mida $n$, on les seus elements són $(z_1, z_2, \cdots z_n)$:
+	$$
+	f(\ket{z}_i) = \frac{e^{\ket{z}_i}}{\sum_{j=1}^{n} e^{\ket{z}_j}}
+	$$
+	S'utilitza a la última capa perquè el output sigui un vector que es pugui interpretar com probabilitats degut a que la suma dels elements dona $1$ i cada element estarà en l'interval $[0,1]$.
+	\item \textbf{Funció lineal:}
+	$$
+	f(x) = x
+	$$
+	Ja se que m'he referit a les funcions d'activació com funcions no lienals, però al ser aquestes xarxes tan versàtils i modulables pot fer una mica el que vulguis\footnote{Mentre funcioni.}, i aquesta funció es utilitzada per alguns algoritmes.
+\end{enumerate}
+
+Aquestes funcions teòricament es poden col·locar en qualsevol tipus de capa, però en la practica hi han certes 'normes', per exemple la funció \textit{softmax} només s'aplica la capa d'output. Hi han diversos tipus de capes a destacar, sobretot les capes convolucionals que s'utilitzen alhora de treballar amb imatges, però parlaré d'elles durant aquest treball.
+
+\section{Descens del gradient}
+Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes van evolucionant en el temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada la \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. En aquesta secció parlaré més en profunditat d'aquest mecanisme que s'anomena el descens (o ascens) del gradient.
+
+Es comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Es a dir, els punts màxims i mínims d'aquesta funció representen els punts òptims de la xarxa, els punts als quals es vol arribar. Per exemple, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a les imatges, $1$ als gats i $0$ als gossos. A partir de la funció de pèrdua \textit{Binary Cross Entropy} o \textit{Log Loss}, que serveix per problemes de classificació de dues classes com el nostre problema:
+$$
+\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
+$$
+Per $t_i$ sent la etiqueta real que ha de tenir l'imatge i $y_i$ sent la etiqueta que el model dona a l'imatge. Per tant si l'etiqueta real és $1$, l'equació acaba sent:
+$$
+\mathcal{L}_1 = - \log(y)
+$$
+I el cas contrari per $t = 0$:
+$$
+\mathcal{L}_0 = - \log(1 - y)
+$$
+
+Si donen com input l'imatge d'un gat i el programa es dona com output $0.92$ tenim que la pèrdua és de:
+\begin{align*}
+	\mathcal{L} &= - t\log(y) - (1 - t)\log(1 - y) = - \log(0.92) \simeq 0.0834
+\end{align*}
+En canvi, si el programa es dona un output de $0.15$ la pèrdua seria:
+\begin{align*}
+	\mathcal{L} &= - t\log(y) - (1 - t)\log(1 - y) = - \log(0.15) \simeq 1.897
+\end{align*}
+Es pot veure que si l'etiqueta que posa el model s'allunya més de l'etiqueta real la pèrdua és més gran. El mateix es pot veure per les imatges del gossos o en altres paraules les imatges que haurien de tenir etiqueta zero:
+\begin{align*}
+	\mathcal{L} &= - 0\cdot\log(0.89) - (1 - 0)\cdot\log(1 - 0.89) = - \log(1- 0.89) \simeq 2.207 \\
+	\mathcal{L} &= - 0\cdot\log(0.08) - (1 - 0)\cdot\log(1 - 0.08) = - \log(1- 0.08)\simeq 0.0834 \\
+\end{align*}
+Per tant quan més pròximes estén les prediccions (els outputs del model) a les etiquetes del programa, menor serà la pèrdua, llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes o ho seran pràcticament. 
+
+A aquests punts òptims s'arriba actualitzant els paràmetres a través de la derivada, concretament a través del gradient. El gradient d'una funció és un vector\footnote{O més bé un camp vectorial.} on els elements són la derivada parcial respecte a cada paràmetre (per aclarir, un element per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
+$$
+\nabla f(\theta) = \begin{bmatrix}
+	\pdv{f}{\theta_1} \\
+	\pdv{f}{\theta_2} \\
+	\vdots \\
+	\pdv{f}{\theta_{n-1}} \\
+	\pdv{f}{\theta_{n}}
+\end{bmatrix}
+$$
+No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada.  
+
+\section{Generative adversial networks}
 
 \chapter{Generació d'imatges amb un ordinador quàntic}

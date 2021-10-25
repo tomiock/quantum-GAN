@@ -185,7 +185,6 @@ Codi per efectuar una regressió lineal a dades que es generen al atzar en el ma
 	
 	matplotlib.rc('font', **font)
 	
-	
 	# generate the data
 	np.random.seed(222)
 	X = np.random.normal(0,1, (200, 1))
@@ -193,11 +192,9 @@ Codi per efectuar una regressió lineal a dades que es generen al atzar en el ma
 	# data + white noise
 	y = X@w_target + np.random.normal(0, 1, (200,1))
 	
-	
 	# least squares
 	w_estimate = np.linalg.inv(X.T@X)@X.T@y
 	y_estimate = X@w_estimate
-	
 	
 	# plot the data
 	plt.figure(figsize=(15,10))
