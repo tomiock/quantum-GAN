@@ -1010,10 +1010,11 @@ $$
 \sigma \left(\sum_{i=1}^n w_i x_i + b\right) = \sigma \left( w_1x_1 + w_2x_2 + \cdots + w_nx_n + b 
 \right) 
 $$
-Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Però per acabar de desenvolupar l'equació s'ha de tenir en compte la interconnectivitat de les neurones, estan connectades entre si, i una neurona pot tenir inputs de diverses persones. D'aquesta manera es formen les xarxes. Si poden tindre diversos inputs es pot representar els \textit{weights} com una matriu, com es pot veure en la següent equació:
-$$
-\sigma(WX + B)
-$$
+Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Després de deixar clara l'equació s'ha d'ilustrar la interconnectivitat que tenen les neurones entre si. 
+
+Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix pasa amb els outputs. Depen de com es conectin entre si o de quina operació adicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. 
+
+Per exemple, tenim una \textit{fully connected network} on 
 
  	
 
