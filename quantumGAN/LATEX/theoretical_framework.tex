@@ -1002,7 +1002,7 @@ Hi han diversos mètodes per ajustar els paràmetres, el més comú es ajustar-l
 Degut a que es poden realitzar molts tipus de funcions de pèrdua, ja sigui per la forma de la funció en si o per els paràmetres de la funció. Per conseqüència, el programes de \textit{machine learning} són extremadament versàtils, la màxima expressió d'això es pot veure en les xarxes neuronals o \textit{neural networks}. Aquests algoritmes són els més potents, complexos i polivalents. Precisament utilitzo un d'aquests per generar les imatges. Són àmpliament utilitzats pel reconeixement d'imatges, traducció i sintetització de textos, conducció automàtica, algoritmes de recomanació i es clar, generació d'imatges \tocite. 
 
 \section{Xarxes neuronals}
-Aquests tipus d'algoritmes que entren dintre de la categoria de \textit{machine learning} no tenen un nombre que fa recordar a les xarxes de neuronals que formen part del nostre sistema nerviós central per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa. Segons la variació del tipus de neurona i la estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. 
+Aquests tipus d'algoritmes que entren dintre de la categoria de \textit{machine learning} no tenen un nombre que fa recordar a les xarxes de neuronals que formen part del nostre sistema nerviós central per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa, la qual s'organitza a partir de capes. Segons la variació del tipus de neurona i la estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. Aquests models d'intel·ligencia artificial constitueixen el camp del \textit{deep learning} o aprenentatge profund. S'anomenen d'aquesta forma per referenciar la profunditat d'aquests algoritmes, es a dir el nombre de capes que tenen.
 
 Una neurona consisteix simplement en una suma ponderada, una altra suma i una funció no lineal que s'aplica al resultat. Les neurones tenen com input i output vectors. Per tant, una neurona es pot definit com:
 $$
@@ -1010,9 +1010,9 @@ $$
 \right) 
 $$
 Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. 
-Aquests paràmetres tenen una utiltiat pot clara, per això tenim que parlar en termes d'importancia. En altres paraules, com afecta cada paràmetre a una part de la xarxa i també com afecta aquest al output de la xarxa. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
+Aquests paràmetres tenen una utilitat pot clara, per això tenim que parlar en termes d'importància. En altres paraules, com afecta cada paràmetre a una part de la xarxa i també com afecta aquest al output de la xarxa. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
 
-Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Tornant a l'utilitat del paràmetres, un \textit{weight} especifica com de forta es la relació entre una neurona en una capa i una altre neurona en una capa veina. I un \textit{bias} especifica com d'important és un capa sencera, degut a que aquest número efecta a tots els outputs de la capa fent que siguin més forts\footnote{En altres paraules, que els outputs siguin números més grans.}
+Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Tornant a l'utilitat del paràmetres, un \textit{weight} especifica com de forta es la relació entre una neurona en una capa i una altre neurona en una capa veïna. I un \textit{bias} especifica com d'important és una neurona, degut a que aquest número afecta al resultat de la suma de la neurona, fent que aquesta sigui més alta.
 
 Usualment l'arquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
 
@@ -1063,9 +1063,10 @@ Aquestes funcions teòricament es poden col·locar en qualsevol tipus de capa, p
 Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes van evolucionant en el temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada la \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. En aquesta secció parlaré més en profunditat d'aquest mecanisme que s'anomena el descens (o ascens) del gradient.
 
 Es comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Es a dir, els punts màxims i mínims d'aquesta funció representen els punts òptims de la xarxa, els punts als quals es vol arribar. Per exemple, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a les imatges, $1$ als gats i $0$ als gossos. A partir de la funció de pèrdua \textit{Binary Cross Entropy} o \textit{Log Loss}, que serveix per problemes de classificació de dues classes com el nostre problema:
-$$
-\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
-$$
+\begin{equation}
+	\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
+	\label{eq:BCE}
+\end{equation}
 Per $t_i$ sent la etiqueta real que ha de tenir l'imatge i $y_i$ sent la etiqueta que el model dona a l'imatge. Per tant si l'etiqueta real és $1$, l'equació acaba sent:
 $$
 \mathcal{L}_1 = - \log(y)
@@ -1102,7 +1103,7 @@ $$
 $$
 No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada. 
 
-Al fer la derivada de la funció de pèrdua es pot veure inmediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depen del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una técnica concreta per efectuar la derivada de la xarxa neuronal, el \textit{backpropagation}. 
+Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depèn del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una tècnica concreta per efectuar la derivada de la xarxa neuronal, el \textit{backpropagation}. 
 
 \subsection{Backpropagation}
 Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
@@ -1111,9 +1112,80 @@ No entreré en profunditat sobre la \textit{backpropagation} en aquesta secció,
 
 L'activació d'una neurona $j$ en l'última capa $L$ de la xarxa es defineix com: 
 $$
-a^{L}_j = \sigma(\sum_{j=0}^{n_L - 1}w^L_{jk} a^{L-1}_jk+ b^L)
+a^{L}_j = \sigma\left(\sum_{j=0}^{n_{L- 1}}w^L_{jk} a^{L-1}_k+ b_j^L\right)
 $$
-On $a^{L-1}_k$ és l'activació d'una neurona $k$ en la capa anterior $L-1$, i on el \textit{weight} $w^L_{jk}$ és el paràmetre que expressa en que mesura es conecta la neurona $j$ a la neurona $k$. Com ja he dit, com de forta és aquesta conexió.  
+On $a^{L-1}_k$ és l'activació d'una neurona $k$ en la capa anterior $L-1$, i on el \textit{weight} $w^L_{jk}$ és el paràmetre que expressa en que mesura es connecta la neurona $j$ a la neurona $k$. Com ja he dit, expressa com de forta és aquesta connexió. Utilitzant aquesta definició ja es poden fer les derivades. La suma es fa al llarg de $n_{L-1}$ que és el nombre de neurones que té la capa $L-1$.
+
+No obstant, convé definir el terme $z_j^L$ per procedir a fer les derivades. Simplement és l'equació d'una neurona però sense la funció d'activació:
+$$
+z_j^L = \sum_{j=0}^{n_L - 1}w^L_{jk} a^{L-1}_k+ b_j^L
+$$
+L'objectiu és obtenir la derivada de la \textit{loss function} respecte a un \textit{weight} qualsevol i un \textit{bias} qualsevol. Per tant, s'han obtenir les següents derivades parcials:
+$$
+\pdv{\mathcal{L}}{w_{jk}^L} \text{ i } \pdv{\mathcal{L}}{b_j^L}
+$$
+Començaré amb la derivada del \textit{weight}, a aplicar la regla de cadena obtenim que:
+\begin{equation}
+	\pdv{\mathcal{L}}{w_{jk}^L} = \pdv{z_k^L}{w_{jk}^L}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L}
+	\label{eq:chain_neuron}
+\end{equation}
+L'última derivada, 'la que està més afora' és simplement la derivada de la funció de pèrdua respecte al output de la xarxa. En el cas de la funció de pèrdua \textit{Squared Error}, és\footnote{No aplico la regla de la cadena en aquesta derivació perquè ja es té en compte en l'equació \ref{eq:chain_neuron}}:
+$$
+\pdv{\mathcal{L}}{a_j^L} =  \pdv{a_j^L} (a_j^L - y)^2 = 2(a_j^L - y)
+$$
+On $y$ és la predicció desitjada del model. A continuació, la derivada del resultat de la neurona $a_j^L$ respecte a $z_j^L$, que és la derivada la funció d'activació.
+$$
+\pdv{a_j^L}{z_j^L} = \sigma'(z_j^L)
+$$
+Per últim tenim la derivada de $z_j^L$ respecte al \textit{weight}:
+$$
+\pdv{z_j^L}{w_{jk}^L} = a^{L-1}_k
+$$
+La derivada és la neurona anterior, cal recordar que el \textit{weight} lo que fa es establir la connexió entre dues neurones, les neurones $j$ i $k$. Per tant l'equació \ref{eq:chain_neuron} es pot escriure com\footnote{Deixo l'ultima derivada $\pdv{\mathcal{L}}{a_j^L}$ sense reescriure perquè aquest terme pot variar depenent de la funció de pèrdua que s'utilitza.}:
+$$
+	\pdv{\mathcal{L}}{w_{jk}^L} = \pdv{z_k^L}{w_{jk}^L}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L} = 
+	a^{L-1}_k \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L}
+$$
+
+No obstant falta un detall, la derivada d'una neurona que passa el resultat a diverses neurones, respecte a la \textit{loss function}. És a dir:
+$$
+\pdv{\mathcal{L}}{a_j^{L-1}} = \sum_{j=0}^{n_{L-1}} \pdv{z_j^L}{a_k^{L-1}}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L}
+$$
+La suma representa que aquesta neurona té un output que es propaga cap a endavant i afecta a les neurones que estan més endavant. A partir d'aquestes derivades ja es pot desenvolupar el vectors gradient, que es un vector en el qual estan totes les derivades de la \textit{loss function} respecte a tots els paràmetres. Més concretament la mitjana d'aquestes derivades, perquè es vol actualitzar els paràmetres per poder minimitzar la pèrdua en totes les dades disponibles. En altres paraules, si es vol que una xarxa reconegui imatges de gats, se li té que ensenyar moltes imatges de gats. Si només se li ensenya una, només aprendrà a reconèixer aquella imatge. 
+
+Tota aquesta teoria es veurà implementada en la part pràctica en forma de codi, degut a que m'he vista amb la necessitat de tenir una xarxa neuronal programada des de zero.
+
 \section{Generative adversial networks}
+Com ja he dit hi han molts tipus de xarxes neuronals, no obstant, en aquest treball només em centraré en un tipus en específic, les xarxes generatives adversatives o \textit{generative adversial networks (GAN)} en anglès.
+
+Aquestes xarxes, com el seu nom diu, s'utilitzen per generar dades, usualment s'apliquen a imatges. Es troben al darrera de projectes com \textit{This person does not exist} \cite{styleGAN, this_person_does_not_exist}, una pàgina web que et genera una cara d'una persona que no existeix, degut a que es una cara generada artificialment a partir d'aquest tipus de models.
+
+Aquests tipus de models van ser introduïts per primera vegada al 2014 per Ian Goodfellow \cite{GAN2014}, des de llavors s'han convertit en un dels models de \textit{deep learning} més sòlids i utilitzats. 
+
+Aquests algoritmes consisteixen en dos models (xarxes) diferents, un generador i un discriminador, amb objectius oposats que s'enfrenen entres si. Per aquesta raó tenen la paraula adversatives en el nom. El generador i discriminador es poden entendre com uns falsificador de bitllets i uns policies que els volen atrapar, respectivament. Els policies es tornen millors al seu treball, podent distingir millor entre els bitllets falsificats i els reals. Els falsificadors responen a això millorant les seves tècniques de falsificació, per tant els policies han de millor encara més. Es un cicle en el qual aquestes forces antagonistes es fan millorar l'una al altra. El mateix passa amb el generador i el discriminador. El discriminadors aprèn a distingir entre les imatges reals i les imatges falses que fabrica el generador, mentre que el generador aprèn a enganyar al discriminador. 
+
+Si s'especifiquen bé els objectius de cada model, arribem a \textit{zero sum game}\footnote{Un \textit{zero sum game} es simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.} de teoria de joc. La manera en la que es soluciona es al arribar a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte es definit d'una altra forma.}
+
+En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models:
+\begin{algorithm}
+	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:cap}
+	\begin{algorithmic}
+		\For{número de interacions}
+		\For{$k$ pasos}
+		\State Treure minibatch de $m$ mostres de soroll $\{z_i, \cdots, z_m\}$ de la distribució de soroll $p_g(z)$
+		\State Treure minibatch de $m$ mostres d'exemples $\{x_i, \cdots, x_m\}$ de la distribució d'exemples $p_{\mathrm{data}}(x)$
+		\State Actualitzar el discriminador ascendint el seu gradient: 
+		$$
+		\nabla_\theta \frac{1}{m}\sum_{i=1}^{m}\left[\log D(x_i) + \log(1- D(G(z_i)))\right]
+		$$
+		\EndFor
+		\State Treure minibatch de $m$ mostres de soroll $\{z_i, \cdots, z_m\}$ de la distribució de soroll $p_g(z)$
+		\State Actualitzar el generador descendent el seu gradient:
+		$$
+		\nabla_\theta \frac{1}{m} \sum_{i=1}^{m} \log(1_D(G(z_i)))
+		$$
+		\EndFor
+	\end{algorithmic}
+\end{algorithm}
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
