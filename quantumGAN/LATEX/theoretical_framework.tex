@@ -1097,7 +1097,12 @@ $$
 	\pdv{f}{\theta_{n}}
 \end{bmatrix}
 $$
-No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada.  
+No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada. 
+
+Al fer la derivada de la funció de pèrdua es pot veure inmediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depen del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una técnica concreta per efectuar la derivada de la xarxa neuronal, el \textit{backpropagation}. 
+
+\subsection{Backpropagation}
+Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
 
 \section{Generative adversial networks}
 
