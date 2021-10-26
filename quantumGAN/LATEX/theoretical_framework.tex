@@ -1101,14 +1101,29 @@ $$
 	\pdv{f}{\theta_{n}}
 \end{bmatrix}
 $$
-No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada. 
+No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada. Això es pot entendre com canviar lleugerament un paràmetre acord amb la direcció. Aquesta direcció es indica per la derivada. L'objecte que s'encarrega d'actualitzar-los, s'anomena optimitzador. L'optimitzador més senzill que hi ha és:
+$$
+\theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
+$$
+Aquí s'actualitza un paràmetre $\theta_i$, he posat el superíndex $t$ per expressar que s'actualitza, passant d'un temps $t-1$ a $t$. En aquesta equació utilitzo $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un número $\eta$ anomenat \textit{learning rate}. Usualment és un número que petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest paràmetre especifica com de ràpid cabien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació, del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. Es poden utilitzar optimitzadors més complexos per millorar l'eficiència del model, per exemple Adam\footnote{No es un acrònim, simplement és un algoritme que és diu Adam. } \cite{adam}:
+$$
+\theta_{i}^t = \theta_{i}^{t-1} \pm \frac{\eta}{\sqrt{\hat{v_t}}+\epsilon}\hat{m}_t
+$$
+On $\hat{m}_t$ i $\hat{v}_t$ són:
+\begin{align*}
+	\hat{m}_t = \frac{m_t}{1-\beta^t_1} \\
+	\hat{v}_t = \frac{v_t}{1-\beta^t_2}
+\end{align*}
+Els autors del paper original recomanen que $\eta = 0.001$, $\beta_1 = 0.9$, $\beta_2=0.999$ i $\epsilon=10^{-8}$. En aquest optimitzador es comença $m_0$ i $m_0$ sent zero, i es van augmentar els valors d'acord amb les paràmetres $\beta_1$ i $\beta_2$. 
 
-Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depèn del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una tècnica concreta per efectuar la derivada de la xarxa neuronal, el \textit{backpropagation}. 
+Cal notar que en els optimitzadors esmentats he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció. 
+
+Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depèn del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una tècnica concreta per efectuar la derivada de la xarxa neuronal anomenada \textit{backpropagation}. 
 
 \subsection{Backpropagation}
 Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
 
-No entreré en profunditat sobre la \textit{backpropagation} en aquesta secció, només en limitaré a esmentar la manera en la qual es calcula. 
+No entraré en profunditat sobre la \textit{backpropagation} en aquesta secció, només en limitaré a esmentar la manera en la qual es calcula. 
 
 L'activació d'una neurona $j$ en l'última capa $L$ de la xarxa es defineix com: 
 $$
@@ -1166,9 +1181,13 @@ Aquests algoritmes consisteixen en dos models (xarxes) diferents, un generador i
 
 Si s'especifiquen bé els objectius de cada model, arribem a \textit{zero sum game}\footnote{Un \textit{zero sum game} es simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.} de teoria de joc. La manera en la que es soluciona es al arribar a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte es definit d'una altra forma.}
 
-En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models:
+En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, que he representat en l'algoritme \ref{alg:GAN}. En aquest és parla de \textit{minibatch} que és simplement un grup d'imatges o de dades, i de soroll que són dades generades aleatòriament i que es poden com input al generador perquè aquest no generi exactament les mateixes imatges cada vegada. El soroll afegeix variació als outputs del generador, però sempre s'intenta en una petita quantitat. 
+
+En el pseudocodi es pot veure que primer s'actualitza el discriminadors $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos, perquè ell aprèn a partir del que indica el discriminador.
+
+També és pot veure com és la funció de pèrdua, que en el paper anomenen \textit{minimax loss function} que és la mateixa que la \textit{Binary Cross Entropy}. Es pot veure que en la BCE, quan $t$ és zero, que seria l'etiqueta per les imatges falses del generador dona $\log(1-y)$. En el cas contrari, per $t$ igual a un, que expressa que les imatges són reals dona $\log(y)$.  
 \begin{algorithm}
-	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:cap}
+	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:GAN}
 	\begin{algorithmic}
 		\For{número de interacions}
 		\For{$k$ pasos}
@@ -1182,7 +1201,7 @@ En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models:
 		\State Treure minibatch de $m$ mostres de soroll $\{z_i, \cdots, z_m\}$ de la distribució de soroll $p_g(z)$
 		\State Actualitzar el generador descendent el seu gradient:
 		$$
-		\nabla_\theta \frac{1}{m} \sum_{i=1}^{m} \log(1_D(G(z_i)))
+		\nabla_\theta \frac{1}{m} \sum_{i=1}^{m} \log(1-D(G(z_i)))
 		$$
 		\EndFor
 	\end{algorithmic}
