@@ -1009,9 +1009,12 @@ $$
 \sigma \left(\sum_{i=1}^n w_i x_i + b\right) = \sigma \left( w_1x_1 + w_2x_2 + \cdots + w_nx_n + b 
 \right) 
 $$
-Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
+Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. 
+Aquests paràmetres tenen una utiltiat pot clara, per això tenim que parlar en termes d'importancia. En altres paraules, com afecta cada paràmetre a una part de la xarxa i també com afecta aquest al output de la xarxa. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
 
-Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Usualment l'arquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
+Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Tornant a l'utilitat del paràmetres, un \textit{weight} especifica com de forta es la relació entre una neurona en una capa i una altre neurona en una capa veina. I un \textit{bias} especifica com d'important és un capa sencera, degut a que aquest número efecta a tots els outputs de la capa fent que siguin més forts\footnote{En altres paraules, que els outputs siguin números més grans.}
+
+Usualment l'arquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
 
 En canvi, les \textit{hidden layers}, es a dir les capes ocultes, no tenen una mida determinades, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas, la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb el diversos tipus de capa és el que dona la versatilitat d'aquests algoritmes, com ja he comentat. 
  
@@ -1104,6 +1107,13 @@ Al fer la derivada de la funció de pèrdua es pot veure inmediatament que s'ha 
 \subsection{Backpropagation}
 Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
 
+No entreré en profunditat sobre la \textit{backpropagation} en aquesta secció, només en limitaré a esmentar la manera en la qual es calcula. 
+
+L'activació d'una neurona $j$ en l'última capa $L$ de la xarxa es defineix com: 
+$$
+a^{L}_j = \sigma(\sum_{j=0}^{n_L - 1}w^L_{jk} a^{L-1}_jk+ b^L)
+$$
+On $a^{L-1}_k$ és l'activació d'una neurona $k$ en la capa anterior $L-1$, i on el \textit{weight} $w^L_{jk}$ és el paràmetre que expressa en que mesura es conecta la neurona $j$ a la neurona $k$. Com ja he dit, com de forta és aquesta conexió.  
 \section{Generative adversial networks}
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
