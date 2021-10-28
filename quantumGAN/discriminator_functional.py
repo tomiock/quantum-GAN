@@ -93,8 +93,7 @@ class ClassicalDiscriminator_that_works:
             z = zs[-l]
             delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
             nabla_b[-l] = delta
-            nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
-                                 activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+            nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1), activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
         return nabla_b, nabla_w, activations[-1]
 
     def backprop_minimax(self, real_image, fake_image, is_real):

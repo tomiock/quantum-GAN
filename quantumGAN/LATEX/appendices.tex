@@ -71,59 +71,58 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 
 
 
-\chapter{Quantum Computation vs Quantum Mechanics}
-On the introduction I mentioned that one of the reasons for with I started learning and researching quantum computing is because it is easy, on this appendix I am going to present why this is the case with a practical example.
+\chapter{Computació Quàntica vs Mecànica Quàntica}
+En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil, en aquest apèndix explicaré exactament a que em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè si ho és, si es compara la computació quàntica amb la mecànica quàntica. Presentaré un exemple pràctic per il·lutrar-lo.  
 
-On quantum mechanics the more general way to represent quantum state, like the orbitals of an atom of hydrogen, are wavefunctions, not statevectors. Wavefunctions are extremely useful, however, working with them adds a hole new level of complexity because they are continuous functions that depend on time. Compare them with vectors, which are discrete packets of information that evolve through discrete amounts of time.
+En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen, és a través de \textit{wavefunctions} o funcions d'ona, no es solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant, treballar amb elles és molt més complicat degut a que són funcions que depenen del temps, no son vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre normalitzar una funció d'ona i un vectors d'estat.
 
-\section{Normalizing}
-Because the probabilistic interpretation of both statevectors and wavefunctions, these two objects have to be normalize upon measurement, thus making the total sum of probabilities $1$. How to normalize these objects is a perfect example to illustrate the difference in complexity that I see between quantum mechanics and quantum computation. 
+\section{Normalitzar}
+Degut a l'interpretació probabilística dels vectors d'estat i de les funcions d'ona, aquests objectes han de ser normalitzats perquè la suma de la probabilitats del possibles estats de mesura sigui $1$. 
 
- For a wavefunction $\Psi$ that represents a particle, the probability of finding the particle in a point $x$ is $\abs{\Psi(x,t)}^2$. Then, the wavefunction has to be normalized like the following:
+Per una funció d'ona $\Psi(x,t)$ que representa una partícula, la probabilitat de trobar aquesta partícula en un punt $x$ és $\abs{\Psi(x,t)}^2$. Per tant, la funció d'ona ha de ser normalitza seguint la fórmula: 
 \begin{equation}
 \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 1
 \label{eq:norm_wave}
 \end{equation}
 
-Since the wavefunctions evolves over time with the Schrödinger equation, see Fig.\ref{fig:schro}, any solution this equation has to be normalized. Luckily, if the wavefunction is normalized at time $t=0$ it stays this way, in other words, the Schrödinger equations preserves the normalization of the wavefunction \cite{IntroQM:normalizing}. 
-
+Degut a que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger, veure la figura \ref{fig:schro}, qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
 \begin{figure}
 	$$
 	i\hslash \pdv{\Psi}{t} = -\frac{\hslash^2}{2m}\pdv[2]{\Psi}{x}+V\Psi
 	$$
-	\caption{\textbf{Schrödinger's Equation}. Where $\hslash$ is $h/2\pi$, and $V$ is the potential energy function.}
+	\caption{\textbf{Equació de Schrödinger}. On $\hslash$ és $h/2\pi$, i $V$ és una funció potencial d'energia.}
 	\label{fig:schro}
 \end{figure}
 
-We can prove that the equation, preserves \ref{eq:norm_wave}, starting from the trivial equality:
+Podem provar que aquesta equació preserva la fórmula \ref{eq:norm_wave}, començant per la igualtat trivial:
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = \pdv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx
 $$
-By the product rule we have that\footnote{A partir d'ara escriuré  $\Psi(x,t)$ simplement com $\Psi$ per no fer les equacions tan enrevessades.}:
+Per la regla del producte tenim que \footnote{A partir d'ara escriuré  $\Psi(x,t)$ simplement com $\Psi$ per no fer les equacions tan enrevessades.}:
 $$
 \pdv{t}\abs{\Psi}^2 = \pdv{t}(\Psi\Psi^*) = \Psi^*\pdv{\Psi}{t} + \pdv{\Psi^*}{t}\Psi
 $$
-Now the Schrödinger equation says that 
+Ara l'equació de Schrödinger diu que
 $$
 \pdv{\Psi}{t} = \frac{i\hslash}{2m}\pdv[2]{\Psi}{x} -  \frac{i}{\hslash}V\Psi
 $$
-then by taking the complex conjugate we have that 
+després calculant el complex conjugat tenim que 
 $$
 \pdv{\Psi^*}{t} = - \frac{i\hslash}{2m}\pdv[2]{\Psi^*}{x} + \frac{i}{\hslash}V\Psi^*
 $$
-so
+per tant
 $$
 \pdv{t}\abs{\Psi}^2 = \frac{i\hslash}{2m} \left( \Psi^*\pdv[2]{\Psi}{x} - \pdv[2]{\Psi^*}{x}\Psi \right) = \pdv{x} \left[ \frac{i\hslash}{2m} \left(\Psi^*\pdv{\Psi}{x} - \pdv{\Psi^*}{x}\Psi\right)\right]
 $$
-finally we can evaluate the integral from the start:
+finalment podem avaluar l'integral del principi:
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = \frac{i\hslash}{2m} \left( \Psi^*\pdv{\Psi}{x} - \pdv{\Psi^*}{x}\Psi \right) \Big|_{-\infty}^{+\infty}
 $$
-Because $\Psi(x,t)$ has to go to zero when x goes to either infinity, is true that:
+Degut a que $\Psi(x,t)$ ha de convergir a zero quan $x$ va cap a infinit, es veritat que:
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 0
 $$
-Thus the integral is constant and went $\Psi$ is normalized at $t=0$, it stays that way for any $t$ (positive of course). \todo{falta la prueba para la normalización de un statevector}
+Es pot veure que l'integral es constant i per tant quan $\Psi$ es normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu es clar). 
 
 \chapter{Polarització d'un fotó}
 \label{appendix:optics}

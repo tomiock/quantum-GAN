@@ -1156,19 +1156,23 @@ Per últim tenim la derivada de $z_j^L$ respecte al \textit{weight}:
 $$
 \pdv{z_j^L}{w_{jk}^L} = a^{L-1}_k
 $$
-La derivada és la neurona anterior, cal recordar que el \textit{weight} lo que fa es establir la connexió entre dues neurones, les neurones $j$ i $k$. Per tant l'equació \ref{eq:chain_neuron} es pot escriure com\footnote{Deixo l'ultima derivada $\pdv{\mathcal{L}}{a_j^L}$ sense reescriure perquè aquest terme pot variar depenent de la funció de pèrdua que s'utilitza.}:
+La derivada és la neurona anterior, cal recordar que el \textit{weight} lo que fa es establir la connexió entre dues neurones, les neurones $j$ i $k$. 
+
+Finalment es pot veure que l'equació \ref{eq:chain_neuron} es pot escriure com\footnote{Deixo l'ultima derivada $\pdv{\mathcal{L}}{a_j^L}$ sense reescriure perquè aquest terme pot variar depenent de la funció de pèrdua que s'utilitza.}:
 $$
 	\pdv{\mathcal{L}}{w_{jk}^L} = \pdv{z_k^L}{w_{jk}^L}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L} = 
 	a^{L-1}_k \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L}
 $$
 
-No obstant falta un detall, la derivada d'una neurona que passa el resultat a diverses neurones, respecte a la \textit{loss function}. És a dir:
+No obstant falta un detall, la derivada d'una neurona que passa el seu resultat a diverses neurones. Aquesta derivada és:
 $$
 \pdv{\mathcal{L}}{a_j^{L-1}} = \sum_{j=0}^{n_{L-1}} \pdv{z_j^L}{a_k^{L-1}}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L}
 $$
-La suma representa que aquesta neurona té un output que es propaga cap a endavant i afecta a les neurones que estan més endavant. A partir d'aquestes derivades ja es pot desenvolupar el vectors gradient, que es un vector en el qual estan totes les derivades de la \textit{loss function} respecte a tots els paràmetres. Més concretament la mitjana d'aquestes derivades, perquè es vol actualitzar els paràmetres per poder minimitzar la pèrdua en totes les dades disponibles. En altres paraules, si es vol que una xarxa reconegui imatges de gats, se li té que ensenyar moltes imatges de gats. Si només se li ensenya una, només aprendrà a reconèixer aquella imatge. 
+La suma representa que aquesta neurona té un output que es propaga cap a endavant i afecta a les neurones que estan més endavant. 
 
-Tota aquesta teoria es veurà implementada en la part pràctica en forma de codi, degut a que m'he vista amb la necessitat de tenir una xarxa neuronal programada des de zero.
+Amb aquestes derivades ja es pot desenvolupar el vector gradient, en el qual estan totes les derivades de la \textit{loss function} respecte a tots els paràmetres. Concretament, la mitjana d'aquestes derivades, perquè es vol actualitzar els paràmetres per poder minimitzar la pèrdua en totes les dades disponibles. En altres paraules, si es vol que una xarxa reconegui imatges de gats, se li té que ensenyar moltes imatges de gats. Si només se li ensenya una, només aprendrà a reconèixer aquella imatge. 
+
+Tota aquesta teoria es veurà implementada en la part pràctica en forma de codi, degut a que m'he vist amb la necessitat de tenir una xarxa neuronal programada des de zero. Usualment s'utilitzen plataformes com \textit{TensorFlow} \cite{tensorflow2015-whitepaper} o \textit{PyTorch} \cite{pytorch_2019}.
 
 \section{Generative adversial networks}
 Com ja he dit hi han molts tipus de xarxes neuronals, no obstant, en aquest treball només em centraré en un tipus en específic, les xarxes generatives adversatives o \textit{generative adversial networks (GAN)} en anglès.
@@ -1179,13 +1183,10 @@ Aquests tipus de models van ser introduïts per primera vegada al 2014 per Ian G
 
 Aquests algoritmes consisteixen en dos models (xarxes) diferents, un generador i un discriminador, amb objectius oposats que s'enfrenen entres si. Per aquesta raó tenen la paraula adversatives en el nom. El generador i discriminador es poden entendre com uns falsificador de bitllets i uns policies que els volen atrapar, respectivament. Els policies es tornen millors al seu treball, podent distingir millor entre els bitllets falsificats i els reals. Els falsificadors responen a això millorant les seves tècniques de falsificació, per tant els policies han de millor encara més. Es un cicle en el qual aquestes forces antagonistes es fan millorar l'una al altra. El mateix passa amb el generador i el discriminador. El discriminadors aprèn a distingir entre les imatges reals i les imatges falses que fabrica el generador, mentre que el generador aprèn a enganyar al discriminador. 
 
-Si s'especifiquen bé els objectius de cada model, arribem a \textit{zero sum game}\footnote{Un \textit{zero sum game} es simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.} de teoria de joc. La manera en la que es soluciona es al arribar a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte es definit d'una altra forma.}
+Si s'especifiquen bé els objectius de cada model, arribem a \textit{zero sum game}\footnote{Un \textit{zero sum game} es simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.} de teoria de joc. La manera en la que es soluciona es al arribar a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte es definit d'una altra forma.}.
 
 En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, que he representat en l'algoritme \ref{alg:GAN}. En aquest és parla de \textit{minibatch} que és simplement un grup d'imatges o de dades, i de soroll que són dades generades aleatòriament i que es poden com input al generador perquè aquest no generi exactament les mateixes imatges cada vegada. El soroll afegeix variació als outputs del generador, però sempre s'intenta en una petita quantitat. 
 
-En el pseudocodi es pot veure que primer s'actualitza el discriminadors $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos, perquè ell aprèn a partir del que indica el discriminador.
-
-També és pot veure com és la funció de pèrdua, que en el paper anomenen \textit{minimax loss function} que és la mateixa que la \textit{Binary Cross Entropy}. Es pot veure que en la BCE, quan $t$ és zero, que seria l'etiqueta per les imatges falses del generador dona $\log(1-y)$. En el cas contrari, per $t$ igual a un, que expressa que les imatges són reals dona $\log(y)$.  
 \begin{algorithm}
 	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:GAN}
 	\begin{algorithmic}
@@ -1206,5 +1207,10 @@ També és pot veure com és la funció de pèrdua, que en el paper anomenen \te
 		\EndFor
 	\end{algorithmic}
 \end{algorithm}
+
+En el pseudocodi es pot veure que primer s'actualitza el discriminadors $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament, per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos, perquè ell aprèn a partir del que indica el discriminador.
+
+També és pot veure com és la funció de pèrdua, que en el paper anomenen \textit{minimax loss function} que és la mateixa que la \textit{Binary Cross Entropy}. Es pot veure que en la BCE, quan $t$ és zero, que seria l'etiqueta per les imatges falses del generador dona $\log(1-y)$. En el cas contrari, per $t$ igual a un, que expressa que les imatges són reals dona $\log(y)$.  
+
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
