@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/quantumGAN/images" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (tfq)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (qGAN)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
