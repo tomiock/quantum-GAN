@@ -1,4 +1,5 @@
 import glob
+import os
 import json
 import random
 from datetime import datetime
@@ -9,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
-from quantumGAN.functions import minimax, save_images
+from quantumGAN.functions import minimax
 from quantumGAN.quantum_generator import QuantumGenerator
 
 
@@ -21,11 +22,19 @@ class Quantum_GAN:
                  ):
 
         now = datetime.now()
-        self.filename = "data/run{}/run.txt".format(now.strftime("%d_%m_%Y__%H_%M_%S"))
-        print(self.filename)
+        init_time = now.strftime("%d_%m_%Y__%H_%M_%S")
+        self.path = "data/run{}".format(init_time)
+        self.path_images = self.path + "/images"
+        self.filename = "run.txt"
 
-        with open(self.filename, "w") as file:
-            file.write("RUN {}".format(now.strftime("%d_%m_%Y__%H_%M_%S")))
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
+
+        if not os.path.exists(self.path_images):
+            os.makedirs(self.path_images)
+
+        with open(os.path.join(self.path, self.filename), "w") as file:
+            file.write("RUN {} \n".format(init_time))
             file.close()
 
         self.generator = generator
@@ -42,7 +51,7 @@ class Quantum_GAN:
             .format(self.discriminator.sizes, self.example_g_circuit)
 
     def store_info(self, epoch, loss, real_label, fake_label):
-        file = open(self.filename, "a")
+        file = open(os.path.join(self.path, self.filename), "a")
         file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {}\n"
                    .format(epoch,
                            loss,
@@ -101,7 +110,7 @@ class Quantum_GAN:
                 self.discriminator.train_mini_batch(mini_batch, self.discriminator_lr)
 
             output_real = mini_batches[0][0][0]
-            save_images(self.generator.get_output(latent_space_noise=noise, parameters=None), o)
+            self.save_images(self.generator.get_output(latent_space_noise=noise, parameters=None), o)
 
             label_real, label_fake = self.discriminator.predict(output_real), self.discriminator.predict(output_fake)
             loss_final = 1 / 2 * (minimax(label_real, label_fake) + minimax(label_real, label_fake))
@@ -114,15 +123,25 @@ class Quantum_GAN:
             print(label_real[-1], label_fake[-1])
             self.store_info(o, loss_final, label_real, label_fake)
 
+    def save_images(self, image, epoch):
+        image_shape = int(image.shape[0] / 2)
+        image = image.reshape(image_shape, image_shape)
+
+        plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
+        plt.axis('off')
+        plt.savefig(self.path_images + '/image_at_epoch_{:04d}.png'.format(epoch))
+
     def create_gif(self):
-        anim_file = 'dcgan.gif'
+        anim_file = self.path + '/dcgan.gif'
 
         with imageio.get_writer(anim_file, mode='I') as writer:
-            filenames = glob.glob('images/image*.png')
+            filenames = glob.glob(self.path_images + '/image*.png')
             filenames = sorted(filenames)
+
             for filename in filenames:
                 image = imageio.imread(filename)
                 writer.append_data(image)
+
             image = imageio.imread(filename)
             writer.append_data(image)
 
@@ -133,11 +152,15 @@ class Quantum_GAN:
                 "D_weights": [w.tolist() for w in self.discriminator.weights],
                 "D_biases": [b.tolist() for b in self.discriminator.biases],
                 "D_loss": self.discriminator.type_loss,
-                "Q_parameters": self.generator.parameter_values,
+                "Q_parameters": [theta for theta in self.generator.parameter_values],
+                "Q_shots": self.generator.shots,
                 "Q_num_qubits": self.generator.num_qubits_total,
-                "Q_num_qubits_ancilla": self.generator.num_qubits_ancilla
+                "Q_num_qubits_ancilla": self.generator.num_qubits_ancilla,
+                "real_labels": self.label_real_series,
+                "fake_labels": self.label_fake_series,
+                "loss_series": self.loss_series
                 }
-        f = open(self.filename, "w")
+        f = open(os.path.join(self.path, "data.txt"), "a")
         json.dump(data, f)
         f.close()
 
@@ -155,15 +178,15 @@ def load_gan(filename):
     f.close()
     discriminator = ClassicalDiscriminator_that_works(data["D_sizes"], data["D_loss"])
 
-    generator = QuantumGenerator(num_qubits=data["D_num_qubits"],
+    generator = QuantumGenerator(num_qubits=data["Q_num_qubits"],
                                  generator_circuit=None,
                                  num_qubits_ancilla=data["Q_num_qubits_ancilla"],
-                                 shots=data["shots"])
+                                 shots=data["Q_shots"])
 
     quantum_gan = Quantum_GAN(generator, discriminator)
 
-    quantum_gan.discriminator.weights = [np.array(w) for w in data["weights"]]
-    quantum_gan.discriminator.biases = [np.array(b) for b in data["biases"]]
-    quantum_gan.generator.parameter_values = data["Q_parameters"]
+    quantum_gan.discriminator.weights = [np.array(w) for w in data["D_weights"]]
+    quantum_gan.discriminator.biases = [np.array(b) for b in data["D_biases"]]
+    quantum_gan.generator.parameter_values = np.array(data["Q_parameters"])
 
-    return quantum_gan
+    return quantum_gan, data["batch_size"]

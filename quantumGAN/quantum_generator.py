@@ -39,8 +39,6 @@ class QuantumGenerator:
 		                                                to_measure=False)
 		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
 
-
-
 	def construct_circuit(self,
 	                      latent_space_noise,
 	                      to_measure: bool):
@@ -169,7 +167,7 @@ class QuantumGenerator:
 			new_images.append(self.get_output(noise))
 
 		for index in range(len(self.parameter_values)):
-			self.parameter_values[index] += (learning_rate / self.mini_batch_size) * nabla_theta[index]
+			self.parameter_values[index] += (learning_rate / len(mini_batch)) * nabla_theta[index]
 
 		mini_batch = [(datapoint[0], fake_image) for datapoint, fake_image in zip(mini_batch, new_images)]
 
@@ -200,7 +198,7 @@ class QuantumGenerator:
 			new_images.append(self.get_output(noise))
 
 		for index in range(len(self.parameter_values)):
-			self.parameter_values[index] += (learning_rate / self.mini_batch_size) * nabla_theta[index]
+			self.parameter_values[index] += (learning_rate / len(mini_batch)) * nabla_theta[index]
 
 		mini_batch = [(datapoint[0], fake_image) for datapoint, fake_image in zip(mini_batch, new_images)]
 

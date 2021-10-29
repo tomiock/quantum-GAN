@@ -5,13 +5,6 @@ from matplotlib import pyplot as plt
 
 
 # DATA PROCESSING
-def save_images(image, epoch):
-	image_shape = int(image.shape[0] / 2)
-	image = image.reshape(image_shape, image_shape)
-	plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
-	plt.axis('off')
-	plt.savefig('images/image_at_epoch_{:04d}.png'.format(epoch))
-
 
 def save_images_color(image, epoch):
 	plt.imshow(image.reshape(int(image.shape[0] / 3), 1, 3))
