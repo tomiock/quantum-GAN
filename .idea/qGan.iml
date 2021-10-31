@@ -3,6 +3,18 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/quantumGAN/data" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__16_43_30/images" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_43_16" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_43_50" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_44_34" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_47_19" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_48_54" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_53_06" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_55_34" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__20_58_36" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__21_01_15" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__21_04_00" />
+      <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__21_07_27" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (qGAN)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

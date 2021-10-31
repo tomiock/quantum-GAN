@@ -45,15 +45,20 @@ class Quantum_GAN:
         self.example_g_circuit = self.generator.construct_circuit(latent_space_noise=None,
                                                                   to_measure=False)
         self.generator.set_discriminator(self.discriminator)
+        self.num_epochs = None
+        self.training_data = None
+        self.batch_size = None
+        self.batch_size = None
+        self.generator_lr = None
+        self.discriminator_lr = None
 
     def __repr__(self):
         return "Discriminator Architecture: {} \n Generator Example Circuit: \n{}" \
             .format(self.discriminator.sizes, self.example_g_circuit)
 
     def store_info(self, epoch, loss, real_label, fake_label):
-        t_now = datetime.now().time()
         file = open(os.path.join(self.path, self.filename), "a")
-        file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {} \n"
+        file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {}\n"
                    .format(epoch,
                            loss,
                            self.generator.parameter_values,
@@ -88,25 +93,10 @@ class Quantum_GAN:
         plt.ylabel('label')
         plt.show()
 
-    def train(self,
-              num_epochs: int,
-              training_data: List,
-              batch_size: int,
-              generator_learning_rate: float,
-              discriminator_learning_rate: float,
-              is_save_images: bool):
-
-        self.num_epochs = num_epochs
-        self.training_data = training_data
-        self.batch_size = batch_size
-        self.batch_size = batch_size
-        self.generator_lr = generator_learning_rate
-        self.discriminator_lr = discriminator_learning_rate
-        self.is_save_imgaes = is_save_images
-        self.t_init = datetime.now().time()
+    def train(self):
 
         noise = self.training_data[0][1]
-        time_init = datetime.now()
+
         for o in range(self.num_epochs):
             mini_batches = create_mini_batches(self.training_data, self.batch_size)
             output_fake = self.generator.get_output(latent_space_noise=mini_batches[0][0][1], parameters=None)
@@ -116,8 +106,14 @@ class Quantum_GAN:
                 self.discriminator.train_mini_batch(mini_batch, self.discriminator_lr)
 
             output_real = mini_batches[0][0][0]
-            if is_save_images:
-                self.save_images(self.generator.get_output(latent_space_noise=noise, parameters=None), o)
+            #image = self.generator.get_output(latent_space_noise=noise, parameters=None)
+#
+            #image_shape = int(image.shape[0] / 2)
+            #image = image.reshape(image_shape, image_shape)
+#
+            #plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
+            #plt.axis('off')
+            #plt.savefig(self.path_images + '/image_at_epoch_{}.png'.format(o))
 
             label_real, label_fake = self.discriminator.predict(output_real), self.discriminator.predict(output_fake)
             loss_final = 1 / 2 * (minimax(label_real, label_fake) + minimax(label_real, label_fake))
@@ -126,20 +122,9 @@ class Quantum_GAN:
             self.label_real_series.append(label_real)
             self.label_fake_series.append(label_fake)
 
-            print("Epoch {}: Loss: {}".format(o, loss_final), output_real, output_fake)
-            print(label_real[-1], label_fake[-1])
+            #print("Epoch {}: Loss: {}".format(o, loss_final), output_real, output_fake)
+            #print(label_real[-1], label_fake[-1])
             self.store_info(o, loss_final, label_real, label_fake)
-
-        time_now = datetime.now()
-        print((time_now - time_init).total_seconds(), "seconds")
-
-    def save_images(self, image, epoch):
-        image_shape = int(image.shape[0] / 2)
-        image = image.reshape(image_shape, image_shape)
-
-        plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
-        plt.axis('off')
-        plt.savefig(self.path_images + '/image_at_epoch_{:04d}.png'.format(epoch))
 
     def create_gif(self):
         anim_file = self.path + '/dcgan.gif'
