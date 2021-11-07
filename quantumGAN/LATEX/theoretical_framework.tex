@@ -824,7 +824,13 @@ $$
 	0 & 0 & 0 & -1 \\
 \end{bmatrix}
 $$
-Amb la matriu de la porta $Z$ a la cantonada inferior dreta.
+Amb la matriu de la porta $Z$ a la cantonada inferior dreta. Aquesta porta en un circuit quàntic es representa de la següent manera:
+\begin{center}
+	\begin{quantikz}
+		& \ctrl{1} & \qw \\
+		& \control{} & \qw
+	\end{quantikz}
+\end{center}
 
 On obstant, una operació controlada de qualsevol unitària $U$ es forma a través del següent circuit: 
 \begin{center}
@@ -1025,44 +1031,15 @@ Entre els diferents tipus de capes que ponen tindre les xarxes neuronals, el mé
 	\label{fig:560px-artificialneuralnetwork}
 	% en:User:Cburnett, CC BY-SA 3.0 \href{http://creativecommons.org/licenses/by-sa/3.0/}, via Wikimedia Commons
 \end{figure}
-No obstant, també poden variar en la funció d'activació que tenen, que ha de ser una funció no lineal. A continuació estan les funcions d'activació més utilitzades:
-\begin{enumerate}
-	\item \textbf{Sigmoid:}
-	$$
-	f(x) = \frac{1}{1+e^{-x}}
-	$$
-	Una sigmoide de tota la vida.
-	\item \textbf{ReLU:}
-	\textit{Rectified Linear Unit (ReLU)}
-	$$
-	f(x) =\max(x,0)
-	$$
-	Per tant és una funció que dona zero si $x$ es més petita que zero i $x$ de lo contrari. Hi han diverses versions d'aquesta funció, per exemple, parametritzada $f(x) = \max(x,ax)$, on $a$ és un 
-	paràmetre i la \textit{Leaky ReLU} on dona $x$ en cas de $x>0$ i $0.01x$ en cas contrari.
-	\item \textbf{Tangent hiperbòlica:}
-	$$
-	\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-z}}
-	$$
-	Una tangent hiperbòlica de tota la vida\footnote{Però en realitat no se el que realment significa, se que hi han unes versions hiperbòliques de les funcions trigonomètriques, suposo que són el mateix per per un espai hiperbòlic.}.
-	\item \textbf{Softmax:}
-	Aquesta funció té com a input un vector de mida $n$, on les seus elements són $(z_1, z_2, \cdots z_n)$:
-	$$
-	f(\ket{z}_i) = \frac{e^{\ket{z}_i}}{\sum_{j=1}^{n} e^{\ket{z}_j}}
-	$$
-	S'utilitza a la última capa perquè el output sigui un vector que es pugui interpretar com probabilitats degut a que la suma dels elements dona $1$ i cada element estarà en l'interval $[0,1]$.
-	\item \textbf{Funció lineal:}
-	$$
-	f(x) = x
-	$$
-	Ja se que m'he referit a les funcions d'activació com funcions no lienals, però al ser aquestes xarxes tan versàtils i modulables pot fer una mica el que vulguis\footnote{Mentre funcioni.}, i aquesta funció es utilitzada per alguns algoritmes.
-\end{enumerate}
-
-Aquestes funcions teòricament es poden col·locar en qualsevol tipus de capa, però en la practica hi han certes 'normes', per exemple la funció \textit{softmax} només s'aplica la capa d'output. Hi han diversos tipus de capes a destacar, sobretot les capes convolucionals que s'utilitzen alhora de treballar amb imatges, però parlaré d'elles durant aquest treball.
+També es pot variar la funció d'activació que tenen, que ha de ser una funció no lineal. La més utilitzada és la sigmoide:
+$$
+f(x) = \frac{1}{1+e^{-1}}
+$$
 
 \section{Descens del gradient}
-Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes van evolucionant en el temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada la \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. En aquesta secció parlaré més en profunditat d'aquest mecanisme que s'anomena el descens (o ascens) del gradient.
+Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes evolucionen al llarg del temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. En aquesta secció parlaré més en profunditat d'aquest mecanisme que s'anomena el descens (o ascens) del gradient.
 
-Es comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Es a dir, els punts màxims i mínims d'aquesta funció representen els punts òptims de la xarxa, els punts als quals es vol arribar. Per exemple, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a les imatges, $1$ als gats i $0$ als gossos. A partir de la funció de pèrdua \textit{Binary Cross Entropy} o \textit{Log Loss}, que serveix per problemes de classificació de dues classes com el nostre problema:
+Es comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Els punts mínims d'aquesta funció representen els punts òptims de la xarxa, els punts als quals es vol arribar. Per exemple, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a les imatges, $1$ als gats i $0$ als gossos. Utilitzaré com a exemple la funció de pèrdua \textit{binary cross entropy} o \textit{log Loss} per poder il·lustrar com una funció pot representar si una xarxa neuronal està fent el seu treball o no. La funció \textit{binary cross entropy} és la següent:
 \begin{equation}
 	\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
 	\label{eq:BCE}
@@ -1087,11 +1064,11 @@ En canvi, si el programa es dona un output de $0.15$ la pèrdua seria:
 Es pot veure que si l'etiqueta que posa el model s'allunya més de l'etiqueta real la pèrdua és més gran. El mateix es pot veure per les imatges del gossos o en altres paraules les imatges que haurien de tenir etiqueta zero:
 \begin{align*}
 	\mathcal{L} &= - 0\cdot\log(0.89) - (1 - 0)\cdot\log(1 - 0.89) = - \log(1- 0.89) \simeq 2.207 \\
-	\mathcal{L} &= - 0\cdot\log(0.08) - (1 - 0)\cdot\log(1 - 0.08) = - \log(1- 0.08)\simeq 0.0834 \\
+	\mathcal{L} &= - 0\cdot\log(0.08) - (1 - 0)\cdot\log(1 - 0.08) = - \log(1- 0.08)\simeq 0.0834
 \end{align*}
-Per tant quan més pròximes estén les prediccions (els outputs del model) a les etiquetes del programa, menor serà la pèrdua, llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes o ho seran pràcticament. 
+Per tant quan més pròximes estén les prediccions (els outputs del model) a les etiquetes del programa, menor serà la pèrdua, llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes.
 
-A aquests punts òptims s'arriba actualitzant els paràmetres a través de la derivada, concretament a través del gradient. El gradient d'una funció és un vector\footnote{O més bé un camp vectorial.} on els elements són la derivada parcial respecte a cada paràmetre (per aclarir, un element per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
+A aquests punts òptims s'han arribat actualitzant els paràmetres a través de la derivada de la funció, concretament a través del gradient. El gradient d'una funció és un vector on els seus elements són la derivada parcial respecte a cada paràmetre (per aclarir, un element per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
 $$
 \nabla f(\theta) = \begin{bmatrix}
 	\pdv{f}{\theta_1} \\
@@ -1105,18 +1082,7 @@ No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa e
 $$
 \theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
 $$
-Aquí s'actualitza un paràmetre $\theta_i$, he posat el superíndex $t$ per expressar que s'actualitza, passant d'un temps $t-1$ a $t$. En aquesta equació utilitzo $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un número $\eta$ anomenat \textit{learning rate}. Usualment és un número que petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest paràmetre especifica com de ràpid cabien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació, del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. Es poden utilitzar optimitzadors més complexos per millorar l'eficiència del model, per exemple Adam\footnote{No es un acrònim, simplement és un algoritme que és diu Adam. } \cite{adam}:
-$$
-\theta_{i}^t = \theta_{i}^{t-1} \pm \frac{\eta}{\sqrt{\hat{v_t}}+\epsilon}\hat{m}_t
-$$
-On $\hat{m}_t$ i $\hat{v}_t$ són:
-\begin{align*}
-	\hat{m}_t = \frac{m_t}{1-\beta^t_1} \\
-	\hat{v}_t = \frac{v_t}{1-\beta^t_2}
-\end{align*}
-Els autors del paper original recomanen que $\eta = 0.001$, $\beta_1 = 0.9$, $\beta_2=0.999$ i $\epsilon=10^{-8}$. En aquest optimitzador es comença $m_0$ i $m_0$ sent zero, i es van augmentar els valors d'acord amb les paràmetres $\beta_1$ i $\beta_2$. 
-
-Cal notar que en els optimitzadors esmentats he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció. 
+Aquí s'actualitza un paràmetre $\theta_i$, he posat el superíndex $t$ per expressar que s'actualitza, passant d'un temps $t-1$ a $t$. En aquesta equació utilitzo $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un número $\eta$ anomenat \textit{learning rate}. Usualment és un número que petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest paràmetre especifica com de ràpid cabien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació, del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. Cal notar que en l'optimitzador he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció. 
 
 Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depèn del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una tècnica concreta per efectuar la derivada de la xarxa neuronal anomenada \textit{backpropagation}. 
 
@@ -1190,7 +1156,7 @@ En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, 
 \begin{algorithm}
 	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:GAN}
 	\begin{algorithmic}
-		\For{número de interacions}
+		\For{número de interaccions}
 		\For{$k$ pasos}
 		\State Treure minibatch de $m$ mostres de soroll $\{z_i, \cdots, z_m\}$ de la distribució de soroll $p_g(z)$
 		\State Treure minibatch de $m$ mostres d'exemples $\{x_i, \cdots, x_m\}$ de la distribució d'exemples $p_{\mathrm{data}}(x)$
@@ -1214,3 +1180,52 @@ També és pot veure com és la funció de pèrdua, que en el paper anomenen \te
 
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
+
+Investigadors al veure el potencial que tenen els ordinadors quàntics i l'intel·ligència artificial, no es van poder resistir a crear un nou camp d'investigació, el \textit{Quantum Machine Learning (QML)}, o aprenentatge automàtic quàntic. Al igual que les xarxes neuronals són les estrelles dintre del \textit{machine learning}, les xarxes neuronals quàntiques ho són dintre del \textit{quantum machine learning}. Des de que es va començar a investigar aquests algoritmes s'han arribat a implementar diversos tipus de xarxes neuronals en algoritmes quàntics. Principalment pel que fa a la generació i classificació d'imatges i dades.
+
+No obstant aquests algoritmes no són completament quàntics, usualment consisteixen en actualitzar els paràmetres d'un circuit quàntic perquè aquest generi les dades. On les actualitzacions dels paràmetres es calculen amb un ordinador clàssic. Això es veure molt clar quan expliqui la part pràctica del treball. 
+
+Abans de continuar amb el capítol he de dir que existeixen diversos algoritmes dintre del \textit{quantum machine learning}, no tot en la vida són xarxes neuronals. Per exemple, es pot donar a terme classificació de dades mitjançant \textit{support vector machines}\footnote{Classificar dades de dimensions petites en espais vectorials molt grans \cite{QSVM_2019, QSVM_xanadu_2019}.} o amb un anàleg de la regressió lineal \cite{Q_linear_regression_xanadu}. No obstant, en aquest capítol em centraré exclusivament en les xarxes neuronals quàntiques.
+
+\section{Descens del gradient quàntic}
+De moment tindre en consideració que una xarxa neuronal quàntica és un circuit quàntic parametritzat, és a dir que simplement té paràmetres. Això juntament amb una funció de pèrdua i dades que corresponen a aquesta es suficient per explicar com s'actualitzen els paràmetres. 
+
+L'objectiu principal es avaluar la derivada respecte amb un paràmetre. Sorprenentment és dona a terme d'una manera més senzilla que amb una xarxa neuronal clàssica. Simplement s'utilitza la definició de la derivada per avaluar-la. S'altera lleugerament un sol paràmetre i es treu la diferencia entre els dos outputs del circuit quàntic. Aquest mètode per avaluar la derivada s'anomena \textit{parameter shift} \cite{tfq, shift_parameter_harrow_2019}. 
+
+Si un circuit quàntic té paràmetres $\theta$ representats per un vector, per un paràmetre $\theta_{i}$, es defineix un vector de pertubació $\Delta_i$ ple de zeros, de igual mida que $\theta$, però que en la posició de $\theta_i$ té un $1$. A partir del vector de pertubació es pot definir la derivada de la funció de pèrdua $\mathcal{L}(\cdot)$ respecte al paràmetre $\theta_{i}$:
+$$
+\pdv{\theta_i} \mathcal{L}(\theta) = \mathcal{L}(\theta + \tfrac{\pi}{4}\Delta_i) - \mathcal{L}(\theta - \tfrac{\pi}{4}\Delta_i)
+$$
+Es pot veure que el vector $\theta \pm \frac{\pi}{4}\Delta_i$ és el vector $\theta$ però amb una petita variació en la posició $i$ que es la que correspon al paràmetre $\theta_i$. Amb aquest mètode ja es pot desenvolupar pràcticament qualsevol actualització de paràmetres, aquesta es la part senzilla de les xarxes neuronals quàntiques, la dificultat radica en la forma dels circuits quàntics que les componen.
+
+\section{Circuits quàntics per xarxes neuronals}
+L'única  certesa sobre aquests circuits es que han de estar parametritzats. Usualment estan compostos per una gran quantitat de portes rotacionals parametritzades, les quals ja he presentat en les equacions \ref{eq:rx}, \ref{eq:ry} i \ref{eq:rz}. 
+
+El problema que esmenten en els articles sobre xarxes neuronals quàntiques es que s'han d'implementar funcions no lienals en els circuits, degut a que la complexitat de les xarxes neuronals radica en aquest tipus de funcions. A primera vista por semblar una tasca quasi impossible a causa de la naturalesa lienal de la computació quàntica. No obstant, durant els anys s'han desenvolupat diverses tècniques per donar a terme aquesta fita. 
+
+A partir d'una combinació de rotacions i portes que entrellacen qubits es pot arribar a implementar una funció semblant a la tangent hiperbòlica\footnote{La tangent hiperbòlica també s'utilitza com a funció no-lienal en el \textit{deep learning}.} en un circuit quàntic \cite{cao2017quantum}. No obstant, aquest mètode té un gran desavantatge, consisteix en un circuit que s'ha d'anar mesurant i repetint per veure si funciona correctament, els autors parlen de \textit{repeat until success} degut a que s'ha de mesurar un qubit i mirar si dona $\ket{0}$ per assegurar que aquesta funció ha sigut aplicada correctament\footnote{En cas de que doni $\ket{1}$, s'ha de repetir el procés.}. 
+
+En un article posterior\footnote{Realitzat en part per un dels autors del mètode anterior}, en el qual els autors generen distribucions continues a partir d'una xarxa generativa adverbial quàntica 
+s'especifica que les no-linearitats presents en l'algoritme no formen part del circuit quàntic, es a dir, funcions que s'implementen clàssicament als resultats dels circuits quàntics o a les dades que s'introdueixen als circuits \cite{romero2019variational}. Aquesta és una mesura molt simple que possiblement implementaré durant la part experimental. 
+
+Al 2019 es va publicar un dels meus articles que més m'agraden\footnote{Utilitzen imatges de cats a les figures i és un dels primers articles que vaig llegir d'aquest camp fa més de dos anys. A més a més la xarxa neuronal esmentada en l'article està completament programada en TensorFlow Quantum \cite{tfq}, i això sempre s'agraeix. } Cong at. al (2019) \cite{cong2019convolucional}, en ell els autors presenten una xarxa neuronal convolucional quàntica. No fa falta entrar en detall sobre aquestes xarxes. Però he de dir que es diuen convolucionals perquè s'apliquen convolucions a les imatges que es volen classificar, es multiplica una part de l'imatge per una matrius que s'anomena filtre \cite{CNN}. Simplement tenen un altre tipus de capes que no són les capes completament connectades. , l'única afirmació dels autors que s'ha de recalcar és que a partir de reduir els graus de llibertat (\textit{degrees of freedom}) en els circuits quàntics, sorgeixen no-linearitats. Això es degut als mesuraments parcials que es donen a terme en un moment determinat del algoritme. 
+
+Un dels mètodes que m'ha semblat més interessant, és l'implementat en una altra xarxa convolucional quàntics\footnote{En l'article també utilitzen l'imatge d'un gat com a exemple a les il·lustracions. Es que els gats i els físics tenen una llarga historia. } on al aplicar els filtres que s'utilitzen per la convolució s'implementa una funció no-lienal. Aquest mètode no el puc arribar a comprendre, les equacions que utilitzen són molt complexes i no sembla que arriben a utilitzar un mesurament parcial en cap moment. Simplement els autors expressen una equació i diuen que no és lienal, i no puc arribar a entendre perquè ho és. 
+
+Finalment he de parlar del paper que he seguit per fer aquest treball Huang et. al. (2021) \cite{QGAN_exp}, en ell, al igual que en l'article de Cong et. el. (2019) sobre xarxes convolucionals quàntiques, s'utilitzen mesuraments quàntics per introduir no-linearitats al algoritme. Concretament implementen aquests mesuraments tant en el generador quàntic d'imatges, com en el discriminador. Els circuits quàntics que utilitzen per el generador d'imatges tenen una forma semblant a aquest:
+
+\begin{center}
+	\begin{quantikz}
+		\lstick[wires=2]{$\mathcal{A}$}& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_1)} & \gate{U_{\theta_{1, l}}}\gategroup[5,steps=5 ,style={dashed,
+		rounded corners,fill=blue!20, inner xsep=2pt},background]{repetició $l$} & \ctrl{1} & \qw & \qw & \qw & \gate{U_{\theta_{1, l-1}}} & \ctrl{1} & \qw & \qw & \qw & \qw \\
+		& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_2)} & \gate{U_{\theta_{2, l}}} & \control{} & \ctrl{1} & \qw & \qw & \gate{U_{\theta_{2, l-1}}} & \control{} & \ctrl{1} & \qw & \qw & \qw \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_3)} & \gate{U_{\theta_{3, l}}} & \qw & \control{} & \ctrl{1} & \qw & \gate{U_{\theta_{3, l-1}}} & \qw & \control{} & \ctrl{1} & \qw & \qw \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_4)} & \gate{U_{\theta_{4, l}}} & \qw & \qw & \control{} & \ctrl{1} & \gate{U_{\theta_{4, l-1}}} & \qw & \qw & \control{} & \ctrl{1} & \qw \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_5)} & \gate{U_{\theta_{5, l}}} & \qw & \qw & \qw & \control{} & \gate{U_{\theta_{5, l-1}}} & \qw & \qw & \qw & \control{} & \qw
+	\end{quantikz}
+\end{center}
+
+On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN \ref{alg:GAN}. El circuit consisteix en aquestes portes $R_y$ i la repetició de les unitàries amb les portes $\mathrm{CZ}$ 
+
+
+
