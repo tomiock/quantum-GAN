@@ -84,56 +84,53 @@ El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\ps
 
 El conjugat Hermitià d'un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
 
-\section{Operadors lineals}
-Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades mapes lineal o operadors lineal\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
+\section{Aplicacions lineals}
+Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades aplicacions lineal o transformacions lineals\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal de un operador lineal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals al en aquesta secció. 
 
-Bàsicament, un operador lineal transforma un vector en un altre vector, aquests vectors poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
-
-Bàsicament, un operador lineal transforma un vector en un altre vector, aquest vector poden o no ser de espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, un operador lienal $A$ entre els vectors, fa l'acció:
+Bàsicament, una aplicació lineal transforma un vector en un altre vector, que poden o no ser d'espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, una transformació lineal $A$ entre els vectors, fa l'acció:
 $$
 A \ket{v} = \ket{w}
 $$
-En altres paraules, l'operador transforma un element del espai vectorial $V$ en un vector del espai vectorial $W$.
-Els operadors lineals han de complir les següents propietats:
+En altres paraules, l'aplicació transforma un element del espai vectorial $V$ en un vector del espai vectorial $W$.
+Les transformacions lienals han de complir les següents propietats:
 \begin{enumerate}
 	\item Addició de vectors: \\
 	Donats els vectors $\ket{\psi}$ i $\ket{\varphi}$ en un mateix espai vectorial, i un operador lineal $A$:
 	$$ A(\ket{\psi} + \ket{\varphi}) = A\ket{\psi} + A\ket{\varphi}$$ 
 	\item Producte escalar:\\
-	Donats els vectors $\ket{\psi}$, l'escalar $z$ i l'operador lienal $A$, es certs que:
+	Donats els vectors $\ket{\psi}$, l'escalar $z$ i la transformació lienal $A$, es certs que:
 	$$ A(z\ket{\psi}) = z A \ket{\psi}$$
 \end{enumerate}
 
-Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars en els espais on els operadors actuen. Cal notar que un operador lineal no te perquè ser una matriu necessàriament, per exemple, les derivades i les integrals son operadors lineals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
+Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars en els espais on les aplicacions actuen. Cal notar que una aplicació lineal no té perquè ser una matriu necessàriament, per exemple, les derivades i les integrals son aplicacions lineals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
 
-Les matrius només son la representació matricial del operadors lienals \cite{LR_done_right:matrix}.
+Les matrius només són la representació matricial de les aplicacions lineals \cite{LR_done_right:matrix}.
 
-	\subsection{Tipus d'operadors lineals}
-En la secció actual, exposaré els tipus bàsics d'operadors lineals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
+	\subsection{Tipus d'aplicacions lineals}
+En la secció actual, exposaré els tipus bàsics d'aplicacions lineals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
 
 \begin{enumerate}
 	\item \textbf{Operador zero} \\
 	Qualsevol espai vectorial té un vector zero expressat en notació de Dirac com a $0$, degut a que $\ket{0}$ es un altre concepte totalment diferent en CQ i IQ\footnote{Computació Quàntica i Informació Quàntica.}. El vector zero es aquell vector que per qualsevol vector $\ket{\psi}$ i qualsevol escalar $z$, es compleix que:	
 	$\ket{\psi} + 0 = \ket{\psi} $ i $z0 = 0$. \\
-	El operador zero també s'escriu com a $0$ i es defineix com l'operador que tranforma qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
+	El operador zero també s'escriu com a $0$ i es defineix com l'aplicació que transforma qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
 	
 	\item \textbf{Matriu inversa} \\
 	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A$. $A^{-1} = I$ és la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero. En altres paraules, és l'element neutre per la suma i l'element null per la multiplicació. 
 
-	\item \textbf{Operador Identitat} \\
+	\item \textbf{Matriu Identitat} \\
 	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera. Cal notar també que per qualsevol matriu $A$ i la seva inversa és veritat que $AA^{-1} = I$. 
 	
-	\item \textbf{Operador Unitari} \\
+	\item \textbf{Matriu Unitari} \\
 	Un operador unitari es qualsevol operador que no altera la norma dels vectors al quals es aplicat, per tant, una matriu es unitària si $AA^\dagger = I$
 	Per convertir qualsevol operador en unitari, es divideix les seves entrades entre la norma del operador. 
 	
-	\item \textbf{Operadors Hermitians} \\
-	Un operador Hermitià o \textit{self-adjoint operator} en anglès, es qualsevol operador que el seu conjugat Hermitià es ell mateix: $A = A^\dagger$ \\
-	Una altre cosa a tenir en compte es que existeix un operador únic $A$ en un espai de Hilbert, de manera que per qualsevol vectors $\ket{\psi}$ i $\ket{\varphi}$, es compleix que:
+	\item \textbf{Matrius Hermitianes} \\
+	Una matriu Hermitiana compleix que: 
 	$$
 	\bra{\psi} (A \ket{\varphi}) = (A^\dagger\bra{\psi})\ket{\varphi}
-	$$ 
-	Aquest operador es conegut com el \textit{adjoint} o conjugat Hermitià de $A$.
+	$$
+	On $\ket{\psi}$ i $\ket{\varphi}$, són dos vectors del espai en el qual actua $A$. Si apliquem el producte interior a aquesta equació tenim que: $A = A^\dagger$.
 	
 \end{enumerate}
 
@@ -146,7 +143,7 @@ $$
 $$
 Amb $z, a_i, b_i \in \mathbb{C}$. Quan hem refereixo a un producte interior, normalment diré "el producte interior de dos vectors", quan en realitat es una operació entre un vector dual i un vector.
 
-El equivalent d'aquest producte en un espai real de dos dimensions $\mathbb{R}^2$ es el producte escalar, que es expressat com a :
+El equivalent d'aquest producte en un espai real de dos dimensions $\mathbb{R}^2$ és el producte escalar, que es expressat com a :
 \begin{equation}
 	\bra{a}\ket{b} = \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta 
 	\label{eq:dot_product}
@@ -230,7 +227,7 @@ El producte exterior és una funció (expressada com $\ket{a}\bra{b}$, amb $\ket
 
 %For a vector $\ket{v}$ and $\ket{v'}$ in the Hilbert space $V$ and a vector $\ket{w}$ in the Hilbert space $W$. The output is a linear operator of dimensions $m \times n$ in the space $M_{m\times n}$:
 %$$\ket{v}\bra{w} : V,W \mapsto M_{m\times n} \\ $$
-Per els vectors $\ket{v}$ i $\ket{v'}$ amb dimensions $m$ i el vector $\ket{w}$ de dimensió $n$. El producte exterior és l'operador lineal $A$ de dimensions $m \times n$ en l'espai $\mathrm{Mat}_{m\times n}$:
+Per els vectors $\ket{v}$ i $\ket{v'}$ amb dimensions $m$ i el vector $\ket{w}$ de dimensió $n$. El producte exterior és l'aplicació lineal $A$ de dimensions $m \times n$ en l'espai $\mathrm{Mat}_{m\times n}$:
 $$
 \ket{v}\bra{w} = A \text{ with } A\in \mathrm{Mat}_{m\times n} .
 $$ 
@@ -871,7 +868,7 @@ $$
 
 La diferencia entre aquesta manera de fer les mesures i elevar els coeficients al quadrat, és que l'equació \ref{eq:Mm} és una forma més general, on en comptes de mesurar en la base computacional, és pot mesurar en qualsevol base. A més a més, utilitzant aquest mètode no es necessari saber la composició\footnote{Els coeficients del estats base que descomponen el vector.} del estat que vols mesurar. 
 
-Per mesurar en la base computacional un \textit{statevector} s'utilitzen operadors de mesura derivats de la base computacional amb productes exteriors. Per crear l'operador ${M_i}$ associat a la base computacional $\ket{i}$ s'agafa el producte exterior de la base:
+Per mesurar en la base computacional un \textit{statevector} s'utilitzen operadors de mesura derivats de la base computacional amb productes exteriors. Per crear l'aplicació lienal ${M_i}$ associat a la base computacional $\ket{i}$ s'agafa el producte exterior de la base:
 $$
 M_i = \ket{i}\bra{i}
 $$
@@ -935,10 +932,10 @@ Per últim s'ha de recordar que les matrius densitat al igual que els vectors d'
 	\item La traça de $\rho$ ha d'equivaler $1$.
 	\item $\rho$ ha de ser un operador positiu\footnote{Un operador positiu $A$ es aquell que $\bra{\psi}A\ket{\psi}\geq0, \forall \ket{\psi}$.}.
 \end{enumerate}
-\subsection{Operador de densitat reduït}
+\subsection{Matriu de densitat reduïda}
 Una aplicació important dels operadors de densitat és la descripció d'estats parcials amb el operador de densitat reduït, i per tant la descripció dels mesuraments parcials. 
 
-Al tindre un sistema físic compost de dos sistemes $A$ i $B$ que es descriu per un operador de densitat $\rho^{AB}$, l'operador de densitat reduït del sistema $A$ és:
+Al tindre un sistema físic compost de dos sistemes $A$ i $B$ que es descriu per una matriu de densitat $\rho^{AB}$, la matriu de densitat reduït del sistema $A$ és:
 \begin{equation}
 \rho^A = \tr_B(\rho^{AB})
 	\label{eq:partial_trace}
@@ -949,7 +946,7 @@ On $\tr_B$ és la traça parcial sobre el sistema $B$, que es defineix per l'equ
 \end{equation*}
 Amb $\ket{a_1}$ i $\bra{a_2}$ sent estats vàlid pel sistema $A$, i $\ket{b_1}$ i $\bra{b_2}$ sent-ho per $B$. El terme $\tr(\ket{b_1}\bra{b_2})$ s'omet quan els els vectors del producte exterior son iguals i formen un operador de densitat vàlid, el qual la traça ha de donar $1$.
 
-No obstant aquesta definició no es pot utilitzar quan no saps com representar l'operador $\rho$ com a un producte vectorial, en el qual un dels termes és l'estat que es traça afora. En altres paraules, en la equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.  
+No obstant aquesta definició no es pot utilitzar quan no saps com representar la matriu de densitat $\rho$ com a un producte vectorial, en el qual un dels termes és l'estat que es traça afora. En altres paraules, en la equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.  
 
 Degut a això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altre manera més general, on només s'ha de saber les bases del sistemes $A$ i $B$ i un operador vàlid per el sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa el sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
 $$
@@ -1225,7 +1222,4 @@ Finalment he de parlar del paper que he seguit per realitzar aquest treball, Hua
 	\end{quantikz}
 \end{center}
 
-On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN (algoritme \ref{alg:GAN}). El circuit consisteix en aquestes portes $R_y$ i la repetició-$l$ amb unitàries i les portes $\mathrm{CZ}$. En aquest cas el circuit t'e dues repticions-$l$, amb $l=2$. Al hora de mesurar 'es fa un mesurament parcial per'o els autors especifiquen que es fa d'una forma concreta. 
-
-
-
+On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN (algoritme \ref{alg:GAN}). El circuit consisteix en aquestes portes $R_y$ i la repetició-$l$ amb unitàries i les portes $\mathrm{CZ}$. En aquest cas el circuit t'e dues repticions-$l$, amb $l=2$. Al hora de mesurar 'es fa un mesurament parcial per'o els autors especifiquen que es fa d'una forma concreta.

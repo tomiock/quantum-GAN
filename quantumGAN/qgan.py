@@ -102,9 +102,9 @@ class Quantum_GAN:
         self.batch_size = batch_size
         self.generator_lr = generator_learning_rate
         self.discriminator_lr = discriminator_learning_rate
-        self.is_save_imgaes = is_save_images
-        self.t_init = datetime.now().time()
+        self.is_save_images = is_save_images
 
+        print(self.is_save_images)
         noise = self.training_data[0][1]
         time_init = datetime.now()
         for o in range(self.num_epochs):
