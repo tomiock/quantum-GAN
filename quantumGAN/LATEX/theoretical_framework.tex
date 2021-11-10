@@ -1213,7 +1213,8 @@ Finalment he de parlar del paper que he seguit per realitzar aquest treball, Hua
 
 \begin{center}
 	\begin{quantikz}
-		\lstick[wires=2]{$\mathcal{A}$}& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_1)} & \gate{U_{\theta_{1, l}}}\gategroup[5,steps=5 ,style={dashed,
+		\lstick[wires=2]{$\mathcal{A}$}& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_1)}\gategroup[5,steps=1 ,style={dashed,
+			rounded corners,fill=green!20, inner xsep=2pt},background]{$\ket{z}$ estat inicial} & \gate{U_{\theta_{1, l}}}\gategroup[5,steps=5 ,style={dashed,
 		rounded corners,fill=blue!20, inner xsep=2pt},background]{repetició $l$} & \ctrl{1} & \qw & \qw & \qw & \gate{U_{\theta_{1, l-1}}} & \ctrl{1} & \qw & \qw & \qw & \qw \\
 		& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_2)} & \gate{U_{\theta_{2, l}}} & \control{} & \ctrl{1} & \qw & \qw & \gate{U_{\theta_{2, l-1}}} & \control{} & \ctrl{1} & \qw & \qw & \qw \\
 		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_3)} & \gate{U_{\theta_{3, l}}} & \qw & \control{} & \ctrl{1} & \qw & \gate{U_{\theta_{3, l-1}}} & \qw & \control{} & \ctrl{1} & \qw & \qw \\
@@ -1222,4 +1223,14 @@ Finalment he de parlar del paper que he seguit per realitzar aquest treball, Hua
 	\end{quantikz}
 \end{center}
 
-On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN (algoritme \ref{alg:GAN}). El circuit consisteix en aquestes portes $R_y$ i la repetició-$l$ amb unitàries i les portes $\mathrm{CZ}$. En aquest cas el circuit t'e dues repticions-$l$, amb $l=2$. Al hora de mesurar 'es fa un mesurament parcial per'o els autors especifiquen que es fa d'una forma concreta.
+On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN (algoritme \ref{alg:GAN}). El circuit consisteix en aquestes portes $R_y$ i la repetició-$l$ amb unitàries i les portes $\mathrm{CZ}$. En aquest cas el circuit té dues repeticions-$l$, amb $l=2$. Al hora de mesurar és fa un mesurament parcial però els autors especifiquen que es fa d'una forma concreta. 
+
+Per un estat $\ket{\Psi_\alpha}$ que surt del circuit especificat abans, l'estat $\rho(z)$després d'una mesura parcial sobre el qubits $\mathcal{A}$, és:
+$$
+\rho(z) = \frac{\tr_\mathcal{A}(\Pi_\mathcal{A}\ket{\Psi(z)}\bra{\Psi(z)})}{\tr(\Pi_\mathcal{A} \otimes I_{2^{N-N_\mathcal{A}}}\ket{\Psi(z)}\bra{\Psi(z)})}
+$$
+Els autors afirmen que aquest estat $\rho(\alpha)$ és una funció no lineal del estat $\ket{z}$ que es defineix per les primeres portes $R_y$ que s'apliquen en el circuit\footnote{En la figura (-), aquestes operacions estan indicades de color verd.}. Això es degut a que tant el denominador com el numerador de l'equació són funcions de $\ket{z}$. 
+
+No obstant, en altres treball com per exemple Zoufal et. al. (2019) \cite{QGAN_IBM}, on es defineix una GAN que a partir de circuits quàntics genera distribucions de probabilitat. Els autors no mencionen la necessitat de tenir funcions no lineals en alguna part del algoritme. 
+
+
