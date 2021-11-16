@@ -1,0 +1,20 @@
+\chapter{Plantejament de l'hipòtesi}
+
+Al ser l'implementació de les funcions no-lineal un assumpte lleugerament conflictiu entre els diversos models de xarxes neuronals quàntiques havia decidit des de un principi centrar-me en aquest assumpte en concret. Podria haver anat per al altres vies com la generació d'imatges amb color o l'implementació d'un d'una porta $X$ en una part especifica del circuit quàntic que genera les imatges, que al posar-la o no, el model generes dos tipus d'imatge a través del mateix circuit. Tanmateix, les dues propostes requerien de desenvolupar nous conceptes, llavors al no tindre el coneixements necessaris per poder desenvolupar-les vaig descartar aquestes opcions. 
+
+La pregunta a investigar és la següent: \\
+L'incorporació d'una funció no-lienal en el circuit quàntic del model, a partir d'una mesura parcial, causa que el model arribi més ràpidament al punt òptim?
+
+En altres paraules, volia veure si la mesura parcial repercutia positivament en la eficiència del model, fent que la generació de les imatges desitjades es dones a terme en un menor temps. 
+
+Sembla una qüestió senzilla, però la dificultada del experiment radica en crear la xarxa neuronal en si amb totes les seves parts accessibles per poder jo fer els canvis necessaris. L'única manera de fer-ho seria a través de la programació del model. 
+
+\chapter{Programació del model}
+
+Posteriorment a començar jo ja sabia que havia de programar en Python, ja havia realitzar petits algoritmes abans de començar aquest treball i tenia experiència construint i executant circuits quàntics amb Cirq, una eina desenvolupada per Google. A més a més, sabia de l'existència de TensorFlow Quantum \cite{tfq}, una altra eina desenvolupada per Google destinada a la creació de xarxes neuronals quàntiques i algoritmes de \textit{quantum mechine learning} en general. També tenia experiència en aquest \textit{framework}. Llavors TensorFlow Quantum va ser la meva primera opció, tenia pensat basar el meu codi en el tutorial de TensorFlow sobre un xarxa convolucional generativa adverbial. Havia de canviar el generador per un circuit quàntic que s'optimitzes a partir d'un diferenciador automàtic provinent de TensorFlow Quantum. Els canvis corresponent al discriminadors simplement havien de ser un canvi d'arquitectura passar d'una xarxa més complexa a una xarxa més simple que només consistia en unes capes totalment connectades. 
+
+El primer problema que em vaig trobar va ser la creació del \textit{data set} que alimentar a la xarxa discriminativa. A causa de la peculiaritat de les imatges que volia generar\footnote{Usualment les imatges que componen els \textit{datasets} utilitzada en \textit{deep machine learning} són extretes de bancs d'informació de mides enormes. En el meu cas, havien de ser generades per mi, per tant havia de convertir \textit{arrays} de Numpy en \textit{datasets} per TensorFlow.}. Recordo que en va costar arribar a tindre la solució a aquest problema. 
+
+
+\chapter{Realització del experiment} 
+ 

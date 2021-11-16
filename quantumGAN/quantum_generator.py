@@ -42,11 +42,15 @@ class QuantumGenerator:
 	def construct_circuit(self,
 	                      latent_space_noise,
 	                      to_measure: bool):
-
-		qr = QuantumRegister(self.num_qubits_total - self.num_qubits_ancilla, 'q')
-		anc = QuantumRegister(self.num_qubits_ancilla, 'ancilla')
-		cr = ClassicalRegister(self.num_qubits_total - self.num_qubits_ancilla, 'c')
-		qc = QuantumCircuit(anc, qr, cr)
+		if self.num_qubits_ancilla == 0:
+			qr = QuantumRegister(self.num_qubits_total, 'q')
+			cr = ClassicalRegister(self.num_qubits_total, 'c')
+			qc = QuantumCircuit(qr, cr)
+		else:
+			qr = QuantumRegister(self.num_qubits_total - self.num_qubits_ancilla, 'q')
+			anc = QuantumRegister(self.num_qubits_ancilla, 'ancilla')
+			cr = ClassicalRegister(self.num_qubits_total - self.num_qubits_ancilla, 'c')
+			qc = QuantumCircuit(anc, qr, cr)
 
 		if latent_space_noise is None:
 			randoms = np.random.normal(-np.pi * .01, np.pi * .01, self.num_qubits_total)
@@ -60,7 +64,10 @@ class QuantumGenerator:
 			for index in range(self.num_qubits_total):
 				init_dist.ry(latent_space_noise[index], index)
 
-		entangler_map = create_entangler_map(self.num_qubits_total - self.num_qubits_ancilla)
+		if self.num_qubits_ancilla == 0:
+			entangler_map = create_entangler_map(self.num_qubits_total)
+		else:
+			entangler_map = create_entangler_map(self.num_qubits_total - self.num_qubits_ancilla)
 
 		ansatz = TwoLocal(int(self.num_qubits_total), 'ry', 'cz', entanglement=entangler_map, reps=1,
 		                  insert_barriers=True)
