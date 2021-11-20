@@ -29,8 +29,9 @@ generator = QuantumGenerator(num_qubits=num_qubits,
 quantum_gan = Quantum_GAN(generator, discriminator)
 print(quantum_gan)
 print(num_epochs)
-quantum_gan.train(num_epochs, train_data, batch_size, .1, .1, True)
+quantum_gan.generator.get_output(fake_datapoint[0], None)
+#quantum_gan.train(num_epochs, train_data, batch_size, .1, .1, True)
 
-quantum_gan.plot()
+#quantum_gan.plot()
 #quantum_gan.create_gif()
-quantum_gan.save()
+#quantum_gan.save()

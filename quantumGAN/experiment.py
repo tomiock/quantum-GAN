@@ -57,6 +57,8 @@ generator_not_ancilla.parameter_values = init_parameters_not_ancilla
 quantum_gan_not_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
 
 quantum_gan_ancilla.plot()
-quantum_gan_ancilla.save()
 quantum_gan_not_ancilla.plot()
-quantum_gan_ancilla.save()
+
+
+#quantum_gan_ancilla.save()
+#quantum_gan_ancilla.save()

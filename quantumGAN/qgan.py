@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
-from quantumGAN.functions import minimax
+from quantumGAN.functions import minimax, images_to_distribution, images_to_scatter
 from quantumGAN.quantum_generator import QuantumGenerator
 
 
@@ -21,6 +21,7 @@ class Quantum_GAN:
                  discriminator: ClassicalDiscriminator_that_works
                  ):
 
+        self.last_batch = None
         now = datetime.now()
         init_time = now.strftime("%d_%m_%Y__%H_%M_%S")
         self.path = "data/run{}".format(init_time)
@@ -63,6 +64,39 @@ class Quantum_GAN:
 
     def plot(self):
         # save data for plotting
+
+        fake_images, real_images = [], []
+        for image_batch in self.last_batch:
+            fake_images.append(image_batch[1])
+            real_images.append(image_batch[0])
+
+        keys, average_result = images_to_distribution(fake_images)
+        print(average_result)
+        plt.title("fake images distribution")
+        plt.ylim(0., 1.)
+        plt.bar(keys, average_result)
+        plt.show()
+
+        keys_real, average_result_real = images_to_distribution(real_images)
+        print(average_result_real)
+        plt.title("real images distribution")
+        plt.ylim(0., 1.)
+        plt.bar(keys_real, average_result_real)
+        plt.show()
+
+        y_axis, x_axis = images_to_scatter(fake_images)
+        y_axis_real, x_axis_real = images_to_scatter(real_images)
+        plt.title("fake images plot")
+        plt.ylim(0.-.1, 1.+.1)
+        plt.scatter(y_axis, x_axis, label='data points for fake images',
+                    color='mediumvioletred',
+                    linewidth=.1)
+        plt.scatter(y_axis_real, x_axis_real, label='data points for real images',
+                    color='rebeccapurple',
+                    linewidth=.1)
+        plt.show()
+
+
         t_steps = np.arange(self.num_epochs)
         plt.figure(figsize=(6, 5))
         plt.title("Progress in the loss function")
@@ -112,8 +146,8 @@ class Quantum_GAN:
             output_fake = self.generator.get_output(latent_space_noise=mini_batches[0][0][1], parameters=None)
 
             for mini_batch in mini_batches:
-                mini_batch = self.generator.train_mini_batch(mini_batch, self.generator_lr)
-                self.discriminator.train_mini_batch(mini_batch, self.discriminator_lr)
+                self.last_batch = self.generator.train_mini_batch(mini_batch, self.generator_lr)
+                self.discriminator.train_mini_batch(self.last_batch, self.discriminator_lr)
 
             output_real = mini_batches[0][0][0]
             if is_save_images:
