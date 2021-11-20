@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 
 from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
@@ -5,7 +7,7 @@ from quantumGAN.qgan import Quantum_GAN
 from quantumGAN.quantum_generator import QuantumGenerator
 
 # Set number of training epochs
-num_epochs = 200
+num_epochs = 400
 # Batch size
 batch_size = 10
 
@@ -45,8 +47,11 @@ init_parameters_not_ancilla = np.array(not_ancilla_list)
 
 quantum_gan_ancilla = \
 	Quantum_GAN(generator_ancilla, discriminator_ancilla)
+time.sleep(1)
 quantum_gan_not_ancilla = \
 	Quantum_GAN(generator_not_ancilla, discriminator_not_ancilla)
+print(quantum_gan_not_ancilla.path)
+print(quantum_gan_ancilla.path)
 
 
 # abans de començar a entrenar el model s'ha de cambiar els paràmetres als definits anteriorment

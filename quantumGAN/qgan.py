@@ -75,6 +75,7 @@ class Quantum_GAN:
         plt.title("fake images distribution")
         plt.ylim(0., 1.)
         plt.bar(keys, average_result)
+        plt.savefig(self.path + "/fake_distribution.png")
         plt.show()
 
         keys_real, average_result_real = images_to_distribution(real_images)
@@ -82,6 +83,7 @@ class Quantum_GAN:
         plt.title("real images distribution")
         plt.ylim(0., 1.)
         plt.bar(keys_real, average_result_real)
+        plt.savefig(self.path + "/real_distribution.png")
         plt.show()
 
         y_axis, x_axis = images_to_scatter(fake_images)
@@ -94,6 +96,7 @@ class Quantum_GAN:
         plt.scatter(y_axis_real, x_axis_real, label='data points for real images',
                     color='rebeccapurple',
                     linewidth=.1)
+        plt.savefig(self.path + "/scatter_plot.png")
         plt.show()
 
 
@@ -105,6 +108,7 @@ class Quantum_GAN:
         plt.legend(loc='best')
         plt.xlabel('time steps')
         plt.ylabel('loss')
+        plt.savefig(self.path + "/loss_plot.png")
         plt.show()
 
         t_steps = np.arange(self.num_epochs)
@@ -120,6 +124,7 @@ class Quantum_GAN:
         plt.legend(loc='best')
         plt.xlabel('time steps')
         plt.ylabel('label')
+        plt.savefig(self.path + "/labels_plot.png")
         plt.show()
 
     def train(self,
