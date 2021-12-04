@@ -9,7 +9,7 @@ import imageio
 import matplotlib.pyplot as plt
 import numpy as np
 
-from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
+from quantumGAN.discriminator import ClassicalDiscriminator
 from quantumGAN.functions import minimax, images_to_distribution, images_to_scatter
 from quantumGAN.quantum_generator import QuantumGenerator
 
@@ -18,7 +18,7 @@ class Quantum_GAN:
 
     def __init__(self,
                  generator: QuantumGenerator,
-                 discriminator: ClassicalDiscriminator_that_works
+                 discriminator: ClassicalDiscriminator
                  ):
 
         self.last_batch = None
@@ -225,7 +225,7 @@ def load_gan(filename):
     f = open(filename, "r")
     data = json.load(f)
     f.close()
-    discriminator = ClassicalDiscriminator_that_works(data["D_sizes"], data["D_loss"])
+    discriminator = ClassicalDiscriminator(data["D_sizes"], data["D_loss"])
 
     generator = QuantumGenerator(num_qubits=data["Q_num_qubits"],
                                  generator_circuit=None,

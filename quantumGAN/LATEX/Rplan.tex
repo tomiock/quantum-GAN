@@ -155,7 +155,8 @@
 
 %\newcommand{\tikzmark}[2]{
 %	\tikz[overlay,remember picture,baseline]
-
+\usepackage{tcolorbox}
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=4pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
 
 \usepackage{tikz}
 \newcommand{\tikzmarktrace}[2]{
@@ -180,6 +181,8 @@
 
 \usepackage{xcolor}
 \bibliographystyle{unsrt}
+
+
 
 \begin{document}
 
@@ -278,7 +281,7 @@
 	\printglossaries
 	
 	%\chapter{appendix}
-	
+	\part{Apèndix}
 	\begin{appendices}
 		\input{appendices}
 	\end{appendices}

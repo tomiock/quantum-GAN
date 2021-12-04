@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
+from quantumGAN.discriminator import ClassicalDiscriminator
 from quantumGAN.qgan import Quantum_GAN
 from quantumGAN.quantum_generator import QuantumGenerator
 
@@ -19,9 +19,9 @@ for _ in range(800):
 	train_data.append((real_datapoint, fake_datapoint))
 
 discriminator_ancilla = \
-	ClassicalDiscriminator_that_works(sizes=[4, 16, 8, 1], type_loss="minimax")
+	ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
 discriminator_not_ancilla = \
-	ClassicalDiscriminator_that_works(sizes=[4, 16, 8, 1], type_loss="minimax")
+	ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
 
 generator_ancilla = \
 	QuantumGenerator(num_qubits=4,

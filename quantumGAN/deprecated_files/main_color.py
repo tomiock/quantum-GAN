@@ -8,10 +8,9 @@ import qiskit
 from qiskit.circuit.library import TwoLocal
 
 from quantumGAN.discriminator import ClassicalDiscriminator
-from quantumGAN.discriminator_functional import ClassicalDiscriminator_that_works
 from quantumGAN.functions import create_entangler_map, minimax, save_images_color
 from quantumGAN.quantum_generator import QuantumGenerator
-from quantumGAN.rgb_functions import qcolor_to_image
+from quantumGAN.deprecated_files.rgb_functions import qcolor_to_image
 
 num_qubits = 2
 
@@ -43,7 +42,7 @@ for _ in range(800):
 g_circuit = ansatz.compose(init_dist, front=True)
 print(g_circuit)
 
-discriminator = ClassicalDiscriminator_that_works(training_data=train_data,
+discriminator = ClassicalDiscriminator(training_data=train_data,
                                        mini_batch_size=batch_size,
                                        sizes=[3, 64, 16, 1],
                                        type_loss="minimax")

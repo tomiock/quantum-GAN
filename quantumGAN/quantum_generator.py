@@ -1,6 +1,6 @@
 """QUANTUM GENERATOR"""
 
-from typing import Any, Dict, List, Optional, cast
+from typing import Any, Dict, Optional, cast
 
 import numpy as np
 import qiskit
@@ -10,7 +10,7 @@ from qiskit.circuit.library import TwoLocal
 from qiskit.providers.aer import AerSimulator
 
 from quantumGAN.functions import create_entangler_map, create_real_keys, minimax_generator
-from quantumGAN.rgb_functions import qcolor_to_image
+from quantumGAN.deprecated_files.rgb_functions import qcolor_to_image
 
 
 class QuantumGenerator:
