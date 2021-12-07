@@ -1,8 +1,7 @@
 import itertools
-from typing import List
+import math
 
 import numpy as np
-import math
 from matplotlib import pyplot as plt
 
 

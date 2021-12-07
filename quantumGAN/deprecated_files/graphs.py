@@ -1,6 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
+import numpy as np
 
 lst_images = np.array([104, 262, 498, 1600, 2991, 6575])
 lst_no_images = np.array([93, 203, 400, 788, 1032, 1781])

@@ -1,7 +1,4 @@
-from quantumGAN.functions import Partial_Trace
 import qiskit
-from qiskit.aqua.utils import tensorproduct
-import matplotlib.pyplot as plt
 
 """
 Test to verify the equation to get the post measurement state

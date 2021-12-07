@@ -1,9 +1,8 @@
 import glob
-import os
 import json
+import os
 import random
 from datetime import datetime
-from typing import List
 
 import imageio
 import matplotlib.pyplot as plt

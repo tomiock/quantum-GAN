@@ -966,6 +966,7 @@ On $N$ és la dimensió del sistema $A$ i $M$ és la dimensió del sistema $B$.
 Es pot comprovar que aquestes definicions són correctes degut a que en els dos llibres utilitzen les seves definicions per tractar el mateix cas i obtenen el mateix resultat \cite{QCandQI:example_partial, QC_intro:example_partial}.
 
 \subsubsection{Mesurament parcial}
+\label{par_measurament}
 Es pot arribar a treure una mesura parcial sobre un sistema de qubits amb la traça parcial i operadors de mesura. En el paper fet per Huang et.al. \cite{QGAN_exp} es descriu un estat $\rho$ després d'un mesurament parcial $\Pi_A$ sobre un sistema $A$ del estat $\ket{\psi}$ com:
 $$
 \rho = \frac{\tr_A(\Pi_A \ket{\psi}\bra{\psi})}{\tr(\Pi_A\otimes I_{2^N-2^{N_A}}\ket{\psi}\bra{\psi})}
@@ -973,7 +974,7 @@ $$
 El sistema $A$ està compost per $N_A$ qubits per tant la resta del estat $\ket{\psi}$ té $N-N_A$, on $N$ és el nombre total de qubits del estat $\ket{\psi}$. D'aquesta manera $\Pi_A\otimes I_{2^N-2^{N_A}}$ té $2^N\times 2^N$ dimensions i pot ser multiplicat per la matriu $\ket{\psi}\bra{\psi}$ que té les mateixes dimensions. No obstant sorgeix un problema amb el numerador de l'equació perquè $\Pi_A$ no té les mateixes dimensions que $\ket{\psi}\bra{\psi}$, encara no he pogut utilitzar aquesta equació adequadament. No sé com computar-la. Parlaré d'això més endavant en la part experimental d'aquest treball.
 
 En el mateix paper es planteja la mateixa equació però per l'estat post-mesura expressat en forma de vector d'estat, molt semblat a l'equació \ref{eq:post_state_rho}. L'única diferencia es que en l'equació del paper no s'expressa el operador de mesura en la forma $M_m^\dagger M_m$, en canvi el autors ho expressen tan sols com $\Pi_A$, més concretament  $I_{2^N-2^{N_A}}\otimes \Pi_A$. Potser la forma plantejada per els autors té en compte el conjugat hermitià, però no estic segur.
-L'equació esmentada en el paper es la següent:
+L'equació esmentada en l'article és la següent:
 $$
 \ket{\psi_m} = \frac{I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}}{\sqrt{\tr(I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}\bra{\psi})}}
 $$
@@ -1169,6 +1170,7 @@ En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, 
 		$$
 		\EndFor
 	\end{algorithmic}
+
 \end{algorithm}
 
 En el pseudocodi es pot veure que primer s'actualitza el discriminadors $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament, per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos, perquè ell aprèn a partir del que indica el discriminador.

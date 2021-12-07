@@ -3,7 +3,7 @@ Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren 
 
 
 \section{Procediment de Gram–Schmidt}\label{gram}
-El procediment de Gram-Schmidt és un mètode utilitzat per produir bases per a espais vectorials \cite{QCandQI:GramSchmidt}. Per un espai $V$ amb producte interior de $d$ dimensions amb el set de vectors ${\ket{v_1}, \cdots, \ket{v_d}}$, podem definir una nova base de vectors ortonormals $\{\ket{u}\}$. El primer element d'aquest set és $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, amb el següent element $\ket{v_{k+1}}$ sent:
+El procediment de Gram-Schmidt és un mètode utilitzat per produir bases per a espais vectorials\cite{QCandQI:GramSchmidt}. Per un espai $V$ amb producte interior de $d$ dimensions amb el set de vectors ${\ket{v_1}, \cdots, \ket{v_d}}$, podem definir una nova base de vectors ortonormals $\{\ket{u}\}$. El primer element d'aquest set és $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, amb el següent element $\ket{v_{k+1}}$ sent:
 $$
 \ket{u_{k+1}} = \frac{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}{\norm{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}}
 $$
@@ -165,14 +165,16 @@ Al 1996, Lov Grover va presentar un algoritme quàntic per cercar en dades desor
 L'algoritme funciona de la següent manera: 
 
 \chapter{Codi}
-En l'apèndix actual presentaré el codi que he utilitzat al llarg del treball. Està organitzat segons el moment en el qual he referenciat el codi en el text.
+En l'apèndix actual presentaré el codi que he utilitzat al llarg del treball. Està organitzat segons el moment en el qual he referenciat el codi en el text. 
+
+IMPORTANT: Si hi ha text en català dintre del codi (n'hi ha en forma de comentaris), no porta accents perquè els paquet que utilitzo per formateixar el codi d'aquesta manera dintre del document no els accepta. Però si es mira el codi en el \href{https://github.com/tomiock/qGAN}{repositori del treball} es pot veure que si que té accents. No em deixa posar ni accents, ni la ce trencada, ni la ele geminada. L'error diu que no són caràcters que estan en Unicode UTF-8, quan si que estan allà, per fet que és un codi que suposadament està internacionalitzat per tots el llenguatges que s'utilitzen 'moderadament'. 
 
 \section{Part I}
 \subsection{Capítol 3}
 
 \paragraph{Regressió lienal}
 \label{lst:linear_regression}
-Codi per efectuar una regressió lineal a dades que es generen al atzar en el mateix arxiu, l'utilitzo per poder generar una gràfic per il·lustrar un exemple de regressió lienal. Aquest troç de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{link}}.
+Codi per efectuar una regressió lineal a dades que es generen al atzar en el mateix arxiu, l'utilitzo per poder generar una gràfic per il·lustrar un exemple de regressió lienal. Aquest tros de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{link}}.
 
 \begin{lstlisting}[language=Python, caption=Regressió lineal]
 	import numpy as np
@@ -352,7 +354,7 @@ def sigmoid_prime(z):
 
 \paragraph{Codi final per el discriminador}
 \label{lst:disc_final}
-Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{discriminator\_functional.py}. 
+Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{discriminator.py}. 
 
 \begin{lstlisting}[language=Python, caption=Codi final pel discriminador]
 """DISCRIMINATOR"""
@@ -517,3 +519,259 @@ self.biases = [b - (learning_rate / len(mini_batch)) * nb
 for b, nb in zip(self.biases, nabla_b)]
 \end{lstlisting}
 
+\paragraph{Codi per el generador}
+\label{lst:gen_final}
+Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{generador.py}. 
+
+\begin{lstlisting}[language=Python, caption=Codi final pel generador]
+"""QUANTUM GENERATOR"""
+
+from typing import Any, Dict, Optional, cast
+
+import numpy as np
+import qiskit
+from qiskit import ClassicalRegister, QuantumRegister
+from qiskit.circuit import QuantumCircuit
+from qiskit.circuit.library import TwoLocal
+from qiskit.providers.aer import AerSimulator
+
+from quantumGAN.functions import create_entangler_map, create_real_keys, minimax_generator
+
+
+class QuantumGenerator:
+
+	def __init__(
+			self,
+			shots: int,
+			num_qubits: int,
+			num_qubits_ancilla: int,
+			generator_circuit: Optional[QuantumCircuit] = None,
+			snapshot_dir: Optional[str] = None
+	) -> None:
+
+		super().__init__()
+		# passar els arguments de la classe a metodes en de classes
+		# d'aquesta manera son accessibles per qualsevol funcio dintre de la classe
+		self.num_qubits_total = num_qubits
+		self.num_qubits_ancilla = num_qubits_ancilla
+		self.generator_circuit = generator_circuit
+		self.snapshot_dir = snapshot_dir
+		self.shots = shots
+		self.discriminator = None
+		self.ret: Dict[str, Any] = {"loss": []}
+		self.simulator = AerSimulator()
+
+	def init_parameters(self):
+		"""Inicia els parametres inicial i crea el circuit al qual se li posen els parametres"""
+		# iniciacia dels parametres inicials i dels circuits al qual posar aquests parametres
+		self.generator_circuit = self.construct_circuit(latent_space_noise=None, to_measure=False)
+		# s'ha de crear primer el circuit perque d'aquesta manera es pot saber el nombre de parametres que es necessiten
+		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
+
+	def construct_circuit(self,
+						latent_space_noise,
+						to_measure: bool):
+		"""Crea el circuit quantic des de zero a partir de diversos registres de qubits"""
+		if self.num_qubits_ancilla is 0:
+			qr = QuantumRegister(self.num_qubits_total, 'q')
+			cr = ClassicalRegister(self.num_qubits_total, 'c')
+			qc = QuantumCircuit(qr, cr)
+		else:
+			qr = QuantumRegister(self.num_qubits_total - self.num_qubits_ancilla, 'q')
+			anc = QuantumRegister(self.num_qubits_ancilla, 'ancilla')
+			cr = ClassicalRegister(self.num_qubits_total - self.num_qubits_ancilla, 'c')
+			qc = QuantumCircuit(anc, qr, cr)
+
+		# creacia de la part del circuit que conte la implantacio dels parametres d'input. En cas que no es donin aquests parametres es creen automaticament
+		if latent_space_noise is None:
+			randoms = np.random.normal(-np.pi * .01, np.pi * .01, self.num_qubits_total)
+			init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+
+			# es col.loca una porta RY en cada qubits i amb un parametre diferent cadascuna
+			for index in range(self.num_qubits_total):
+				init_dist.ry(randoms[index], index)
+		else:
+			init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+
+			for index in range(self.num_qubits_total):
+				init_dist.ry(latent_space_noise[index], index)
+
+		# la funcio create_entagler_map crea les parelles de qubits a les qual col.locar les portes CZ
+		# en funcio del nombre de qubits
+		if self.num_qubits_ancilla is 0:
+			entangler_map = create_entangler_map(self.num_qubits_total)
+		else:
+			entangler_map = create_entangler_map(self.num_qubits_total - self.num_qubits_ancilla)
+
+		# creacio final dels circuits a partir una funcio integrada a Qiskit que va repetint les operacions
+		# que se li especifiquen
+		ansatz = TwoLocal(int(self.num_qubits_total), 'ry', 'cz', entanglement=entangler_map, reps=1, insert_barriers=True)
+
+		# aqui s'ajunten el circuit que funciona com a input amb el circuit que consisteix en la repeticio
+		# de les portes RY i CZ
+		qc = qc.compose(init_dist, front=True)
+		qc = qc.compose(ansatz, front=False)
+
+		if to_measure:
+			qc.measure(qr, cr)
+
+		return qc
+
+	def set_discriminator(self, discriminator) -> None:
+		self.discriminator = discriminator
+
+	def get_output(
+					self,
+					latent_space_noise,
+					parameters: Optional[np.ndarray] = None
+					):
+		"""Retorna un output del generador quan se li dona un estat d'input i opcionalment uns parametres en especific. Els pixels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant, els pixels de l'imatge estan normalitzats amb la norma l-1."""
+		real_keys_set, real_keys_list = create_real_keys(self.num_qubits_total - self.num_qubits_ancilla)
+
+		# en cas de que no es donin parametres com a input, es treuen els parametres de la variable
+		# self.parameter_values. Es a dir els parametres que es creen automaticament al principi i que es van
+		# actualitzant al mateix temps que el model s'optimitza
+		if parameters is None:
+			parameters = cast(np.ndarray, self.parameter_values)
+
+		qc = self.construct_circuit(latent_space_noise, True)
+
+		parameter_binds = {parameter_id: parameter_value for parameter_id, parameter_value in zip(qc.parameters, parameters)}
+
+		# el metode bind_parametres del circuit quantic
+		qc = qc.bind_parameters(parameter_binds)
+
+		# Simulacio dels circuits mitjancant el simulador Aer de Qiskit. El nivell d'optimitzacio es zero, perque al ser circuits petits i que simulen una vegada, no es necessari. Al optimitzar el proces acaba sent mes lent.
+		result_ideal = qiskit.execute(experiments=qc,
+									  backend=self.simulator,
+									  shots=self.shots,
+									  optimization_level=0).result()
+		counts = result_ideal.get_counts()
+
+		try:
+			# creacio de l'imatge resultant
+			pixels = np.array([counts[index] for index in list(real_keys_list)])
+
+		except KeyError:
+			# aquesta excepcio sorgeix quan en el diccionari dels resultats no estan totes les keys pel fet que qiskit, en cas de que no hi hagi un mesurament en una base, no inclou aquesta base en el diccionari
+			keys = counts.keys()
+			missing_keys = real_keys_set.difference(keys)
+			# s'utilitza un la resta entre dos sets per poder veure quina es la key que falta en el diccionari
+			for key_missing in missing_keys:
+				counts[key_missing] = 0
+
+			# una vegada es troba les keys que faltaven es crea l'imatge resultant
+			pixels = np.array([counts[index] for index in list(real_keys_list)])
+
+		pixels = pixels / self.shots
+		return pixels
+
+	def get_output_pixels(
+					 	  self,
+						  latent_space_noise,
+						  params: Optional[np.ndarray] = None
+						  ):
+		"""Retorna un output del generador quan se li dona un estat d'input i opcionalment uns parametres en especific. Cada pixel es la probabilitat de que un qubits resulti en l'estat ket_0, per tant, els valors cada pixel (que son independents entre si) es troba en l'interval (0, 1) """
+		qc = QuantumCircuit(self.num_qubits_total)
+
+		init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
+		assert latent_space_noise.shape[0] == self.num_qubits_total
+
+		for num_qubit in range(self.num_qubits_total):
+			init_dist.ry(latent_space_noise[num_qubit], num_qubit)
+
+		if params is None:
+			params = cast(np.ndarray, self.parameter_values)
+
+		qc.assign_parameters(params)
+
+		# comptes de simular els valors que donara cada qubits, es simula l'estat final del circuit i d'aquest s'extreuen els valors que es mesuraran per a cada qubit
+		state_vector = qiskit.quantum_info.Statevector.from_instruction(qc)
+		pixels = []
+		for qubit in range(self.num_qubits_total):
+			# per treure la probabilitat s'utilitza una funcio implementada en Qiskit
+			pixels.append(state_vector.probabilities([qubit])[0])
+
+		# creacio de l'imatge resultada a partir de la llista que conte el valor per a cada pixel
+		generated_samples = np.array(pixels)
+		generated_samples.flatten()
+
+		return generated_samples
+
+	def train_mini_batch(self, mini_batch, learning_rate):
+		"""Optimitzacio del generador per una batch d'imatges. Retorna una batch de les imatges generades amb unes imatges reals que poder donar com a input al generador. """
+	 	nabla_theta = np.zero_like(self.parameter_values.shape)
+		new_images = []
+
+		for _, noise in mini_batch:
+			for index, _ in enumerate(self.parameter_values):
+				perturbation_vector = np.zeros_like(self.parameter_values)
+				perturbation_vector[index] = 1
+
+				# Creacio dels parametres per generar les dues imatges
+				pos_params = self.parameter_values + (np.pi / 4) * perturbation_vector
+				neg_params = self.parameter_values - (np.pi / 4) * perturbation_vector
+
+				pos_result = self.get_output(noise, parameters=pos_params)  # Generacio imatges
+				neg_result = self.get_output(noise, parameters=neg_params)
+
+				pos_result = self.discriminator.predict(pos_result)  # Assignacio de les etiquetes
+				neg_result = self.discriminator.predict(neg_result)
+
+				# Diferencia entre les avaluacions de la funcio de perdua entre les dues etiquetes
+				gradient = minimax_generator(pos_result) - minimax_generator(neg_result)
+				nabla_theta[index] += gradient  # Afegir derivada d'un parametre al gradient
+			new_images.append(self.get_output(noise))
+
+		for index, _ in enumerate(self.parameter_values):
+			# Actualitzacio dels parametres a traves del gradient
+			self.parameter_values[index] += (learning_rate / len(mini_batch)) * nabla_theta[index]
+
+		# Creacio de la batch d'imatges a retornar
+		mini_batch = [(datapoint[0], fake_image) for datapoint, fake_image in zip(mini_batch, new_images)]
+		return mini_batch
+\end{lstlisting}
+
+\paragraph{Execució del model}
+\label{lst:main}
+Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{main.py}. 
+
+\begin{lstlisting}[language=Python, caption=Codi final pel generador]
+import numpy as np
+
+from quantumGAN.discriminator import ClassicalDiscriminator
+from quantumGAN.qgan import Quantum_GAN
+from quantumGAN.quantum_generator import QuantumGenerator
+
+num_qubits: int = 3
+
+# Set number of training epochs
+num_epochs = 150
+# Batch size
+batch_size = 10
+
+train_data = []
+for _ in range(800):
+	x2 = np.random.uniform(.55, .46, (2,))
+	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (num_qubits,))
+	real_datapoint = np.array([x2[0], 0, x2[0], 0])
+	train_data.append((real_datapoint, fake_datapoint))
+
+discriminator = ClassicalDiscriminator(sizes=[4, 16, 8, 1],
+									   type_loss="minimax")
+generator = QuantumGenerator(num_qubits=num_qubits,
+							 generator_circuit=None,
+							 num_qubits_ancilla=1,
+							 shots=4096)
+
+quantum_gan = Quantum_GAN(generator, discriminator)
+print(quantum_gan)
+print(num_epochs)
+quantum_gan.generator.get_output(fake_datapoint[0], None)
+quantum_gan.train(num_epochs, train_data, batch_size, .1, .1, True)
+
+quantum_gan.plot()
+quantum_gan.create_gif()
+quantum_gan.save()
+
+\end{lstlisting}

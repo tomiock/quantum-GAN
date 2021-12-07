@@ -39,7 +39,7 @@
 	highlight/.style={rectangle,rounded corners,fill=red!15,draw,fill opacity=0.5,thick,inner sep=0pt}
 }
 \newcommand{\tikzmark}[2]{\tikz[overlay,remember picture,baseline=(#1.base)] \node (#1) {#2};}
-%
+
 \newcommand{\Highlight}[1][submatrix]{%
 	\tikz[overlay,remember picture]{
 		\node[highlight,fit=(left.north west) (right.south east)] (#1) {};}
@@ -60,10 +60,7 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \usepackage{enumitem}
-\usepackage{multirow}
 \usepackage{url}
-\usepackage{setspace}
-\usepackage{tikz}
 \usepackage{graphicx}
 \usepackage[margin=3cm]{geometry}
 \usepackage{xspace}
@@ -103,7 +100,7 @@
 	keywordstyle=\color{codefuctions},
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
-	basicstyle=\ttfamily\footnotesize,
+	basicstyle=\ttfamily\scriptsize,
 	breakatwhitespace=false,         
 	breaklines=true,                 
 	captionpos=b,                    
@@ -113,7 +110,7 @@
 	showspaces=false,                
 	showstringspaces=false,
 	showtabs=false,                  
-	tabsize=2,
+	tabsize=4,
 	rulecolor=\color{black}
 }
 
@@ -125,11 +122,11 @@
 	citecolor=blue,
 	filecolor=black,
 	linkcolor=blue,
-	urlcolor=green
+	urlcolor=blue
 }
 
 \onecolumn
-\usepackage[margin=2cm]{caption}
+\usepackage[labelfont=sc, font={footnotesize, doublespacing}]{caption}
 
 \renewcommand\thesection{%
 	\ifnum\value{section}<1{\thechapter.\arabic{section}}%
@@ -158,7 +155,6 @@
 \usepackage{tcolorbox}
 \newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=4pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
 
-\usepackage{tikz}
 \newcommand{\tikzmarktrace}[2]{
 	\tikz[overlay,remember picture,baseline] 
 	\node[anchor=base] (#1) {$#2$};
@@ -180,7 +176,14 @@
 }
 
 \usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{algorithmicx}
 \bibliographystyle{unsrt}
+
+%\onehalfspacing
+\setlength{\parindent}{1cm}	
+\setlength{\parskip}{.2cm plus4mm minus3mm}
+\renewcommand{\baselinestretch}{1.5}
 
 
 
@@ -248,9 +251,7 @@
 		
 	\end{titlepage}
 
-	
-	\onehalfspacing
-	\setlength{\parskip}{0.5cm plus4mm minus3mm}
+
 	\afterpage{\blankpage}
 	
 	\tableofcontents

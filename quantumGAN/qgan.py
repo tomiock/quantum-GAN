@@ -52,7 +52,6 @@ class Quantum_GAN:
             .format(self.discriminator.sizes, self.example_g_circuit)
 
     def store_info(self, epoch, loss, real_label, fake_label):
-        t_now = datetime.now().time()
         file = open(os.path.join(self.path, self.filename), "a")
         file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {} \n"
                    .format(epoch,
@@ -64,7 +63,6 @@ class Quantum_GAN:
 
     def plot(self):
         # save data for plotting
-
         fake_images, real_images = [], []
         for image_batch in self.last_batch:
             fake_images.append(image_batch[1])
@@ -72,60 +70,77 @@ class Quantum_GAN:
 
         keys, average_result = images_to_distribution(fake_images)
         print(average_result)
-        plt.title("fake images distribution")
+        if self.generator.num_qubits_ancilla != 0:
+            plt.title(f"Distribució d'una imatge generada \n(ancilla, epoch={self.num_epochs})")
+        else:
+            plt.title(f"Distribució d'una imatge generada \n(epoch={self.num_epochs})")
         plt.ylim(0., 1.)
         plt.bar(keys, average_result)
         plt.savefig(self.path + "/fake_distribution.png")
-        plt.show()
+        plt.clf()
 
         keys_real, average_result_real = images_to_distribution(real_images)
         print(average_result_real)
-        plt.title("real images distribution")
+        if self.generator.num_qubits_ancilla != 0:
+            plt.title(f"Distribució d'una imatge real \n(ancilla, epoch={self.num_epochs})")
+        else:
+            plt.title(f"Distribució d'una imatge real \n(epoch={self.num_epochs})")
         plt.ylim(0., 1.)
         plt.bar(keys_real, average_result_real)
         plt.savefig(self.path + "/real_distribution.png")
-        plt.show()
+        plt.clf()
 
         y_axis, x_axis = images_to_scatter(fake_images)
         y_axis_real, x_axis_real = images_to_scatter(real_images)
-        plt.title("fake images plot")
-        plt.ylim(0.-.1, 1.+.1)
-        plt.scatter(y_axis, x_axis, label='data points for fake images',
-                    color='mediumvioletred',
-                    linewidth=.1)
-        plt.scatter(y_axis_real, x_axis_real, label='data points for real images',
-                    color='rebeccapurple',
-                    linewidth=.1)
+        if self.generator.num_qubits_ancilla != 0:
+            plt.title(f"Comparació entre les imatges reals con les imatges falses \n(ancilla, epoch={self.num_epochs})")
+        else:
+            plt.title(f"Comparació entre les imatges reals con les imatges falses \n(epoch={self.num_epochs})")
+        plt.ylim(0. - .1, 1. + .1)
+        plt.scatter(y_axis, x_axis, label='Valors per les imatges falses',
+                    color='indigo',
+                    linewidth=.1,
+                    alpha=.2)
+        plt.scatter(y_axis_real, x_axis_real, label='Valors per les imatges reals',
+                    color='limegreen',
+                    linewidth=.1,
+                    alpha=.2)
         plt.savefig(self.path + "/scatter_plot.png")
-        plt.show()
-
+        plt.clf()
 
         t_steps = np.arange(self.num_epochs)
         plt.figure(figsize=(6, 5))
-        plt.title("Progress in the loss function")
-        plt.plot(t_steps, self.loss_series, label='Discriminator loss function', color='rebeccapurple', linewidth=2)
+        if self.generator.num_qubits_ancilla != 0:
+            plt.title(f"Progrés de la funció de pèrdua \n(ancilla, epoch={self.num_epochs})")
+        else:
+            plt.title(f"Progrés de la funció de pèrdua \n(epoch={self.num_epochs})")
+        plt.plot(t_steps, self.loss_series, label='Funció de pèrdua del discriminador', color='rebeccapurple', linewidth=2)
         plt.grid()
         plt.legend(loc='best')
-        plt.xlabel('time steps')
-        plt.ylabel('loss')
+        plt.xlabel('Iteracions')
+        plt.ylabel('Funció de pèrdua')
         plt.savefig(self.path + "/loss_plot.png")
-        plt.show()
+        plt.clf()
 
         t_steps = np.arange(self.num_epochs)
         plt.figure(figsize=(6, 5))
-        plt.title("Progress in labels")
-        plt.scatter(t_steps, self.label_real_series, label='Label for real images',
+        if self.generator.num_qubits_ancilla != 0:
+            plt.title(f"Progrés de les etiquetes \n(ancilla, epoch={self.num_epochs})")
+        else:
+            plt.title(f"Progrés de les etiquetes \n(epoch={self.num_epochs})")
+        plt.scatter(t_steps, self.label_real_series, label='Etiquetes per les imatges reals',
                     color='mediumvioletred',
                     linewidth=.1)
-        plt.scatter(t_steps, self.label_fake_series, label='Label for fake images',
+        plt.scatter(t_steps, self.label_fake_series, label='Etiquetes per les imatges generades',
                     color='rebeccapurple',
                     linewidth=.1)
         plt.grid()
+        plt.ylim(0. - .1, 1. + .1)
         plt.legend(loc='best')
-        plt.xlabel('time steps')
-        plt.ylabel('label')
+        plt.xlabel('Iteracions')
+        plt.ylabel('Valor de les etiquetes')
         plt.savefig(self.path + "/labels_plot.png")
-        plt.show()
+        plt.clf()
 
     def train(self,
               num_epochs: int,
@@ -143,7 +158,6 @@ class Quantum_GAN:
         self.discriminator_lr = discriminator_learning_rate
         self.is_save_images = is_save_images
 
-        print(self.is_save_images)
         noise = self.training_data[0][1]
         time_init = datetime.now()
         for o in range(self.num_epochs):
@@ -179,6 +193,7 @@ class Quantum_GAN:
         plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
         plt.axis('off')
         plt.savefig(self.path_images + '/image_at_epoch_{:04d}.png'.format(epoch))
+        plt.clf()
 
     def create_gif(self):
         anim_file = self.path + '/dcgan.gif'
@@ -213,6 +228,7 @@ class Quantum_GAN:
         json.dump(data, f)
         f.close()
 
+
 def create_mini_batches(training_data, mini_batch_size):
     n = len(training_data)
     random.shuffle(training_data)
@@ -220,6 +236,7 @@ def create_mini_batches(training_data, mini_batch_size):
         training_data[k:k + mini_batch_size]
         for k in range(0, n, mini_batch_size)]
     return [mini_batches[0]]
+
 
 def load_gan(filename):
     f = open(filename, "r")

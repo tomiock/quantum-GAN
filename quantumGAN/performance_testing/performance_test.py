@@ -1,13 +1,8 @@
-from ctypes import cast
-
-from qiskit import IBMQ, QuantumCircuit, QuantumRegister, assemble, transpile
-from qiskit.circuit.library import TwoLocal
-from qiskit.circuit.random import random_circuit
 import numpy as np
 import qiskit
-
-import logging
-
+from qiskit import IBMQ, QuantumCircuit, QuantumRegister, transpile
+from qiskit.circuit.library import TwoLocal
+from qiskit.circuit.random import random_circuit
 from qiskit.providers.aer import AerSimulator
 
 from quantumGAN.performance_testing.performance_get_output_generator import construct_circuit
