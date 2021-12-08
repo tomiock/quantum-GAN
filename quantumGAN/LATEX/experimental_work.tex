@@ -160,6 +160,11 @@ L'arxiu que utilitzo per fer els experiments és \code{experiment.py}. En ell es
 Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{link per veure una imatge amb totes les gràfiques} (perdó per l'informalitat)} comencen amb els mateixos paràmetres, per tant en exactament les mateixes condicions, menys els circuits quàntics es clar. També s'utilitza el mateix dataset i altres hiperparàmetres. 
 
 \section{Anàlisi dels resultats}
+Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia, els model que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen. Això no vol dir necessàriament que siguin més eficients però l'estabilitat és un factor que es busca en les GANs. 
 
+També es pot observar una clara diferencia en les imatges generades en la primera iteració. Amb el generador amb la funció no-lienal es pot veure un píxel amb un valor d'$1$ mentre que els altres estan al $0$. Mentre que en l'altre tipus de generador es pot veure que els píxels tenen més o menys el mateix valor, d'aquesta manera formant una distribució uniforme. Aquest fet probablement es causat per l'estructura del circuit que té els qubits ancilla. No obstant, perquè exactament passa això està fora dels meus coneixements sobre la matèria\footnote{Saber com es comporten sistemes quàntics que tenen parts entrellaçades com aquest està fora del meu àmbit.}. 
 
+La part que realment m'intriga es que a partir de les primeres iteracions, en els circuits amb els qubits ancilla. El píxel que té el valor d'$1$, passa d'un a un altre. Aquest comportament succeïx en absolutament totes les vegades que he executat el codi. Al igual que he dit abans, arribar a comprendre això està fora del meu nivell de coneixement. 
+
+Aquesta fluctuació dels valors del píxels molt probablement és el factor que causa l'inestabilitat que es pot observar en les etiquetes. 
  

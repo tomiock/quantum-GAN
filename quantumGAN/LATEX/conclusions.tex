@@ -1,0 +1,20 @@
+
+
+La primera conclusió que puc treure és que a primera vista, es pot veure que els generadors amb els qubits ancilla, no són més eficients que els altres. No obstant, aquesta afirmació també és veritat al capbaix. Els generadors sense els qubits ancilla no semblen més eficients que els que si els tenen. 
+
+Tanmateix es pot veure una clara diferencia en l'estabilitat dels dos tipus de model, això és especialment notable quan es mira a les gràfiques que mostren l'evolució de les etiquetes.  
+
+Les funcions no-lineals no han tingut el efecte que esperava, si assumeixo que els resultats de l'article en el que m'ha basat són veritat, he pensat en uns quants factors que podem explicar els meus resultats: 
+\begin{enumerate}
+	\item L'implementació de les funcions no-lienals, concretament del mesurament parcial, no ha estat igual que el dels experiments donats a terme en l'article. Aquest factor és bastant probable considerant que he utilitzat un mètode diferent al emprat en l'article.
+	\item El càlcul de l'eficiència no s'ha fer correctament. Hauria de fer servir una mètrica que sigui més correcta i sensible en comparació a mirar gràfics e.g. \textit{accuracy}. 
+	\item Estic analitzant un comportament que no és normal en GAN per generar imatges clàssiques. Es possible que el comportament del meu model no sigui l'adecuat degut a que vaig que en el cas de no tenir els qubits ancilla, les etiquetes s'estabilitazen molt ràpid. Quan he vist altres model per la generació d'imatges més complexes, les funcions de pèrdua d'aquestos no tendeixen a veure com la funció de pèrdua en el meu model. No obstant, això pot ser degut a la simpleza del meu model, hauria de realizar un model purament clàssic i encomanar-li exactament la mateixa tasca per arribar a una conclusió sobre si el comportament del meu model es adequat o no. 
+	\item Es possible que necessiti afegir més variables de control al meu experiment\footnote{No penso que es necessitin més però és un factor a dintre en compte.}, però veig molt importants els problemes esmentat anteriorment. 
+\end{enumerate}
+
+Alguns d'aquests factors tenen una clara solució a la qual es podrà arribar en un futur, com per exemple els punts $4$, $2$ i $3$. No obstant, el punt que em sembla el més important i complicat és l'$1$. 
+
+Penso que és el més important perquè és una clara falla en aquest experiment, no he aconseguit seguir exactament les mateixes passes que en l'article original. Per tant, només és pot afirmar que el mesurament parcial que jo he utilitzat no té efecte, llavors, és un mesurament parcial que genera una funció no-lienal. És possible que si implemento una funció no-lienal als outputs del generadors\footnote{Posar els valors del píxels que genera a través d'una sigmoide.}, l'eficiència del model es vegi afectada. 
+
+Deixant d'una banda tot això, és veritat que al veure les gràfiques i les imatges generades pels models, no és pot afirmar si un tipus de model és més eficient que l'altres amb caritat, per tant la meva conclusió és que el mesurament parcial, no té un afecte notable en l'eficiencia de la generació de les imatges. I que per acabar d'afirmar això s'hauria de fer un anàlisi més profund dels resultat. Per exemple, a partir d'implementar una funció que determini la precisió del model, definir un llindar de precisió  en el qual considerar que les imatges generades són suficientment bones i veure qual dels dos models és el que tendeix a arriba a aquests llindar més ràpid.  
+
