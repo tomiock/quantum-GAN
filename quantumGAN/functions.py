@@ -193,9 +193,8 @@ class Partial_Trace:
     
 def fechet_distance(image1: np.array, 
                     image2: np.array):
-    y = np.array([0, 1, 2, 3])
-
     assert image1.shape == image2.shape
+    y = np.arange(0, image1.flatten().shape[0])
 
     matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
     matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
