@@ -189,3 +189,16 @@ class Partial_Trace:
 
         entries = np.array(entries)
         return entries.reshape(self.a_dim, self.a_dim)
+    
+    
+def fechet_distance(image1: np.array, 
+                    image2: np.array):
+    y = np.array([0, 1, 2, 3])
+
+    assert image1.shape == image2.shape
+
+    matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
+    matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
+
+    to_trace = matrix_a_cov + matrix_b_cov - 2*(linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
+    return np.abs(image1.mean() - image2.mean())**2 + np.trace(to_trace)
