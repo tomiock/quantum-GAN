@@ -1,16 +1,16 @@
 \chapter{Àlgebra lineal}\label{algebra}
-Quan vaig començar a buscar informació sobre computació quàntica, en vaig ràpidament donar compte que necessitava molt més coneixement matemàtic, degut a que no entenia gairebé res dels llibres sobre computació quàntica. Arran aquell temps, una serie de vídeos sobre àlgebra lineal en va captar l’atenció, que es justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Els vídeos son les lliçons que dona el Professor Gilbert Strang al Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos. 
+Quan vaig començar a buscar informació sobre computació quàntica, en vaig ràpidament adonar compte que necessitava molt més coneixement matemàtic, degut a que no entenia gairebé res dels llibres sobre computació quàntica. Però durant aquell temps, una serie de vídeos sobre àlgebra lineal en va captar l’atenció, que es justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Els vídeos son les lliçons que dona el Professor Gilbert Strang al Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos. 
 
-Aquelles lliçons es van ajudar a entendre les matemàtiques de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} i \textit{Quantum Computing: A Gentle Introduction}. A poc a poc, vaig anar aprenent els fundaments matemàtics de la computació quàntica i mecànica quàntica.
+Aquelles lliçons em van ajudar a entendre les matemàtiques de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} i \textit{Quantum Computing: A Gentle Introduction}. A poc a poc, vaig anar aprenent els fonaments matemàtics de la computació quàntica i mecànica quàntica.
 
 En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lienal, per formar els coneixements en matemàtiques necessaris per poder comprendre aquest treball. 
 
 \section{Vectors i espais vectorials}
-Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial es el conjunt de tots els vectors que tenen les mateixes dimensions. Per exemple  $\mathbb{R}^{3}$ seria el espai vectorial de tots els vectors de 3 dimensions, aquests vectors normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica un tipus d'espais vectorials en concret són utilitzats: Els espais de Hilbert, en altres paraules, un espai vectorial amb un producte interior \cite{QCandQI:GramSchmidt}. Els espais de Hilbert segueixen un conjunt de productes i compleixen unes certes normes, en aquest capítol presentaré una part d'aquestes normes i productes, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, també que d'aquí en endavant, quan mencioni espai vectorial hem referiré a un espai de Hilbert, d'ha no ser que s'especifiqui el contrari. 
+Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial és el conjunt de tots els vectors amb les mateixes dimensions i amb certes propietats en comú. Per exemple  $\mathbb{R}^{3}$ seria l'espai vectorial de tots els vectors de 3 dimensions els quals normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica s'utilitzen en concret els espais vectorials anomenats espais de Hilbert, que són aquells en els que hi ha definit un producte interior \cite{QCandQI:GramSchmidt}. En els espais de Hilbert es defineixen un conjunt d'operacions amb certes propietats, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, i que d'aquí en endavant, quan mencioni espai vectorial, em referiré a un espai de Hilbert.
 
-Els espais vectorial estan definits per les seves bases, un set de vectors $B = \{\ket{v_1}, \dots, \ket{v_n}\}$ es una base vàlida per l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$. Els vectors de la base $B$ són linealment independent entre ells.
+Els espais vectorial estan definits per les seves bases, i.e. un set de vectors independents $B = \{\ket{v_1}, \dots, \ket{v_n}\}$. Posat d'una altra manera: el conjunt $B$ és una base pel l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$.
 
-La notació estàndard pels conceptes de  àlgebra lienal en mecànica quàntica es la notació de Dirac, en la qual es representa un vector com $ \ket{\psi} $. On $\psi$ es la etiqueta del vector. Un vector $ \ket{\psi} $ amb $n$ dimensions també pot ser representat com una matriu columna que te la forma: 
+La notació estàndard per l'àlgebra lienal en mecànica quàntica es la notació de Dirac, en la qual es representa un vector com $ \ket{\psi} $. On $\psi$ es la etiqueta del vector. Un vector $ \ket{\psi} $ amb $n$ dimensions també pot ser representat com una matriu columna que te la forma: 
 $$
 \ket{\psi} = 
 \begin{bmatrix}
@@ -22,43 +22,43 @@ $$
 \end{bmatrix}
 $$
 
-On els nombres complexes $(z_{1}, z_{2}, \dots , z_{n-1}, z_{n} )$ són els seus elements. Un vector escrit com a $\ket{\psi}$ també s'anomena \textit{ket}.
+Pels seus elements $\{z_{1}, z_{2}, \cdots , z_{n-1}, z_{n}\} \in \mathbb{C}$ . Els vectors escrits com $\ket{\psi}$ s'anomenen \textit{ket}.
 
-La adició d'un par de vectors en un espai de Hilbert es definida per \footnote{Els vectors d'aquesta definició tenen els seus elements representats per la seva etiqueta i un subscrit e.g. el vector $\ket{\psi}$ te un element qualsevol $\psi_{1}$ i el seu primer element es $\psi_{1}$. Aquesta notació es seguirà utilitzant al llarg del treball.}:
+En els espais de Hilbert es defineix una adició de vectors\footnote{Els vectors d'aquesta definició tenen els seus elements representats per la seva etiqueta i un subíndex e.g. el vector $\ket{\psi}$ te un element qualsevol $\psi_{1}$ i el seu primer element es $\psi_{1}$. Aquesta notació es seguirà utilitzant al llarg del treball.}:
 $$
 \ket{\psi} + \ket{\varphi} = \begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} +
 \begin{bmatrix} \varphi_{1} \\ \vdots \\ \varphi_{n} \end{bmatrix}
 $$
 
-A més a més, hi ha una multiplicació per un escalar\footnote{Un numero qualsevol en $\mathbb{R}$.} definida per:
+I una multiplicació escalar:
 $$
   z\ket{\psi} = z\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix} = \begin{bmatrix} z \psi_{1} \\ \vdots \\ z \psi_{n} \end{bmatrix}
 $$
-On $z$ es un escalar i $\ket{\psi}$ un vector. Cal que notar que cada element del vector es multiplicar per el escalar.
+On $z$ és un escalar i $\ket{\psi}$ un vector.
 
-Degut a que els espais de Hilbert son complexos tenen un conjugat complex definit per escalar com a: Per un escalar complex $z=a +bi$, el seu conjugat $z^*$ es igual a $a-bi$. 
+A més a més, hi ha definit un conjugat complex: Per $z=a +bi$, el seu conjugat $z^*$ és igual a $a-bi$. 
 
-Aquesta noció pot ampliar per a vectors i matrius, agafant el conjugat de totes els seus elements:
+Aquesta noció es pot ampliar també per les matrius:
 $$
 \ket{\psi}^{*} = 
-	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
+	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^* = \begin{bmatrix} \psi_{1}^* \\ \vdots \\ \psi_{n}^* \end{bmatrix}
 $$
 $$
 A^{*} = 
 	\begin{bmatrix} 
 	a_{11} & \cdots & a_{1n}\\ 
 	\vdots & \ddots & \vdots \\ 
-	a_{m1} & \cdots & a_mn
+	a_{m1} & \cdots & a_{mn}
 \end{bmatrix}^* 
 = \begin{bmatrix} 
 	a_{11}^* & \dots & a_{1n}^*\\ 
 	\vdots & \ddots & \vdots \\ 
-	a_{m1}^* & \cdots & a_mn^*
+	a_{m1}^* & \cdots & a_{mn}^*
 \end{bmatrix}
 $$
 Amb $\ket{\psi}$ sent un vector de dimensions $n$, i $A$ sent una matriu de dimensions $m \times n$.
 
-Un altre concepte important es la transposada, representada per el superíndex $T$ que 'rota' un vector o una matriu. Un vector columna amb una dimensió $n\times 1$ es transforma amb un vector fila amb una dimensió $1\times n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
+Un altre concepte important es la transposada, representada per el superíndex $T$ que 'rota' un vector o una matriu. Un vector columna amb una dimensió $n\times 1$ es transforma a un vector fila amb una dimensió $1\times n$\footnote{En realitat els vectors columna son matrius amb dimensió $n,1$ però he estat ometent el 1. Quan hem refereixo a les dimensions de un vector qualsevol, només diré un numero, no obstant, especificaré si és un vector columna o un vector fila.}:
 $$
 \ket{\psi}^{T} = 
 	\begin{bmatrix} \psi_{1} \\ \vdots \\ \psi_{n} \end{bmatrix}^T = \begin{bmatrix} \psi_{1} & \dots & \psi_{n} \end{bmatrix}
@@ -85,14 +85,14 @@ El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\ps
 El conjugat Hermitià d'un vector columna $\ket{\psi}$ s'anomena \textit{bra} o vector dual. En la notació de Dirac un vector dual s'escriu com $\bra{\psi}$.
 
 \section{Aplicacions lineals}
-Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades aplicacions lineal o transformacions lineals\footnote{}, que són noms que descriuen millor com funcionen aquests objectes. La definició formal d'una aplicació lienal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals en aquesta secció. 
+Per poder operar amb vectors i fer operacions amb ells, s'utilitzen les matrius, que també son anomenades aplicacions lineal o transformacions lineals; noms que descriuen millor com funcionen aquests objectes. La definició formal d'una aplicació lienal pot ser bastant complicada, per aquesta raó, utilitzaré termes més informals en aquesta secció. 
 
-Bàsicament, una aplicació lineal transforma un vector en un altre vector, que poden o no ser d'espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, una transformació lineal $A$ entre els vectors, fa l'acció:
+Bàsicament, una aplicació lineal transforma un vector en un altre vector, que poden o no ser d'espais diferents \cite{LR_done_right:linear_map}. Més formalment, per un vector $\ket{v}$ en un espai $V$ i un vector $\ket{w}$ en un espai $W$, una aplicació lineal $A$ entre els vectors, fa l'acció:
 $$
 A \ket{v} = \ket{w}
 $$
 En altres paraules, l'aplicació transforma un element del espai vectorial $V$ en un vector del espai vectorial $W$.
-Les transformacions lienals han de complir les següents propietats:
+Les aplicacions lineals han de complir les següents propietats:
 \begin{enumerate}
 	\item Addició de vectors: \\
 	Donats els vectors $\ket{\psi}$ i $\ket{\varphi}$ en un mateix espai vectorial, i un operador lineal $A$:
@@ -102,28 +102,29 @@ Les transformacions lienals han de complir les següents propietats:
 	$$ A(z\ket{\psi}) = z A \ket{\psi}$$
 \end{enumerate}
 
-Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars en els espais on les aplicacions actuen. Cal notar que una aplicació lineal no té perquè ser una matriu necessàriament, per exemple, les derivades i les integrals son aplicacions lineals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors \footnote{No et preocupis, que es clar que les aplicaré a vectors :D.}.
+Aquestes afirmacions han de ser certes per tots els vectors i tots els escalars en els espais on les aplicacions actuen. Cal notar que una aplicació lineal no té perquè ser una matriu necessàriament, per exemple, les derivades i les integrals son aplicacions lineals, això es pot provar fàcilment al veure que compleixen els criteris especificats posteriorment. No obstant, les derivades i les integrals usualment no s'apliquen a vectors, sinó a les funcions, però es possible aplicar-les a vectors.
 
-Les matrius només són la representació matricial de les aplicacions lineals \cite{LR_done_right:matrix}.
+Les matrius serien la representació matricial de les aplicacions lineals \cite{LR_done_right:matrix}.
 
-	\subsection{Tipus d'aplicacions lineals}
-En la secció actual, exposaré els tipus bàsics d'aplicacions lineals que són indispensables en la teoria presentada en aquest capítol i la rest del treball.
+\subsection{Tipus d'aplicacions lineals}
+En la secció actual, exposaré els tipus bàsics d'aplicacions lineals que són indispensables en la teoria presentada en aquest capítol i la resta del treball.
 
 \begin{enumerate}
 	\item \textbf{Operador zero} \\
-	Qualsevol espai vectorial té un vector zero expressat en notació de Dirac com a $0$, degut a que $\ket{0}$ es un altre concepte totalment diferent en CQ i IQ\footnote{Computació Quàntica i Informació Quàntica.}. El vector zero es aquell vector que per qualsevol vector $\ket{\psi}$ i qualsevol escalar $z$, es compleix que:	
-	$\ket{\psi} + 0 = \ket{\psi} $ i $z0 = 0$. \\
-	El operador zero també s'escriu com a $0$ i es defineix com l'aplicació que transforma qualsevol vector al vector zero: $0\ket{\psi} = 0 $.  
+	Qualsevol espai vectorial té un vector zero expressat en notació de Dirac com a $0$, degut a que $\ket{0}$ es un altre concepte totalment diferent en CQ i IQ\footnote{Computació Quàntica i Informació Quàntica.}. Es aquell vector que per qualsevol vector $\ket{\psi}$ i qualsevol escalar $z$, es compleix que:	
+	És l'element neutre: $\ket{\psi} + 0 = \ket{\psi} $\\
+	I l'element nul pel producte escalar: $z0 = 0$. \\
+	El operador zero també s'escriu com a $0$.
 	
 	\item \textbf{Matriu inversa} \\
-	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A$. $A^{-1} = I$ és la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero. En altres paraules, és l'element neutre per la suma i l'element null per la multiplicació. 
+	Un matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A = I$ és la matriu inversa de $A$. La manera més ràpida de saber si una matriu es invertible es veient si el seu determinant no és zero. 
 
 	\item \textbf{Matriu Identitat} \\
-	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera. Cal notar també que per qualsevol matriu $A$ i la seva inversa és veritat que $AA^{-1} = I$. 
+	Per a qualsevol espai vectorial $V$ existeix un operador identitat $I$ que es definit com $I\ket{\psi} = \ket{\psi}$, aquest operador no fa cap canvi al vectors als quals opera.
 	
-	\item \textbf{Matriu Unitari} \\
-	Un operador unitari es qualsevol operador que no altera la norma dels vectors al quals es aplicat, per tant, una matriu es unitària si $AA^\dagger = I$
-	Per convertir qualsevol operador en unitari, es divideix les seves entrades entre la norma del operador. 
+	\item \textbf{Matriu Unitària} \\
+	Un operador unitari es qualsevol operador que no altera la norma\footnote{El concepte generalitzat de la longitud d'un vector. Usualment parlaré de la norma $\ell_2$, esmentada com $\norm{\cdot}_2$, i definida com $\norm{\ket{\psi}} = \sqrt{\psi^2_1 + \cdots + \psi^2_n}$.} o longitud dels vectors al quals es aplicat, per tant, una matriu es unitària si $AA^\dagger = I$
+	Per convertir qualsevol operador en unitari, es divideixen els seus component entre la longitud o norma del vector del operador. 
 	
 	\item \textbf{Matrius Hermitianes} \\
 	Una matriu Hermitiana compleix que: 
@@ -141,16 +142,16 @@ Un vector dual $\bra{\psi}$ i un vector $\ket{\varphi}$ combinats formen el prod
 $$
 \bra{a}\ket{b} = a_1 b_1 + a_2 b_2 + ... + a_{n-1} b_{n-1} + a_n b_n = z
 $$
-Amb $z, a_i, b_i \in \mathbb{C}$. Quan hem refereixo a un producte interior, normalment diré "el producte interior de dos vectors", quan en realitat es una operació entre un vector dual i un vector.
+Amb $z, a_i, b_i \in \mathbb{C}$.
 
-El equivalent d'aquest producte en un espai real de dos dimensions $\mathbb{R}^2$ és el producte escalar, que s'expressat com a :
+Aquest producte per dos vectors en $\mathbb{R}^2$ també es pot escriure com a:
 \begin{equation}
 	\bra{a}\ket{b} = \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta 
 	\label{eq:dot_product}
 \end{equation}
 
 
-Amb $\norm{\cdot}_2$ sent la norma $\ell^2$  definida com a $\norm{\ket{\psi}}_2 = \sqrt{\psi_{1}^2 + \cdots + \psi_{n}^2}$ amb $\theta$ sent l'angle entre els vectors $\ket{a}$ i $\ket{b}$. Com he dit l'equació \eqref{eq:dot_product} és equivalent al producte interior, no obstant, segons el que he vist, no es usada àmpliament ja que interpretar $\theta$ com un angle entre vectors de dimensions altes no té molt de sentit. En contrast, he vist aquest producte presentat en la seva interpretació geomètrica\footnote{Els detalls exactes de l'interpretació geomètrica estan fora del domini d'aquest treball, malgrat que m'agradaria molt parlar sobre el tema.} com el producte entre un vector fila i un vector columna: 
+Amb $\norm{\cdot}_2$ sent la norma $\ell^2$ i $\theta$ sent l'angle entre els vectors $\ket{a}$ i $\ket{b}$. Com he dit l'equació \eqref{eq:dot_product} és equivalent al producte interior, no obstant, segons el que he vist, no es usada àmpliament ja que interpretar $\theta$ com un angle entre vectors de dimensions altes no té molt de sentit. En contraposició, he vist aquest producte presentat en la seva interpretació geomètrica\footnote{Els detalls exactes de l'interpretació geomètrica estan fora del domini d'aquest treball, malgrat que m'agradaria molt parlar sobre el tema.} com el producte entre un vector fila i un vector columna: 
 % The Geometry of Linear Equations: https://www.youtube.com/watch?v=ZK3O402wf1c&list=PL3CCC70370BD3FD48&index=1
 % The four Fundamental Subspaces: https://www.youtube.com/watch?v=nHlE7EgJFds
 $$
@@ -161,7 +162,7 @@ Ja he definit la norma $\ell_2$ com l'arrel quadrada de la suma del elements d'u
 $$
 \norm{\ket{a}}_2 = \sqrt{\sum_{i} \abs{a_{i}}^2}
 $$
-No obstant, la definició més comú es basa en el producte interior. Com es pot veure el producte interior de un vector per ell mateix es la suma de les seves entrades al quadrat:
+No obstant, la definició més comú es basa en el producte interior. Com es pot veure el producte interior d'un vector per ell mateix es la suma dels seus components al quadrat:
 $$
 \bra{a}\ket{a} = a_1 a_1 + \cdots + a_n a_n = a_1^2 + \cdots +  a_n^2 \\= \sum_{i} \abs{a_i}^2
 $$
@@ -170,7 +171,7 @@ Per tant, la norma pot ser definida com l'arrel quadrada del producte interior d
 \norm{\ket{a}}_2 = \sqrt{\bra{a}\ket{a}}
 \label{eq:norm}
 \end{equation}
-Quan la norma es aplicada a un vector bidimensional, es pot veure que es lo mateix que la longitud Euclidiana d'aquell vector, això es perquè realment son el mateixos conceptes, tot i això, la norma es el concepte de longitud però generalitzat a vectors de dimensions altes. 
+Quan la norma es aplicada a un vector bidimensional, es pot veure que es lo mateix que la longitud Euclidiana d'aquell vector, això és perquè realment son el mateixos conceptes, tot i això, la norma és el concepte de longitud però generalitzat a vectors de dimensions altes. 
 
 Pel el que jo entenc algunes propietats de la longitud d'un vector bidimensional no es mantenen amb la norma d'un vector que te més de 2 dimensions. En altres paraules, la norma es comporta en certes maneres com la distancia des de d'origen (que es la definició de la longitud), per tant, no són exactament lo mateix. A més d’això, hi han diferents tipus de normes que s'utilitzen en diversos escenaris. Aquesta es la raó per la qual en refereixo a la norma, com la norma $\ell^2$. A aquesta norma també se li diu norma Euclidiana \cite{wolfram:2norm}.
 
@@ -184,10 +185,10 @@ Les propietats bàsiques del producte interior són les següents:
 
  
 \subsection{Vectors ortonormals i ortogonals}
-A partir del concepte de norma sorgeixen els conceptes de un par de vectors ortonormals i un par de vectors ortogonals \footnote{Una nota graciosa, la primera vegada que vaig trobar aquest dos conceptes els vaig confondre i pensava que eren la mateixa cosa, això hem va confondre moltíssim i no entenia gairebé res.}.
-Mirant l'equació \eqref{eq:norm} podem veure que si el producte interior del vector és 1, la norma del mateix vector també és 1. Un vector que té norma 1, és un vector unitari. D'aquesta manera, si el producte interior d'un vector és 1, és un vector unitari. 
+A partir del concepte de norma sorgeixen els conceptes de un par de vectors ortonormals i un par de vectors ortogonals.
+Mirant l'equació \eqref{eq:norm} podem veure que si el producte interior del vector és 1, la norma del mateix vector també és 1. Un vector que té norma 1, és un vector unitari.
 
-De vectors que no són zero son ortogonals si el seu producte interior és zero. Si aquests vectors són de bidimensionals, a partir de l'equació \eqref{eq:dot_product} podem veure que l'angle que fan entre ells és zero i per tant son perpendiculars entre ells: 
+Dos vectors diferents de zero són ortogonals si el seu producte interior és zero. Si aquests vectors són bidimensionals, a partir de l'equació \eqref{eq:dot_product} podem veure que el cosinus de l'angle que fan entre ells és zero i per tant són perpendiculars entre ells: 
 \begin{multline*}
 	 \text{Per }\ket{a} \text{i} \ket{b}\neq 0 : \\
 	\text{Si }\bra{a}\ket{b} = 0 \text{ tenim que: } \norm{\ket{a}}_2 \cdot \norm{\ket{b}}_2 \cos \theta = 0 \\
@@ -210,9 +211,8 @@ $$
 $$
 Els vectors ortonormals són importants, àmpliament utilitzats tant en computació quàntica com en mecànica quàntica perquè serveixen per crear bases vectorials molt útils. 
 
-Una altre cosa que remarcar i no he dit es que al dir un par de vectors, aquest par també pot ser un set de vectors. Si un set té tots els vectors unitaris i ortogonals entre tots ells, és un set de vectors ortonormals. 
+Una altre cosa que remarcar i no he dit es que al dir un par de vectors, aquest parell també pot ser un conjunt de vectors. Si un conjunt té tots els vectors unitaris i ortogonals entre tots ells, és un set de vectors ortonormals. 
 El set de vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ és ortonormal si $\bra{\beta_i}\ket{\beta_j} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} on $\delta_{ij}$ és el Kronecker delta, definit com:
-: 
 $$
 \delta_{ij} =
 \begin{cases}
@@ -238,7 +238,7 @@ Amb la seva acció definida per:
 	\label{eq:outer_def}
 \end{equation}
 
-A partir de l'equació \eqref{eq:outer_def} l'utilitat i significat del producte es bastant complicada d'entendre, per tant exposaré la manera de computar-lo per clarificar com funciona. Per dos vectors $\ket{a}$ i $\ket{b}$ de dimensions $m$ i $n$ respectivament, el seu producte interior es computa multiplicant cada element de $\ket{a}$ per cada elment de $\ket{b}$ formant una matriu amb mida $m\times n$:
+A partir de l'equació \eqref{eq:outer_def} l'utilitat i significat del producte es bastant complicada d'entendre, per tant exposaré la manera de computar-lo per clarificar com funciona. Per dos vectors $\ket{a}$ i $\ket{b}$ de dimensions $m$ i $n$ respectivament, el seu producte interior es computa multiplicant cada element de $\ket{a}$ per cada element de $\ket{b}$ formant una matriu amb mida $m\times n$:
 $$
 \ket{a}\bra{b} = \begin{bmatrix}
 	a_1 b_1 & a_1 b_2 & \cdots & a_1 b_n \\
@@ -252,7 +252,7 @@ L'utilitat d'aquest producte és mostrara més endavant.
 \section{Producte tensorial}
 L'últim producte que mencionaré és el tensorial, representat per el símbol $\otimes$. Aquest producte s'utilitza per crear espais vectorials més grans combinant espais vectorials més petits. La definició formal és bastant complicada, per tant en centraré en explicar la manera amb la qual es computa utilitzant la representació matricial d'aquest producte, anomenada el producte de Kronecker. 
 
-Per una $m \times n$ $A$, i una $p \times q$ matriu $B$, el seu producte de Kronecker \cite{QCandQI:kronecker} és la matriu de mida $pm \times qn$: 
+Per una matriu $m \times n$, $A$, i una $p \times q$ matriu $B$, el seu producte de Kronecker \cite{QCandQI:kronecker} és la matriu de mida $pm \times qn$: 
 \begin{multline*}
 A \otimes B = \begin{bmatrix}
 	a_{11} B & a_{12} B & \cdots & a_{1n}B \\
@@ -329,27 +329,6 @@ Aquí hi ha un exemple més il·lustratiu amb dues matrius de mida $2\times2$, e
 \end{bmatrix}
 \end{equation*}
 
-Una altre notació a tenir en compte és el símbol $\bigotimes$, utilitzat per representar el equivalent de la suma (expressada amb $\sum$), però en comptes de la adició el producte de Kronecker és utilitzat. En altres paraules, $\bigotimes$ representa el producte de Kronecker de un nombre finit de termes. Per clarificar, aquí hi ha un exemple amb una matriu identitat: 
-
-Amb $\mathbb{I}$ com la matriu $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$ i $n$ com una potencia de $2$:
-$$
-\mathbb{I}_n = \bigotimes^{\log_{2} n} \mathbb{I}  
-$$
-	
-Aquí està el cas per $n=8$: 
-$$\mathbb{I}_8 =  \bigotimes^{\log_{2} 8} \mathbb{I} =\bigotimes^3 \mathbb{I} = \mathbb{I} \otimes \mathbb{I} \otimes \mathbb{I} =
-	\begin{bmatrix}
-		1 &0 &0 &0 &0 &0 &0 &0 \\
-		0 &1 &0 &0 &0 &0 &0 &0 \\
-		0 &0 &1 &0 &0 &0 &0 &0 \\
-		0 &0 &0 &1 &0 &0 &0 &0 \\
-		0 &0 &0 &0 &1 &0 &0 &0 \\
-		0 &0 &0 &0 &0 &1 &0 &0 \\
-		0 &0 &0 &0 &0 &0 &1 &0 \\
-		0 &0 &0 &0 &0 &0 &0 &1 \\
-	\end{bmatrix} 
-$$
-
 El producte de Kronecker també funciona amb vectors de la mateixa manera, però amb una multiplicació de escalar per vector.
 
 Per els vectors $\ket{\psi}$ i $\ket{\varphi}$ de dimensions $n$ i $m$ respectivament:
@@ -375,10 +354,6 @@ $$
 $$
 
 S'ha de tenir en compte que el producte de Kronecker també es pot fer entre un vector i una matriu, o viceversa, no obstant, no és molt comú fer-ho.
-\todo{page 34 of QC-intro, inner product for a space $V\otimes W$ }
-%With $V$ and $W$ being vector spaces of dimension $m$ and $n$ respectively, the tensor product between them $V \otimes W$ is a vector spaces of dimension $mn$. The elements on the space $V \otimes W$ are 
-%For the orthonormal basis $\ket{i}$ and $\ket{j}$ of $V$ and $W$ respectively the orthonormal basis for $V\otimes W$ would be $\ket{i}\otimes\ket{j}$.
-
 
 \subsection{Propietats del producte tensorial}
 Les propietats bàsiques del producte tensorial són les següents \cite{QCandQI:tensor_product, wiki:tensor_product}:
@@ -387,7 +362,7 @@ Les propietats bàsiques del producte tensorial són les següents \cite{QCandQI
 	$ (zA) \otimes B = A \otimes (zB) = z(A \otimes B)$\\
 	$ (A \otimes B) \otimes C = A \otimes (B\otimes C)$ \\
 	$A \otimes 0 = 0 \otimes A = 0 $
-	\item No-commutativitat \footnote{Una cosa guay es que $A \otimes B$ i $B \otimes A$ són 
+	\item No-commutativitat \footnote{Una cosa a notar és que $A \otimes B$ i $B \otimes A$ són 
 	permutativament equivalents: \\ $\exists P, Q \Rightarrow A \otimes B = P (  B \otimes A )Q$ on $P$ i $Q$ són matrius permutatives.  }: \\
 	$A \otimes B \neq B \otimes A $
 \end{enumerate}
@@ -401,7 +376,7 @@ Les propietats bàsiques del producte tensorial són les següents \cite{QCandQI
 
 
 \section{Traça}
-La traça d'una matriu és tal sols la suma dels seus elements en la diagonal principal, la diagonal que va d'abaix a dalt i d'esquerra a dreta.  
+La traça d'una matriu és tal sols la suma dels seus elements en la diagonal principal, la diagonal que va d'adalt a abaix i d'esquerra a dreta.  
 
 Aquí hi ha una matriu $A$ amb la seva diagonal principal marcada:
 $$A = 
@@ -427,7 +402,7 @@ $$
 La traça d'una matriu té les propietats següents:
 \begin{enumerate}
 	\item Operador lineal: \\
-	Degut a que la traça és un mapa lienal, es compleix que:\\
+	Degut a que la traça és un aplicació lienal, es compleix que:\\
 	$\Tr[A+B] = \Tr[A] + \Tr[B]$ i $\Tr[zA] = z \Tr[A]$, per a totes les matrius quadrades $A$ i $B$, i tots els escalars $z$.
 	\item Traça d'un producte tensorial: \\
 	$\Tr[A \otimes B] = \Tr[A]\Tr[B]$
@@ -438,21 +413,21 @@ La traça d'una matriu té les propietats següents:
 	$\Tr[AB]=\Tr[BA]$
 \end{enumerate}
 
-Una altre manera molt útil de computar la traça d'un operador és a través del procediment de Gram-Schmidt\footnote{Mirar \ref{gram} per una definició del procediment de Gram-Schmidt.} i un producte exterior.
-Utilitzant Gram-Schmidt per representar el vector unitat $\ket{\psi}$ amb una base ortonormal $\ket{i}$ que inclou $\ket{\psi}$ com el seu primer element, es veritat que:
+Una altre manera molt útil d'avaluar la traça d'un operador és a través del procediment de Gram-Schmidt\footnote{Mirar \ref{gram} per una definició del procediment de Gram-Schmidt\footnote{S'ulitza per poder generar bases ortonormals a partir d'un conjunt de vectors.}.} i el producte exterior.
+Utilitzant Gram-Schmidt per representar el vector unitat $\ket{\psi}$ en una base ortonormal $\ket{i}$ que inclou $\ket{\psi}$ com el seu primer element, és compleix que:
 $$
 \Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
 $$
 
 \chapter{Computació quàntica}
-Després de bastant teoria matemàtica, ha arribat el temps de parlar sobre mecànica quàntica\footnote{No crec que aquesta frase doni molts ànims per continuar.}, en aquest capítol introduiré  alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (QI i QC).
+Després de bastant teoria matemàtica, ha arribat el moment de parlar sobre mecànica quàntica, en aquest capítol introduiré  alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (IQ i CQ).
 
-Quantum mechanics is a mathematical framework or rather a set of theories used to describe and explain the physical properties of atoms, molecules, and subatomic particles. It is the framework of all quantum physics including quantum information science. The right way of presenting quantum computation is through the formal quantum mechanics postulates because, with them, the statements made in quantum computation do not seem to come from anywhere \cite{QCandQI:QM_postulates}. However, to not complicate this section more than it is, I will do my best to explain the concepts and math of quantum computing just on their own, without presenting more generalized concepts from quantum mechanics, unless it is totally necessary to do so.
+La mecànica quàntica és un marc matemàtic o un conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent la teoria d'informació quàntica. La manera correcta de definir la computació quàntica és a través de postulats formals de la mecànica quàntica, perquè amb ells les afirmacions que es fan en computació quàntica no semblen venir d'enlloc \cite{QCandQI:QM_postulates}. No obstant, per no complicar més aquesta secció, faré el millor possible per \todo{això es diu aixi????} poder explicar els conceptes de la computació quàntica sense entrar en els conceptes més generals de la mecànica quàntica, a no ser que sigui estrictament necessari. 
 
 \section{Estats quàntics i superposicions}
-Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica és representen per estats quàntics, els quals són algun tipus de distribucions de probabilitat per els possibles resultats d'una mesura on un sistema quàntic \cite{QT_concepts:q_systems}.
+Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica és representen per estats quàntics, els quals són un tipus de distribucions de probabilitat que representen els possibles resultats d'una mesura on un sistema quàntic \cite{QT_concepts:q_systems}.
 
-Imaginat que tens un boli, però que no saps de quin color és, no obstant, saps que pot ser vermell o blau. Per esbrinar de quin color és, pots provar a escriure amb el boli per veure el color de la pinta, o en altres paraules, fer una mesura. Saps que hi ha un 50\% de probabilitat de que sigui vermell i un 50\% de que sigui blau. En aquesta situació hipotètica tindries el teu sistema quàntic (el boli), una manera de mesurar-lo (escriure alguna cosa) i una llista amb els possibles resultats (50\% vermell, 50\% blau), només et falta una manera de representar-lo tot matemàticament, el estat quàntic. Per tant, per què no intentem guardar la informació que sabem del boli en un vector?
+Imaginat que tens un boli, però que no saps de quin color és, no obstant, saps que pot ser vermell o blau. Per esbrinar de quin color és, pots provar a escriure amb el boli per veure el color de la tinta, o en altres paraules, fer una mesura del sistema. Saps que hi ha un 50\% de probabilitat de que sigui vermell i un 50\% de que sigui blau. En aquesta situació hipotètica tindries el teu sistema quàntic (el boli), una manera de mesurar-lo (escriure alguna cosa) i una llista amb els possibles resultats (50\% vermell, 50\% blau), només et falta una manera de representar-lo tot matemàticament, l'estat quàntic. Per tant, per què no intentem guardar la informació que sabem del boli en un vector?
 
 Si posem cada probabilitat de treure un resultat en un vector tenim que:
 $$
@@ -468,7 +443,7 @@ $$
 	\textcolor{blue}{0.5}
 \end{bmatrix}
 $$
-Cal remarcar que aquest vector està normalitzat amb la norma $\ell_1$, definida com la suma de les entrades d'un vector\footnote{Amb $\ket{a}$ sent un vector, la norma $\ell_1$, denotada per $\norm{\cdot}_1$ és $\norm{\ket{a}}_1 = \sum_i a_i$.}, en altres paraules la norma $\ell_1$ d'aquest vector és $1$.
+Cal remarcar que aquest vector està normalitzat amb la norma $\ell_1$, definida com la suma dels components d'un vector\footnote{Amb $\ket{a}$ sent un vector, la norma $\ell_1$, denotada per $\norm{\cdot}_1$ és $\norm{\ket{a}}_1 = \sum_i a_i$.}, en altres paraules la norma $\ell_1$ d'aquest vector és $1$.
 
 Llavors, hem d'escollir una operació matemàtica per poder extreure la informació del vector, com que el output ha de ser un número, podem provar a utilitzar un producte interior. Però primer s'ha de representar el vector com una combinació lineal de les seves bases:
 $$
@@ -538,7 +513,7 @@ $$
 	\textcolor{brown}{0.05}
 \end{bmatrix} = \textcolor{green}{0.1 }
 $$
-Deixant els bolis a una banda, ara els podem substituir per un sistema físic quàntic, com per exemple un fotó. Els fotons tenen certes propietats que poden ser mesurades, com la seva polarització\footnote{Concretament, són una propietat que les ones transversals tenen, el tipus d'ona de les ones electromagnètiques, que són els fotons en realitat.}. Al mirar als fotons com ones en que oscil·len en el camps electromagnètic, la polarització és l'orientació geomètrica de l'ona. La polarització pot ser interpretada com un angle respecte a la direcció de propagació. \todo{posar una figura aquí}
+Deixant els bolis a una banda, ara els podem substituir per un sistema físic quàntic, com per exemple un fotó. Els fotons tenen certes propietats que poden ser mesurades, com la seva polarització\footnote{Concretament, són una propietat que les ones transversals tenen, el tipus d'ona de les ones electromagnètiques, que són els fotons en realitat.}. Al mirar als fotons com ones en que oscil·len en el camps electromagnètic, la polarització és l'orientació geomètrica de l'ona. La polarització pot ser interpretada com un angle respecte a la direcció de propagació.
 
 Al definir les bases del estat de polarització com vertical i horitzontal, denotades per els vectors $\ket{\text{\textrightarrow}}$ i $\ket{\text{\textuparrow}}$, respectivament. Podem definir un estat de superposició entre les bases, representat com $\ket{\nearrow}$ \cite{QC_intro:photon}: 
 \begin{equation}
@@ -547,21 +522,21 @@ Al definir les bases del estat de polarització com vertical i horitzontal, deno
 \end{equation}
 
 On $\alpha$ i $\beta$ són números complexos. 
-Un estat en superposició es simplement un estat on l'angle de polarització no és $0$ ni $\frac{\pi}{2}$. No ens tenim que preocupar de la descripció matemàtica exacte de la polarització dels fotons al parlar de computació quàntica perquè el que importa és l'informació que porten aquests estat, no la física dels sistemes que representen. Aquesta informació s'ha d'agafar mitjançant mesures, com amb els bolis. Aquestes mesures en el cas de la polarització dels fotons seria passar-los per diversos filtres de polarització, els quals deixen passar el fotó o l'absorbeixen, tot això d'una manera probabilística, es a dir, dependent de quin sigui l'estat tenen certa possibilitat de ser absorbits o no.
+Un estat en superposició es simplement un estat on l'angle de polarització no és $0$ ni $\frac{\pi}{2}$. No ens hem de que preocupar de la descripció matemàtica exacte de la polarització dels fotons al parlar de computació quàntica perquè el que importa és l'informació que porten aquests estat, no la física dels sistemes que representen. Aquesta informació s'ha d'agafar mitjançant mesures, com amb els bolis. Aquestes mesures en el cas de la polarització dels fotons seria passar-los per diversos filtres de polarització, els quals deixen passar el fotó o l'absorbeixen, tot això d'una manera probabilística, es a dir, depenent de quin sigui l'estat tenen certa possibilitat de ser absorbits o no.
 
-Per clarificar, el filtre lo que fa es col·lapsar el fotó en els dos possibles estats de polarització, l'estat en el quan el filtre es orientat o l'estat perpendicular a aquest. Si col·lapsa en l'estat del filtre el fotó passa pel el filtre, en cas de col·lapsar en l'altre estat, es absorbit. La manera en la que els fotons col·lapsen és probabilística, si agafen un filtre que està orientat horitzontalment respecte al fotons que li arriben, un fotó orientat en horitzontalment té un 100\% de poder passar, mentre que un fotó polaritzat verticalment té un 0\% de probabilitat de poder passar. I si un fotó està polaritzat en un angle just entre vertical i horitzontal, es a dir a 45º, tindrà un 50\% de possibilitats de passar i un 50\% de no poder-hi. 
+Per clarificar, el filtre lo que fa es col·lapsar el fotó en els dos possibles estats de polarització, l'estat en el quan el filtre es orientat o l'estat perpendicular a aquest. Si col·lapsa en l'estat del filtre el fotó passa pel el filtre, en cas de col·lapsar en l'altre estat, es absorbit. La manera en la que els fotons col·lapsen és probabilística, si agafen un filtre que està orientat horitzontalment respecte al fotons que li arriben, un fotó orientat horitzontalment té un 100\% de possibilitats de  poder passar, mentre que un fotó polaritzat verticalment té un 0\% de probabilitat de poder passar. I si un fotó està polaritzat en un angle just entre vertical i horitzontal, es a dir a $\frac{\pi}{4}$, tindrà un 50\% de possibilitats de passar i un 50\% de no poder-hi. 
 
 Aquesta és la manera amb la qual els sistemes quàntics es comporten, a través de la probabilitat, on els estats que els representen tenen la informació sobre quines són aquestes possibilitats. 
 No obstant, la, polarització dels fotons són un sistema físic concret, quan es parla de computació quàntica és millor treballar amb conceptes més generals per poder expressar tants algoritmes com sigui possible i poder implementar aquests algoritmes en tants ordinadors quàntics com sigui possible. Per saqueta raó, en la branca de la informació quàntica i la computació quàntica es treballa amb qubits, en comptes de diversos sistemes físics. 
 
 \section{Qubits i operacions quàntiques}
-Ordinadors modern representen informació a través de cadenes de zeros i uns, anomenats bits. Tot, des de imatges a lletres o instruccions electròniques. Per exemple, la lletra t és representada per la cadena de bits $01110100$, codificat a través de codi binari. Tot el que fas en un ordinador es codifica i representa en codi binari. 
+Els ordinadors modern representen l'informació a través de cadenes de zeros i uns, anomenades bits. Tot; des de imatges a lletres o instruccions electròniques. Per exemple, la lletra t és representada per la cadena de bits $01110100$, codificat a través de codi binari. Tot el que fas en un ordinador es codifica i representa en codi binari. 
 
-Degut a que estem molt acostumats a codi binari, en el camp de la computació quàntica també s'utilitza, no obstant, en comptes de bits s'utilitzen qubits. Un qubit es l'anàleg d'un bit, en altres paraules, és la unitat mínima d'informació utilitzada pels ordinadors quàntics. En els qubits podem aplicar propietats quàntiques com la superposició o l'entrellaçament\footnote{Ja he parlat de la primera amb la polarització del fotons, del entrellaçament parlaré més endavant.}. Si un bit pot estar en l'estat $1$ o en l'estat $1$, un qubit pot estar en una combinació d'aquests estats, en un estat enmig del $1$ o el $0$. És una combinació lienal dels vectors que representen aquests estats, $\ket{0}$ i $\ket{1}$:
+Degut a que estem molt acostumats a codi binari, en el camp de la computació quàntica també s'utilitza, no obstant, en comptes de bits s'utilitzen qubits. Un qubit es l'anàleg d'un bit, en altres paraules, és la unitat mínima d'informació utilitzada pels ordinadors quàntics. En els qubits podem aplicar propietats quàntiques com la superposició o l'entrellaçament\footnote{Ja he parlat de la primera amb la polarització del fotons, del entrellaçament parlaré més endavant.}. Si un bit pot estar en l'estat $0$ o en l'estat $1$, un qubit pot estar en una combinació d'aquests estats, en un estat enmig del $1$ i del $0$. És una combinació lineal dels vectors que representen aquests estats, $\ket{0}$ i $\ket{1}$:
 $$
 \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
 $$
-On $\alpha$ i $\beta$ són nombres complexos i $\ket{\psi}$ és un vector en un bidimensional espai de Hilbert\footnote{Un espai vectorial amb un producte interior.}. Els vectors $\ket{0}$ i $\ket{1}$ són anomenats els vectors de la base computacionals, representats com:
+On $\alpha$ i $\beta$ són nombres complexos i $\ket{\psi}$ és un vector en espai de Hilbert bidimensional. Els vectors $\ket{0}$ i $\ket{1}$ són anomenats els vectors de la base computacionals, representats com:
 $$
 \ket{0} = \begin{bmatrix}
 	1 \\ 0
@@ -593,17 +568,14 @@ Llavors:
 	\norm{\psi} &= \sqrt{\abs{\alpha}^2 + \abs{\beta}^2} = 1 \\
 	&\Rightarrow \abs{\alpha}^2 + \abs{\beta}^2 = 1
 \end{align*}
-Definir un qubit com una 'combinació lienal dels estats fundamentals' no és de molta ajuda, per això, elaboraré més sobre aquesta definició: 
+Definir un qubit com una 'combinació lineal dels estats fonamentals' no és de molta ajuda, per això, elaboraré més sobre aquesta definició: 
 Una cadena de $n$-bit pot només representar una única combinació d'uns i zeros, mentres que una cadena de $n$-qubits representa una combinació de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
 
-Definir un qubit com una "combinació lienal dels estats fundamentals" no és de molta ajuda, per això, elaboraré més sobre aquesta definició: 
-Una cadena de $n$-bit pot només representar una única combinació d'uns i zeros, mentres que una cadena de $n$-qubits representa una combinació de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
-
-Una cosa molt interessant passa quan s'augmenta el nombre qubits, la 'quantitat d'informació' creix exponencialment. Per una cadena de $n$ qubits la quantitat d'informació que té, en altres paraules la quantitat de números que representa és $2^n$, on aquests números son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
+Una cosa molt interessant passa quan s'augmenta el nombre qubits, la 'quantitat d'informació' creix exponencialment. Per una cadena de $n$ qubits la quantitat d'informació que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
 
 Per il·lustrar tot això, 2 qubits es representen amb el \textit{statevector}:
 \begin{align*}
-	\ket{\psi} &= \alpha_1\ket{00} + \alpha_2\ket{00} + \alpha_3\ket{00} + \alpha_4\ket{00}\\
+	\ket{\psi} &= \alpha_1\ket{00} + \alpha_2\ket{01} + \alpha_3\ket{10} + \alpha_4\ket{11}\\
 	&= \alpha_1\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} + \alpha_2 \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix} + \alpha_3 \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix} + \alpha_4\begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix} 
 	= \begin{bmatrix} \alpha_1 \\ \alpha_2 \\ \alpha_3 \\ \alpha_4 \end{bmatrix}
 \end{align*}
@@ -616,7 +588,7 @@ Una aspecte que sempre m'agradat del qubits és la seva representació geomètri
 \begin{figure}
 	\centering
 	\includegraphics[width=0.4\linewidth]{Figures/677px-Bloch_Sphere.svg}
-	\caption{Esfera de Bloch, on es representa un estat arbitrari $\ket{\psi}$ amb els vectors $\hat{\mathbf{x}}, \hat{\mathbf{y}}, \hat{\mathbf{z}}$ representat els eixos ortonormals de la esfera.}
+	\caption{Esfera de Bloch, on es representa un estat arbitrari $\ket{\psi}$ amb els vectors $\hat{\mathbf{x}}, \hat{\mathbf{y}}, \hat{\mathbf{z}}$ representat els eixos ortonormals de la esfera de radi $1$.}
 	\label{fig:677px-blochsphere}
 \end{figure}
 
@@ -640,9 +612,9 @@ X\ket{0} = \ket{1}
 $$
 D'una manera més general: 
 $$
-\begin{bmatrix} 0 & 1\\ 1 & 0\\ \end{bmatrix} \begin{bmatrix}\alpha \\ \beta \end{bmatrix} =
-\begin{bmatrix} 0\times\alpha & 1\times\beta \\
-	1\times\alpha & 0\times\beta \\
+\begin{bmatrix} 0 & 1\\ 1 & 0\\ \end{bmatrix} 
+\begin{bmatrix}\alpha \\ \beta \end{bmatrix} =
+\begin{bmatrix} 0\times\alpha + 1\times\beta \\1\times\alpha + 0\times\beta \\
 \end{bmatrix}
 = \begin{bmatrix} \beta \\ \alpha \end{bmatrix}
 $$
@@ -658,7 +630,7 @@ $$
 
 Aquestes matrius són molt important en la mecànica quàntica\footnote{Al ser Hermitianes són observables, concretament ho són dels que corresponen al spin d'una partícula amb spin $\frac{1}{2}$ bàsicament estan relacionades amb els operadors del moment angular.} i són utilitzades àmpliament per descompondre i com a portes lògiques quàntiques.
 
-A partir d'elles podem elaborar matrius que facin una rotació de qualsevol angle  en un del eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}: 
+A partir d'elles podem elaborar matrius que facin una rotació d'un angle $\theta$ qualsevol en un del eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}: 
 \begin{align}
 	& R_x(\theta) =  e^{-i\theta X/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}X = 
 	\begin{bmatrix}
@@ -679,7 +651,7 @@ A partir d'elles podem elaborar matrius que facin una rotació de qualsevol angl
 Per exemple la matriu $R_y(\cdot)$ (Eq.\ref{eq:ry}) correspon a una rotació en el eix $\hat{\mathbf{y}}$ de la esfera de la figura \ref{fig:677px-blochsphere}. 
 %The quantity of information that a qubit has is the information of all possible combination that the qubit has. One qubit has two possible combination $\ket{0}$ and $\ket{1}$, meanwhile two qubits have four possible combinations $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, and four qubits have $2^4$ possible combinations, that is a total of $16$. And the information about each combination is a complex number, represent in the examples above has $\alpha_i$. The complex numbers are used to specify the quantum superposition that the system has. 
 
-Aquestes operacions poden resultar en superposicions si es fan rotacions amb certs angles. Però hi ha una porta lògica especial per poder fer una rotació que resulta en una superposició uniforme. Es a dir una superposició que tingui les mateixes probabilitats de resultar en $\ket{0}$ o $\ket{1}$\footnote{Un 50\% cada una.}. Aquesta és la porta de Hadamard, denotada per $H$:
+Aquestes operacions poden resultar en superposicions si es fan rotacions amb certs angles. Però hi ha una porta lògica especial per poder fer una rotació que resulta en una superposició uniforme. Es a dir una superposició que tingui les mateixes probabilitats de resultar en $\ket{0}$ o $\ket{1}$. Aquesta és la porta de Hadamard, denotada per $H$:
 \begin{equation}
 	H = \frac{1}{\sqrt{2}}\begin{bmatrix}
 		1 & 1 \\ 1 & -1
@@ -697,7 +669,7 @@ Al elevar al quadrat qualsevol del coeficients es pot veure que dona $\frac{1}{2
 $$
 \left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2}
 $$
-Llavors tenim que la probabilitat per obtindre ambos estats és la mateixa, es a dir que si mesurem l'estat $\ket{+}$ hi ha la mateixa probabilitat de que surti $\ket{0}$ o $\ket{1}$. La porta lògica de Hadamard és molt important ja que s'utilitza per crear distribucions uniformes, ja sigui en un qubit o en diversos \footnote{S'aplica aquesta operació a cada qubit del sistema.}.
+Llavors tenim que la probabilitat per obtindre ambós estats és la mateixa, es a dir que si mesurem l'estat $\ket{+}$ hi ha la mateixa probabilitat de que surti $\ket{0}$ o $\ket{1}$. La porta lògica de Hadamard és molt important ja que s'utilitza per crear distribucions uniformes, ja sigui en un qubit o en diversos \footnote{S'aplica aquesta operació a cada qubit del sistema.}.
 
 Altres operacions importants de només un qubit són les portes $S$ i $T$:
 $$
@@ -708,7 +680,7 @@ $$
 \subsection{Circuit quàntics}
 Aquestes operacions usualment es representen a través de circuits quàntics. Són representacions gràfiques que indiquen de quines operacions s'apliquen a quins qubits i en quin ordre\footnote{A mi em semblen semblats a les partitures musicals.}. 
 
-La forma de representar una porta $H$ aplica a un qubit és amb el circuit quàntic:
+La forma de representar una porta $H$ aplicada a un qubit és amb el circuit quàntic:
 \begin{center}
 	\begin{quantikz}
 		\lstick{$\ket{0}$} & \gate{H} & \qw
@@ -756,7 +728,7 @@ Lo realment interessant es quan s'apliquen portes a diversos qubits, perquè d'a
 
 És bàsicament una porta $X$\footnote{També anomenada porta $\mathrm{NOT}$ degut al paral·lelisme que es fa amb la porta lògica del ordinadors clàssics NOT \cite{wiki:NOT_gate} que simplement inverteix els bits d'1 a 0 (i viceversa), igual que $X$ que inverteix els qubits $\ket{1}$ a $\ket{0}$ i viceversa.} que està controlada per un altre qubit, si l'altre qubit és $\ket{1}$ s'aplica la porta $X$ al altre qubit. Però si l'altre qubit està en superposició, per exemple en $\ket{+}$, aquesta superposició es passa també al qubit controlat, i al mesurar el qubit, la probabilitat de que s'apliqui la porta $X$ és la probabilitat de mesurar l'estat $\ket{1}$. Es considera que aquests qubits estan entrellaçats, una mesura a un d'ells afecta a la mesura del altre. El qubit al qual se li aplica la porta $X$ es diu \textit{target} i el qubit sobre el qual depèn el \textit{target} és el \textit{control}. 
 
-Aquesta porta representa en un circuit s'escriu com:
+Aquesta porta representada en un circuit s'escriu com:
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
@@ -773,14 +745,14 @@ $$
 $$
 Es pot veure que només hi han dos estats possibles $\ket{00}$ i $\ket{11}$ que tenen la mateixa probabilitat associada\footnote{Això es pot veure al elevar al quadrat els coeficients del dos, que donen $\frac{1}{2}$.}. S'afecten l'un al altre en el sentit que quan es mesura només un dels qubits i dona per exemple $\ket{1}$, al mesurar l'altre també dona $\ket{1}$, d'aquesta manera acabant amb l'estat $\ket{11}$. En altres paraules, la mesura d'una part del sistema determina el resultat d'una mesura en una altre part del sistema.
 
-Matemàticament un sistema quàntic, e.i. un conjunt de qubits, està entrellaçant quan aquest sistema no es pot descriure amb un producte tensorial de les parts. Per exemple estat $\ket{00}$ es pot escriure com $\ket{0}\otimes\ket{0}$, mentre que l'estat $\frac{\ket{00} + \ket{11}}{\sqrt{2}}$, no. Per tant el primer no és sistema amb qubits entrellaçats i el segon si ho és.
+Matemàticament un sistema quàntic, i.e. un conjunt de qubits, està entrellaçant quan aquest sistema no es pot descriure amb un producte tensorial de les parts. Per exemple estat $\ket{00}$ es pot escriure com $\ket{0}\otimes\ket{0}$, mentre que l'estat $\frac{\ket{00} + \ket{11}}{\sqrt{2}}$, no. Per tant el primer no és sistema amb qubits entrellaçats i el segon si ho és.
 
 A partir del entrellaçament i la superposició és com els ordinadors quàntics arribem a tenir avantatges en complexitat sobre els ordinadors clàssics, per més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques veure l'apèndix \ref{complexity}. 
 
 \subsubsection{Operacions controlades}
 A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment és pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot podem haver-hi diversos qubits \textit{control} i \textit{target}. 
 
-Per exemple existeix la porta Toffoli\footnote{Inventada per Tommaso Toffoli XD}:
+Per exemple existeix la porta Toffoli:
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
@@ -803,7 +775,7 @@ $$
 $$
 Aquesta porta aplica una porta $X$ al últim qubit en cas de que els dos primers siguin $\ket{0}$. 
 
-Tornant a dos qubits, al veure la matriu per la porta $\mathrm{CNOT}$, es pot apreciar que està comporta per una una matriu identitat i una porta $X$\footnote{La matriu identitat es troba a la cantonada superior esquerra, mentre que la porta $X$ es troba al altre extrem.}:
+Tornant a dos qubits, al veure la matriu per la porta $\mathrm{CNOT}$, es pot apreciar que està composta per una una matriu identitat i una porta $X$\footnote{La matriu identitat es troba a la cantonada superior esquerra, mentre que la porta $X$ es troba al altre extrem.}:
 $$
 \begin{bmatrix}
 	1 & 0 & 0 & 0 \\
@@ -829,7 +801,7 @@ Amb la matriu de la porta $Z$ a la cantonada inferior dreta. Aquesta porta en un
 	\end{quantikz}
 \end{center}
 
-On obstant, una operació controlada de qualsevol unitària $U$ es forma a través del següent circuit: 
+No obstant, una operació controlada de qualsevol matriu unitària $U$ es forma a través del següent circuit: 
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
@@ -854,14 +826,15 @@ Aquesta és la forma més simple de poder predir el mesurament d'un estat quànt
 
 Els mesuraments quàntics són un conjunt d'operadors de mesura ${M_m}$, la probabilitat del estat $m$ associat a un operador $M_m$, és:
 \begin{equation}
+	\label{eq:Mm}
 	\mathrm{prob}(m)=\bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
 \end{equation}
-\label{eq:Mm}
+
 On l'estat després de la mesura, és:
 $$
 \frac{M_{m}\ket{\psi}}{\sqrt{\bra{\psi}M_{m}^\dagger M_{m} \ket{\psi}}}
 $$
-Els operadors ${M_m}$ han de complir que las suma de les seves probabilitats sigui u:
+Els operadors ${M_m}$ han de complir que las suma de les seves probabilitats sigui $1$:
 $$
 1 = \sum_m \mathrm{prob}(m) = \sum_m \bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
 $$
@@ -889,11 +862,11 @@ El resultat té sentit degut a que si mesurem $\ket{0}$ en la base $\ket{0}$, es
 Una serie de qubits es pot representar tant per un vector com per una matriu, anomenats \textit{statevector} i \textit{density matrix}, respectivament \cite{QCandQI}.
 En aquesta secció aniré ràpidament sobre el concepte de la matriu de densitat i com les operacions que s'apliquen a un \textit{statevector} poden ser aplicades a una \textit{density matrix}. Desprès parlaré del mesuraments parcial d'un sistema, un concepte que es important per la part experimental del treball. 
 
-Una matriu densitat és la representació matemàtica d'un estat quàntic a partir de d'un matriu, es a dir, d'un operador. Aquesta representació serveix descriure sistemes quàntics que no són completament coneguts. Concretament aquests operadors són conjunts de estats quàntics, per un sistema que es descriu amb el estats $\ket{\psi_i}$ que tenen probabilitats $p_i$\footnote{$i$ és l'índex que relaciona un estat a un probabilitat.} la matriu densitat del sistema $\rho$ \cite{QCandQI:density_matrix}:
+Una matriu densitat és la representació matemàtica d'un estat quàntic a partir de d'un matriu, es a dir, d'un operador. Aquesta representació serveix descriure sistemes quàntics que no són completament coneguts. Concretament aquests operadors són conjunts d'estats quàntics: Per un sistema que es descriu amb un conjunt d'estats $\{ket{\psi_i}\}$ amb cada element del conjunt tenint una probabilitat associada de $p_i$. La matriu densitat del sistema $\rho$ és \cite{QCandQI:density_matrix}:
 $$
 \rho = \sum_i p_i\ket{\psi_i}\bra{\psi_i}
 $$
-Cal matriu densitat pot ser simplement $\ket{\psi}\bra{\psi}$ per un estat qualsevol $\ket{\psi}$, per exemple la matriu que representa $\ket{0}$ és:
+La matriu densitat pot ser simplement $\ket{\psi}\bra{\psi}$ per un estat qualsevol $\ket{\psi}$, per exemple la matriu que representa $\ket{0}$ és:
 $$
 \rho = \ket{0}\bra{0} = \begin{bmatrix}
 	1 & 0 \\
@@ -906,7 +879,7 @@ $$
 \sum_i p_i U \ket{\psi_i}\bra{\psi_i} U^\dagger = U\rho U^\dagger 
 $$
 
-Al igual que es fan mesures en \textit{statevectors}, les podem amb les \textit{density matrices}. Per operadors de mesura $M_m$, tenim que la probabilitat de tindre l'estat $m$ és:
+Al igual que es fan mesures en \textit{statevectors}, les podem fer amb les \textit{density matrices}. Per operadors de mesura $M_m$, tenim que la probabilitat de tindre l'estat $m$ és:
 \begin{align*}
 	\mathrm{prob}(m) &= \bra{\psi_i}M_m^\dagger M_m\ket{\psi_i} = \tr(M_m^\dagger M_m \ket{\psi_i}\bra{\psi_i})\\ &= \tr(M_m^\dagger M_m \rho)
 \end{align*}
@@ -929,7 +902,7 @@ Per a tots els estats possibles $m$.
 
 Per últim s'ha de recordar que les matrius densitat al igual que els vectors d'estat han de tenir certes característiques: 
 \begin{enumerate}
-	\item La traça de $\rho$ ha d'equivaler $1$.
+	\item La traça de $\rho$ ha d'equivaldre a $1$.
 	\item $\rho$ ha de ser un operador positiu\footnote{Un operador positiu $A$ es aquell que $\bra{\psi}A\ket{\psi}\geq0, \forall \ket{\psi}$.}.
 \end{enumerate}
 \subsection{Matriu de densitat reduïda}

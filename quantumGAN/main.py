@@ -7,7 +7,7 @@ from quantumGAN.quantum_generator import QuantumGenerator
 num_qubits: int = 2
 
 # Set number of training epochs
-num_epochs = 400
+num_epochs = 10
 # Batch size
 batch_size = 10
 
@@ -29,8 +29,9 @@ generator = QuantumGenerator(num_qubits=num_qubits,
 quantum_gan = Quantum_GAN(generator, discriminator)
 print(quantum_gan)
 print(num_epochs)
+quantum_gan.discriminator.init_parameters()
 quantum_gan.train(num_epochs, train_data, batch_size, .1, .1, False)
 
 quantum_gan.plot()
-quantum_gan.create_gif()
+#quantum_gan.create_gif()
 quantum_gan.save()

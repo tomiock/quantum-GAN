@@ -6,6 +6,8 @@ from matplotlib import pyplot as plt
 
 
 # DATA PROCESSING
+from scipy import linalg
+
 
 def save_images_color(image, epoch):
     plt.imshow(image.reshape(int(image.shape[0] / 3), 1, 3))

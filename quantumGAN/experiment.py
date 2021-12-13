@@ -16,7 +16,7 @@ for _ in range(800):
 	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
 	real_datapoint = np.array([x2[0], 0, x2[0], 0])
 	train_data.append((real_datapoint, fake_datapoint))
-list_epochs = [100, 200, 300, 400]
+list_epochs = [200]
 
 for num_epochs in list_epochs:
 	# definició d'un discriminador pel model amb la funció no-lineal i una altre pel model que no la té

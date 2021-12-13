@@ -119,15 +119,14 @@ Si executen el model, amb un mida de batch de $10$, tant el \textit{learning rat
 	\label{fig:labels_loss_400}
 	\begin{subfigure}{0.45\textwidth}
 		\includegraphics[width=\linewidth]{figures/model/loss_plot.png}
-		\caption{Funció de pèrdua per cada iteració. A partir de l'iteració 175, es pot veure com el valor de la funció s'estabilitza en l'interval $(-1.35, -1.4)$, això concorda amb els valors de les etiquetes en les mateixes iteracions, ja que $\log(\frac{1}{2}) + \log(1-\frac{1}{2}) \simeq -1.38$.}\label{fig:loss_400}
-	\end{subfigure}%
-	\hspace*{\fill}   % maximize separation between the subfigures
+		\caption{}
+		\label{fig:loss_400}
+	\end{subfigure}
 	\begin{subfigure}{0.45\textwidth}
 		\includegraphics[width=\linewidth]{figures/model/labels_plot.png}
-		\caption{Etiquetes per les imatges reals i generades per cada iteració. Es pot observar que els valors de les etiquetes per les imatges reals són més inestables que els valors de les generades. Això es perquè les imatges reals tenen una major variació en els valors dels píxels, mentre que en les generades aquest fet no es tan notable. Per tant el discriminador assigna etiquetes amb una major variació.} \label{fig:labels_400}
-	\end{subfigure}%
-	\hspace*{\fill}
-	\caption{En pot veure com per l'iteració 250, el model ja s'ha estabilitzat, ja que les etiquetes i el valor de la funció de pèrdua convergeixen en un valor.}% maximizeseparation between the subfigures
+		\caption{} \label{fig:labels_400}
+	\end{subfigure}
+	\caption{En pot veure com per l'iteració 250, el model ja s'ha estabilitzat, ja que les etiquetes i el valor de la funció de pèrdua convergeixen en un valor. \textbf{A)} Funció de pèrdua per cada iteració. A partir de l'iteració 175, es pot veure com el valor de la funció s'estabilitza en l'interval $(-1.35, -1.4)$, això concorda amb els valors de les etiquetes en les mateixes iteracions, ja que $\log(\frac{1}{2}) + \log(1-\frac{1}{2}) \simeq -1.38$. \textbf{B)} Etiquetes per les imatges reals i generades per cada iteració. Es pot observar que els valors de les etiquetes per les imatges reals són més inestables que els valors de les generades. Això es perquè les imatges reals tenen una major variació en els valors dels píxels, mentre que en les generades aquest fet no es tan notable. Per tant el discriminador assigna etiquetes amb una major variació.}
 \end{figure}
 
 En la figura, \ref{fig:labels_400}, es pot veure com les etiquetes pels dos tipus d'imatges van oscil·lant fins a estabilitzar-se. El mateix es pot dir per la funció de pèrdua \ref{fig:loss_400}.  
@@ -167,4 +166,16 @@ També es pot observar una clara diferencia en les imatges generades en la prime
 La part que realment m'intriga es que a partir de les primeres iteracions, en els circuits amb els qubits ancilla. El píxel que té el valor d'$1$, passa d'un a un altre. Aquest comportament succeïx en absolutament totes les vegades que he executat el codi. Al igual que he dit abans, arribar a comprendre això està fora del meu nivell de coneixement. 
 
 Aquesta fluctuació dels valors del píxels molt probablement és el factor que causa l'inestabilitat que es pot observar en les etiquetes. 
- 
+
+Després de mirar les gràfiques que generaven els models, vaig posar-me a redactar les conclusions, no obstant, no estava satisfet la precisió de l'analisi de les dades. No podia saber amb certesa quin dels dos tipus de models és el més eficient. Necessitava una mètrica que en digues quina és la semblança entre les imatges generades i les imatges reals. Sabia que en l'article en el que he basat el treball, els autors havien fet servir una mètrica anomenada \textit{Férchet Score} o puntuació de Férchet, on s'utilitza la distancia de Férchet. Aquesta distancia serveix per comparar dues distribucions, a partir de la seva mitjana i la seva covariància. 
+
+Llavors vaig decidir implantar aquesta mètric, i veure com evoluciona al llarg de la optimització. 
+
+En un article sobre l'avalució de les imatges generades per les GAN \cite{sd_score}, vaig trobar aquesta equació per calcular la distancia de Férchet:
+$$
+FD(r, g) = \abs{\mu_r - \mu_g}^2 + \tr(\Sigma_r + \Sigma_g -2(\Sigma_r\Sigma_g)^{\frac{1}{2}})
+$$
+
+On $\mu$ és la mitjana\footnote{Jo he utilitzat la mitjana aritmètica.} i $\Sigma$ és la covariància d'un distribució. Aquesta equació le implementat en Python mitjançant matrius, es a dir les imatges directament. Numpy té una funció que calcula la covariància d'una matriu, on cada fila representa una variable de la distribució. No puc estar 100\% segur de que he implementat aquesta mètrica correctament, degut a que no sé el funcionament exacte de la covariància, ni de la funció que l'implementa en Numpy. No obstant, sembla que funciona correctament. 
+
+Cal notar que si les dues imatges són exactament iguals, la distancia dona pràcticament zero\footnote{Python diu que és d'un ordre de magnitud de $10^{-16}$ aproximadament.}. Per considerar que dues imatges són 'acceptablement semblants', han de tenir una distancia entre elles de $10^{-3}$ aproximadament. 

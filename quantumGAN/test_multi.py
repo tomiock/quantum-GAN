@@ -15,7 +15,7 @@ for _ in range(800):
 	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
 	real_datapoint = np.array([x2[0], 0, x2[0], 0])
 	train_data.append((real_datapoint, fake_datapoint))
-list_epochs = [300, 300, 300]
+list_epochs = [550, 550, 550]
 
 example_generator_ancilla = QuantumGenerator(num_qubits=4,
                                              generator_circuit=None,

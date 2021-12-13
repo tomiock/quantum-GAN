@@ -71,6 +71,7 @@
 \usepackage[toc,page]{appendix}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{setspace}
 
 
 \usepackage[colorinlistoftodos,textwidth=2.7cm]{todonotes}
@@ -126,7 +127,7 @@
 }
 
 \onecolumn
-\usepackage[labelfont=sc, font={footnotesize, doublespacing}]{caption}
+\usepackage[labelfont=sc, font={footnotesize, singlespacing}]{caption}
 
 \renewcommand\thesection{%
 	\ifnum\value{section}<1{\thechapter.\arabic{section}}%
@@ -160,14 +161,14 @@
 	\node[anchor=base] (#1) {$#2$};
 }
 
-\let\LaTeXStandardTableOfContents\tableofcontents
-\renewcommand{\contentsname}{Index}
-\renewcommand{\tableofcontents}{%
-	\begingroup%
-	\renewcommand{\bfseries}{\relax}%
-	\LaTeXStandardTableOfContents%
-	\endgroup%
-}%
+%\let\LaTeXStandardTableOfContents\tableofcontents
+%\renewcommand{\contentsname}{Index}
+%\renewcommand{\tableofcontents}{%
+%	\begingroup%
+%	\renewcommand{\bfseries}{\relax}%
+%	\LaTeXStandardTableOfContents%
+%	\endgroup%
+%}
 \usepackage{titlesec}
 \usepackage{xparse}
 \NewDocumentCommand{\DIV}{om}{%
@@ -191,7 +192,8 @@
 
 	\begin{titlepage}
 		
-		\center % Center everything on the page
+		\begin{center}
+		\begin{singlespace}%Center everything on the page
 		
 		%----------------------------------------------------------------------------------------
 		%	TITLE SECTION
@@ -200,9 +202,9 @@
 		
 		\HRule \\[0.4cm]
 		{ \Huge \bfseries Generant Imatges amb un Ordinador Quàntic}\\[0.1cm] 
-		\HRule \\[1.5cm]
+		\HRule \\[1.2cm]
 		
-		\textsc{\Large \textbf{Treball de Recerca de Batxillerat}}\\[.3cm]
+		\textsc{\Large \textbf{Treball de Recerca de Batxillerat}}\\[.5cm]
 		
 		\textsc{\large \textbf{IES Miquel Tarradell}}\\[2cm]
 		
@@ -210,20 +212,20 @@
 		%	AUTHOR & ADVISOR(S) SECTION
 		%----------------------------------------------------------------------------------------
 		
-		\vspace{8.3cm}
+		\vspace{8.5cm}
 		\begin{minipage}{0.48\textwidth}
 			\begin{flushleft} \large
-				\Large \textbf{Autor:}\\[0.1cm]
-				\Large Tomàs Ockier Poblet \\ 2nd Batxillerat \\ \href{mailto:ockier1@gmail.com}{ockier1@gmail.com}
+				\Large \textbf{Autor:}\\
+				\Large Tomàs Ockier Poblet \\ 2n Batxillerat \\ \href{mailto:ockier1@gmail.com}{ockier1@gmail.com}
 			\end{flushleft}
 		\end{minipage}
 		~
 		\begin{minipage}{0.48\textwidth}
 			\begin{flushright} \large
-				\Large \textbf{Tutor:} \\[0.1cm]
-				\Large Tomàs Ockier Poblet 
+				\Large \textbf{Tutor:} \\
+				\Large Montserrat Parcet Bertran 
 			\end{flushright}
-		\end{minipage}\\[1.5cm]
+		\end{minipage}\\
 		
 		%----------------------------------------------------------------------------------------
 		%	LOGO SECTION
@@ -235,8 +237,7 @@
 			\end{center}
 		\end{minipage}
 		
-		
-		\vspace{.4cm}
+		\vspace{.5cm}
 		
 		%----------------------------------------------------------------------------------------
 		%	DATE SECTION
@@ -248,13 +249,17 @@
 		%----------------------------------------------------------------------------------------
 		
 		\vfill % Fill the rest of the page with whitespace
+		\end{singlespace}
+		\end{center}
 		
 	\end{titlepage}
 
-
+	\begin{onehalfspacing}
 	\afterpage{\blankpage}
-	
+	\begin{onehalfspacing}
 	\tableofcontents
+	\end{onehalfspacing}
+	\end{onehalfspacing}
 	%\listoftables
 	%\listoffigures
 	
