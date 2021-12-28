@@ -1,11 +1,14 @@
 
-Una vegada havia implementat la distancia de Férchet per poder avaluar el rendiment dels models, havia arribat a una clara conclusió:
+Una vegada havia implementat la distancia de Férchet per poder avaluar el rendiment dels models, vaig arribar a una clara conclusió:
 
 Els models que tenen implementada la funció no-lienal són més eficients. 
 
-No és exactament així perquè s'ha de tenir en compte el temps que triguen en optimitzar-se, no obstant, trec aquesta conclusió pel fet que els models sense la funció no arriben a estabilitzar-se. Fins el que puc veure, es queden oscil·lant entre 'aquestes imatges són idèntiques' i 'encara queda per optimitzar'. En una iteració les imatges són pràcticament iguals i al cap de 20 iteracions es pot diferenciar clarament entre una imatge falsa i una generada. 
+Arribo a aquesta conclusió degut a que els models sense la funció no arriben a estabilitzar-se, es a dir, no arriben al punt d'equilibri. En canvi, els models que si la presenten si ho fan. Arribar al punt d'equilibri ens garanteix que les imatges que generen seguin òptimes indefinidament. Per molt més que el model segueixi optimitzat-se, sempre donarà els mateixos resultats.
 
-Aquest problema no es causat pel discriminador, és el generador el que es queda oscil·lant. No sé molt bé la causa d'aquesta oscil·lació, però està clar que la funció no-lineal té un impacte. Tot i que hi han excepcions, a vegades els models sense la funció no experimenten aquesta oscil·lació. Però cal remarcar que les vegades que passa són notablement més altes que les que no passa. Com es pot veure amb les dades de la taula \ref{tab:oscilations} 
+
+Els models que no presenten la funció, no assoleixen el punt d'equilibri, degut a que la fidelitat de les imatges oscil·la Es a dir, poden arribar a generar imatges correctament, però no ho fan indefinidament, al cap d'unes interaccions la semblança de les imatges generades amb les real no es significativa.
+
+Aquest problema no es causat pel discriminador, això es veritat perquè la variable independent dels experiment, és el circuit quàntic del generador. Per tant és el factor que té més possibilitat de ser el causant d'aquest comportament. No sé molt bé la causa exacte, però està clar que el mesurament parcial té un impacte. Tot i que hi han excepcions, a vegades els models sense la funció no experimenten aquesta oscil·lació. Però cal remarcar que les vegades que passa són notablement més altes que les que no passa. Com es pot veure amb les dades de la taula \ref{tab:oscilations} 
 
 \begin{table}[]
 	\resizebox{\textwidth}{!}{%
@@ -49,9 +52,8 @@ Aquest problema no es causat pel discriminador, és el generador el que es queda
 		\includegraphics[width=\linewidth]{figures/data/FD_score_A3.png}
 		\caption{}
 	\end{subfigure}
+\caption{Totes les gràfiques corresponen a models que s'ha executat al llarg de $550$ iteracions. Les figures \textbf{A}, \textbf{B} i \textbf{C}, corresponen a models sense la funció lineal. L'únic d'ells que no presenta una oscil·lació és el \textbf{C}. Les gràfiques sense la funció es poden comparar a les d'abaix, les quals representen models amb la funció implementada. Els models han estat creats per parelles, les quals estan organitzades verticalment. Es a dir, les gràfiques \textbf{A} i \textbf{D} representen models que tenen els mateixos paràmetre inicials. El mateix passa amb \textbf{B} i \textbf{E} i amb \textbf{C} i \textbf{F}.}
 \label{fig:550_SD_score}
-\caption{Totes les gràfiques corresponen a models que s'ha executat al llarg de $550$ iteracions. \textbf{A}, \textbf{B} i \textbf{C}, corresponen a models sense la funció lineal. Es l'únic d'ells que no presenta una oscil·lació és el \textbf{C}. Les gràfiques sense la funció es poden comparar a les d'abaix, les quals representen models amb la funció. Els models han estat creats per parelles, les quals estan organitzades verticalment. Es a dir, les gràfiques \textbf{A} i \textbf{D} representen models que tenen els mateixos paràmetre inicial, que són equivalents. El mateix passa amb \textbf{B} i \textbf{E} i d'una altra banda amb \textbf{C} i \textbf{F}.}
-	
 \end{figure}
 
 \begin{figure}
@@ -80,9 +82,8 @@ Aquest problema no es causat pel discriminador, és el generador el que es queda
 		\includegraphics[width=\linewidth]{figures/data/FD_score_A6.png}
 		\caption{}
 	\end{subfigure}
+	\caption{Aquestes gràfiques corresponen a models que s'han executat al llarg de $700$ iteracions. Estan organitzades igual que les gràfiques de la figura \ref{fig:550_SD_score}. En aquests casos, com es pot observar tots els models sense la funció no-lineal presenten les oscil·lacions. No obstant en la gràfica \textbf{A}, aquesta es molt feble. Per veure com afecten les oscil·lacions es pot veure la figura, on estan representades les últimes imatges que han generat els models que corresponen les gràfiques d'aquesta figura.}
 	\label{fig:700_SD_score}
-	\caption{Aquestes gràfiques corresponen a models que s'han executat al llarg de $700$ iteracions. Estan organitzades igual que les gràfiques de la figura \ref{fig:550_SD_score}. En aquests casos, com es pot observar tots els models sense la funció no-lineal presenten les oscil·lacions. No obstant en la gràfica \textbf{A}, aquesta es molt feble. Per veure com afecten les oscil·lacions es pot veure la figura, on estan representades les ultimes imatges que han generat els models que corresponen les gràfiques d'aquesta figura.}
-	
 \end{figure}
 
 \begin{figure}
@@ -112,7 +113,7 @@ Aquest problema no es causat pel discriminador, és el generador el que es queda
 		\caption{}
 	\end{subfigure}
 	\label{fig:700_images}
-	\caption{Aquestes gràfiques corresponen als mateixos models que els de la figura \ref{fig:700_SD_score}. Les posicions de les gràfiques són les mateixes, per tant si estan en la mateixa posició que les de l'altra figura, corresponen al mateix model. Les imatges generades pels models sense la funció no-lienal  (\textbf{A}, \textbf{C}, \textbf{B}) no s'asemblen a les reals. Es pot veure com els punts de les imatges generades (color violeta) no estan en els mateixos valors. Mentre que en les gràfiques \textbf{D}, \textbf{E} i \textbf{F}, si que ho estan. Els punts violetes sembla que representen la mitjana dels punts verd. També es pot observar que les imatges generades tendeixen a ser més variades que les reals.}
+	\caption{Aquestes gràfiques corresponen als mateixos models que els de la figura \ref{fig:700_SD_score}. Les posicions de les gràfiques són les mateixes, per tant si estan en la mateixa posició que les de l'altra figura, corresponen al mateix model. Les imatges generades pels models sense la funció no-lienal  (\textbf{A}, \textbf{C}, \textbf{B}) no s'asemblen a les reals. Es pot veure com els punts de les imatges generades (color violeta) no estan als mateixos valors. Mentre que en les gràfiques \textbf{D}, \textbf{E} i \textbf{F}, si que ho estan. Els punts violetes sembla que representen la mitjana dels punts verds. També es pot observar que les imatges generades tendeixen a ser més variades que les reals.}
 	
 \end{figure}
 

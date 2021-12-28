@@ -8,7 +8,7 @@ En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lienal, 
 \section{Vectors i espais vectorials}
 Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial és el conjunt de tots els vectors amb les mateixes dimensions i amb certes propietats en comú. Per exemple  $\mathbb{R}^{3}$ seria l'espai vectorial de tots els vectors de 3 dimensions els quals normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica s'utilitzen en concret els espais vectorials anomenats espais de Hilbert, que són aquells en els que hi ha definit un producte interior \cite{QCandQI:GramSchmidt}. En els espais de Hilbert es defineixen un conjunt d'operacions amb certes propietats, la quantitat que és necessària. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, i que d'aquí en endavant, quan mencioni espai vectorial, em referiré a un espai de Hilbert.
 
-Els espais vectorial estan definits per les seves bases, i.e. un set de vectors independents $B = \{\ket{v_1}, \dots, \ket{v_n}\}$. Posat d'una altra manera: el conjunt $B$ és una base pel l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$.
+Els espais vectorial estan definits per les seves bases, i.e. un conjunt de vectors independents $B = \{\ket{v_1}, \cdots, \ket{v_n}\}$. Posat d'una altra manera: el conjunt $B$ és una base pel l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$.
 
 La notació estàndard per l'àlgebra lienal en mecànica quàntica es la notació de Dirac, en la qual es representa un vector com $ \ket{\psi} $. On $\psi$ es la etiqueta del vector. Un vector $ \ket{\psi} $ amb $n$ dimensions també pot ser representat com una matriu columna que te la forma: 
 $$
@@ -211,8 +211,8 @@ $$
 $$
 Els vectors ortonormals són importants, àmpliament utilitzats tant en computació quàntica com en mecànica quàntica perquè serveixen per crear bases vectorials molt útils. 
 
-Una altre cosa que remarcar i no he dit es que al dir un par de vectors, aquest parell també pot ser un conjunt de vectors. Si un conjunt té tots els vectors unitaris i ortogonals entre tots ells, és un set de vectors ortonormals. 
-El set de vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ és ortonormal si $\bra{\beta_i}\ket{\beta_j} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} on $\delta_{ij}$ és el Kronecker delta, definit com:
+Una altre cosa que remarcar i no he dit es que al dir un par de vectors, aquest parell també pot ser un conjunt de vectors. Si un conjunt té tots els vectors unitaris i ortogonals entre tots ells, és un conjunt de vectors ortonormals. 
+El conjunt de vectors $ B = \{\ket{\beta_1}, \ket{\beta_2}, ..., \ket{\beta_{n-1}} \ket{\beta_n}\} $ és ortonormal si $\bra{\beta_i}\ket{\beta_j} = \delta_{ij}  \forall i, j$ \cite{QCandQI:GramSchmidt} on $\delta_{ij}$ és el Kronecker delta, definit com:
 $$
 \delta_{ij} =
 \begin{cases}
@@ -422,7 +422,7 @@ $$
 \chapter{Computació quàntica}
 Després de bastant teoria matemàtica, ha arribat el moment de parlar sobre mecànica quàntica, en aquest capítol introduiré  alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (IQ i CQ).
 
-La mecànica quàntica és un marc matemàtic o un conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent la teoria d'informació quàntica. La manera correcta de definir la computació quàntica és a través de postulats formals de la mecànica quàntica, perquè amb ells les afirmacions que es fan en computació quàntica no semblen venir d'enlloc \cite{QCandQI:QM_postulates}. No obstant, per no complicar més aquesta secció, faré el millor possible per \todo{això es diu aixi????} poder explicar els conceptes de la computació quàntica sense entrar en els conceptes més generals de la mecànica quàntica, a no ser que sigui estrictament necessari. 
+La mecànica quàntica és un marc matemàtic o un conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent la teoria d'informació quàntica. La manera correcta de definir la computació quàntica és a través de postulats formals de la mecànica quàntica, perquè amb ells les afirmacions que es fan en computació quàntica no semblen venir d'enlloc \cite{QCandQI:QM_postulates}. No obstant, per no complicar més aquesta secció, faré el millor possible per poder explicar els conceptes de la computació quàntica sense entrar en els conceptes més generals de la mecànica quàntica, a no ser que sigui estrictament necessari. 
 
 \section{Estats quàntics i superposicions}
 Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica és representen per estats quàntics, els quals són un tipus de distribucions de probabilitat que representen els possibles resultats d'una mesura on un sistema quàntic \cite{QT_concepts:q_systems}.
@@ -569,9 +569,9 @@ Llavors:
 	&\Rightarrow \abs{\alpha}^2 + \abs{\beta}^2 = 1
 \end{align*}
 Definir un qubit com una 'combinació lineal dels estats fonamentals' no és de molta ajuda, per això, elaboraré més sobre aquesta definició: 
-Una cadena de $n$-bit pot només representar una única combinació d'uns i zeros, mentres que una cadena de $n$-qubits representa una combinació de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
+Una cadena de $n$-bit pot només representar una única combinació d'uns i zeros, mentre que una cadena de $n$-qubits representa una combinació de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
 
-Una cosa molt interessant passa quan s'augmenta el nombre qubits, la 'quantitat d'informació' creix exponencialment. Per una cadena de $n$ qubits la quantitat d'informació que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
+Una cosa molt interessant passa quan s'augmenta el nombre qubits, la «quantitat d'informació» creix exponencialment. Per una cadena de $n$ qubits la «quantitat d'informació» que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres son els coeficients de la combinació lineal. Això es perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació és necessita només saber quina combinació és. No passa res si això no s'entén perfectament, lo important és saber que es necessiten $2^n$ números complexos\footnote{Són complexos degut a que els coeficients de la combinació lienal són números complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
 
 Per il·lustrar tot això, 2 qubits es representen amb el \textit{statevector}:
 \begin{align*}
@@ -661,7 +661,7 @@ Podem comprovar que és una superposició uniforme al aplicar-la al estat $\ket{
 $$
 H\ket{0} = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix}
 $$
-L'estat resultant és un estat especial que s'escriu com $\ket{+}$\footnote{Un altre estat similar és $\frac{\ket{0} - \ket{1}}{\sqrt{2}}$, quan la matriu $H$ s'aplica al estat $\ket{1}$.} La probabilitat de que un estat col·lapsi en una determinada base és el coeficient de la seva base elevat al quadrat. Com que l'estat és:
+L'estat resultant és un estat especial que s'escriu com $\ket{+}$\footnote{Un altre estat similar és $\frac{\ket{0} - \ket{1}}{\sqrt{2}}$, quan la matriu $H$ s'aplica al estat $\ket{1}$.}. La probabilitat de que un estat col·lapsi en una determinada base és el coeficient de la seva base elevat al quadrat. Com que l'estat és:
 $$
 \ket{+} = \begin{bmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix} = \frac{\ket{0} + \ket{1}}{\sqrt{2}} =  \frac{1}{\sqrt{2}}\ket{0} +  \frac{1}{\sqrt{2}}\ket{1}
 $$
@@ -669,7 +669,7 @@ Al elevar al quadrat qualsevol del coeficients es pot veure que dona $\frac{1}{2
 $$
 \left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2}
 $$
-Llavors tenim que la probabilitat per obtindre ambós estats és la mateixa, es a dir que si mesurem l'estat $\ket{+}$ hi ha la mateixa probabilitat de que surti $\ket{0}$ o $\ket{1}$. La porta lògica de Hadamard és molt important ja que s'utilitza per crear distribucions uniformes, ja sigui en un qubit o en diversos \footnote{S'aplica aquesta operació a cada qubit del sistema.}.
+Llavors tenim que la probabilitat per obtindre ambós estats és la mateixa, es a dir que si mesurem l'estat $\ket{+}$ hi ha la mateixa probabilitat de que surti $\ket{0}$ o $\ket{1}$. La porta lògica de Hadamard és molt important ja que s'utilitza per crear distribucions uniformes, ja sigui en un qubit o en diversos\footnote{S'aplica aquesta operació a cada qubit del sistema.}.
 
 Altres operacions importants de només un qubit són les portes $S$ i $T$:
 $$
@@ -820,11 +820,11 @@ No obstant, una operació controlada de qualsevol matriu unitària $U$ es forma 
 On $U, \alpha, A, B$ i $C$ son tals que $U = e^{i\alpha}AXBXC$ i  $ABC = I$.
 
 \section{Mesurament quàntic}
-Com ja s'ha esmentat a la secció \ref{only_one_qubit} al elevar al quadrat el coeficient d'un estat base que forma part d'un estat, s'obté la probabilitat d'obtenir l'estat base quan es mesura. 
+Com ja s'ha esmentat a la secció \ref{only_one_qubit} al elevar al quadrat el coeficient d'un estat base que forma part d'un estat, s'obté la probabilitat d'obtenir aquest estat base quan es mesura. 
 
-Aquesta és la forma més simple de poder predir el mesurament d'un estat quàntic. Però hi han més coses a dir que son útils. 
+Aquesta és la forma més simple de poder predir el mesurament d'un estat quàntic. però hi han altres mètodes que a vegades resulten més útils.
 
-Els mesuraments quàntics són un conjunt d'operadors de mesura ${M_m}$, la probabilitat del estat $m$ associat a un operador $M_m$, és:
+Els mesuraments quàntics també es ponen pensar com un conjunt d'operadors de mesura ${M_m}$. On la probabilitat d'obtindre l'estat $m$ associat a un operador $M_m$ al mesurar un $\ket{\psi}$:
 \begin{equation}
 	\label{eq:Mm}
 	\mathrm{prob}(m)=\bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
@@ -856,7 +856,7 @@ Per $\ket{\psi} = \ket{0}$ tenim que\footnote{Cal notar que $\ket{0}\bra{0}^\dag
 	&= \bra{0}\ket{0}\bra{0}\ket{0} \\
 	&= 1
 \end{align*}
-El resultat té sentit degut a que si mesurem $\ket{0}$ en la base $\ket{0}$, esperem que el resultat sigui $1$. 
+El resultat té sentit degut a que si mesurem $\ket{0}$ en la base $\ket{0}$, la probabilitat de provar l'estat hauria de ser $1$. 
 
 \section{Matriu de densitat}
 Una serie de qubits es pot representar tant per un vector com per una matriu, anomenats \textit{statevector} i \textit{density matrix}, respectivament \cite{QCandQI}.
@@ -906,9 +906,9 @@ Per últim s'ha de recordar que les matrius densitat al igual que els vectors d'
 	\item $\rho$ ha de ser un operador positiu\footnote{Un operador positiu $A$ es aquell que $\bra{\psi}A\ket{\psi}\geq0, \forall \ket{\psi}$.}.
 \end{enumerate}
 \subsection{Matriu de densitat reduïda}
-Una aplicació important dels operadors de densitat és la descripció d'estats parcials amb el operador de densitat reduït, i per tant la descripció dels mesuraments parcials. 
+Una aplicació important dels operadors de densitat és la descripció d'estats parcials amb l'operador de densitat reduït, i per tant la descripció dels mesuraments parcials. 
 
-Al tindre un sistema físic compost de dos sistemes $A$ i $B$ que es descriu per una matriu de densitat $\rho^{AB}$, la matriu de densitat reduït del sistema $A$ és:
+Un sistema físic compost per dos sistemes $A$ i $B$, es descriu per una matriu de densitat $\rho^{AB}$, la matriu de densitat reduït del sistema $A$ és:
 \begin{equation}
 \rho^A = \tr_B(\rho^{AB})
 	\label{eq:partial_trace}
@@ -917,15 +917,15 @@ On $\tr_B$ és la traça parcial sobre el sistema $B$, que es defineix per l'equ
 \begin{equation*}
 	\tr_B(\ket{a_1}\bra{a_2}\otimes\ket{b_1}\bra{b_2}) = \ket{a_1}\bra{a_2}\tr(\ket{b_1}\bra{b_2})
 \end{equation*}
-Amb $\ket{a_1}$ i $\bra{a_2}$ sent estats vàlid pel sistema $A$, i $\ket{b_1}$ i $\bra{b_2}$ sent-ho per $B$. El terme $\tr(\ket{b_1}\bra{b_2})$ s'omet quan els els vectors del producte exterior son iguals i formen un operador de densitat vàlid, el qual la traça ha de donar $1$.
+Amb $\ket{a_1}$ i $\bra{a_2}$ sent estats vàlids pel sistema $A$, i $\ket{b_1}$ i $\bra{b_2}$ sent-ho per $B$. El terme $\tr(\ket{b_1}\bra{b_2})$ s'omet quan els els vectors del producte exterior son iguals i formen un operador de densitat vàlid, el qual té una traça de $1$.
 
-No obstant aquesta definició no es pot utilitzar quan no saps com representar la matriu de densitat $\rho$ com a un producte vectorial, en el qual un dels termes és l'estat que es traça afora. En altres paraules, en la equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.  
+No obstant aquesta definició no es pot utilitzar quan no saps com representar la matriu de densitat $\rho$ com a un producte tensorial, en el qual un dels termes és l'estat que es traça afora. En altres paraules, en la equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.  
 
-Degut a això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altre manera més general, on només s'ha de saber les bases del sistemes $A$ i $B$ i un operador vàlid per el sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa el sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
+Degut a això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altre manera més general, on només s'ha de saber les bases del sistemes $A$ i $B$ i un operador vàlid pel sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa el sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
 $$
 \tr_B \rho^{AB} = \sum_i \bra{\beta_i}\rho^{AB}\ket{\beta_i}
 $$
-On el conjunt ${\beta_i}$ són les bases del sistema $B$. Les entrades de la matriu $\tr_B \rho^{AB}$ representades en termes de les bases ${\ket{\alpha_i}}$ i ${\ket{\beta_j}} $del sistemes $A$ i $B$ respectivament, són:
+On el conjunt $\{ \ket{\beta_i} \}$ són les bases del sistema $B$. Les entrades de la matriu $\tr_B \rho^{AB}$ representades en termes de les bases ${\ket{\alpha_i}}$ i ${\ket{\beta_j}}$ del sistemes $A$ i $B$ respectivament, són:
 $$
 (\tr\rho^{AB})_{ij} = \sum_{k=0}^{M-1} \bra{a_i}\bra{\beta_k}\rho^{AB}\ket{\alpha_j}\ket{\beta_k}
 $$
@@ -940,32 +940,32 @@ Es pot comprovar que aquestes definicions són correctes degut a que en els dos 
 
 \subsubsection{Mesurament parcial}
 \label{par_measurament}
-Es pot arribar a treure una mesura parcial sobre un sistema de qubits amb la traça parcial i operadors de mesura. En el paper fet per Huang et.al. \cite{QGAN_exp} es descriu un estat $\rho$ després d'un mesurament parcial $\Pi_A$ sobre un sistema $A$ del estat $\ket{\psi}$ com:
+Es pot arribar a treure una mesura parcial\footnote{Es a dir, una mesura a només una part dels qubits que conformen un sistema.} sobre un sistema de qubits amb la traça parcial i operadors de mesura. En el paper fet per Huang et.al. \cite{QGAN_exp} es descriu un estat $\rho$ després d'un mesurament parcial $\Pi_A$ sobre un sistema $A$ que perteneix a l'estat $\ket{\psi}$ com:
 $$
 \rho = \frac{\tr_A(\Pi_A \ket{\psi}\bra{\psi})}{\tr(\Pi_A\otimes I_{2^N-2^{N_A}}\ket{\psi}\bra{\psi})}
 $$
-El sistema $A$ està compost per $N_A$ qubits per tant la resta del estat $\ket{\psi}$ té $N-N_A$, on $N$ és el nombre total de qubits del estat $\ket{\psi}$. D'aquesta manera $\Pi_A\otimes I_{2^N-2^{N_A}}$ té $2^N\times 2^N$ dimensions i pot ser multiplicat per la matriu $\ket{\psi}\bra{\psi}$ que té les mateixes dimensions. No obstant sorgeix un problema amb el numerador de l'equació perquè $\Pi_A$ no té les mateixes dimensions que $\ket{\psi}\bra{\psi}$, encara no he pogut utilitzar aquesta equació adequadament. No sé com computar-la. Parlaré d'això més endavant en la part experimental d'aquest treball.
+El sistema $A$ està compost per $N_A$ qubits per tant la resta del estat $\ket{\psi}$ té $N-N_A$, on $N$ és el nombre total de qubits del estat $\ket{\psi}$. D'aquesta manera $\Pi_A\otimes I_{2^N-2^{N_A}}$ té $2^N\times 2^N$ dimensions i pot ser multiplicat per la matriu $\ket{\psi}\bra{\psi}$ que té les mateixes dimensions. No obstant sorgeix un problema amb el numerador de l'equació perquè $\Pi_A$ no té les mateixes dimensions que $\ket{\psi}\bra{\psi}$, encara no he pogut utilitzar aquesta equació adequadament. No sé com computar-la. Aquest problema l'adreçaré en la part experimental del treball.
 
-En el mateix paper es planteja la mateixa equació però per l'estat post-mesura expressat en forma de vector d'estat, molt semblat a l'equació \ref{eq:post_state_rho}. L'única diferencia es que en l'equació del paper no s'expressa el operador de mesura en la forma $M_m^\dagger M_m$, en canvi el autors ho expressen tan sols com $\Pi_A$, més concretament  $I_{2^N-2^{N_A}}\otimes \Pi_A$. Potser la forma plantejada per els autors té en compte el conjugat hermitià, però no estic segur.
+En el mateix article es planteja la mateixa equació però per l'estat post-mesura expressat en forma de vector d'estat, molt semblat a l'equació \ref{eq:post_state_rho}. L'única diferencia es que en l'equació de l'article no s'expressa el operador de mesura en la forma $M_m^\dagger M_m$, en canvi el autors ho expressen tan sols com $\Pi_A$, més concretament  $I_{2^N-2^{N_A}}\otimes \Pi_A$. Potser la forma plantejada per els autors té en compte el conjugat hermitià, però no estic segur.
 L'equació esmentada en l'article és la següent:
 $$
 \ket{\psi_m} = \frac{I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}}{\sqrt{\tr(I_{2^N-2^{N_A}}\otimes\Pi_A\ket{\psi}\bra{\psi})}}
 $$
-Al igual que l'equació per les matrius de densitat parlaré d'aquesta contradicció en la part experimental.
+Al igual que amb l'altra equació, no sé com computar aquest mesurament. 
 
 \section{Ordinadors quàntics}
 Tota aquesta teoria és aplicada a través de qubits físics que s'ubiquen al ordenadors quàntics. Hi han diversos tipus d'ordinadors quàntics, degut a que els qubits poden ser diversos sistemes. Poden ser fotons, chips de silici superconductors o ions atrapats per imants. No elaboraré més sobre aquest tema degut a que no és el tema central d'aquest treball, m'he centrat molt més en la teoria. 
 
-Però si vull generar imatges amb un ordinador quàntic, no necessito un? No, perquè puc simular l'evolució dels estats quàntics amb un ordinador, pensa que tot ser expressat amb àlgebra lienal. No obstant, quan s'intenta simular un sistema quàntic de molt qubits\footnote{Més de 50 per exemple.} un ordinador de sobretaula tardaria molt de temps i realment no és viable. Per més informació sobre algoritmes quàntics i com s'executen en ordinadors i en simuladors, es pot llegir l'apèndix \ref{complexity}.  
+Però si vull generar imatges amb un ordinador quàntic, no necessito un? No necessàriament, perquè puc simular l'evolució dels estats quàntics amb un ordinador, al cap i a la fi, és només àlgebra lineal, són operacions que es poden fer perfectament en un ordinador. No obstant, quan s'intenta simular un sistema quàntic de molt qubits\footnote{Més de 50 per exemple.} un ordinador de sobretaula tardaria molt de temps i realment no és viable. 
 
 
 \chapter{Intel·ligència artificial}
 
 Segurament has sentit parlar de l'intel·ligènica artificial o de les xarxes neuronals, són conceptes que semblen abstractes però jo penso que son bastant intuïtius, intentaré que tú et sentis de la mateixa manera al final d'aquest capítol. 
 
-Intel·ligència artificial és un mot una mica ambigu, que és refereix a qualsevol algoritme que entra dintre del camps del \textit{machine learning} o aprenentatge automàtic\footnote{No obstant, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'ha li ha designat, no importa quin és el objectiu o com ho aconseguix, lo que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria ven bé una intel·ligència o un algoritme de \textit{machine learning}. 
+Intel·ligència artificial és un mot una mica ambigu, que és refereix a qualsevol algoritme que entra dintre del camps del \textit{machine learning} o aprenentatge automàtic\footnote{No obstant, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'ha lis ha designat, no importa quin és el objectiu o com ho aconseguix, lo que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria una intel·ligència artificial o un algoritme de \textit{machine learning}. 
 
-La manera que tenen aquests algoritmes d'alterar-se a si mateixos usualment es canviant els paràmetres de les operacions dels quals estan compostos. Per exemple, en una regressió lineal, s'actualitzen els paràmetres de la recta que representa la tendència de les dades, com es pot veure a la figura ref{fig:leastsquares}.
+La manera que tenen aquests algoritmes d'alterar-se a si mateixos usualment es canviant els paràmetres de les operacions dels quals estan compostos. Per exemple, en una regressió lineal, s'actualitzen els paràmetres de la recta que representa la tendència de les dades, com es pot veure a la figura  \ref{fig:leastsquares}.
 
 \begin{figure}
 	\centering
@@ -974,52 +974,58 @@ La manera que tenen aquests algoritmes d'alterar-se a si mateixos usualment es c
 	\label{fig:leastsquares}
 \end{figure}
 
-Hi han diversos mètodes per ajustar els paràmetres, el més comú es ajustar-los segons la derivada d'una funció anomenada funció de pèrdua o \textit{loss function}, usualment representada per la lletra $\mathcal{L}$. Aquesta funció representa els objectius del programa i pot ser minimitzada o maximitzada, per exemple, en una regressió lienal es vol reduir la distancia entre els \textit{data points} o dades i la línia que prediu la tendència, Fig. \ref{fig:leastsquares}. 
+Hi han diversos mètodes per ajustar els paràmetres, el més comú es ajustar-los segons la derivada d'una funció anomenada funció de pèrdua o \textit{loss function}, usualment representada per la lletra $\mathcal{L}$. Aquesta funció representa els objectius del programa i pot ser minimitzada o maximitzada, per exemple, en una regressió lienal es vol reduir la distancia entre els els punts de dades i la línia que prediu la tendència, com es pot veure en la figura \ref{fig:leastsquares}. 
 
-Degut a que es poden realitzar molts tipus de funcions de pèrdua, ja sigui per la forma de la funció en si o per els paràmetres de la funció. Per conseqüència, el programes de \textit{machine learning} són extremadament versàtils, la màxima expressió d'això es pot veure en les xarxes neuronals o \textit{neural networks}. Aquests algoritmes són els més potents, complexos i polivalents. Precisament utilitzo un d'aquests per generar les imatges. Són àmpliament utilitzats pel reconeixement d'imatges, traducció i sintetització de textos, conducció automàtica, algoritmes de recomanació i es clar, generació d'imatges \tocite. 
+Degut a que es poden realitzar molts tipus de funcions de pèrdua, ja sigui per la forma de la funció en si o per els paràmetres de la funció, el programes de \textit{machine learning} són extremadament versàtils, la màxima expressió d'això es pot veure en les xarxes neuronals o \textit{neural networks}. Aquests algoritmes són els més potents, complexos i polivalents, dintre del aprendizatje automàtic.. Precisament utilitzo un d'aquests algoritmes d'aquests per generar les imatges. reconeixement d'imatges, la traddució i sintetització de textos, la conducció automàtica, els algoritmes de recomanció, i es clar, la generació d'imatges. 
 
 \section{Xarxes neuronals}
-Aquests tipus d'algoritmes que entren dintre de la categoria de \textit{machine learning} no tenen un nombre que fa recordar a les xarxes de neuronals que formen part del nostre sistema nerviós central per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa, la qual s'organitza a partir de capes. Segons la variació del tipus de neurona i la estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. Aquests models d'intel·ligencia artificial constitueixen el camp del \textit{deep learning} o aprenentatge profund. S'anomenen d'aquesta forma per referenciar la profunditat d'aquests algoritmes, es a dir el nombre de capes que tenen.
+Aquests tipus d'algoritmes no tenen un nombre que fa recordar a les xarxes de neuronals dels nostres cervells per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa, la qual s'organitza a partir de capes. Segons la variació del tipus de neurona i la estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. Aquests models d'intel·ligencia artificial constitueixen el camp del \textit{deep learning} o aprenentatge profund. S'anomenen d'aquesta forma per referenciar la gran profunditat d'aquests algoritmes, es a dir el gran nombre de capes que tenen.
 
-Una neurona consisteix simplement en una suma ponderada, una altra suma i una funció no lineal que s'aplica al resultat. Les neurones tenen com input i output vectors. Per tant, una neurona es pot definit com:
+Una neurona consisteix simplement en una suma ponderada, a qual se li suma un altre número una funció no lineal que s'aplica al resultat. Les neurones tenen vectors com input i output. Per tant, una neurona es pot definit com:
 $$
 \sigma \left(\sum_{i=1}^n w_i x_i + b\right) = \sigma \left( w_1x_1 + w_2x_2 + \cdots + w_nx_n + b 
 \right) 
 $$
 Per $\sigma$ sent una funció no lienal i $n$ sent la mida del vector. Després estan el paràmetres, $w_i$ i $b$, anomenats \textit{weights} i \textit{bias}. 
-Aquests paràmetres tenen una utilitat pot clara, per això tenim que parlar en termes d'importància. En altres paraules, com afecta cada paràmetre a una part de la xarxa i també com afecta aquest al output de la xarxa. Després de deixar clara l'equació s'ha d'il·lustrar la interconnectivitat que tenen les neurones entre si. 
 
-Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depèn de com es connectin entre si o de quina operació addicional fan les neurones, aquestes formen diversos tipus de capes. A partir de les tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. Tornant a l'utilitat del paràmetres, un \textit{weight} especifica com de forta es la relació entre una neurona en una capa i una altre neurona en una capa veïna. I un \textit{bias} especifica com d'important és una neurona, degut a que aquest número afecta al resultat de la suma de la neurona, fent que aquesta sigui més alta.
+Una neurona pot tindre diversos inputs que venen de diverses neurones, el mateix passa amb els outputs. Depenent de com es connectin entre si les neurones, aquestes passen a formar diversos tipus de capes. A partir dels tipus de capes i el nombre d'aquestes es com s'especifica l'arquitectura d'una xarxa neuronal. 
 
-Usualment l'arquitectura es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada pixel. 
+Una vegada especificada la interconnectivitat de les neurones puc parlar de l'intuició darrera dels paràmetres,  \textit{weight} especifica com de forta és la relació entre una neurona en una capa i una altre neurona en una capa veïna. I un \textit{bias} especifica com d'important és una neurona, degut a que aquest número afecta al resultat a la suma, fent que aquesta sigui més alta.
 
-En canvi, les \textit{hidden layers}, es a dir les capes ocultes, no tenen una mida determinades, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas, la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb el diversos tipus de capa és el que dona la versatilitat d'aquests algoritmes, com ja he comentat. 
- 
-Entre els diferents tipus de capes que ponen tindre les xarxes neuronals, el més comú i simple d'aquestes és una \textit{fully connected layer}, o una capa completament connectada, veure la figura \ref{fig:560px-artificialneuralnetwork}. Les neurones que formen aquesta capa estan connectades a totes les neurones de la capa anterior i així mateix a totes les neurones de la capa següent. La forma que tenen aquestes capes de variar es mitjançant la mida que tenen, es a dir, la quantitat de neurones que tenen. \begin{figure}
+Tornant a l'arquitectura, usualment aquesta es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi han a la capa d'inputs es la que defineix la mida del vector que es dona com input a la xarxa, degut a que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant el número de neurones que té cadascuna d'aquestes dues capes, especifica la mida del vectors d'input i d'output de la xarxa respectivament. Per exemple si es vol donar com input a una xarxa una imatge de 16 per 16 píxels\footnote{Una imatge en blanc i negre.} calen 256 neurones en la capa d'inputs, una per cada píxel. 
+
+En canvi, les \textit{hidden layers}, es a dir les capes ocultes, no tenen una mida determinada, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb el diversos tipus de capes és el que dona la versatilitat d'aquests algoritmes.
+
+Entre els diferents tipus de capes que ponen tindre les xarxes neuronals, la més comú i simple d'aquestes és la \textit{fully connected layer}, o una capa completament connectada, veure la figura \ref{fig:560px-artificialneuralnetwork}. Les neurones que formen aquesta capa estan connectades a totes les neurones de la capa anterior i així mateix, a totes les neurones de la capa següent. Aquestes capes l'única forma de variar que tenen és a partir de canviar el nombre de neurones, ja que no hi ha forma d'alterar el funcionament de les neurones. 
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/560px-Artificial_neural_network.svg}
 	\caption{Usualment les xarxes neuronals es representen d'aquesta forma, amb fletxes i boles. Les boles representarien cada neurona i les fletxes mostren com estan connectades. La \textit{hidden layer} d'aquesta representació es pot veure que és una \textit{fully connected layer} degut a com està connectada a les altres capes, rebent cada neurona el output de cada neurona anterior.}
 	\label{fig:560px-artificialneuralnetwork}
 	% en:User:Cburnett, CC BY-SA 3.0 \href{http://creativecommons.org/licenses/by-sa/3.0/}, via Wikimedia Commons
 \end{figure}
-També es pot variar la funció d'activació que tenen, que ha de ser una funció no lineal. La més utilitzada és la sigmoide:
+No obstant, es pot variar la funció d'activació que tenen, que ha de ser una funció no lineal. La més utilitzada és la sigmoide:
 $$
 f(x) = \frac{1}{1+e^{-1}}
 $$
 
 \section{Descens del gradient}
-Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes evolucionen al llarg del temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. En aquesta secció parlaré més en profunditat d'aquest mecanisme que s'anomena el descens (o ascens) del gradient.
+Una vegada he parlar de les xarxes neuronals, he de comentar com aquestes evolucionen al llarg del temps, es a dir com es van actualitzen a si mateixes per complir la tasca que s'ha li's ha encomanat. Ja he comentat que existeix una funció anomenada \textit{loss function}, la qual es deriva per actualitzar els paràmetres de la xarxa. El mecanisme per el qual s'actualitzen els paràmetres s'anomena el descens del gradient.
 
-Es comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Els punts mínims d'aquesta funció representen els punts òptims de la xarxa, els punts als quals es vol arribar. Per exemple, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a les imatges, $1$ als gats i $0$ als gossos. Utilitzaré com a exemple la funció de pèrdua \textit{binary cross entropy} o \textit{log Loss} per poder il·lustrar com una funció pot representar si una xarxa neuronal està fent el seu treball o no. La funció \textit{binary cross entropy} és la següent:
+Aquest procés comença amb la funció de pèrdua, que esmenta els objectius de la xarxa. Els punts mínims d'aquesta funció representen els punts òptims de la xarxa, als quals es vol arribar. 
+
+ Per explicar-lo utilitzaré un exemple pràctic, primer de tot parlaré sobre la funció de pèrdua que s'utilitza i a continuació de l'actualització dels paràmetres. 
+ 
+ Parlaré de la classificació d'imatges, si es volen classificar imatges de gats i gossos, s'assignen dos etiquetes a aquestes, per exemple, $1$ als gats i $0$ als gossos. A continuació s'escull una funció de pèrdua\footnote{Una que funcioni per la classificació d'imatges, es clar.} com \textit{binary cross entropy} o \textit{log loss}. La funció \textit{binary cross entropy} és la següent:
 \begin{equation}
 	\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
 	\label{eq:BCE}
 \end{equation}
-Per $t_i$ sent la etiqueta real que ha de tenir l'imatge i $y_i$ sent la etiqueta que el model dona a l'imatge. Per tant si l'etiqueta real és $1$, l'equació acaba sent:
+Amb $t_i$ sent l'etiqueta que ha de tenir l'imatge, anomenada etiqueta real, i $y_i$ sent la etiqueta que el model assigna a l'imatge. Per tant si l'etiqueta real és $1$, l'equació acaba sent:
 $$
 \mathcal{L}_1 = - \log(y)
 $$
-I el cas contrari per $t = 0$:
+I el cas contrari per $t = 0$ seria:
 $$
 \mathcal{L}_0 = - \log(1 - y)
 $$
@@ -1032,14 +1038,14 @@ En canvi, si el programa es dona un output de $0.15$ la pèrdua seria:
 \begin{align*}
 	\mathcal{L} &= - t\log(y) - (1 - t)\log(1 - y) = - \log(0.15) \simeq 1.897
 \end{align*}
-Es pot veure que si l'etiqueta que posa el model s'allunya més de l'etiqueta real la pèrdua és més gran. El mateix es pot veure per les imatges del gossos o en altres paraules les imatges que haurien de tenir etiqueta zero:
+Es pot veure que si l'etiqueta que posa el model s'allunya més de l'etiqueta real la pèrdua acaba és més gran. El mateix es pot veure per les imatges del gossos, es a dir, les imatges que haurien de tenir etiqueta zero:
 \begin{align*}
 	\mathcal{L} &= - 0\cdot\log(0.89) - (1 - 0)\cdot\log(1 - 0.89) = - \log(1- 0.89) \simeq 2.207 \\
 	\mathcal{L} &= - 0\cdot\log(0.08) - (1 - 0)\cdot\log(1 - 0.08) = - \log(1- 0.08)\simeq 0.0834
 \end{align*}
-Per tant quan més pròximes estén les prediccions (els outputs del model) a les etiquetes del programa, menor serà la pèrdua, llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes.
+Per tant quan més pròximes estén les prediccions (els outputs del model) a les etiquetes ideals, menor serà la pèrdua. Llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes.
 
-A aquests punts òptims s'han arribat actualitzant els paràmetres a través de la derivada de la funció, concretament a través del gradient. El gradient d'una funció és un vector on els seus elements són la derivada parcial respecte a cada paràmetre (per aclarir, un element per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
+A aquests punts òptims s'ha arriben actualitzant els paràmetres a partir de la derivada de la funció, concretament a través del seu gradient. El gradient d'una funció és un vector on els seus elements són la derivada parcial respecte a cada paràmetre (per aclarir, una entrada per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
 $$
 \nabla f(\theta) = \begin{bmatrix}
 	\pdv{f}{\theta_1} \\
@@ -1049,82 +1055,99 @@ $$
 	\pdv{f}{\theta_{n}}
 \end{bmatrix}
 $$
-No fa falta fixar-se en lo que és exactament un gradient, l'únic que importa es que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar acorde amb la derivada. Això es pot entendre com canviar lleugerament un paràmetre acord amb la direcció. Aquesta direcció es indica per la derivada. L'objecte que s'encarrega d'actualitzar-los, s'anomena optimitzador. L'optimitzador més senzill que hi ha és:
+No fa falta fixar-se en lo que és exactament un gradient, només s'ha de saber que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar d'acord amb la derivada respecte al paràmetre. Això es pot entendre com canviar lleugerament un paràmetre acord amb la direcció de la derivada respecte a ell. L'objecte que s'encarrega d'actualitzar-los s'anomena optimitzador. L'optimitzador més senzill que hi ha és el següent:
 $$
 \theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
 $$
-Aquí s'actualitza un paràmetre $\theta_i$, he posat el superíndex $t$ per expressar que s'actualitza, passant d'un temps $t-1$ a $t$. En aquesta equació utilitzo $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un número $\eta$ anomenat \textit{learning rate}. Usualment és un número que petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest paràmetre especifica com de ràpid cabien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació, del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. Cal notar que en l'optimitzador he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció. 
+Es pot veure com s'actualitza el paràmetre $\theta_i$. En l'equació he posat el superíndex $t$ per expressar aquesta actualització, passant d'un temps $t-1$ a $t$. A més a més, utilitzo el símbol $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un nombre $\eta$ anomenat \textit{learning rate}. Usualment és un nombre petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest nombre especifica com de ràpid canvien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació o del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. 
 
-Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que s'ha de fer la derivada del output de la xarxa neuronal degut a que depèn del paràmetre. Al ser les xarxes neuronals funcions molt complexes, s'utilitza una tècnica concreta per efectuar la derivada de la xarxa neuronal anomenada \textit{backpropagation}. 
+Cal notar que en l'optimitzador he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció, degut a que la majoria de funcions de pèrdua estan dissenyades per ser descendides.  
+
+Al fer la derivada de la funció de pèrdua es pot veure immediatament que s'ha d'aplicar la regla de la cadena, ja que l'estructura de la xarxa neuronal està composta per una serie de funcions compostes entre si. En la secció següent parlaré del procediment que s'utilitzar per avaluar el gradient, anomenat \textit{backpropagation} o propagació inversa. 
 
 \subsection{Backpropagation}
-Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
+Al aplicar la regla de la cadena 'de fora cap a dins' s'ha de començar a derivar per l'última capa i acabar per la primera, d'aquí ve el nom \textit{backpropagation} perquè es propaga l'error en direcció contraria. Mentre que quan es dona un input a la xarxa, s'anomena {forward propagation} o \textit{forward pass}.  
 
-No entraré en profunditat sobre la \textit{backpropagation} en aquesta secció, només en limitaré a esmentar la manera en la qual es calcula. 
+No entraré en profunditat sobre l'intuició de la \textit{backpropagation} en aquesta secció, només em limitaré a esmentar la manera en la qual es calcula. 
 
-L'activació d'una neurona $j$ en l'última capa $L$ de la xarxa es defineix com: 
+L'activació\footnote{S'anomena així al resultat d'una neurona.} d'una neurona $j$ en l'última capa $L$ de la xarxa es defineix com: 
 $$
 a^{L}_j = \sigma\left(\sum_{j=0}^{n_{L- 1}}w^L_{jk} a^{L-1}_k+ b_j^L\right)
 $$
-On $a^{L-1}_k$ és l'activació d'una neurona $k$ en la capa anterior $L-1$, i on el \textit{weight} $w^L_{jk}$ és el paràmetre que expressa en que mesura es connecta la neurona $j$ a la neurona $k$. Com ja he dit, expressa com de forta és aquesta connexió. Utilitzant aquesta definició ja es poden fer les derivades. La suma es fa al llarg de $n_{L-1}$ que és el nombre de neurones que té la capa $L-1$.
+On $a^{L-1}_k$ és l'activació d'una neurona $k$ en la capa anterior $L-1$, i on el \textit{weight} $w^L_{jk}$ és el paràmetre que expressa en que mesura es connecta la neurona $j$ a la neurona $k$. Com ja he dit, expressa com de forta és aquesta connexió. La suma es fa al llarg de $n_{L-1}$ que és el nombre de neurones que té la capa $L-1$. Utilitzant aquesta definició ja es poden efectuar les derivades.
 
 No obstant, convé definir el terme $z_j^L$ per procedir a fer les derivades. Simplement és l'equació d'una neurona però sense la funció d'activació:
-$$
-z_j^L = \sum_{j=0}^{n_L - 1}w^L_{jk} a^{L-1}_k+ b_j^L
-$$
+\begin{equation}
+\label{eq:neuron_definition}
+	z_j^L = \sum_{j=0}^{n_L - 1}w^L_{jk} a^{L-1}_k+ b_j^L
+\end{equation}
 L'objectiu és obtenir la derivada de la \textit{loss function} respecte a un \textit{weight} qualsevol i un \textit{bias} qualsevol. Per tant, s'han obtenir les següents derivades parcials:
 $$
 \pdv{\mathcal{L}}{w_{jk}^L} \text{ i } \pdv{\mathcal{L}}{b_j^L}
 $$
-Començaré amb la derivada del \textit{weight}, a aplicar la regla de cadena obtenim que:
+Començaré amb la derivada del \textit{weight}, al aplicar la regla de cadena obtenim que:
 \begin{equation}
 	\pdv{\mathcal{L}}{w_{jk}^L} = \pdv{z_k^L}{w_{jk}^L}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L}
 	\label{eq:chain_neuron}
 \end{equation}
-L'última derivada, 'la que està més afora' és simplement la derivada de la funció de pèrdua respecte al output de la xarxa. En el cas de la funció de pèrdua \textit{Squared Error}, és\footnote{No aplico la regla de la cadena en aquesta derivació perquè ja es té en compte en l'equació \ref{eq:chain_neuron}}:
-$$
-\pdv{\mathcal{L}}{a_j^L} =  \pdv{a_j^L} (a_j^L - y)^2 = 2(a_j^L - y)
-$$
-On $y$ és la predicció desitjada del model. A continuació, la derivada del resultat de la neurona $a_j^L$ respecte a $z_j^L$, que és la derivada la funció d'activació.
-$$
-\pdv{a_j^L}{z_j^L} = \sigma'(z_j^L)
-$$
-Per últim tenim la derivada de $z_j^L$ respecte al \textit{weight}:
-$$
-\pdv{z_j^L}{w_{jk}^L} = a^{L-1}_k
-$$
-La derivada és la neurona anterior, cal recordar que el \textit{weight} lo que fa es establir la connexió entre dues neurones, les neurones $j$ i $k$. 
+La primera derivada, és la derivada de $z_j^L$ respecte al \textit{weight}:
+\begin{equation*}
+	\pdv{z_j^L}{w_{jk}^L} = a^{L-1}_k
+\end{equation*}
 
-Finalment es pot veure que l'equació \ref{eq:chain_neuron} es pot escriure com\footnote{Deixo l'ultima derivada $\pdv{\mathcal{L}}{a_j^L}$ sense reescriure perquè aquest terme pot variar depenent de la funció de pèrdua que s'utilitza.}:
+La següent és la derivada del resultat de la neurona $a_j^L$ respecte a $z_j^L$, que resulta ser la derivada de la funció d'activació de la neurona:
+\begin{equation*}
+	\pdv{a_j^L}{z_j^L} = \sigma'(z_j^L)
+\end{equation*}
+
+Finalment està la derivada de la funció de pèrdua respecte al output de la xarxa, es a dir, l'activació d'una de les últimes neurones. La qual és simplement la derivada de la funció de pèrdua, per tant, varia en cada cas. 
+
+Ja sabent totes les derivades, es pot reescriure l'equació \ref{eq:chain_neuron} es pot escriure com\footnote{Deixo l'ultima derivada $\pdv{\mathcal{L}}{a_j^L}$ sense reescriure perquè aquest terme pot variar depenent de la funció de pèrdua que s'utilitza.}:
 $$
 	\pdv{\mathcal{L}}{w_{jk}^L} = \pdv{z_k^L}{w_{jk}^L}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L} = 
 	a^{L-1}_k \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L}
 $$
 
-No obstant falta un detall, la derivada d'una neurona que passa el seu resultat a diverses neurones. Aquesta derivada és:
+No obstant falta un detall, per efectuar la derivada de l'activació d'una neurona respecte a la funció de pèrdua s'ha d'afegir un sumatori:
 $$
 \pdv{\mathcal{L}}{a_j^{L-1}} = \sum_{j=0}^{n_{L-1}} \pdv{z_j^L}{a_k^{L-1}}\pdv{a_j^L}{z_j^L}\pdv{\mathcal{L}}{a_j^L}
 $$
-La suma representa que aquesta neurona té un output que es propaga cap a endavant i afecta a les neurones que estan més endavant. 
+La suma representa que aquesta neurona té un output que es propaga cap a endavant afectant les neurones que la segueixen. 
 
-Amb aquestes derivades ja es pot desenvolupar el vector gradient, en el qual estan totes les derivades de la \textit{loss function} respecte a tots els paràmetres. Concretament, la mitjana d'aquestes derivades, perquè es vol actualitzar els paràmetres per poder minimitzar la pèrdua en totes les dades disponibles. En altres paraules, si es vol que una xarxa reconegui imatges de gats, se li té que ensenyar moltes imatges de gats. Si només se li ensenya una, només aprendrà a reconèixer aquella imatge. 
+Finalment he d'esmentar la derivada de la funció de pèrdua respecte a un \textit{bias} qualsevol $ b^L_k$. Al aplicar la regla de la cadena es pot veure que aquesta derivada és:
+\begin{equation*}
+	\pdv{\mathcal{L}}{b^L_k} = \pdv{z^L_{k}}{b^L_{k}}\pdv{a^L_{k}}{z^L_{k}}\pdv{\mathcal{L}}{a^L_{k}}
+\end{equation*}
 
-Tota aquesta teoria es veurà implementada en la part pràctica en forma de codi, degut a que m'he vist amb la necessitat de tenir una xarxa neuronal programada des de zero. Usualment s'utilitzen plataformes com \textit{TensorFlow} \cite{tensorflow2015-whitepaper} o \textit{PyTorch} \cite{pytorch_2019}.
+Al veure l'equació \ref{eq:neuron_definition} es pot veure que la derivada $ \pdv{z^{L}_{k}}{b^{L}_{k}}$ serà $1$ degut a que $ b^{L}_{k}$ és una constant. Les altres derivades de l'equació ja les he esmentat anteriorment. Per tant finalment tenim que:
+\begin{align*}
+	\pdv{\mathcal{L}}{w_{jk}^L} &= a^{L-1}_k \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L} \\
+	\pdv{\mathcal{L}}{b^L_k} &= \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L}
+\end{align*}
+
+Amb aquestes derivades ja es pot desenvolupar el vector gradient, que com ja he dit està compost per les derivades de cada paràmetre de la xarxa, no obstant, concretament està compost la mitjana d'aquestes, perquè es vol actualitzar els paràmetres per poder minimitzar la pèrdua en totes les dades disponibles. Per tant es calcula l'error d'unes quantes mostres del \textit{dataset}, i s'efectua una mitjana d'aquests errors.
+
+Tota aquesta teoria es veurà implementada en la part pràctica en forma de codi, degut a que m'he vist amb la necessitat de tenir una xarxa neuronal programada des de zero. No obstant, usualment s'utilitzen plataformes com \textit{TensorFlow} \cite{tensorflow2015-whitepaper} o \textit{PyTorch} \cite{pytorch_2019} al programar xarxes neuronals, degut a que aquests \textit{frameworks} faciliten moltíssim el treball als programadors. 
 
 \section{Generative adversial networks}
 Com ja he dit hi han molts tipus de xarxes neuronals, no obstant, en aquest treball només em centraré en un tipus en específic, les xarxes generatives adversatives o \textit{generative adversial networks (GAN)} en anglès.
 
-Aquestes xarxes, com el seu nom diu, s'utilitzen per generar dades, usualment s'apliquen a imatges. Es troben al darrera de projectes com \textit{This person does not exist} \cite{styleGAN, this_person_does_not_exist}, una pàgina web que et genera una cara d'una persona que no existeix, degut a que es una cara generada artificialment a partir d'aquest tipus de models.
+Aquestes xarxes, com el seu nom diu, s'utilitzen per generar dades, usualment s'apliquen a imatges. Es troben al darrera de projectes com \textit{This person does not exist} \cite{styleGAN, this_person_does_not_exist}, una pàgina web que et genera una cara d'una persona que no existeix, ja que és una cara generada artificialment a partir d'aquest tipus de models.
 
 Aquests tipus de models van ser introduïts per primera vegada al 2014 per Ian Goodfellow \cite{GAN2014}, des de llavors s'han convertit en un dels models de \textit{deep learning} més sòlids i utilitzats. 
 
-Aquests algoritmes consisteixen en dos models (xarxes) diferents, un generador i un discriminador, amb objectius oposats que s'enfrenen entres si. Per aquesta raó tenen la paraula adversatives en el nom. El generador i discriminador es poden entendre com uns falsificador de bitllets i uns policies que els volen atrapar, respectivament. Els policies es tornen millors al seu treball, podent distingir millor entre els bitllets falsificats i els reals. Els falsificadors responen a això millorant les seves tècniques de falsificació, per tant els policies han de millor encara més. Es un cicle en el qual aquestes forces antagonistes es fan millorar l'una al altra. El mateix passa amb el generador i el discriminador. El discriminadors aprèn a distingir entre les imatges reals i les imatges falses que fabrica el generador, mentre que el generador aprèn a enganyar al discriminador. 
+Aquests algoritmes consisteixen en dos models (xarxes) diferents, un generador i un discriminador, amb objectius oposats. Per aquesta raó s'inclou paraula adversativa en el nom. El generador i discriminador es poden entendre com un falsificador de bitllets i un policies que el vol atrapar. On el generador és el falsificador de bitllets i el discriminador és el policia.
 
-Si s'especifiquen bé els objectius de cada model, arribem a \textit{zero sum game}\footnote{Un \textit{zero sum game} es simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.} de teoria de joc. La manera en la que es soluciona es al arribar a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte es definit d'una altra forma.}.
+L'analogia és la següent: 
+Una vegada el falsificador comença el seu entramat, el policia contesta immediatament, i amb el temps es torna millor al seu treball, podent distingir entre els bitllets falsificats i els reals. El falsificador respon a això millorant les seves tècniques, per tant el policia han de millorar encara més. És un cicle en el qual aquestes forces antagonistes es fan millorar l'una al altra. 
 
-En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, que he representat en l'algoritme \ref{alg:GAN}. En aquest és parla de \textit{minibatch} que és simplement un grup d'imatges o de dades, i de soroll que són dades generades aleatòriament i que es poden com input al generador perquè aquest no generi exactament les mateixes imatges cada vegada. El soroll afegeix variació als outputs del generador, però sempre s'intenta en una petita quantitat. 
+El mateix passa amb el generador i el discriminador. El discriminador aprèn a distingir entre les imatges reals i les imatges falses que fabrica el generador, mentre que el generador aprèn a enganyar al discriminador. 
 
-\begin{algorithm}
+Si s'especifiquen bé els objectius de cada model, arriben a \textit{zero sum game}\footnote{Un \textit{zero sum game} és simplement un joc entre dos jugadors en que per guanyar un l'altre ha de perdre e.g. joc d'estirar la corda entre dos equips.}. La manera en la qual és soluciona aquest tipus de joc és arribant a un equilibri de Nash \cite{QGAN_exp}, on el discriminador no sap diferenciar entre les imatges reals i les falses\footnote{Que el discriminador no sàpiga diferenciar no implica arribar a un equilibri de Nash, aquest concepte és definit d'una altre forma que està fora de l'àmbit d'aquest treball \cite{GAN2014}.}.
+
+En l'article original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, que he representat en l'algoritme \ref{alg:GAN}. En aquest es parla de \textit{minibatch} que és simplement un grup d'imatges o de dades, i de soroll, que són dades generades aleatòriament i que es donen com input al generador perquè aquest no generi exactament les mateixes imatges cada vegada. El soroll afegeix variació als outputs del generador, però sempre s'intenta que sigui en una petita quantitat. 
+
+\begin{algorithm}[H]
 	\caption{Pseudocodi per una xarxa generativa adversativa}\label{alg:GAN}
 	\begin{algorithmic}
 		\For{número de interaccions}
@@ -1146,45 +1169,48 @@ En el paper original \cite{GAN2014} s'esmenta un pseudocodi per aquests models, 
 
 \end{algorithm}
 
-En el pseudocodi es pot veure que primer s'actualitza el discriminadors $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament, per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos, perquè ell aprèn a partir del que indica el discriminador.
+En el pseudocodi es pot veure que primer s'actualitza el discriminador $k$ vegades i després  el generador una sola vegada. Això és perquè interessa que el discriminador sàpiga distingir les imatges ràpidament, per poder indicar al generador com generar les imatges. Si el discriminador esmenta que unes imatges de gats són imatges de gossos, el generador fabricarà imatges de gossos pensant que ho són de gats, perquè aquest aprèn a partir del que l'indica el discriminador.
 
-També és pot veure com és la funció de pèrdua, que en el paper anomenen \textit{minimax loss function} que és la mateixa que la \textit{Binary Cross Entropy}. Es pot veure que en la BCE, quan $t$ és zero, que seria l'etiqueta per les imatges falses del generador dona $\log(1-y)$. En el cas contrari, per $t$ igual a un, que expressa que les imatges són reals dona $\log(y)$.  
+També és pot veure com és la funció de pèrdua, que en l'article el autors anomenen \textit{Minimax loss function}, la qual en la pràctica és la mateixa que la \textit{Binary Cross Entropy (BCE)}. Es pot veure que en la BCE, quan $t=0$, que seria l'etiqueta per les imatges falses del generador, aquesta funció seria $\log(1-y)$. En el cas contrari, per $t=1$, la funció seria $\log(y)$.
+
 
 
 \chapter{Generació d'imatges amb un ordinador quàntic}
 
-Investigadors al veure el potencial que tenen els ordinadors quàntics i l'intel·ligència artificial, no es van poder resistir a crear un nou camp d'investigació, el \textit{Quantum Machine Learning (QML)}, o aprenentatge automàtic quàntic. Al igual que les xarxes neuronals són les estrelles dintre del \textit{machine learning}, les xarxes neuronals quàntiques ho són dintre del \textit{quantum machine learning}. Des de que es va començar a investigar aquests algoritmes s'han arribat a implementar diversos tipus de xarxes neuronals en algoritmes quàntics. Principalment pel que fa a la generació i classificació d'imatges i dades.
+Investigadors en informació quàntica al veure el potencial que tenen els ordinadors quàntics i l'intel·ligència artificial, no es van poder resistir a crear un nou camp d'investigació, el \textit{Quantum Machine Learning (QML)}, o aprenentatge automàtic quàntic. Al igual que les xarxes neuronals són les estrelles dintre del \textit{machine learning}, les xarxes neuronals quàntiques també ho són dintre del \textit{quantum machine learning}. 
 
-No obstant aquests algoritmes no són completament quàntics, usualment consisteixen en actualitzar els paràmetres d'un circuit quàntic perquè aquest generi les dades. On les actualitzacions dels paràmetres es calculen amb un ordinador clàssic. Això es veure molt clar quan expliqui la part pràctica del treball. 
+Des de que es van començar a investigar aquests algoritmes s'han arribat a implementar diversos tipus de xarxes neuronals. Principalment pel que fa a la generació i classificació d'imatges i dades.
 
-Abans de continuar amb el capítol he de dir que existeixen diversos algoritmes dintre del \textit{quantum machine learning}, no tot en la vida són xarxes neuronals. Per exemple, es pot donar a terme classificació de dades mitjançant \textit{support vector machines}\footnote{Classificar dades de dimensions petites en espais vectorials molt grans \cite{QSVM_2019, QSVM_xanadu_2019}.} o amb un anàleg de la regressió lineal \cite{Q_linear_regression_xanadu}. No obstant, en aquest capítol em centraré exclusivament en les xarxes neuronals quàntiques.
+No obstant aquests algoritmes no són completament quàntics, usualment consisteixen en actualitzar els paràmetres d'un circuit quàntic perquè aquest generi les dades. On les actualitzacions dels paràmetres es calculen amb un ordinador clàssic. Això es veurà molt clar quan expliqui la part pràctica del treball. 
+
+Abans de continuar amb el capítol he de dir que existeixen diversos algoritmes dintre del \textit{quantum machine learning}, no tot en la vida són xarxes neuronals. Per exemple, es pot donar a terme classificació de dades mitjançant \textit{support vector machines}\footnote{Classificar dades de dimensions petites en espais vectorials molt grans.}  \cite{QSVM_2019, QSVM_xanadu_2019} o amb un anàleg de la regressió lineal \cite{Q_linear_regression_xanadu}. No obstant, en aquest capítol em centraré exclusivament en les xarxes neuronals quàntiques.
 
 \section{Descens del gradient quàntic}
-De moment tindre en consideració que una xarxa neuronal quàntica és un circuit quàntic parametritzat, és a dir que simplement té paràmetres. Això juntament amb una funció de pèrdua i dades que corresponen a aquesta es suficient per explicar com s'actualitzen els paràmetres. 
+De moment tindre en consideració que una xarxa neuronal quàntica és un circuit quàntic qualsevol però parametritzat, és a dir, que té portes quàntiques parametritzades. Això juntament amb una funció de pèrdua i un \textit{dataset} és suficient per explicar com s'actualitzen els paràmetres. 
 
-L'objectiu principal es avaluar la derivada respecte amb un paràmetre. Sorprenentment és dona a terme d'una manera més senzilla que amb una xarxa neuronal clàssica. Simplement s'utilitza la definició de la derivada per avaluar-la. S'altera lleugerament un sol paràmetre i es treu la diferencia entre els dos outputs del circuit quàntic. Aquest mètode per avaluar la derivada s'anomena \textit{parameter shift} \cite{tfq, shift_parameter_harrow_2019}. 
+L'objectiu principal és avaluar la derivada respecte a un paràmetre. Sorprenentment és dona a terme d'una manera més senzilla que amb una xarxa neuronal clàssica. Tan sols s'utilitza la definició de la derivada per poder avaluar-la: S'altera lleugerament un sol paràmetre i es treu la diferencia entre dos outputs del circuit quàntic que tenen el paràmetre alterat. Aquest mètode per avaluar la derivada s'anomena \textit{parameter shift} \cite{tfq, shift_parameter_harrow_2019}. 
 
-Si un circuit quàntic té paràmetres $\theta$ representats per un vector, per un paràmetre $\theta_{i}$, es defineix un vector de pertubació $\Delta_i$ ple de zeros, de igual mida que $\theta$, però que en la posició de $\theta_i$ té un $1$. A partir del vector de pertubació es pot definir la derivada de la funció de pèrdua $\mathcal{L}(\cdot)$ respecte al paràmetre $\theta_{i}$:
+Si un circuit quàntic té un vector de paràmetres $\theta\,$, per un paràmetre $\theta_{i}\,$, es defineix un vector de pertubació $\Delta_i$ ple de zeros, de igual mida que $\theta$, però que en la posició de $\theta_i$ té un $1$. A partir del vector de pertubació es pot definir la derivada de la funció de pèrdua $\mathcal{L}(\cdot)$ respecte al paràmetre $\theta_{i}\,$:
 $$
 \pdv{\theta_i} \mathcal{L}(\theta) = \mathcal{L}(\theta + \tfrac{\pi}{4}\Delta_i) - \mathcal{L}(\theta - \tfrac{\pi}{4}\Delta_i)
 $$
-Es pot veure que el vector $\theta \pm \frac{\pi}{4}\Delta_i$ és el vector $\theta$ però amb una petita variació en la posició $i$ que es la que correspon al paràmetre $\theta_i$. Amb aquest mètode ja es pot desenvolupar pràcticament qualsevol actualització de paràmetres, aquesta es la part senzilla de les xarxes neuronals quàntiques, la dificultat radica en la forma dels circuits quàntics que les componen.
+Es pot veure que el vector $\theta \pm \frac{\pi}{4}\Delta_i$ és el vector $\theta$ però amb una petita variació en la posició $i$ que és la que correspon al paràmetre $\theta_i\,$. Amb aquest mètode ja es pot desenvolupar pràcticament qualsevol actualització de paràmetres, aquesta és la part senzilla de les xarxes neuronals quàntiques, la dificultat radica en la forma dels circuits quàntics que les componen.
 
 \section{Circuits quàntics per xarxes neuronals}
-L'única  certesa sobre aquests circuits es que han de estar parametritzats. Usualment estan compostos per una gran quantitat de portes rotacionals parametritzades, les quals ja he presentat en les equacions \ref{eq:rx}, \ref{eq:ry} i \ref{eq:rz}. 
+L'única qualitat obligatòria que han de dintre aquests circuits és que han de estar parametritzats. Usualment estan compostos per una gran quantitat de portes rotacionals parametritzades, les quals ja he presentat en les equacions \ref{eq:rx}, \ref{eq:ry} i \ref{eq:rz}. 
 
-El problema que esmenten en els articles sobre xarxes neuronals quàntiques es que s'han d'implementar funcions no lienals en els circuits, degut a que la complexitat de les xarxes neuronals radica en aquest tipus de funcions. A primera vista por semblar una tasca quasi impossible a causa de la naturalesa lienal de la computació quàntica. No obstant, durant els anys s'han desenvolupat diverses tècniques per donar a terme aquesta fita. 
+El problema al qual s'enfrenten els investigadors dedicats a les xarxes neuronals quàntiques és la manera amb la qual implementar funcions no-lienals en els circuits quàntics. Aquests tipus de funcions són les responsables de la gran complexitat i profunditat de les xarxes neuronals clàssiques. A primera vista por semblar una tasca quasi impossible a causa de la naturalesa lineal de la computació quàntica. No obstant, durant els anys s'han desenvolupat diverses tècniques per donar a terme aquesta fita, les quals comentaré a continuació.  
 
 A partir d'una combinació de rotacions i portes que entrellacen qubits es pot arribar a implementar una funció semblant a la tangent hiperbòlica\footnote{La tangent hiperbòlica també s'utilitza com a funció no-lienal en el \textit{deep learning}.} en un circuit quàntic \cite{cao2017quantum}. No obstant, aquest mètode té un gran desavantatge, consisteix en un circuit que s'ha d'anar mesurant i repetint per veure si funciona correctament, els autors parlen de \textit{repeat until success} degut a que s'ha de mesurar un qubit i mirar si dona $\ket{0}$ per assegurar que aquesta funció ha sigut aplicada correctament\footnote{En cas de que doni $\ket{1}$, s'ha de repetir el procés.}. 
 
-En un article posterior\footnote{Realitzat en part per un dels autors del mètode anterior}, en el qual els autors generen distribucions continues a partir d'una xarxa generativa adverbial quàntica.
+En un article posterior\footnote{Realitzat en part per un dels autors del mètode anterior.}, en el qual els autors generen distribucions continues a partir d'una xarxa generativa adversària quàntica.
 S'especifica que les no-linearitats presents en l'algoritme no formen part del circuit quàntic, es a dir, funcions que s'implementen clàssicament als resultats dels circuits quàntics o a les dades que s'introdueixen als circuits \cite{romero2019variational}. Aquesta és una mesura molt simple que possiblement implementaré durant la part experimental. 
 
-Al 2019 es va publicar un dels articles que més m'agraden\footnote{Utilitzen imatges de gats a les figures i és un dels primers articles que vaig llegir d'aquest camp fa més de dos anys. A més a més la xarxa neuronal esmentada en l'article està completament programada en TensorFlow Quantum \cite{tfq}, i això sempre s'agraeix. } Cong at. al (2019) \cite{cong2019convolucional}, en ell els autors presenten una xarxa neuronal convolucional quàntica. No fa falta entrar en detall sobre aquestes xarxes. Però he de dir que es diuen convolucionals perquè s'apliquen convolucions a les imatges que es volen classificar, es multiplica una part de l'imatge per una matrius que s'anomena filtre \cite{CNN}. Simplement tenen un altre tipus de capes que no són les capes completament connectades. , l'única afirmació dels autors que s'ha de recalcar és que a partir de reduir els graus de llibertat (\textit{degrees of freedom}) en els circuits quàntics, sorgeixen no-linearitats. Això es degut als mesuraments parcials que es donen a terme en un moment determinat del algoritme. 
+Al 2019 es va publicar un dels articles que més m'agraden\footnote{Utilitzen imatges de gats a les figures i és un dels primers articles que vaig llegir d'aquest camp fa més de dos anys. A més a més la xarxa neuronal esmentada en l'article està completament programada en TensorFlow Quantum \cite{tfq}, i això sempre s'agraeix. } Cong et. al. (2019) \cite{cong2019convolucional}, en ell els autors presenten una xarxa neuronal convolucional quàntica. No fa falta entrar en detall, però es diuen convolucionals perquè s'apliquen convolucions a les imatges que es volen classificar, es multiplica una part de l'imatge per una matriu que s'anomena filtre \cite{CNN}. Simplement tenen un altre tipus de capes que no són les capes completament connectades. L'única afirmació dels autors que s'ha de recalcar, és que a partir de reduir els graus de llibertat (\textit{degrees of freedom}) en els circuits quàntics, sorgeixen no-linearitats. Això es degut als mesuraments parcials que es donen a terme en un moment determinat del algoritme. 
 
-Un dels mètodes que m'ha semblat més interessant, és l'implementat en una altra xarxa convolucional quàntics\footnote{En l'article també utilitzen l'imatge d'un gat com a exemple a les il·lustracions. Es que els gats i els físics tenen una llarga historia. }, on al aplicar els filtres que s'utilitzen per la convolució s'implementa una funció no-lienal. Aquest mètode no el puc arribar a comprendre, les equacions que utilitzen són molt complexes i no sembla que arriben a utilitzar un mesurament parcial en cap moment. Simplement els autors expressen una equació i diuen que no és lienal, i no puc arribar a entendre perquè ho és. 
+Un dels mètodes que m'ha semblat més interessant, és l'implementat en una altra xarxa convolucional quàntica, on al aplicar els filtres que s'utilitzen per la convolució, s'implementa una funció no-lienal. Aquest mètode no el puc arribar a comprendre, les equacions que utilitzen són molt complexes i no sembla que arriben a utilitzar un mesurament parcial en cap moment. Simplement els autors presenten una equació i diuen que no és lienal, i no puc arribar a comprendre perquè ho és. 
 
-Finalment he de parlar del paper que he seguit per realitzar aquest treball, Huang et. al. (2021) \cite{QGAN_exp}, en el al igual que en l'article de Cong et. el. (2019) sobre xarxes convolucionals quàntiques, s'utilitzen mesuraments quàntics per introduir no-linearitats al algoritme. Concretament implementen aquests mesuraments tant en el generador quàntic d'imatges, com en el discriminador. Els circuits quàntics que utilitzen pel generador d'imatges són de la següent forma:
+Finalment he de parlar de l'article que he seguit per realitzar aquest treball, Huang et. al. (2021) \cite{QGAN_exp}, en aquest al igual que en l'article de Cong et. el. (2019) \cite{cong2019convolucional}, s'utilitzen mesuraments quàntics per introduir no-linearitats al algoritme. Concretament els autors implementen aquests mesuraments tant en el generador quàntic d'imatges, com en el discriminador. Els circuits quàntics que utilitzen pel generador d'imatges tenen la següent forma:
 
 \begin{center}
 	\begin{quantikz}
@@ -1198,14 +1224,16 @@ Finalment he de parlar del paper que he seguit per realitzar aquest treball, Hua
 	\end{quantikz}
 \end{center}
 
-On les portes $R_y$ amb un paràmetre $\alpha_i$ són les dades que s'introdueixen en el circuit, és simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN (algoritme \ref{alg:GAN}). El circuit consisteix en aquestes portes $R_y$ i la repetició-$l$ amb unitàries i les portes $\mathrm{CZ}$. En aquest cas el circuit té dues repeticions-$l$, amb $l=2$. Al hora de mesurar és fa un mesurament parcial però els autors especifiquen que es fa d'una forma concreta. 
+On les portes $R_y$ amb un paràmetre $\alpha_i$, marcades en verd, són utilitzades per introduir les dades al circuit. Aquestes dades són simplement soroll que crea varietat en els outputs dels circuits, al igual que el soroll que s'utilitza en les GAN clàssiques (algoritme \ref{alg:GAN}). 
 
-Per un estat $\ket{\Psi_\alpha}$ que surt del circuit especificat abans, l'estat $\rho(z)$després d'una mesura parcial sobre el qubits $\mathcal{A}$, és:
+El circuit que genera les imatges realment consisteix en les portes $U_{\theta}$ i $\mathrm{CZ}$, marcades en blau. Aquestes portes s'agrupen en les repeticions-$l$, que s'utilitzen per afegir profunditat i complexitat als circuits. En aquest cas el circuit té dues repeticions-$l$\footnote{Es a dir $l=2$.}. Al mesurar es fa un mesurament parcial però els autors especifiquen que es fa d'una forma concreta que explicaré a continuació.
+
+Per un estat $\ket{\Psi_\alpha}$ que surt del circuit especificat posteriorment, l'estat $\rho(z)$ després d'una mesura parcial sobre el qubits $\mathcal{A}$, és:
 $$
 \rho(z) = \frac{\tr_\mathcal{A}(\Pi_\mathcal{A}\ket{\Psi(z)}\bra{\Psi(z)})}{\tr(\Pi_\mathcal{A} \otimes I_{2^{N-N_\mathcal{A}}}\ket{\Psi(z)}\bra{\Psi(z)})}
 $$
-Els autors afirmen que aquest estat $\rho(\alpha)$ és una funció no lineal del estat $\ket{z}$ que es defineix per les primeres portes $R_y$ que s'apliquen en el circuit\footnote{En la figura (-), aquestes operacions estan indicades de color verd.}. Això es degut a que tant el denominador com el numerador de l'equació són funcions de $\ket{z}$. 
+Els autors afirmen que aquest estat $\rho(\alpha)$, és una funció no-lineal de l'estat $\ket{z}$. Això és degut a que tant el denominador com el numerador de l'equació són funcions de $\ket{z}$. 
 
-No obstant, en altres treball com per exemple Zoufal et. al. (2019) \cite{QGAN_IBM}, on es defineix una GAN que a partir de circuits quàntics genera distribucions de probabilitat. Els autors no mencionen la necessitat de tenir funcions no lineals en alguna part del algoritme. 
+No obstant, en altres treballs com per exemple Zoufal et.al. (2019) \cite{QGAN_IBM}, on es defineix una GAN quàntica que genera distribucions de probabilitat, els autors no mencionen la necessitat de tenir funcions no lineals en alguna part del algoritme. 
 
 

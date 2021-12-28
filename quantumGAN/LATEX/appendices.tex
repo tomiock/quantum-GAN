@@ -157,12 +157,35 @@ En ciència de la computació existeix el concepte de \textit{Big-O Notation}, u
 
 La \textit{Big-O Notation} consisteixes en definir el temps màxim que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida del input al algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. Com a un exemple més concret tenim que un l'algoritme de cerca de cadenes binaries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. Recorda que la notació $O(\cdot)$ és el màxim, es a dir es \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la que es troba la cadena, també es possible que es trobi-s'hi a la primera comprovació que es va\footnote{Que la primera cadena que es cerca, és la que s'ha de trobar.}, llavors l'algoritme acabaria en un temps $O(1)$. Simplement és una manera de mirar lo eficients que són els algoritmes en relació a la mida del input que tenen.
 
-Amb aquesta notació tenim una manera de comparar la eficiència que tenen els algoritmes quàntics amb la del clàssics que tenen la mateixa funció. 
+Amb aquesta notació tenim una manera de comparar la eficiència que tenen els algoritmes quàntics amb la del clàssics que tenen la mateixa funció. Per il·lustrar aquesta avantatge en eficiència que presenten els algoritmes quàntics, presentaré a continuació els dos algoritmes quàntics més famosos, el de Grover, i el de Shor. Que serveixen per la cerca d'un element en una llista desordenada, i per la factorització en nombres prims respectivament. 
 
 \section{Algoritme de Grover}
-Al 1996, Lov Grover va presentar un algoritme quàntic per cercar en dades desordenades \cite{Grover_96} (e.g. cercar el número de telèfon d'una persona en una llista desordenada). Per aquest problema un algoritme clàssic té una complexitat de $O(N)$ cerques\footnote{Una cerca és quan es verifica si un element de la llista és l'element que es cerca.}, mentre que l'algoritme de Grover té una complexitat de $O(\sqrt{N})$, sent substancialment més eficient. En les paraules de Grover \cite{Grover_96} (adaptades), un ordinador clàssic per tindre un probabilitat de $\frac{1}{2}$ de trobar el número de telèfon d'una persona en una llista desordenada necessita mirar a un mínim de $\frac{N}{2}$ números, mentre que amb el seu s'obté el número de telèfon en només $O(\sqrt{N})$ passos\footnote{Per passos entenc que es refereix al nombre de vegades que es mira al oracle, es a dir el nombre que de vegades que es verifica si s'ha trobar el que es cerca.}.
+Al 1996, Lov Grover va presentar un algoritme quàntic per cercar en dades desordenades \cite{Grover_96} (e.g. cercar el número de telèfon d'una persona en una llista desordenada). Per aquest problema un algoritme clàssic té una complexitat de $O(N)$ cerques\footnote{Una cerca és quan es verifica si un element de la llista és l'element que es cerca.}, mentre que l'algoritme de Grover té una complexitat de $O(\sqrt{N})$, sent substancialment més eficient. En les paraules de Grover \cite{Grover_96} (adaptades), un ordinador clàssic per tindre un probabilitat de $\frac{1}{2}$ de trobar el número de telèfon d'una persona en una llista desordenada necessita mirar a un mínim de $\frac{N}{2}$ números, mentre que amb el seu s'obté el número de telèfon en només $O(\sqrt{N})$ passos\footnote{Per passos entenc que es refereix al nombre de vegades que es mira al oracle, es a dir, el nombre que de vegades que es verifica si s'ha trobar l'element que es cerca.}.
 
-L'algoritme funciona de la següent manera: 
+L'algoritme funciona de la següent manera:
+Agafar un sistema de $n$ qubits en l'estat $\ket{0}$ que resulten en una combinació de $N = 2^n$ estats. Aplicar una distribució uniforme als qubits, es a dir, aplicar portes Hadamard a tots els qubits, tenint al final un estat resultant $\ket{s}$:
+\begin{equation*}
+	\ket{s} = \frac{1}{\sqrt{N}} \sum_{x=0}^{2^n-1} \ket{x}
+\end{equation*}
+Repetir $\approx \frac{\pi}{4}\sqrt{N}$ vegades, el operador de Grover $G$, que consisteix en el següent conjunt d'instruccions:
+\begin{algorithmic}[1]
+	\State{Aplicar el \textit{Oracle} $U_{\omega}$}
+	\State{Aplicar portes Hadamard a tots els qubits}
+	\State{Aplicar el \textit{Grover diffusion operator} $U_{s} = 2\ket{s}\bra{s} - I$}
+	\State{Aplicar una altre vegada les portes Hadamard}
+\end{algorithmic}
+
+
+El \textit{oracle} és un tipus de funció que s'utilitza en els algoritmes de cerca, té la finalitat de reconèixer si un element és l'element que s'està cercant. En els algoritmes de cerca es contrueixen al voltant de l'\textit{oracle}, diversos algoritmes tenen diverses formes de consultar al oracle. A més a més, la quantitat de consultes a l'\textit{oracle} serveixen per quantificar la complexitat del algoritme, a més consultes, més ineficient és l'algoritme. 
+
+Al veure el procediment de l'algoritme es pot veure l\textit{oracle} es consulta aproximadament $\frac{\pi}{4}\sqrt{N}$, vegades, d'aquesta manera resultat en una complexitat aproximada de $O(\sqrt{N})$, on $N=2^{n}$ per $n$ qubits, com ja he esmentat anteriorment. 
+
+No entraré més en profunditat sobre aquest algoritme, perquè sinó hauré d'introduir més conceptes de computació quàntica com ara la fase d'un estat, o començar a utilitzar notació més complicada que també hauré d'explicar. Em sap greu, perquè és un algoritme que funciona d'una manera bonica de veure. També em sembla el millor algoritme per poder explicar una de les millors característiques de la computació quàntica, tenir algoritmes que et descarten automàticament els estats dolents dintre d'una combinació d'estats, d'aquesta manera lliurant un estat concret desitjat de entre la combinació. En el cas de l'algoritme de Grover aquest estat desitjat, és l'estat que està cercant l'\textit{oracle}. 
+
+\section{Algoritme de Shor}
+No explicaré la funcionalitat d'aquest algoritme degut a que és molt complex, no surt ni en els llibres de texts als quals tinc accés. Simplement en limitaré a explicar quina és la seva funció i P
+
+
 
 \chapter{Codi}
 En l'apèndix actual presentaré el codi que he utilitzat al llarg del treball. Està organitzat segons el moment en el qual he referenciat el codi en el text. 
@@ -775,3 +798,9 @@ quantum_gan.create_gif()
 quantum_gan.save()
 
 \end{lstlisting}
+
+
+\paragraph{Multiprocessament}
+Per poder ser més eficient alhora de executar els models, vaig decidir utilitzar una característica molt útil de Python, el \textit{multiprocessing}. Usualment una instancia de Python, es a dir; un arxiu executant-se, només utilitza un nucli del processador a la vegada, però amb \textit{multiprocessing} pots utilitzar múltiples nuclis amb un mateix arxiu, d'aquesta manera executant diverses línies de codi al mateix temps. Llavors vaig 
+
+

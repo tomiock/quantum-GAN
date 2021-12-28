@@ -46,9 +46,8 @@ El procediment és el següent, s'ha d'agafar els paràmetres a optimitzar, que 
 
 Llavors es creen dos vectors de paràmetres nous multiplicant $\pm\frac{\pi}{4}$ pel vector de pertubació, i sumant el resultat al vector de paràmetres original. A continuació, es creen dues imatges, cadascuna per a cada grup de paràmetres, una amb el terme $\pm\frac{\pi}{4}$ positiu i l'altra amb el negatiu. Per últim, es mira la funció de pèrdua per a cada imatge generada i es treu la diferencia entre elles. El resultat es sumat a un vector que té la mateixa mida que el vector de paràmetres. Al començament de l'iteració, aquest vector és zero, però segons es va optimitzat s'ha li van sumant els errors. Això es fa per a cada paràmetre del circuit per un input, i per a cada input dintre del \textit{batch} a optimitzar.
 \begin{figure}
-	\label{fig:alg_gen}
 	\HRule \\[-.5cm]
-	\begin{algorithmic}[1]
+	\begin{algorithmic}
 		\State{$\nabla = 0$} \Comment{Creació del vector  $\nabla$ que te la mateixa mida que $\theta$}
 		\For{soroll en batch}
 		\For{paràmetre $\theta_i$ en  $\theta$}
@@ -73,6 +72,7 @@ Llavors es creen dos vectors de paràmetres nous multiplicant $\pm\frac{\pi}{4}$
 	\end{algorithmic}
 	\HRule \\[-.4cm]
 	\caption{\textbf{Pseudocodi per una xarxa generativa adversativa.} Em refereixo al input de la xarxa generacional com a soroll, ja que és més acertat d'aquesta manera. El vector $\nabla$ té la mateixa mida que el vector de paràmetres $\theta$, cal notar que també té la mateixa mida els vectors $\theta^\pm_i$, degut a que aquests vectors són $\theta$ per amb una alteració al paràmetre $\theta_i$. Les paraules \textit{generador} i \textit{discriminador} denoten els respectius models, per tant, \textit{Imatge\textsubscript{$i$}} i \textit{Predicció\textsubscript{$i$}} són els outputs del models.}
+	\label{fig:alg_gen}
 \end{figure}
 
 Quan ja s'han calculat tot els errors, s'agafa el vector que els conte que és multiplica pel \textit{learning rate}, i es divideix per el nombre d'imatge del \textit{batch}, d'aquesta manera fent la mitjana aritmètica del errors. El resultat es suma als paràmetres originals, d'aquesta manera completant una iteració. 
@@ -97,25 +97,10 @@ No obstant en l'arxiu \code{qgan.py}, no es troba l'execució del model, només 
 
 Com es pot veure en l'apèndix, \ref{lst:main}, aquesta arxiu té molt poc codi. En ell només es crea amb Numpy el dataset, es defineix el discriminar i el generadors, es crea el model amb \code{Quantum\_GAN}, i es crida la funció \code{Quantum\_GAN.train()} per optimitzar-lo. Al acabar l'optimització es criden les funcions \code{Quantum\_GAN.plot()}, \code{Quantum\_GAN.create\_gif()} i \code{Quantum\_GAN.save()}, les quals donen a terme funcions complementàries com la creació de les gràfiques, la creació d'un GIF que mostra com les imatges vam evolucionant al llarg de l'optimització, i l'emmagatzematge de les dades rellevant que s'han creat durant l'optimització.  
 
-Les imatges que vaig escollir per generar són les mateixes que van generar en l'article en el que em vaig basar. No entraré molt en detall sobre les distribucions concretes que formen les imatges, però per tindre una imatge general sobre com són, es pot veure la figura, \todo{poner la figura donde se ven como 4 imagenes o algo asi no se ya lo veras en un futuro depende de como queden}.
+Les imatges que vaig escollir per generar són les mateixes que van generar en l'article en el que em vaig basar. No entraré molt en detall sobre les distribucions concretes que formen les imatges, però per tindre una imatge general sobre com són, es pot veure la figura.
 
 Si executen el model, amb un mida de batch de $10$, tant el \textit{learning rate} del discriminador com del generador a $0.1$, i un total de iteracions de $400$, hi ha una garantia d'arribar a la convergència desitjada, es dir que, que els dos models arriben al equilibri de Nash i no poden continuar l'optimització. En aquest punt és quan les imatges falses i les reals són iguals.
-
-\begin{figure}
-	\label{fig:comp_imatge}
-	\begin{subfigure}{0.51\textwidth}
-		\includegraphics[width=\linewidth]{figures/model/real_distribution.png}
-		\caption{Distribució d'una imatge real} \label{fig:1a}
-	\end{subfigure}%
-	\hspace*{\fill}   % maximize separation between the subfigures
-	\begin{subfigure}{0.51\textwidth}
-		\includegraphics[width=\linewidth]{figures/model/fake_distribution.png}
-		\caption{Distribució d'una imatge generada} \label{fig:1b}
-	\end{subfigure}%
-	\hspace*{\fill}
-	\caption{Comparació d'una imatge generada i una real, quan el model ha assolit la convergència. En el eix Y es pot veure el valor d'un píxel, mentre que en l'eix X estan els píxels. }   % maximizeseparation between the subfigures
-\end{figure}
-\begin{figure}
+\begin{figure}[H]
 	\label{fig:labels_loss_400}
 	\begin{subfigure}{0.45\textwidth}
 		\includegraphics[width=\linewidth]{figures/model/loss_plot.png}
@@ -131,8 +116,23 @@ Si executen el model, amb un mida de batch de $10$, tant el \textit{learning rat
 
 En la figura, \ref{fig:labels_400}, es pot veure com les etiquetes pels dos tipus d'imatges van oscil·lant fins a estabilitzar-se. El mateix es pot dir per la funció de pèrdua \ref{fig:loss_400}.  
 
-Degut a que aquests gràfics són molt semblants als seus anàlegs de les GANs clàssiques i que les distribucions reals i generades són pràcticament iguals, com es pot veure a la figura \ref{fig:comp_imatge}. Considero que el model funciona correctament. 
+Degut a que aquests gràfics són molt semblants als seus anàlegs de les GANs clàssiques i que les distribucions reals i generades són pràcticament iguals, com es pot veure a la figura \ref{fig:comp_imatge}, considero que el model funciona correctament. 
 
+
+\begin{figure}[H]
+	\begin{subfigure}{0.51\textwidth}
+		\includegraphics[width=\linewidth]{figures/model/real_distribution.png}
+		\caption{Distribució d'una imatge real} \label{fig:1a}
+	\end{subfigure}%
+	\hspace*{\fill}   % maximize separation between the subfigures
+	\begin{subfigure}{0.51\textwidth}
+		\includegraphics[width=\linewidth]{figures/model/fake_distribution.png}
+		\caption{Distribució d'una imatge generada} \label{fig:1b}
+	\end{subfigure}%
+	\hspace*{\fill}
+	\caption{Comparació d'una imatge generada i una real, quan el model ha assolit la convergència. En el eix Y es pot veure el valor d'un píxel, mentre que en l'eix X estan els píxels. }
+	\label{fig:comp_imatge} 
+\end{figure}
 
 
 Abans he especificat que al cap de $400$ iteracions podem tenir la garantir d'arribar al punt d'equilibri, no obstant, es pot arribar a aquest punt amb menys iteracions, el que vull dir es que amb $400$ de segur que s'arriva. Això és perquè, com a tots els model de \textit{machine learning} hi ha una part de sort implicada, si els paràmetres inicials són més semblants als paràmetres desitjats, el model assoli-ra la convergència més ràpidament. Per més detalls l'execució del model es pot veure l'apèndix XXX. Tanmateix, per més informació sobre la part experimental del treball es pot veure en l'apèndix XXX.1, en aquest capítol he omitit coses interessants com el meu intent de generació d'imatges a color. 
@@ -142,6 +142,17 @@ Abans he especificat que al cap de $400$ iteracions podem tenir la garantir d'ar
 Una vegada havia confirmat el correcte funcionament del model, vaig alterar el generador per poder acomodar els dos tipus de circuits quàntics que necessitava, uns amb un sistema ancilla, i uns altres sense.
 
 Un sistema ancilla, són un grup de qubits sobre els quals es donen a terme operacions però que no es mesuren per treure el output del circuit. Aquests qubits es pot veure molt clar en la figura, \todo{poner figura}. 
+
+\begin{figure}
+	\begin{quantikz}
+		\lstick[wires=2]{$\mathcal{A}$}& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_1)}& \gate{U_{\theta_{1, l}}} & \ctrl{1} & \qw & \qw & \qw & \gate{U_{\theta_{1, l-1}}} & \ctrl{1} & \qw & \qw & \qw & \qw  \\
+		& & \lstick{$\ket{0}$} &  \gate{R_y(\alpha_2)} & \gate{U_{\theta_{2, l}}} & \control{} & \ctrl{1} & \qw & \qw & \gate{U_{\theta_{2, l-1}}} & \control{} & \ctrl{1} & \qw & \qw & \qw  \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_3)} & \gate{U_{\theta_{3, l}}} & \qw & \control{} & \ctrl{1} & \qw & \gate{U_{\theta_{3, l-1}}} & \qw & \control{} & \ctrl{1} & \qw &  \meter{} \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_4)} & \gate{U_{\theta_{4, l}}} & \qw & \qw & \control{} & \ctrl{1} & \gate{U_{\theta_{4, l-1}}} & \qw & \qw & \control{} & \ctrl{1} &  \meter{} \\
+		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_5)} & \gate{U_{\theta_{5, l}}} & \qw & \qw & \qw & \control{} & \gate{U_{\theta_{5, l-1}}} & \qw & \qw & \qw & \control{}  & \meter{}
+	\end{quantikz}
+	\caption{Aquí he marcat els qubits ancilla amb $\mathcal{A}$, són els dos primers. També al final del circuit he afegit mesures als qubits que s'han de mesurar.}
+\end{figure}
 
 Primer de tot he de mencionar que havia de fer alguns canvis al generador per acomodar aquests qubits ancilla. 
 
@@ -159,9 +170,9 @@ L'arxiu que utilitzo per fer els experiments és \code{experiment.py}. En ell es
 Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{link per veure una imatge amb totes les gràfiques} (perdó per l'informalitat)} comencen amb els mateixos paràmetres, per tant en exactament les mateixes condicions, menys els circuits quàntics es clar. També s'utilitza el mateix dataset i altres hiperparàmetres. 
 
 \section{Anàlisi dels resultats}
-Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia, els model que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen. Això no vol dir necessàriament que siguin més eficients però l'estabilitat és un factor que es busca en les GANs. 
+Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia: Els models que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen. Això no vol dir necessàriament que siguin més eficients però l'estabilitat és un factor que es busca en les GANs. 
 
-També es pot observar una clara diferencia en les imatges generades en la primera iteració. Amb el generador amb la funció no-lienal es pot veure un píxel amb un valor d'$1$ mentre que els altres estan al $0$. Mentre que en l'altre tipus de generador es pot veure que els píxels tenen més o menys el mateix valor, d'aquesta manera formant una distribució uniforme. Aquest fet probablement es causat per l'estructura del circuit que té els qubits ancilla. No obstant, perquè exactament passa això està fora dels meus coneixements sobre la matèria\footnote{Saber com es comporten sistemes quàntics que tenen parts entrellaçades com aquest està fora del meu àmbit.}. 
+També es pot observar una clara diferencia en les imatges generades en la primera iteració. En les primeres imatges d'un generador amb la funció no-lienal es pot veure un píxel amb un valor de $1$ mentre que els altres estan al $0$. Mentre que en l'altre tipus de generador es pot veure que els píxels tenen més o menys el mateix valor, d'aquesta manera formant una distribució uniforme. Aquest fet probablement es causat per l'estructura del circuit que té els qubits ancilla. No obstant, perquè exactament passa això està fora dels meus coneixements sobre la matèria\footnote{Saber com es comporten sistemes quàntics que tenen parts entrellaçades com aquest està fora del meu àmbit.}. 
 
 La part que realment m'intriga es que a partir de les primeres iteracions, en els circuits amb els qubits ancilla. El píxel que té el valor d'$1$, passa d'un a un altre. Aquest comportament succeïx en absolutament totes les vegades que he executat el codi. Al igual que he dit abans, arribar a comprendre això està fora del meu nivell de coneixement. 
 

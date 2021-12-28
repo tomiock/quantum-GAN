@@ -28,14 +28,14 @@ example_generator = QuantumGenerator(num_qubits=2,
 
 # generem els paràmetres inicials d'acord amb el circuit amb un mayor nombre de paràmetres
 circuit_ancilla = example_generator_ancilla.construct_circuit(None, False)
-circuit_not_ancilla = example_generator.construct_circuit(None, False)
+circuit_not_ancilla = example_generator_ancilla.construct_circuit(None, False)
 
 init_parameters_ancilla = np.random.normal(np.pi / 2, .1, circuit_ancilla.num_parameters)
 
 # canviem les dimensions dels paràmetres perquè coincideixin amb les dimensions necessàries pel circuit
 # sense qubits ancilla
 not_ancilla_list = init_parameters_ancilla.tolist()[
-	                   circuit_ancilla.num_parameters - circuit_not_ancilla.num_parameters:]
+                   circuit_ancilla.num_parameters - circuit_not_ancilla.num_parameters:]
 init_parameters_not_ancilla = np.array(not_ancilla_list)
 
 example_discriminator = discriminator_ancilla = \
