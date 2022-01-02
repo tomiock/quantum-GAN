@@ -63,6 +63,17 @@ def images_to_scatter(batch_image):
 
     return y_axis, x_axis
 
+def fechet_distance(image1: np.array, 
+                    image2: np.array):
+    assert image1.shape == image2.shape
+    y = np.arange(0, image1.flatten().shape[0])
+
+    matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
+    matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
+
+    to_trace = matrix_a_cov + matrix_b_cov - 2*(linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
+    return np.abs(image1.mean() - image2.mean())**2 + np.trace(to_trace)
+
 
 # ACTIVATION FUNCTIONS
 
@@ -121,6 +132,8 @@ def minimax(real_prediction, fake_prediction):
 def minimax_generator(prediction_fake):
     return (-1) * np.log(1 - prediction_fake)
 
+
+# QUANTUM FUNCTIONS
 
 class Partial_Trace:
     def __init__(self, state: np.array, qubits_out: int, side: str):
@@ -191,15 +204,3 @@ class Partial_Trace:
 
         entries = np.array(entries)
         return entries.reshape(self.a_dim, self.a_dim)
-    
-    
-def fechet_distance(image1: np.array, 
-                    image2: np.array):
-    assert image1.shape == image2.shape
-    y = np.arange(0, image1.flatten().shape[0])
-
-    matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
-    matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
-
-    to_trace = matrix_a_cov + matrix_b_cov - 2*(linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
-    return np.abs(image1.mean() - image2.mean())**2 + np.trace(to_trace)

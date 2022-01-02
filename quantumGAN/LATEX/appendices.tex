@@ -67,7 +67,7 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 	$ \mathbb{C}_1$ o $\mathbb{C} $ & Espai del nombres complexos \\
 	
 \end{tabular}
-\section{Més on la traça parcial}
+
 
 
 
@@ -86,7 +86,7 @@ Per una funció d'ona $\Psi(x,t)$ que representa una partícula, la probabilitat
 \end{equation}
 
 Degut a que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger, veure la figura \ref{fig:schro}, qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
-\begin{figure}
+\begin{figure}[H]
 	$$
 	i\hslash \pdv{\Psi}{t} = -\frac{\hslash^2}{2m}\pdv[2]{\Psi}{x}+V\Psi
 	$$
@@ -176,14 +176,16 @@ Repetir $\approx \frac{\pi}{4}\sqrt{N}$ vegades, el operador de Grover $G$, que 
 \end{algorithmic}
 
 
-El \textit{oracle} és un tipus de funció que s'utilitza en els algoritmes de cerca, té la finalitat de reconèixer si un element és l'element que s'està cercant. En els algoritmes de cerca es contrueixen al voltant de l'\textit{oracle}, diversos algoritmes tenen diverses formes de consultar al oracle. A més a més, la quantitat de consultes a l'\textit{oracle} serveixen per quantificar la complexitat del algoritme, a més consultes, més ineficient és l'algoritme. 
+El \textit{oracle} és un tipus de funció que s'utilitza en els algoritmes de cerca, té la finalitat de reconèixer si un element és l'element que s'està cercant. En els algoritmes de cerca es construeixen al voltant de l'\textit{oracle}, diversos algoritmes tenen diverses formes de consultar al oracle. A més a més, la quantitat de consultes a l'\textit{oracle} serveixen per quantificar la complexitat del algoritme, a més consultes, més ineficient és l'algoritme. 
 
 Al veure el procediment de l'algoritme es pot veure l\textit{oracle} es consulta aproximadament $\frac{\pi}{4}\sqrt{N}$, vegades, d'aquesta manera resultat en una complexitat aproximada de $O(\sqrt{N})$, on $N=2^{n}$ per $n$ qubits, com ja he esmentat anteriorment. 
 
 No entraré més en profunditat sobre aquest algoritme, perquè sinó hauré d'introduir més conceptes de computació quàntica com ara la fase d'un estat, o començar a utilitzar notació més complicada que també hauré d'explicar. Em sap greu, perquè és un algoritme que funciona d'una manera bonica de veure. També em sembla el millor algoritme per poder explicar una de les millors característiques de la computació quàntica, tenir algoritmes que et descarten automàticament els estats dolents dintre d'una combinació d'estats, d'aquesta manera lliurant un estat concret desitjat de entre la combinació. En el cas de l'algoritme de Grover aquest estat desitjat, és l'estat que està cercant l'\textit{oracle}. 
 
 \section{Algoritme de Shor}
-No explicaré la funcionalitat d'aquest algoritme degut a que és molt complex, no surt ni en els llibres de texts als quals tinc accés. Simplement en limitaré a explicar quina és la seva funció i P
+No explicaré aquest algoritme en profunditat degut a que és molt complex\footnote{Hauria d'introduir nous conceptes com la fase d'un qubit i com efectuar la transformada de Fourier inversa en un circuit quàntic.}, no surt ni en els llibres de texts als quals tinc accés. Simplement en limitaré a explicar quina és la seva utilitat i el compararé amb les seves alternatives clàssiques.
+
+L'algoritme de Shor per la factorització en nombres prims \cite{Shor_97}, és probablement l'algoritme quàntic més famós i més rellevant que hi ha.
 
 
 
@@ -400,7 +402,7 @@ def load(filename):
 	return net
 
 
-class ClassicalDiscriminator_that_works:
+class ClassicalDiscriminator:
 
 	def __init__(	self,
 					sizes: List[int],
@@ -421,125 +423,124 @@ class ClassicalDiscriminator_that_works:
 	def feedforward(self, a):
 		"""Return the output of the network if ``a`` is input."""
 		for b, w in zip(self.biases, self.weights):
-a = sigmoid(np.dot(w, a) + b)
-return a
+		a = sigmoid(np.dot(w, a) + b)
+		return a
 
-def predict(self, x):
-# feedforward
-activation = x
-zs = []  # list to store all the z vectors, layer by layer
-for b, w in zip(self.biases, self.weights):
-z = np.dot(w, activation) + b
-zs.append(z)
-activation = sigmoid(z)
-return activation
+	def predict(self, x):
+		# feedforward
+		activation = x
+		zs = []  # list to store all the z vectors, layer by layer
+		for b, w in zip(self.biases, self.weights):
+			z = np.dot(w, activation) + b
+			zs.append(z)
+			activation = sigmoid(z)
+		return activation
 
-def evaluate(self, test_data):
+	def evaluate(self, test_data):
+		test_results = [(np.argmax(self.feedforward(x)), y)
+		for (x, y) in test_data]
+		return sum(int(x == y) for (x, y) in test_results)
 
-test_results = [(np.argmax(self.feedforward(x)), y)
-for (x, y) in test_data]
-return sum(int(x == y) for (x, y) in test_results)
 
+	def forwardprop(self, x: np.ndarray):
+		activation = x
+		activations = [x]  # list to store all the activations, layer by layer
+		zs = []  # list to store all the z vectors, layer by layer
+		for b, w in zip(self.biases, self.weights):
+			z = np.dot(w, activation) + b
+			zs.append(z)
+			activation = sigmoid(z)
+			activations.append(activation)
+		return activation, activations, zs
 
-def forwardprop(self, x: np.ndarray):
-activation = x
-activations = [x]  # list to store all the activations, layer by layer
-zs = []  # list to store all the z vectors, layer by layer
-for b, w in zip(self.biases, self.weights):
-z = np.dot(w, activation) + b
-zs.append(z)
-activation = sigmoid(z)
-activations.append(activation)
-return activation, activations, zs
+	def backprop_bce(self, image, label):
+		"""Return a tuple ``(nabla_b, nabla_w)`` representing the
+		gradient for the cost function C_x.  ``nabla_b`` and
+		``nabla_w`` are layer-by-layer lists of numpy arrays, similar
+		to ``self.biases`` and ``self.weights``."""
+		nabla_b = [np.zeros(b.shape) for b in self.biases]
+		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-def backprop_bce(self, image, label):
-"""Return a tuple ``(nabla_b, nabla_w)`` representing the
-gradient for the cost function C_x.  ``nabla_b`` and
-``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-to ``self.biases`` and ``self.weights``."""
-nabla_b = [np.zeros(b.shape) for b in self.biases]
-nabla_w = [np.zeros(w.shape) for w in self.weights]
+		# feedforward and back error calculation depending on type of image
+		activation, activations, zs = self.forwardprop(image)
+		delta = BCE_derivative(activations[-1], label) * sigmoid_prime(zs[-1])
 
-# feedforward and back error calculation depending on type of image
-activation, activations, zs = self.forwardprop(image)
-delta = BCE_derivative(activations[-1], label) * sigmoid_prime(zs[-1])
+		# backward pass
+		nabla_b[-1] = delta
+		nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
 
-# backward pass
-nabla_b[-1] = delta
-nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
+		for l in range(2, self.num_layers):
+			z = zs[-l]
+			delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
+			nabla_b[-l] = delta
+			nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1), activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+		return nabla_b, nabla_w, activations[-1]
 
-for l in range(2, self.num_layers):
-z = zs[-l]
-delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
-nabla_b[-l] = delta
-nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1), activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
-return nabla_b, nabla_w, activations[-1]
+	def backprop_minimax(self, real_image, fake_image, is_real):
+		"""Return a tuple ``(nabla_b, nabla_w)`` representing the
+		gradient for the cost function C_x.  ``nabla_b`` and
+		``nabla_w`` are layer-by-layer lists of numpy arrays, similar
+		to ``self.biases`` and ``self.weights``."""
+		nabla_b = [np.zeros(b.shape) for b in self.biases]
+		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-def backprop_minimax(self, real_image, fake_image, is_real):
-"""Return a tuple ``(nabla_b, nabla_w)`` representing the
-gradient for the cost function C_x.  ``nabla_b`` and
-``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-to ``self.biases`` and ``self.weights``."""
-nabla_b = [np.zeros(b.shape) for b in self.biases]
-nabla_w = [np.zeros(w.shape) for w in self.weights]
+		# feedforward and back error calculation depending on type of image
+		activation_real, activations_real, zs_real = self.forwardprop(real_image)
+		activation_fake, activations_fake, zs_fake = self.forwardprop(fake_image)
 
-# feedforward and back error calculation depending on type of image
-activation_real, activations_real, zs_real = self.forwardprop(real_image)
-activation_fake, activations_fake, zs_fake = self.forwardprop(fake_image)
+		if is_real:
+			delta = minimax_derivative_real(activations_real[-1]) * sigmoid_prime(zs_real[-1])
+			activations, zs = activations_real, zs_real
+		else:
+			delta = minimax_derivative_fake(activations_fake[-1]) * sigmoid_prime(zs_fake[-1])
+			activations, zs = activations_fake, zs_fake
 
-if is_real:
-delta = minimax_derivative_real(activations_real[-1]) * sigmoid_prime(zs_real[-1])
-activations, zs = activations_real, zs_real
-else:
-delta = minimax_derivative_fake(activations_fake[-1]) * sigmoid_prime(zs_fake[-1])
-activations, zs = activations_fake, zs_fake
+		# backward pass
+		nabla_b[-1] = delta
+		nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
 
-# backward pass
-nabla_b[-1] = delta
-nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
+		for l in range(2, self.num_layers):
+			z = zs[-l]
+			delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
+			nabla_b[-l] = delta
+			nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
+			activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+		return nabla_b, nabla_w, activations[-1]
 
-for l in range(2, self.num_layers):
-z = zs[-l]
-delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
-nabla_b[-l] = delta
-nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
-activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
-return nabla_b, nabla_w, activations[-1]
+	def train_mini_batch(self, mini_batch, learning_rate):
+		global label_real, label_fake
+		nabla_b = [np.zeros(b.shape) for b in self.biases]
+		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-def train_mini_batch(self, mini_batch, learning_rate):
-global label_real, label_fake
-nabla_b = [np.zeros(b.shape) for b in self.biases]
-nabla_w = [np.zeros(w.shape) for w in self.weights]
+		if self.type_loss == "binary cross entropy":
+			for real_image, fake_image in mini_batch:
+				delta_nabla_b, delta_nabla_w, label_real = self.backprop_bce(real_image, np.array([1.]))
+				nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+				nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-if self.type_loss == "binary cross entropy":
-for real_image, fake_image in mini_batch:
-delta_nabla_b, delta_nabla_w, label_real = self.backprop_bce(real_image, np.array([1.]))
-nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+				delta_nabla_b, delta_nabla_w, label_fake = self.backprop_bce(fake_image, np.array([0.]))
+				nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+				nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-delta_nabla_b, delta_nabla_w, label_fake = self.backprop_bce(fake_image, np.array([0.]))
-nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+		elif self.type_loss == "minimax":
+			for real_image, fake_image in mini_batch:
+				delta_nabla_b, delta_nabla_w, label_real = self.backprop_minimax(real_image, fake_image, True)
+				nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+				nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-elif self.type_loss == "minimax":
-for real_image, fake_image in mini_batch:
-delta_nabla_b, delta_nabla_w, label_real = self.backprop_minimax(real_image, fake_image, True)
-nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+				delta_nabla_b, delta_nabla_w, label_fake = self.backprop_minimax(real_image, fake_image, False)
+				nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
+				nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+			else:
+				raise Exception("type of loss function not valid")
 
-delta_nabla_b, delta_nabla_w, label_fake = self.backprop_minimax(real_image, fake_image, False)
-nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
-nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
-else:
-raise Exception("type of loss function not valid")
-
-# gradient descent
-# nabla_w and nabla_b are multiplied by the learning rate
-# and taken the mean of (dividing by the mini batch size)
-self.weights = [w - (learning_rate / len(mini_batch)) * nw
-for w, nw in zip(self.weights, nabla_w)]
-self.biases = [b - (learning_rate / len(mini_batch)) * nb
-for b, nb in zip(self.biases, nabla_b)]
+			# gradient descent
+			# nabla_w and nabla_b are multiplied by the learning rate
+			# and taken the mean of (dividing by the mini batch size)
+			self.weights = [w - (learning_rate / len(mini_batch)) * nw
+							for w, nw in zip(self.weights, nabla_w)]
+			self.biases = [b - (learning_rate / len(mini_batch)) * nb
+						   for b, nb in zip(self.biases, nabla_b)]
 \end{lstlisting}
 
 \paragraph{Codi per el generador}
@@ -755,6 +756,288 @@ class QuantumGenerator:
 		return mini_batch
 \end{lstlisting}
 
+
+\paragraph{Definició del model}
+\label{lst:qgan}
+Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{qgan.py}. 
+\begin{lstlisting}[language=Python, caption=Codi per la definició del model]
+import glob
+import os
+import json
+import random
+from datetime import datetime
+from typing import List
+
+import imageio
+import matplotlib.pyplot as plt
+import numpy as np
+
+from quantumGAN.discriminator import ClassicalDiscriminator
+from quantumGAN.functions import fechet_distance, minimax, images_to_distribution, images_to_scatter
+from quantumGAN.quantum_generator import QuantumGenerator
+
+
+class Quantum_GAN:
+
+	def __init__(self,
+				 generator: QuantumGenerator,
+				 discriminator: ClassicalDiscriminator
+				 ):
+
+		self.last_batch = None
+		now = datetime.now()
+		init_time = now.strftime("%d_%m_%Y__%H_%M_%S")
+		self.path = "data/run{}".format(init_time)
+		self.path_images = self.path + "/images"
+		self.filename = "run.txt"
+
+		if not os.path.exists(self.path):
+			os.makedirs(self.path)
+
+		if not os.path.exists(self.path_images):
+			os.makedirs(self.path_images)
+
+		with open(os.path.join(self.path, self.filename), "w") as file:
+			file.write("RUN {} \n".format(init_time))
+			file.close()
+
+		self.generator = generator
+		self.discriminator = discriminator
+		self.loss_series, self.label_real_series, self.label_fake_series, self.FD_score = [], [], [], []
+
+		self.generator.init_parameters()
+		self.example_g_circuit = self.generator.construct_circuit(latent_space_noise=None,
+									 	 to_measure=False)
+		self.generator.set_discriminator(self.discriminator)
+
+	def __repr__(self):
+		return "Discriminator Architecture: {} \n Generator Example Circuit: \n{}" \
+		.format(self.discriminator.sizes, self.example_g_circuit)
+
+	def store_info(self, epoch, loss, real_label, fake_label):
+		file = open(os.path.join(self.path, self.filename), "a")
+		file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {} \n"
+		.format(epoch,
+				loss,
+				self.generator.parameter_values,
+				real_label,
+				fake_label))
+		file.close()
+
+	def plot(self):
+		# save data for plotting
+		fake_images, real_images = [], []
+		for image_batch in self.last_batch:
+			fake_images.append(image_batch[1])
+			real_images.append(image_batch[0])
+
+		keys, average_result = images_to_distribution(fake_images)
+		print(average_result)
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Distribucio d'una imatge generada \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Distribucio d'una imatge generada \n(epoch={self.num_epochs})")
+		plt.ylim(0., 1.)
+		plt.bar(keys, average_result)
+		plt.savefig(self.path + "/fake_distribution.png")
+		plt.clf()
+
+		keys_real, average_result_real = images_to_distribution(real_images)
+		print(average_result_real)
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Distribucio d'una imatge real \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Distribucio d'una imatge real \n(epoch={self.num_epochs})")
+		plt.ylim(0., 1.)
+		plt.bar(keys_real, average_result_real)
+		plt.savefig(self.path + "/real_distribution.png")
+		plt.clf()
+
+		y_axis, x_axis = images_to_scatter(fake_images)
+		y_axis_real, x_axis_real = images_to_scatter(real_images)
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Comparacio entre les imatges reals con les imatges falses \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Comparacio entre les imatges reals con les imatges falses \n(epoch={self.num_epochs})")
+		plt.ylim(0. - .1, 1. + .1)
+		plt.scatter(y_axis, x_axis, label='Valors per les imatges falses',
+				 	color='indigo',
+					linewidth=.1,
+					alpha=.2)
+		plt.scatter(y_axis_real, x_axis_real, label='Valors per les imatges reals',
+					color='limegreen',
+					linewidth=.1,
+					alpha=.2)
+		plt.savefig(self.path + "/scatter_plot.png")
+		plt.clf()
+
+		t_steps = np.arange(self.num_epochs)
+		plt.figure(figsize=(6, 5))
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Progres de la funcio de perdua \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Progres de la funcio de perdua \n(epoch={self.num_epochs})")
+		plt.plot(t_steps, self.loss_series, label='Funcio de perdua del discriminador', color='rebeccapurple', linewidth=2)
+		plt.grid()
+		plt.legend(loc='best')
+		plt.xlabel('Iteracions')
+		plt.ylabel('Funcio de perdua')
+		plt.savefig(self.path + "/loss_plot.png")
+		plt.clf()
+
+		t_steps = np.arange(self.num_epochs)
+		plt.figure(figsize=(6, 5))
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Progres de les etiquetes \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Progres de les etiquetes \n(epoch={self.num_epochs})")
+		plt.scatter(t_steps, self.label_real_series, label='Etiquetes per les imatges reals',
+					color='mediumvioletred',
+					linewidth=.1)
+		plt.scatter(t_steps, self.label_fake_series, label='Etiquetes per les imatges generades',
+					color='rebeccapurple',
+					linewidth=.1)
+		plt.grid()
+		plt.ylim(0. - .1, 1. + .1)
+		plt.legend(loc='best')
+		plt.xlabel('Iteracions')
+		plt.ylabel('Valor de les etiquetes')
+		plt.savefig(self.path + "/labels_plot.png")
+		plt.clf()
+
+		plt.figure(figsize=(6, 5))
+		if self.generator.num_qubits_ancilla != 0:
+			plt.title(f"Puntuacio de a partir de la distancia de Frechet \n(ancilla, epoch={self.num_epochs})")
+		else:
+			plt.title(f"Puntuacio de a partir de la distancia de Frechet \n(epoch={self.num_epochs})")
+		plt.plot(t_steps, self.FD_score, label='Valor de la puntuacio de Frechet', color='rebeccapurple', linewidth=2)
+		plt.grid()
+		plt.legend(loc='best')
+		plt.ylim(0., .28)
+		plt.xlabel('Iteracions')
+		plt.ylabel('Valor de la puntuacio')
+		plt.savefig(self.path + "/FD_score.png")
+		plt.clf()
+
+	def train(self,
+			  num_epochs: int,
+			  training_data: List,
+		 	  batch_size: int,
+			  generator_learning_rate: float,
+			  discriminator_learning_rate: float,
+			  is_save_images: bool):
+
+		self.num_epochs = num_epochs
+		self.training_data = training_data
+		self.batch_size = batch_size
+		self.batch_size = batch_size
+		self.generator_lr = generator_learning_rate
+		self.discriminator_lr = discriminator_learning_rate
+		self.is_save_images = is_save_images
+
+		noise = self.training_data[0][1]
+		time_init = datetime.now()
+		for o in range(self.num_epochs):
+			mini_batches = create_mini_batches(self.training_data, self.batch_size)
+			output_fake = self.generator.get_output(latent_space_noise=mini_batches[0][0][1], parameters=None)
+
+			for mini_batch in mini_batches:
+				self.last_batch = self.generator.train_mini_batch(mini_batch, self.generator_lr)
+				self.discriminator.train_mini_batch(self.last_batch, self.discriminator_lr)
+
+			output_real = mini_batches[0][0][0]
+			if is_save_images:
+				self.save_images(self.generator.get_output(latent_space_noise=noise, parameters=None), o)
+
+			self.FD_score.append(fechet_distance(output_real, output_fake))
+			label_real, label_fake = self.discriminator.predict(output_real), self.discriminator.predict(output_fake)
+			loss_final = 1 / 2 * (minimax(label_real, label_fake) + minimax(label_real, label_fake))
+
+			self.loss_series.append(loss_final)
+			self.label_real_series.append(label_real)
+			self.label_fake_series.append(label_fake)
+
+			print("Epoch {}: Loss: {}".format(o, loss_final), output_real, output_fake)
+			print(label_real[-1], label_fake[-1])
+			self.store_info(o, loss_final, label_real, label_fake)
+
+		time_now = datetime.now()
+		print((time_now - time_init).total_seconds(), "seconds")
+
+	def save_images(self, image, epoch):
+		image_shape = int(image.shape[0] / 2)
+		image = image.reshape(image_shape, image_shape)
+
+		plt.imshow(image, cmap='gray', vmax=1., vmin=0.)
+		plt.axis('off')
+		plt.savefig(self.path_images + '/image_at_epoch_{:04d}.png'.format(epoch))
+		plt.clf()
+
+	def create_gif(self):
+		anim_file = self.path + '/dcgan.gif'
+
+		with imageio.get_writer(anim_file, mode='I') as writer:
+			filenames = glob.glob(self.path_images + '/image*.png')
+			filenames = sorted(filenames)
+
+			for filename in filenames:
+				image = imageio.imread(filename)
+				writer.append_data(image)
+
+			image = imageio.imread(filename)
+			writer.append_data(image)
+
+	def save(self):
+		"""Save the neural network to the file ``filename``."""
+		data = {"batch_size": self.batch_size,
+				"D_sizes": self.discriminator.sizes,
+				"D_weights": [w.tolist() for w in self.discriminator.weights],
+				"D_biases": [b.tolist() for b in self.discriminator.biases],
+				"D_loss": self.discriminator.type_loss,
+				"Q_parameters": [theta for theta in self.generator.parameter_values],
+				"Q_shots": self.generator.shots,
+				"Q_num_qubits": self.generator.num_qubits_total,
+				"Q_num_qubits_ancilla": self.generator.num_qubits_ancilla,
+				"real_labels": self.label_real_series,
+				"fake_labels": self.label_fake_series,
+				"loss_series": self.loss_series
+				}
+		f = open(os.path.join(self.path, "data.txt"), "a")
+		json.dump(data, f)
+		f.close()
+
+
+	def create_mini_batches(training_data, mini_batch_size):
+		n = len(training_data)
+		random.shuffle(training_data)
+		mini_batches = [
+			training_data[k:k + mini_batch_size]
+			for k in range(0, n, mini_batch_size)]
+		return [mini_batches[0]]
+
+
+	def load_gan(filename):
+		f = open(filename, "r")
+		data = json.load(f)
+		f.close()
+		discriminator = ClassicalDiscriminator(data["D_sizes"], data["D_loss"])
+
+		generator = QuantumGenerator(num_qubits=data["Q_num_qubits"],
+									 generator_circuit=None,
+									 num_qubits_ancilla=data["Q_num_qubits_ancilla"],
+									 shots=data["Q_shots"])
+
+		quantum_gan = Quantum_GAN(generator, discriminator)
+
+		quantum_gan.discriminator.weights = [np.array(w) for w in data["D_weights"]]
+		quantum_gan.discriminator.biases = [np.array(b) for b in data["D_biases"]]
+		quantum_gan.generator.parameter_values = np.array(data["Q_parameters"])
+
+		1return quantum_gan, data["batch_size"]
+	
+	
+\end{lstlisting}
+
 \paragraph{Execució del model}
 \label{lst:main}
 Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{main.py}. 
@@ -801,6 +1084,323 @@ quantum_gan.save()
 
 
 \paragraph{Multiprocessament}
-Per poder ser més eficient alhora de executar els models, vaig decidir utilitzar una característica molt útil de Python, el \textit{multiprocessing}. Usualment una instancia de Python, es a dir; un arxiu executant-se, només utilitza un nucli del processador a la vegada, però amb \textit{multiprocessing} pots utilitzar múltiples nuclis amb un mateix arxiu, d'aquesta manera executant diverses línies de codi al mateix temps. Llavors vaig 
+Per poder ser més eficient alhora de executar els models, vaig decidir utilitzar una característica molt útil de Python, el \textit{multiprocessing}. Usualment una instancia de Python, es a dir; un arxiu executant-se, només utilitza un nucli del processador a la vegada, però amb \textit{multiprocessing} pots utilitzar múltiples nuclis amb un mateix arxiu, d'aquesta manera executant diverses línies de codi al mateix temps. Per poder executar diversos models a la mateixa vegada i d'una forma simple, vaig utilitzar aquest modul de Python per executar els models dels quals he agafat les dades que he presentat en aquest treball. Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{test\_multi.py}. 
+\begin{lstlisting}[language=Python, caption=Executar els models amb multiprocessing]
+import multiprocessing
+import time
+import numpy as np
+
+from quantumGAN.discriminator import ClassicalDiscriminator
+from quantumGAN.qgan import Quantum_GAN
+from quantumGAN.quantum_generator import QuantumGenerator
+
+batch_size = 10
+
+train_data = []
+# generacio de les dades
+for _ in range(800):
+	x2 = np.random.uniform(.55, .46, (2,))
+	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
+	real_datapoint = np.array([x2[0], 0, x2[0], 0])
+	train_data.append((real_datapoint, fake_datapoint))
+list_epochs = [550, 550, 550]
+
+example_generator_ancilla = QuantumGenerator(num_qubits=4,
+											 generator_circuit=None,
+											 num_qubits_ancilla=2,
+											 shots=4096)
+example_generator = QuantumGenerator(num_qubits=2,
+									 generator_circuit=None,
+									 num_qubits_ancilla=0,
+									 shots=4096)
+
+# generem els parametres inicials d'acord amb el circuit amb un mayor nombre de parametres
+circuit_ancilla = example_generator_ancilla.construct_circuit(None, False)
+circuit_not_ancilla = example_generator_ancilla.construct_circuit(None, False)
+
+init_parameters_ancilla = np.random.normal(np.pi / 2, .1, circuit_ancilla.num_parameters)
+
+# canviem les dimensions dels parametres perque coincideixin amb les dimensions necessaries pel circuit
+# sense qubits ancilla
+not_ancilla_list = init_parameters_ancilla.tolist()[
+circuit_ancilla.num_parameters - circuit_not_ancilla.num_parameters:]
+init_parameters_not_ancilla = np.array(not_ancilla_list)
+
+example_discriminator = discriminator_ancilla = \
+ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+
+init_biases_discriminator, init_weights_discriminator = example_discriminator.init_parameters()
+
+
+def to_train(num_epochs):
+	# definicio d'un discriminador pel model amb la funcio no-lineal i una altre pel model que no la te
+	discriminator_ancilla = \
+		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+	discriminator_not_ancilla = \
+		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+
+	# es defineix un generador que te la funcio no-lienal integrada en el circuit
+	generator_ancilla = \
+		QuantumGenerator(num_qubits=4,
+						 generator_circuit=None,
+						 num_qubits_ancilla=2,  # IMPORTANT
+						 shots=4096)
+	# i un altre generador que no te la funcio no-lineal
+	generator_not_ancilla = \
+		QuantumGenerator(num_qubits=2,
+     					 generator_circuit=None,
+						 num_qubits_ancilla=0,  # IMPORTANT
+						 shots=4096)
+
+	quantum_gan_ancilla = \
+		Quantum_GAN(generator_ancilla, discriminator_ancilla)
+	time.sleep(1)
+	quantum_gan_not_ancilla = \
+		Quantum_GAN(generator_not_ancilla, discriminator_not_ancilla)
+	print(quantum_gan_not_ancilla.path)
+	print(quantum_gan_ancilla.path)
+
+	# abans de comencar a entrenar el model s'ha de canviar els parametres als definits anteriorment
+	quantum_gan_ancilla.generator.parameter_values = init_parameters_ancilla
+	quantum_gan_ancilla.discriminator.weights = init_weights_discriminator
+	quantum_gan_ancilla.discriminator.biases = init_biases_discriminator
+	quantum_gan_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+
+	quantum_gan_not_ancilla.generator.parameter_values = init_parameters_not_ancilla
+	quantum_gan_not_ancilla.discriminator.weights = init_weights_discriminator
+	quantum_gan_not_ancilla.discriminator.biases = init_biases_discriminator
+	quantum_gan_not_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+
+	# una vegada ha acabat l'optimitzacio es creen els grafics per compara l'eficiencia del models
+	quantum_gan_not_ancilla.plot()
+	quantum_gan_ancilla.plot()
+
+
+def main():
+	# Crear una queue para compartir les dades entre els processos
+	# Crear i iniciar el proces de simulacio
+	jobs = []
+	for epoch in list_epochs:
+		simulate = multiprocessing.Process(None, to_train, args=(epoch,))
+		jobs.append(simulate)
+		time.sleep(2)
+		simulate.start()
+
+
+if __name__ == '__main__':
+	main()
+\end{lstlisting}
+
+
+\paragraph{Funcions extres}
+Hi han funcions en el codi que utilitzo en diversos arxius, aquestes les defineixo en l'arxiu \code{functions.py}, que es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball}. En aquest arxiu també hi ha una funció que dona a terme una traça parcial a una matriu donada, malgrat que no la he arribat a utilitzar. 
+\begin{lstlisting}[language=Python, caption=Funcions varies]
+import itertools
+import math
+
+import numpy as np
+from matplotlib import pyplot as plt
+
+
+# DATA PROCESSING
+from scipy import linalg
+
+
+def save_images_color(image, epoch):
+	plt.imshow(image.reshape(int(image.shape[0] / 3), 1, 3))
+	plt.axis('off')
+	plt.savefig('images/image_at_epoch_{:04d}.png'.format(epoch))
+
+
+def create_real_keys(num_qubits):
+	lst = [[str(a) for a in i] for i in itertools.product([0, 1], repeat=num_qubits)]
+	new_lst = []
+	for element in lst:
+		word = str()
+		for number in element:
+			word = word + number
+			new_lst.append(word)
+	return set(new_lst), new_lst
+
+
+def create_entangler_map(num_qubits: int):
+	lst = [list(i) for i in itertools.combinations(range(num_qubits), 2)]
+	index = 0
+	entangler_map = []
+	for i in reversed(range(num_qubits)):
+		try:
+			entangler_map.append(lst[index])
+			index += i
+		except IndexError:
+			return entangler_map
+
+
+def images_to_distribution(batch_image):
+	num_images = len(batch_image)
+	sum_result = 0
+	for image in batch_image:
+		sum_result += image
+	average_result = sum_result / num_images
+	keys = create_real_keys(int(math.sqrt(batch_image[0].shape[0])))[1]
+	return keys, average_result
+
+
+def images_to_scatter(batch_image):
+	keys = create_real_keys(int(math.sqrt(batch_image[0].shape[0])))[1]
+	x_axis = []
+	y_axis = []
+
+	for image in batch_image:
+		pixel_count = 0
+		for pixel in image:
+			x_axis.append(pixel)
+			y_axis.append(keys[pixel_count])
+			pixel_count += 1
+
+	return y_axis, x_axis
+
+def fechet_distance(image1: np.array, 
+					image2: np.array):
+	assert image1.shape == image2.shape
+	y = np.arange(0, image1.flatten().shape[0])
+
+	matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
+	matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
+
+	to_trace = matrix_a_cov + matrix_b_cov - 2*(linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
+	return np.abs(image1.mean() - image2.mean())**2 + np.trace(to_trace)
+
+
+# ACTIVATION FUNCTIONS
+
+def sigmoid(z):
+	"""The sigmoid function."""
+	return 1.0 / (1.0 + np.exp(-z))
+
+
+def sigmoid_prime(z):
+	"""Derivative of the sigmoid function."""
+	return sigmoid(z) * (1 - sigmoid(z))
+
+
+def relu(z):
+	return np.maximum(0, z)
+
+
+def relu_prime(z):
+	z[z <= 0] = 0
+	z[z > 0] = 1
+	return z
+
+
+# LOSSES
+def MSE_derivative(prediction, y):
+	return 2 * (y - prediction)
+
+
+def MSE(prediction, y):
+	return (y - prediction) ** 2
+
+
+def BCE_derivative(prediction, target):
+	# return prediction - target
+	return -target / prediction + (1 - target) / (1 - prediction)
+
+
+def BCE(predictions: np.ndarray, targets: np.ndarray) -> np.ndarray:
+	return targets * np.log(predictions) + (1 - targets) * np.log(1 - predictions).mean()
+
+
+def minimax_derivative_real(real_prediction):
+	real_prediction = np.array(real_prediction)
+	return np.nan_to_num((-1) * (1 / real_prediction))
+
+
+def minimax_derivative_fake(fake_prediction):
+	fake_prediction = np.array(fake_prediction)
+	return np.nan_to_num(1 / (1 - fake_prediction))
+
+
+def minimax(real_prediction, fake_prediction):
+	return np.nan_to_num(np.log(real_prediction) + np.log(1 - fake_prediction))
+
+
+def minimax_generator(prediction_fake):
+	return (-1) * np.log(1 - prediction_fake)
+
+
+# QUANTUM FUNCTIONS
+
+class Partial_Trace:
+	def __init__(self, state: np.array, qubits_out: int, side: str):
+
+		self.state = state
+		self.qubits_out = qubits_out
+		self.side = side
+
+		if self.state.ndim == 1:
+			self.state = np.outer(self.state, self.state)
+
+		self.total_dim = self.state.shape[0]
+
+		self.num_qubits = int(np.log2(self.total_dim))
+		self.a_dim = 2 ** (self.num_qubits - self.qubits_out)
+		self.b_dim = 2 ** self.qubits_out
+
+		# if self.side == "bot":
+		self.basis_b = [_ for _ in np.identity(int(self.b_dim))]
+		self.basis_a = [_ for _ in np.identity(int(self.a_dim))]
+
+		# elif self.side == "top":
+		#	self.basis_a = [_ for _ in np.identity(int(self.b_dim))]
+		#	self.basis_b = [_ for _ in np.identity(int(self.a_dim))]
+		#
+		# else:
+		#	raise NameError("invalid side argument, enter \"bot\" or \"top\"")
+		print(self.basis_a, self.basis_b)
+
+	def get_entry(self, index_i, index_j):
+		sigma = 0
+
+		if self.side == "bot":
+			for k in range(self.qubits_out + 1):
+				ab_l = np.kron(self.basis_a[index_i],
+						   	   self.basis_b[k])
+				ab_r = np.kron(self.basis_a[index_j],
+						   	   self.basis_b[k])
+
+				print(ab_r, ab_l)
+
+				right_side = np.dot(self.state, ab_r)
+				sigma += np.inner(ab_l, right_side)
+
+		if self.side == "top":
+			for k in range(self.qubits_out + 1):
+				ba_l = np.kron(self.basis_b[index_i],
+							   self.basis_a[k])
+				ba_r = np.kron(self.basis_b[index_j],
+							   self.basis_a[k])
+
+				print(ba_r, ba_l)
+
+				right_side = np.dot(self.state, ba_r)
+				sigma += np.inner(ba_l, right_side)
+
+		return sigma
+
+	def compute_matrix(self):
+		a = [_ for _ in range(self.a_dim)]
+		b = [__ for __ in range(self.a_dim)]
+
+		entries_pre = [(x, y) for x in a for y in b]
+		entries = []
+
+		for i_index, j_index in entries_pre:
+			entries.append(self.get_entry(i_index, j_index))
+
+		entries = np.array(entries)
+		return entries.reshape(self.a_dim, self.a_dim)
+
+\end{lstlisting}
 
 

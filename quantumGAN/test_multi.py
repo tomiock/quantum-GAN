@@ -89,8 +89,8 @@ def to_train(num_epochs):
 
 
 def main():
-	# Create a queue to share data between process
-	# Create and start the simulation process
+	# Crear una queue para compartir les dades entre els processos
+	# Crear i iniciar el proces de simulació
 	jobs = []
 	for epoch in list_epochs:
 		simulate = multiprocessing.Process(None, to_train, args=(epoch,))

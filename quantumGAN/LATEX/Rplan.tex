@@ -11,16 +11,6 @@
 }
 \renewcommand{\headrulewidth}{0pt}% removes header line
 
-%\pagestyle{fancy}
-%\fancyhf{}
-%\lhead{}
-%\chead{}
-%\rhead{}
-%\lfoot{}
-%\rfoot{}
-%\renewcommand{\headrulewidth}{0.4pt}
-%\renewcommand{\footrulewidth}{0.4pt}
-
 
 \renewcommand{\chaptermark}[1]{%
 	\markboth{#1}{}}
@@ -68,7 +58,6 @@
 \usepackage{booktabs}
 \usepackage{glossaries}
 \usepackage{physics}
-\usepackage{braket}
 \usepackage[toc,page]{appendix}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -232,14 +221,14 @@
 		%----------------------------------------------------------------------------------------
 		%	LOGO SECTION
 		%----------------------------------------------------------------------------------------
-		
+		\vspace{1.5cm}
 		\begin{minipage}{0.85\textwidth}
 			\begin{center}
 								\includegraphics[scale=0.2]{Figures/Cover/logo-tarradell.jpg}
 			\end{center}
 		\end{minipage}
 		
-		\vspace{.5cm}
+		\vspace{.3cm}
 		
 		%----------------------------------------------------------------------------------------
 		%	DATE SECTION
@@ -255,19 +244,24 @@
 		\end{center}
 		
 	\end{titlepage}
-
-	\begin{onehalfspacing}
+	
+	
 	\afterpage{\blankpage}
 	\begin{onehalfspacing}
-	\tableofcontents
+		\tableofcontents
 	\end{onehalfspacing}
-	\end{onehalfspacing}
-	%\listoftables
-	%\listoffigures
 	
 	\clearpage
 	
 	\thispagestyle{plain}
+	
+	\section*{Agraïments}
+	Volia agrair a la mfahfajlsdfhjads fladsm 
+	
+	\section*{Nota}
+	Abans de començar amb el treball vull dedicar un petit espai per poder parlar de que significa aquest treball per a mi, del tot l'esforç que he posat en aquest i finalment comentar tot lo que he aprés al llarg d'aquest llarg camí.
+	
+	\afterpage{\blankpage}
 	
 	\part*{Introducció}
 	\label{part:intro}
