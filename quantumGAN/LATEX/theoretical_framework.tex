@@ -1056,9 +1056,10 @@ $$
 \end{bmatrix}
 $$
 No fa falta fixar-se en lo que és exactament un gradient, només s'ha de saber que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar d'acord amb la derivada respecte al paràmetre. Això es pot entendre com canviar lleugerament un paràmetre acord amb la direcció de la derivada respecte a ell. L'objecte que s'encarrega d'actualitzar-los s'anomena optimitzador. L'optimitzador més senzill que hi ha és el següent:
-$$
-\theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
-$$
+\begin{equation}
+	\theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
+	\label{eq:optimizator}
+\end{equation}
 Es pot veure com s'actualitza el paràmetre $\theta_i$. En l'equació he posat el superíndex $t$ per expressar aquesta actualització, passant d'un temps $t-1$ a $t$. A més a més, utilitzo el símbol $\theta$ per expressar tots els paràmetres del model. En els optimitzadors s'afegeix un nombre $\eta$ anomenat \textit{learning rate}. Usualment és un nombre petit\footnote{Entre $0.1$ i $0.001$ per exemple.}, aquest nombre especifica com de ràpid canvien els paràmetres. El \textit{learning rate} es pot anar ajustant depenen de la situació o del model en el qual s'implementi. Alteracions en aquest pot causar diversos fenòmens tan negatius com positius. 
 
 Cal notar que en l'optimitzador he utilitzar el signe $\pm$ perquè si és positiu significa que s'està ascendint pel gradient, i si és negatiu s'està descendint. No obstant, usualment s'utilitza el signe negatiu per convenció, degut a que la majoria de funcions de pèrdua estan dissenyades per ser descendides.  
@@ -1197,6 +1198,7 @@ $$
 Es pot veure que el vector $\theta \pm \frac{\pi}{4}\Delta_i$ és el vector $\theta$ però amb una petita variació en la posició $i$ que és la que correspon al paràmetre $\theta_i\,$. Amb aquest mètode ja es pot desenvolupar pràcticament qualsevol actualització de paràmetres, aquesta és la part senzilla de les xarxes neuronals quàntiques, la dificultat radica en la forma dels circuits quàntics que les componen.
 
 \section{Circuits quàntics per xarxes neuronals}
+\label{qcircuits}
 L'única qualitat obligatòria que han de dintre aquests circuits és que han de estar parametritzats. Usualment estan compostos per una gran quantitat de portes rotacionals parametritzades, les quals ja he presentat en les equacions \ref{eq:rx}, \ref{eq:ry} i \ref{eq:rz}. 
 
 El problema al qual s'enfrenten els investigadors dedicats a les xarxes neuronals quàntiques és la manera amb la qual implementar funcions no-lienals en els circuits quàntics. Aquests tipus de funcions són les responsables de la gran complexitat i profunditat de les xarxes neuronals clàssiques. A primera vista por semblar una tasca quasi impossible a causa de la naturalesa lineal de la computació quàntica. No obstant, durant els anys s'han desenvolupat diverses tècniques per donar a terme aquesta fita, les quals comentaré a continuació.  
