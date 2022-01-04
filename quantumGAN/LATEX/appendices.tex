@@ -183,10 +183,11 @@ Al veure el procediment de l'algoritme es pot veure l\textit{oracle} es consulta
 No entraré més en profunditat sobre aquest algoritme, perquè sinó hauré d'introduir més conceptes de computació quàntica com ara la fase d'un estat, o començar a utilitzar notació més complicada que també hauré d'explicar. Em sap greu, perquè és un algoritme que funciona d'una manera bonica de veure. També em sembla el millor algoritme per poder explicar una de les millors característiques de la computació quàntica, tenir algoritmes que et descarten automàticament els estats dolents dintre d'una combinació d'estats, d'aquesta manera lliurant un estat concret desitjat de entre la combinació. En el cas de l'algoritme de Grover aquest estat desitjat, és l'estat que està cercant l'\textit{oracle}. 
 
 \section{Algoritme de Shor}
-No explicaré aquest algoritme en profunditat degut a que és molt complex\footnote{Hauria d'introduir nous conceptes com la fase d'un qubit i com efectuar la transformada de Fourier inversa en un circuit quàntic.}, no surt ni en els llibres de texts als quals tinc accés. Simplement en limitaré a explicar quina és la seva utilitat i el compararé amb les seves alternatives clàssiques.
+No explicaré aquest algoritme en profunditat degut a que és molt complex\footnote{Hauria d'introduir nous conceptes com la fase d'un qubit i com efectuar la transformada de Fourier inversa en un circuit quàntic.}, no surt ni en els llibres de texts als quals tinc accés. Simplement em limitaré a explicar quina és la seva utilitat i el compararé amb les seves alternatives clàssiques.
 
-L'algoritme de Shor per la factorització en nombres prims \cite{Shor_97}, és probablement l'algoritme quàntic més famós i més rellevant que hi ha.
+L'algoritme de Shor per la factorització en nombres prims \cite{Shor_97}, és probablement l'algoritme quàntic més famós i més rellevant que hi ha, degut a la gran diferencia en complexitat que té en comparació als seus algoritmes anàlegs clàssics, i degut al gran impacte que tindria la seva implementació en a gran escala. Aquest últim punt és el més interesant i llamatiu, per tant és el que desenvoluparé en major profunditat. 
 
+Actualment totes les dades encriptades que s'envien a través d'internet són encriptades mitjançant la familia de protocols RSA\footnote{RSA són les sigles dels creadors d'aquests protocols; Ron Rivest, Adi Shamir i Leonard Adleman, que al 1977 van publicar els resultats de la seva investigació.  https://dl.acm.org/doi/10.1145/359340.359342}. Aquests protocols són una ligerament complicants, no les explicaré, l'únic fet que hem de tenir en compte és que 
 
 
 \chapter{Codi}
