@@ -143,7 +143,7 @@ En l'equació \ref{eq:photon_state} he exclòs el concepte de fase, que determin
 		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\frac{1}{\sqrt{2}}\sin(\theta)e^{i\alpha_y}\ket{y} \\
 					   &= [\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\sin(\theta)e^{i\alpha_y}\ket{y}]\frac{1}{\sqrt{2}}
 	\end{align*}
-	On el signe $\pm$ indica la diferència entre la diferència entre la polarització circular cap a la dreta o l'esquerra, amb $+$ i $-$, respectivament.
+	On el signe $\pm$ indica la diferència entre la polarització circular cap a la dreta o l'esquerra, amb $+$ i $-$, respectivament.
 	\item \textbf{El·líptica:}
 	On els angles $\alpha_x$, $\alpha_y$ són diferents per una quantitat arbitraria\footnote{Però que no sigui la quantitat que dona a terme la polarització circular.}:
 	$$
@@ -155,7 +155,7 @@ En l'equació \ref{eq:photon_state} he exclòs el concepte de fase, que determin
 
 \chapter{Complexitat i algoritmes quàntics}
 \label{complexity}
-En ciència de la computació existeix el concepte de \textit{Big-O Notation}, una forma de quantificar l'eficiència dels algoritmes per fer certes tasques, en altres paraules la complexitat dels algoritmes. Bàsicament, és una forma de classificar-los segon la rapidesa que tenen en fer la tasca que els correspon, aquesta rapidesa no és mesura en segons, ja que aquesta mètrica pot variar d'ordinador a ordinador per les diferències en hardware que aquest poden tindre. En canvi, es mesura segons nombre d'operacions o temps directament, però sense unitats.
+En ciències de la computació existeix el concepte de \textit{Big-O Notation}, una forma de quantificar l'eficiència dels algoritmes, la qual s'anomena la complexitat algorítmica. Bàsicament, és una forma de classificar-los segon la rapidesa que tenen en fer la tasca que els correspon, aquesta rapidesa no és mesura en segons, ja que aquesta mètrica pot variar d'ordinador a ordinador per les diferències en hardware que aquests poden tindre. En canvi, es mesura segons nombre d'operacions o temps directament, però sense unitats.
 
 La \textit{Big-O Notation} consisteix a definir el temps màxim que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida de l'input a l'algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. Com a un exemple més concret tenim que un l'algoritme de cerca de cadenes binàries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. Recorda que la notació $O(\cdot)$ és el màxim, és a dir, és \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la que es troba la cadena, també és possible que es trobi a la primera comprovació que es va\footnote{Que la primera cadena que se cerca, és la que s'ha de trobar.}, llavors l'algoritme acabaria en un temps $O(1)$. Simplement, és una manera de mirar lo eficients que són els algoritmes amb relació a la mida de l'input que tenen.
 
