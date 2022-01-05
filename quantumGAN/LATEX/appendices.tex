@@ -1,5 +1,5 @@
 \chapter{Més àlgebra lineal}
-Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren les suficients perquè estic content amb el treball\footnote{Hi han moltes coses guays i interessants que vull explicar.}, així que aquí hi ha més àlgebra lineal.
+Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren les suficients perquè estic content amb el treball\footnote{Hi ha moltes coses guais i interessants que vull explicar.}, així que aquí hi ha més àlgebra lineal.
 
 
 \section{Procediment de Gram–Schmidt}\label{gram}
@@ -9,20 +9,20 @@ $$
 $$
 Per $k$ en el interval $1 \leq k \leq d-1$.
 
-Si seguim per $k$ en $1 \leq k \leq d-1$, obtenim el set de vectors ${\ket{u_1}, \cdots , \ket{u_d}}$ que es una base vàlida per l'espai ortonormal per l'estai $V$. Els vectors creats han de tindre el mateix span\footnote{L'span d'un set de vectors són totes les combinacions lineals possibles amb aquests vectors.} que el dels vectors que originalment eren la base per $V$:
+Si seguim per $k$ en $1 \leq k \leq d-1$, obtenim el set de vectors ${\ket{u_1}, \cdots , \ket{u_d}}$ que és una base vàlida per l'espai ortonormal per l'estai $V$. Els vectors creats han de tindre el mateix \textit{span}\footnote{L'\textit{span} d'un set de vectors són totes les combinacions lineals possibles amb aquests vectors.} que el dels vectors que originalment eren la base per $V$:
 $$
 \text{span}(\{\ket{v}\}) = \text{span}(\{\ket{v}\}) = V
 $$
-Cal notar que l'span de del set base és la definició del espai. En altres paraules, cada vector en $V$ pot ser representat per una combinació del vectors base. 
+Cal notar que l'\textit{span} de del set base és la definició del espai. En altres paraules, cada vector en $V$ pot ser representat per una combinació del vectors base. 
 
 La prova de que és una base ortonormal és bastant simple:
-Podem veure immediatament que els elements  de $\{ \ket{u} \}$ són vectors unitaris perquè estan normalitzats (els vectors $\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}$ estan dividits per la seva norma). També podem veure que són ortogonals els uns als altres mirant que el producte interior entre els doni 0:
+Podem veure immediatament que els elements de $\{ \ket{u} \}$ són vectors unitaris perquè estan normalitzats (els vectors $\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}$ estan dividits per la seva norma). També podem veure que són ortogonals els uns als altres mirant que el producte interior entre els dona 0:
 
 Per $k=1$:
 $$
 \ket{u_2} = \frac{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}{\norm{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}}
 $$
-Per tant el producte interior amb $\ket{v_1}$ és:
+Per tant, el producte interior amb $\ket{v_1}$ és:
 $$
 \begin{aligned}
 \bra{u_1}\ket{u_2} 
@@ -31,7 +31,7 @@ $$
 &= 0
 \end{aligned}
 $$
-Per inducció podem veure que per $j \leq d$, amb $d$ sent la dimensió del espai vectorial:
+Per inducció podem veure que per $j \leq d$, amb $d$ sent la dimensió de l'espai vectorial:
 $$
 \begin{aligned}
 	\bra{u_j}\ket{u_{n+1}} 
@@ -42,7 +42,7 @@ $$
 	& = 0	\\
 \end{aligned}
 $$
-Tot això no és veu molt clar al principi però cal recordar que el producte interior de dos vectors ortonormals és zero, i que el producte interior entre el mateix vector unitari és un.
+Tot això no es veu molt clar al principi, però cal recordar que el producte interior de dos vectors ortonormals és zero, i que el producte interior entre el mateix vector unitari és un.
 
 \section{Curs ràpid de la notació de Dirac}
 A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac\footnote{La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.} \cite{QCandQI:dirac_notation}
@@ -52,19 +52,19 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 	Notació & Descripció\\
 	\hline
 	\hline
-	$z$ & Nombre complex    \\
+	$z$ & Nombre complex \\
 	$z^{*}$ & Conjugat complex d'un nombre complex $z$. $(a+ bi)^{*} = (a -bi)$\\
-	$\ket{\psi} $ & Vector amb una etiqueta $\psi$. Conegut com \textit{ket}\\
+	$\ket{\psi} $ & Vector amb una etiqueta $\psi$. Conegut com a \textit{ket}\\
 	$\ket{\psi}^T$ & Transposada d'un vector $\ket{\psi}$ \\
-	$\ket{\psi}^\dag $ &  Conjugat Hermitià d'un vector. $\ket{\psi}^\dag = (\ket{\psi}^T)^* $\\
-	$\bra{\psi} $ & Vector dual a $\ket{\psi}$. $ \ket{\psi} = \bra{\psi}^{\dag}$ i $\bra{\psi} = \ket{\psi}^\dag$. Conegut com \textit{bra}\\
+	$\ket{\psi}^\dag $ & Conjugat Hermitià d'un vector. $\ket{\psi}^\dag = (\ket{\psi}^T)^* $\\
+	$\bra{\psi} $ & Vector dual a $\ket{\psi}$. $ \ket{\psi} = \bra{\psi}^{\dag}$ i $\bra{\psi} = \ket{\psi}^\dag$. Conegut com a \textit{bra}\\
 	$ \bra{\varphi}\ket{\psi} $ & Producte interior dels vectors $\bra{\varphi}$ i $\ket{\psi}$ \\
-	$ \ket{\varphi}\bra{\psi} $ & Producte exterior del vectors $\bra{\varphi}$ i $\ket{\psi}$ \\
-	$ \ket{\psi}\otimes\ket{\varphi}$ & Producte tensorial del vectors $\ket{\varphi}$ i $\ket{\psi}$ \\
+	$ \ket{\varphi}\bra{\psi} $ & Producte exterior dels vectors $\bra{\varphi}$ i $\ket{\psi}$ \\
+	$ \ket{\psi}\otimes\ket{\varphi}$ & Producte tensorial dels vectors $\ket{\varphi}$ i $\ket{\psi}$ \\
 	$ 0 $ & Vector zero i operador zero \\
 	$ \mathbb{I}_n $ & Matriu identitat de dimensions $n\times n$ \\
 	$ \mathbb{C}_n $ & Espai vectorial complex de dimensió $n$ \\
-	$ \mathbb{C}_1$ o $\mathbb{C} $ & Espai del nombres complexos \\
+	$ \mathbb{C}_1$ o $\mathbb{C} $ & Espai dels nombres complexos \\
 	
 \end{tabular}
 
@@ -72,20 +72,20 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 
 
 \chapter{Computació Quàntica vs Mecànica Quàntica}
-En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil, en aquest apèndix explicaré exactament a que em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè si ho és, si es compara la computació quàntica amb la mecànica quàntica. Presentaré un exemple pràctic per il·lutrar-lo.  
+En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil, en aquest apèndix explicaré exactament a què em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè si ho és, si es compara la computació quàntica amb la mecànica quàntica. Presentaré un exemple pràctic per il·lustrar-lo.
 
-En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen, és a través de \textit{wavefunctions} o funcions d'ona, no es solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant, treballar amb elles és molt més complicat degut a que són funcions que depenen del temps, no son vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre normalitzar una funció d'ona i un vectors d'estat.
+En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen, és a través de \textit{wavefunctions} o funcions d'ona, no es solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant això, treballar amb elles és molt més complicat, ja que són funcions que depenen del temps, no són vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre com es preserva la normalització d'una funció d'ona i la d'un vector d'estat quan aquests objectes evolucionen en el temps, per mostrar un exemple de com la mecànica quàntica més bàsica em sembla més complicada que la computació quàntica més bàsica.
 
 \section{Normalitzar}
-Degut a l'interpretació probabilística dels vectors d'estat i de les funcions d'ona, aquests objectes han de ser normalitzats perquè la suma de la probabilitats del possibles estats de mesura sigui $1$. 
+A causa de la interpretació probabilística dels vectors d'estat i de les funcions d'ona, aquests objectes han de ser normalitzats perquè la suma de les probabilitats dels possibles estats de mesura sigui $1$.
 
-Per una funció d'ona $\Psi(x,t)$ que representa una partícula, la probabilitat de trobar aquesta partícula en un punt $x$ és $\abs{\Psi(x,t)}^2$. Per tant, la funció d'ona ha de ser normalitza seguint la fórmula: 
+Per una funció d'ona $\Psi(x,t)$ que representa una partícula, la probabilitat de trobar aquesta partícula en un punt $x$ és $\abs{\Psi(x,t)}^2$. Per tant, la funció d'ona ha de ser normalitza seguint la fórmula:
 \begin{equation}
 \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 1
 \label{eq:norm_wave}
 \end{equation}
 
-Degut a que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger, veure la figura \ref{fig:schro}, qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
+Ja que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger, veure la figura \ref{fig:schro}, qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
 \begin{figure}[H]
 	$$
 	i\hslash \pdv{\Psi}{t} = -\frac{\hslash^2}{2m}\pdv[2]{\Psi}{x}+V\Psi
@@ -122,11 +122,13 @@ Degut a que $\Psi(x,t)$ ha de convergir a zero quan $x$ va cap a infinit, es ver
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 0
 $$
-Es pot veure que l'integral es constant i per tant quan $\Psi$ es normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu es clar). 
+Es pot veure que l'integral és constant i, per tant, quan $\Psi$ és normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu és clar), i la normalització d'una funció d'ona és constant si aquesta evoluciona d'acord amb l'equació de Schrödinger.
+
+Mentre que amb un vector d'estat és molt més simple: al evolucionar a partir de matrius unitàries les quals preserven la norma del vector a la qual s'apliquen; si el vector al qual s'aplica una porta quàntica té una norma de $1$, aquesta norma es preservarà.
 
 \chapter{Polarització d'un fotó}
 \label{appendix:optics}
-En l'equació \ref{eq:photon_state} he excluit el concepte de fase, que determina el tipus de polarització que té un fotó. Hi han 3 tipus:
+En l'equació \ref{eq:photon_state} he exclòs el concepte de fase, que determina el tipus de polarització que té un fotó. Hi ha 3 tipus:
 \begin{enumerate}
 	\item \textbf{Linear:}
 	Un fotó té polarització lineal quan els angles de la fase $\alpha_x$, $\alpha_y$ en els estats base $\ket{x},\ket{y}$ són iguals:
@@ -136,14 +138,14 @@ En l'equació \ref{eq:photon_state} he excluit el concepte de fase, que determin
 	\end{align*}
 	On $\alpha=\alpha_x=\alpha_y$.
 	\item \textbf{Circular:}
-	Quan els angles $\alpha_x$, $\alpha_y$ son separats per exactament $\frac{\pi}{2}$ i la amplitud per les dos bases és la mateixa:
+	Quan els angles $\alpha_x$, $\alpha_y$ són separats per exactament $\frac{\pi}{2}$ i l'amplitud per les dues bases és la mateixa:
 	\begin{align*}
 		\ket{\nearrow} &= \frac{1}{\sqrt{2}}\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\frac{1}{\sqrt{2}}\sin(\theta)e^{i\alpha_y}\ket{y} \\
 					   &= [\cos(\theta)e^{i\alpha_x}\ket{x} \pm i\sin(\theta)e^{i\alpha_y}\ket{y}]\frac{1}{\sqrt{2}}
 	\end{align*}
-	On el signe $\pm$ indica la diferencia entre la diferencia entre la polarització circular cap a la dreta o la esquerra, amb $+$ i $-$, respectivament.
+	On el signe $\pm$ indica la diferència entre la diferència entre la polarització circular cap a la dreta o l'esquerra, amb $+$ i $-$, respectivament.
 	\item \textbf{El·líptica:}
-	On els angles $\alpha_x$, $\alpha_y$ son diferents per una quantitat arbitraria\footnote{Però que no sigui la quantitat que dona a terme la polarització circular.}:
+	On els angles $\alpha_x$, $\alpha_y$ són diferents per una quantitat arbitraria\footnote{Però que no sigui la quantitat que dona a terme la polarització circular.}:
 	$$
 	\ket{\nearrow} = \cos(\theta)e^{i\alpha_x}\ket{x} + \sin(\theta)e^{i\alpha_y}\ket{y}
 	$$
@@ -153,17 +155,17 @@ En l'equació \ref{eq:photon_state} he excluit el concepte de fase, que determin
 
 \chapter{Complexitat i algoritmes quàntics}
 \label{complexity}
-En ciència de la computació existeix el concepte de \textit{Big-O Notation}, una forma d'expressar lo eficients que són els algoritmes per fer certes tasques, en altres paraules la complexitat dels algoritmes. Bàsicament es una forma de classificar-los segon la rapidesa que tenen en ver la tasca que els correspon, aquesta rapidesa no és mesura en segons, degut a que aquesta mètrica pot variar d'ordinador a ordinador per les diferencies en hardware que aquest poden tindre. En canvi es mesure en nombre d'operacions o temps directament, però sense unitats. 
+En ciència de la computació existeix el concepte de \textit{Big-O Notation}, una forma de quantificar l'eficiència dels algoritmes per fer certes tasques, en altres paraules la complexitat dels algoritmes. Bàsicament, és una forma de classificar-los segon la rapidesa que tenen en fer la tasca que els correspon, aquesta rapidesa no és mesura en segons, ja que aquesta mètrica pot variar d'ordinador a ordinador per les diferències en hardware que aquest poden tindre. En canvi, es mesura segons nombre d'operacions o temps directament, però sense unitats.
 
-La \textit{Big-O Notation} consisteixes en definir el temps màxim que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida del input al algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. Com a un exemple més concret tenim que un l'algoritme de cerca de cadenes binaries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. Recorda que la notació $O(\cdot)$ és el màxim, es a dir es \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la que es troba la cadena, també es possible que es trobi-s'hi a la primera comprovació que es va\footnote{Que la primera cadena que es cerca, és la que s'ha de trobar.}, llavors l'algoritme acabaria en un temps $O(1)$. Simplement és una manera de mirar lo eficients que són els algoritmes en relació a la mida del input que tenen.
+La \textit{Big-O Notation} consisteix a definir el temps màxim que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida de l'input a l'algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. Com a un exemple més concret tenim que un l'algoritme de cerca de cadenes binàries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. Recorda que la notació $O(\cdot)$ és el màxim, és a dir, és \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la que es troba la cadena, també és possible que es trobi a la primera comprovació que es va\footnote{Que la primera cadena que se cerca, és la que s'ha de trobar.}, llavors l'algoritme acabaria en un temps $O(1)$. Simplement, és una manera de mirar lo eficients que són els algoritmes amb relació a la mida de l'input que tenen.
 
-Amb aquesta notació tenim una manera de comparar la eficiència que tenen els algoritmes quàntics amb la del clàssics que tenen la mateixa funció. Per il·lustrar aquesta avantatge en eficiència que presenten els algoritmes quàntics, presentaré a continuació els dos algoritmes quàntics més famosos, el de Grover, i el de Shor. Que serveixen per la cerca d'un element en una llista desordenada, i per la factorització en nombres prims respectivament. 
+Amb aquesta notació tenim una manera de comparar l'eficiència que tenen els algoritmes quàntics amb la dels clàssics que tenen la mateixa funció. Per il·lustrar aquest avantatge en eficiència que presenten els algoritmes quàntics, presentaré a continuació els dos algoritmes quàntics més famosos, el de Grover, i el de Shor. Que serveixen per a la cerca d'un element en una llista desordenada, i per la factorització en nombres primers respectivament.
 
 \section{Algoritme de Grover}
-Al 1996, Lov Grover va presentar un algoritme quàntic per cercar en dades desordenades \cite{Grover_96} (e.g. cercar el número de telèfon d'una persona en una llista desordenada). Per aquest problema un algoritme clàssic té una complexitat de $O(N)$ cerques\footnote{Una cerca és quan es verifica si un element de la llista és l'element que es cerca.}, mentre que l'algoritme de Grover té una complexitat de $O(\sqrt{N})$, sent substancialment més eficient. En les paraules de Grover \cite{Grover_96} (adaptades), un ordinador clàssic per tindre un probabilitat de $\frac{1}{2}$ de trobar el número de telèfon d'una persona en una llista desordenada necessita mirar a un mínim de $\frac{N}{2}$ números, mentre que amb el seu s'obté el número de telèfon en només $O(\sqrt{N})$ passos\footnote{Per passos entenc que es refereix al nombre de vegades que es mira al oracle, es a dir, el nombre que de vegades que es verifica si s'ha trobar l'element que es cerca.}.
+En 1996, Lov Grover va presentar un algoritme quàntic per cercar en dades desordenades \cite{Grover_96} (e.g. cercar el número de telèfon d'una persona en una llista desordenada). Per aquest problema un algoritme clàssic té una complexitat de $O(N)$ cerques\footnote{Una cerca és quan es verifica si un element de la llista és l'element que se cerca.}, mentre que l'algoritme de Grover té una complexitat de $O(\sqrt{N})$, sent substancialment més eficient. En les paraules de Grover \cite{Grover_96} (adaptades), un ordinador clàssic per tindre una probabilitat de $\frac{1}{2}$ de trobar el número de telèfon d'una persona en una llista desordenada necessita mirar a un mínim de $\frac{N}{2}$ números, mentre que amb el seu s'obté el número de telèfon en només $O(\sqrt{N})$ passos\footnote{Per passos entenc que es refereix al nombre de vegades que es mira a l'oracle, és a dir, el nombre que de vegades que es verifica si s'ha trobat l'element que se cerca.}.
 
 L'algoritme funciona de la següent manera:
-Agafar un sistema de $n$ qubits en l'estat $\ket{0}$ que resulten en una combinació de $N = 2^n$ estats. Aplicar una distribució uniforme als qubits, es a dir, aplicar portes Hadamard a tots els qubits, tenint al final un estat resultant $\ket{s}$:
+Agafar un sistema de $n$ qubits en l'estat $\ket{0}$ que resulten en una combinació de $N = 2^n$ estats. Aplicar una distribució uniforme als qubits, és a dir, aplicar portes Hadamard a tots els qubits, tenint al final un estat resultant $\ket{s}$:
 \begin{equation*}
 	\ket{s} = \frac{1}{\sqrt{N}} \sum_{x=0}^{2^n-1} \ket{x}
 \end{equation*}
@@ -176,42 +178,42 @@ Repetir $\approx \frac{\pi}{4}\sqrt{N}$ vegades, el operador de Grover $G$, que 
 \end{algorithmic}
 
 
-El \textit{oracle} és un tipus de funció que s'utilitza en els algoritmes de cerca, té la finalitat de reconèixer si un element és l'element que s'està cercant. En els algoritmes de cerca es construeixen al voltant de l'\textit{oracle}, diversos algoritmes tenen diverses formes de consultar al oracle. A més a més, la quantitat de consultes a l'\textit{oracle} serveixen per quantificar la complexitat del algoritme, a més consultes, més ineficient és l'algoritme. 
+El \textit{oracle} és un tipus de funció que s'utilitza en els algoritmes de cerca, té la finalitat de reconèixer si un element és l'element que s'està cercant. En els algoritmes de cerca es construeixen al voltant de l'\textit{oracle}, diversos algoritmes tenen diverses formes de consultar a l'oracle. A més a més, la quantitat de consultes a l'\textit{oracle} serveixen per quantificar la complexitat de l'algoritme, a més consultes, més ineficient és l'algoritme.
 
-Al veure el procediment de l'algoritme es pot veure l\textit{oracle} es consulta aproximadament $\frac{\pi}{4}\sqrt{N}$, vegades, d'aquesta manera resultat en una complexitat aproximada de $O(\sqrt{N})$, on $N=2^{n}$ per $n$ qubits, com ja he esmentat anteriorment. 
+Al veure el procediment de l'algoritme es pot veure que l\textit{oracle} es consulta aproximadament $\frac{\pi}{4}\sqrt{N}$, vegades, d'aquesta manera resultat en una complexitat aproximada de $O(\sqrt{N})$, on $N=2^{n}$ per $n$ qubits, com ja he esmentat anteriorment.
 
-No entraré més en profunditat sobre aquest algoritme, perquè sinó hauré d'introduir més conceptes de computació quàntica com ara la fase d'un estat, o començar a utilitzar notació més complicada que també hauré d'explicar. Em sap greu, perquè és un algoritme que funciona d'una manera bonica de veure. També em sembla el millor algoritme per poder explicar una de les millors característiques de la computació quàntica, tenir algoritmes que et descarten automàticament els estats dolents dintre d'una combinació d'estats, d'aquesta manera lliurant un estat concret desitjat de entre la combinació. En el cas de l'algoritme de Grover aquest estat desitjat, és l'estat que està cercant l'\textit{oracle}. 
+No entraré més en profunditat sobre aquest algoritme, perquè si no hauré d'introduir més conceptes de computació quàntica com ara la fase d'un estat, o començar a utilitzar notació més complicada que també hauré d'explicar. Em sap greu, perquè és un algoritme que funciona d'una manera bonica de veure. També em sembla el millor algoritme per poder explicar una de les millors característiques de la computació quàntica, tenir algoritmes que et descarten automàticament els estats dolents dintre d'una combinació d'estats, d'aquesta manera lliurant un estat concret desitjat d'entre la combinació. En el cas de l'algoritme de Grover aquest estat desitjat, és l'estat que està cercant l'\textit{oracle}.
 
 \section{Algoritme de Shor}
-No explicaré aquest algoritme en profunditat degut a que és molt complex\footnote{Hauria d'introduir nous conceptes com la fase d'un qubit i com efectuar la transformada de Fourier inversa en un circuit quàntic.}, no surt ni en els llibres de texts als quals tinc accés. Simplement em limitaré a explicar quina és la seva utilitat i el compararé amb les seves alternatives clàssiques.
+No explicaré aquest algoritme en profunditat perquè és molt complex\footnote{Hauria d'introduir nous conceptes com la fase d'un qubit i com efectuar la transformada de Fourier inversa en un circuit quàntic.}, no surt ni en els llibres de texts als quals tinc accés. Simplement, em limitaré a explicar quina és la seva utilitat i el compararé amb les seves alternatives clàssiques.
 
-L'algoritme de Shor per la factorització en nombres prims \cite{Shor_97}, és probablement l'algoritme quàntic més famós i més rellevant que hi ha, degut a la gran diferencia en complexitat que té en comparació als seus algoritmes anàlegs clàssics, i degut al gran impacte que tindria la seva implementació en a gran escala. Aquest últim punt és el més interesant i llamatiu, per tant és el que desenvoluparé en major profunditat. 
+L'algoritme de Shor per la factorització en nombres primers \cite{Shor_97}, és probablement l'algoritme quàntic més famós i més rellevant que hi ha, degut a la gran diferencia en complexitat que té en comparació als seus algoritmes anàlegs clàssics, i a causa del gran impacte que tindria la seva implementació a gran escala. Aquest últim punt és el més interessant i cridaner, per tant, és el que desenvoluparé en major profunditat.
 
-Actualment totes les dades encriptades que s'envien a través d'internet són encriptades mitjançant la familia de protocols RSA\footnote{RSA són les sigles dels creadors d'aquests protocols; Ron Rivest, Adi Shamir i Leonard Adleman, que al 1977 van publicar els resultats de la seva investigació.  https://dl.acm.org/doi/10.1145/359340.359342}. Aquests protocols són ligerament complicants, no els explicaré, l'únic fet que hem de tenir en compte és que per desencriptar un missatge s'ha de trobar els factors factors prims s'un nombre $n$, es a dir, dos nombres prims $p$ i $q$ que multiplicats donin $n$. Amb aquests nombres es poden saber les claus públiques i privades per encriptar i desencriptar missatges. $n$ seria la clau pública, un nombre que tothom pot coneixer i amb el qual es poden encriptar missatges. Mentres que a partir de $p$ i $q$ es pot trobar la clau privada que correspon a la clau pública, amb la qual es pot descriptar un missatge encriptar amb $n$, per aquesta raó es mantenen els nombres $p$ i $q$ secrets. Es pot entendre la clau pública com un candau que només s'obre amb la clau privada. Cal menciona que a cada clau privada correspond una clau pública, són parellas úniques.   
+Actualment, totes les dades encriptades que s'envien a través d'internet són encriptades mitjançant la família de protocols RSA\footnote{RSA són les sigles dels creadors d'aquests protocols; Ron Rivest, Adi Shamir i Leonard Adleman, que en 1977 van publicar els resultats de la seva investigació \cite{RSA}.}. Aquests protocols són lleugerament complicats, no els explicaré, l'únic fet que hem de tenir en compte és que per desencriptar un missatge s'ha de trobar els factors prims d'un nombre $n$, és a dir, dos nombres primers $p$ i $q$ que multiplicats donin $n$. Amb aquests nombres es poden saber les claus públiques i privades per encriptar i desencriptar missatges. $n$ seria la clau pública, un nombre que tothom pot conèixer i amb el qual es poden encriptar missatges. Mentre que a partir de $p$ i $q$ es pot trobar la clau privada que correspon a la clau pública, amb la qual es pot desencriptar un missatge encriptar amb $n$, per aquesta raó es mantenen els nombres $p$ i $q$ secrets. Es pot entendre la clau pública com un cadenat que només s'obre amb la clau privada. Cal mencionar que a cada clau privada correspon una clau pública, són paralles úniques.
 
-En encriptació es busca el que diu \textit{one way operations}, es a dir, una operació que si sigui fàcil de fer, però que la seva inversa requereixi de molts recursos computacionals per donar-la a terme. L'operació $n = pq$ compleix aquest requisit, és fàcil muliplicar els nombres prims $p$ i $q$ i trobar $n$, però és molt díficil trobar els nombres $p$ i $q$ sabent $n$, degut a que s'ha de realitzar una factorització de $n$ en nombres prims. Els millors algoritmes per donar a terme aquesta tasca requereixen de moltísim temps computacional en els ordenadors clàssics. Per aquesta raó el protocol RSA s'utilitza ampliament, és molt segur degut a que per saber la clau privada a partir de $n$, es requereix de molt de temps. Amb $n$ sent un nombre de 2048 bits, amb la tecnologia actual no és possible trobar els nombres prims $p$ i $q$ en un temps raonable. Dic raonable perquè es pot arribar a trobar, però es tardaria milers d'anys inclús amb el ordinadors més potents del planeta.
+En encriptació es busca el que diu \textit{one way operations}, és a dir, una operació que si és fàcil de fer, però que la seva inversa requereixi molts recursos computacionals per donar-la a terme. L'operació $n = pq$ compleix aquest requisit, és fàcil multiplicar els nombres primers $p$ i $q$ i trobar $n$, però és molt difícil trobar els nombres $p$ i $q$ sabent $n$, ja que s'ha de realitzar una factorització de $n$ en nombres primers. Els millors algoritmes per donar a terme aquesta tasca requereixen moltíssim temps computacional en els ordinadors clàssics. Per aquesta raó el protocol RSA s'utilitza àmpliament, és molt segur perquè per saber la clau privada a partir de $n$, es requereix molt de temps. Amb $n$ sent un nombre de 2048 bits, amb la tecnologia actual no és possible trobar els nombres primers $p$ i $q$ en un temps raonable. Dic raonable perquè es pot arribar a trobar, però es tardaria milers d'anys inclús amb els ordinadors més potents del planeta.
 
-Ara es quan l'algoritme de Shor juga la seva part, com ja he dit s'utilitza per la facorització de nombres primers, i a diferencia dels seus anàlegs clàssics, és extremandament eficient en comparació. En termes de complexitat, aquest algortime pot factoritzar un nombre de $N$ digit en un temps polinomi de $O(\log N)$ \footnote{Concretamente la seva complexitat mesurada mitjaçant la quantitat de portes quàntiques seria de $O((\log n)^2 (\log \log n) (\log \log \log n))$, per factoritzar un nombre $n$ amb una longitud de $\log n$ bits.}. Mentre que el millor algoritme clàssic per factoritzar en nombres prims té una complexitat de $O(e^{c(\log N)^\frac{1}{3} (\log \log N)^\frac{2}{3}})$}} per una constant $c$. Es a dir, que classicament es pot factoritzar en un temps exponianial \cite{Shor_97}, o com a mínim en un temps sub-exponecial. Un algoritme que s'executa en temps sub-exponencial segueix sent més ineficient que un que s'executa en temps polinomi però significativament més eficient que un que s'executa en temps expononecial. De totes maneres només cal tenir en compte que l'algoritme de Shor és molt més eficient que el millor algoritme clàssic que dona a terme la mateixa tasca. 
+Ara és quan l'algoritme de Shor juga la seva part, com ja he dit s'utilitza per a la factorització de nombres primers, i a diferència dels seus anàlegs clàssics, és extremadament eficient en comparació. En termes de complexitat, aquest algoritme pot factoritzar un nombre de $N$ dígit en un temps polinomi de $O(\log N)$ \footnote{Concretament la seva complexitat mesurada mitjançant la quantitat de portes quàntiques seria de $O((\log n)^2 (\log \log n) (\log \log \log n))$, per factoritzar un nombre $n$ amb una longitud de $\log n$ bits.}. Mentre que el millor algoritme clàssic per factoritzar en nombres primers té una complexitat de $O(e^{c(\log N)^\frac{1}{3} (\log \log N)^\frac{2}{3}})$ per una constant $c$. És a dir, que clàssicament es pot factoritzar en un temps exponencial \cite{Shor_97}, o com a mínim en un temps sub-exponencial. Un algoritme que s'executa en temps sub-exponencial segueix sent més ineficient que un que s'executa en temps polinomi, però significativament més eficient que un que s'executa en temps exponencial. De totes maneres només cal tenir en compte que l'algoritme de Shor és molt més eficient que el millor algoritme clàssic que dona a terme la mateixa tasca.
 
-S'estima que amb un ordinador de quàntic suficientment avançat es podrien arribar a factoritzar nombres els quals tenen una mida que actualment utilitzem\footnote{D'uns 2048 per exemple.}, però amb la tecnologia actual aquesta fita és imposible. El record per el major nombre factoritzat per un ordinador quàntic actualment el posseix un equip de l'Universitat de Bristol al Regne Unit. Al 2021 van conseguir factoritzar 21 amb un ordinador quàntic que funciona a partir d'un sistema fotònic. https://arxiv.org/pdf/1111.4147.pdf
+S'estima que amb un ordinador de quàntic prou avançat es podrien arribar a factoritzar nombres els quals tenen una mida que actualment utilitzem\footnote{D'uns 2048 dígits per exemple.}, però amb la tecnologia actual aquesta fita és impossible. El record pel nombre més gran factoritzat per un ordinador quàntic en l'actualitat el posseeix un equip de la Universitat de Bristol al Regne Unit. En 2021 van aconseguir factoritzar 21 amb un ordinador quàntic que funciona a partir d'un sistema fotònic \cite{21_factoritzation}.
 
 \section{Ordinadors quàntics actuals}
-El només ser capaços de poder factoritzar 21 il·lustra lo nova que és la tecnològia que està al darrera dels ordinadors quàntics. És un camp que té pocs anys de vida, i en el qual es difícil fer grans avanços. Al moment només es pot utilitzar el millor algortime que ofereix la computació quàntica per poder fer una tasca extremandament simple\footnote{$3 \times 7 = 21$}.
+El només ser capaços de poder factoritzar 21 il·lustra lo nova que és la tecnologia que està al darrere dels ordinadors quàntics. És un camp que té pocs anys de vida, i en el qual és difícil fer grans avanços. Al moment només es pot utilitzar el millor algoritme que ofereix la computació quàntica per poder fer una tasca extremadament simple\footnote{$3 \times 7 = 21$}.
 
-Això es degut a la quantitat de qubits del quals disposen els ordinadors quàntics actuals i als errors que aquets donen a terme alhora d'aplicar operacions. Quan un ordinador quàntics aplica una rotació en l'estat d'un qubit físic, aquest ho fa amb una certa impresició. El mateix pasa alhora d'aplica portes a dos qubits, com per exemple una $CNOT$. Els ordinadors quàntics actuals només són utilitzats per fer experiments, com probar nous algoritmes i valorar els mateixos ordinadors. Practicament no existeixen situacions pràctiques en les quals els ordinadors quàntics actuals siguin més útils que els clàssics. No obstant, és una tecnonlògia molt prometedora, en la qual grans companyies com Google, IBM, Amazon estàn invertint per investigar-la, al igual que altres companyies més petites i nombrosos equips d'investigació al llarg del món. S'espera que un futur els ordinadors quàntics ens permetiran realitzar tasques que són imposibles de realitzar en ordinadors clàssics, sobretot al tenir en compte que s'espera que començarem a arribar a limitacions físiques si continuem millorant els procesadors d'ordinadors actuals.
+Això és a causa de la quantitat de qubits dels quals disposen els ordinadors quàntics actuals i als errors que aquests donen a terme a l'hora d'aplicar operacions. Quan un ordinador quàntic aplica una rotació en l'estat d'un qubit físic, aquest ho fa amb una certa imprecisió. El mateix passa a l'hora d'aplicar portes a dos qubits, com per exemple una $\mathrm{CNOT}$. Els ordinadors quàntics actuals només són utilitzats per fer experiments, com provar nous algoritmes i valorar els mateixos ordinadors. Pràcticament, no existeixen situacions pràctiques en les quals els ordinadors quàntics actuals siguin més útils que els clàssics. Tanmateix, és una tecnologia molt prometedora, en la qual grans companyies com Google, IBM, Amazon estan invertint per investigar-la, igual que altres companyies més petites i nombrosos equips d'investigació al llarg del món. S'espera que un futur els ordinadors quàntics ens permetran dur a terme tasques que són impossibles de realitzar en ordinadors clàssics, sobretot en tenir en compte que s'espera que començarem a arribar a limitacions físiques si continuem millorant els processadors d'ordinadors actuals.
 
 
 \chapter{Codi}
 En l'apèndix actual presentaré el codi que he utilitzat al llarg del treball. Està organitzat segons el moment en el qual he referenciat el codi en el text. 
 
-IMPORTANT: Si hi ha text en català dintre del codi (n'hi ha en forma de comentaris), no porta accents perquè els paquet que utilitzo per formateixar el codi d'aquesta manera dintre del document no els accepta. Però si es mira el codi en el \href{https://github.com/tomiock/qGAN}{repositori del treball} es pot veure que si que té accents. No em deixa posar ni accents, ni la ce trencada, ni la ele geminada. L'error diu que no són caràcters que estan en Unicode UTF-8, quan si que estan allà, per fet que és un codi que suposadament està internacionalitzat per tots el llenguatges que s'utilitzen.  
+IMPORTANT: Si hi ha text en català dintre del codi (n'hi ha en forma de comentaris), no porta accents perquè els paquets que utilitzo per formatejar el codi d'aquesta manera dintre del document no els accepta. Però si es mira el codi en el \href{https://github.com/tomiock/qGAN}{repositori del treball} es pot veure que sí que té accents. No em deixa posar ni accents, ni la ce trencada, ni l'ele geminada. L'error diu que no són caràcters que estan en Unicode UTF-8, quan sí que estan allà, per fet que és un codi que suposadament està internacionalitzat per tots els llenguatges que es fan servir.
 
 \section{Part I}
 \subsection{Capítol 3}
 
 \paragraph{Regressió lienal}
 \label{lst:linear_regression}
-Codi per efectuar una regressió lineal a dades que es generen al atzar en el mateix arxiu, l'utilitzo per poder generar una gràfic per il·lustrar un exemple de regressió lienal. Aquest tros de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{link}}.
+Codi per efectuar una regressió lineal a dades que es generen a l'atzar en el mateix arxiu, l'utilitzo per poder generar un gràfic per il·lustrar un exemple de regressió lienal. Aquest tros de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{enllaç}}.
 
 \begin{lstlisting}[language=Python, caption=Regressió lineal]
 	import numpy as np
@@ -1095,114 +1097,6 @@ quantum_gan.save()
 \end{lstlisting}
 
 
-\paragraph{Multiprocessament}
-Per poder ser més eficient alhora de executar els models, vaig decidir utilitzar una característica molt útil de Python, el \textit{multiprocessing}. Usualment una instancia de Python, es a dir; un arxiu executant-se, només utilitza un nucli del processador a la vegada, però amb \textit{multiprocessing} pots utilitzar múltiples nuclis amb un mateix arxiu, d'aquesta manera executant diverses línies de codi al mateix temps. Per poder executar diversos models a la mateixa vegada i d'una forma simple, vaig utilitzar aquest modul de Python per executar els models dels quals he agafat les dades que he presentat en aquest treball. Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{test\_multi.py}. 
-\begin{lstlisting}[language=Python, caption=Executar els models amb multiprocessing]
-import multiprocessing
-import time
-import numpy as np
-
-from quantumGAN.discriminator import ClassicalDiscriminator
-from quantumGAN.qgan import Quantum_GAN
-from quantumGAN.quantum_generator import QuantumGenerator
-
-batch_size = 10
-
-train_data = []
-# generacio de les dades
-for _ in range(800):
-	x2 = np.random.uniform(.55, .46, (2,))
-	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
-	real_datapoint = np.array([x2[0], 0, x2[0], 0])
-	train_data.append((real_datapoint, fake_datapoint))
-list_epochs = [550, 550, 550]
-
-example_generator_ancilla = QuantumGenerator(num_qubits=4,
-											 generator_circuit=None,
-											 num_qubits_ancilla=2,
-											 shots=4096)
-example_generator = QuantumGenerator(num_qubits=2,
-									 generator_circuit=None,
-									 num_qubits_ancilla=0,
-									 shots=4096)
-
-# generem els parametres inicials d'acord amb el circuit amb un mayor nombre de parametres
-circuit_ancilla = example_generator_ancilla.construct_circuit(None, False)
-circuit_not_ancilla = example_generator_ancilla.construct_circuit(None, False)
-
-init_parameters_ancilla = np.random.normal(np.pi / 2, .1, circuit_ancilla.num_parameters)
-
-# canviem les dimensions dels parametres perque coincideixin amb les dimensions necessaries pel circuit
-# sense qubits ancilla
-not_ancilla_list = init_parameters_ancilla.tolist()[
-circuit_ancilla.num_parameters - circuit_not_ancilla.num_parameters:]
-init_parameters_not_ancilla = np.array(not_ancilla_list)
-
-example_discriminator = discriminator_ancilla = \
-ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
-
-init_biases_discriminator, init_weights_discriminator = example_discriminator.init_parameters()
-
-
-def to_train(num_epochs):
-	# definicio d'un discriminador pel model amb la funcio no-lineal i una altre pel model que no la te
-	discriminator_ancilla = \
-		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
-	discriminator_not_ancilla = \
-		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
-
-	# es defineix un generador que te la funcio no-lienal integrada en el circuit
-	generator_ancilla = \
-		QuantumGenerator(num_qubits=4,
-						 generator_circuit=None,
-						 num_qubits_ancilla=2,  # IMPORTANT
-						 shots=4096)
-	# i un altre generador que no te la funcio no-lineal
-	generator_not_ancilla = \
-		QuantumGenerator(num_qubits=2,
-     					 generator_circuit=None,
-						 num_qubits_ancilla=0,  # IMPORTANT
-						 shots=4096)
-
-	quantum_gan_ancilla = \
-		Quantum_GAN(generator_ancilla, discriminator_ancilla)
-	time.sleep(1)
-	quantum_gan_not_ancilla = \
-		Quantum_GAN(generator_not_ancilla, discriminator_not_ancilla)
-	print(quantum_gan_not_ancilla.path)
-	print(quantum_gan_ancilla.path)
-
-	# abans de comencar a entrenar el model s'ha de canviar els parametres als definits anteriorment
-	quantum_gan_ancilla.generator.parameter_values = init_parameters_ancilla
-	quantum_gan_ancilla.discriminator.weights = init_weights_discriminator
-	quantum_gan_ancilla.discriminator.biases = init_biases_discriminator
-	quantum_gan_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
-
-	quantum_gan_not_ancilla.generator.parameter_values = init_parameters_not_ancilla
-	quantum_gan_not_ancilla.discriminator.weights = init_weights_discriminator
-	quantum_gan_not_ancilla.discriminator.biases = init_biases_discriminator
-	quantum_gan_not_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
-
-	# una vegada ha acabat l'optimitzacio es creen els grafics per compara l'eficiencia del models
-	quantum_gan_not_ancilla.plot()
-	quantum_gan_ancilla.plot()
-
-
-def main():
-	# Crear una queue para compartir les dades entre els processos
-	# Crear i iniciar el proces de simulacio
-	jobs = []
-	for epoch in list_epochs:
-		simulate = multiprocessing.Process(None, to_train, args=(epoch,))
-		jobs.append(simulate)
-		time.sleep(2)
-		simulate.start()
-
-
-if __name__ == '__main__':
-	main()
-\end{lstlisting}
-
 
 \paragraph{Funcions extres}
 Hi han funcions en el codi que utilitzo en diversos arxius, aquestes les defineixo en l'arxiu \code{functions.py}, que es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball}. En aquest arxiu també hi ha una funció que dona a terme una traça parcial a una matriu donada, malgrat que no la he arribat a utilitzar. 
@@ -1415,4 +1309,111 @@ class Partial_Trace:
 
 \end{lstlisting}
 
-
+\subsection{Capítol 7}
+\paragraph{Multiprocessament}
+Per poder ser més eficient a l'hora d'executar els models, vaig decidir utilitzar una característica molt útil de Python, el \textit{multiprocessing}. Usualment, una instància de Python, és a dir; un arxiu executant-se, només es fa servir un nucli del processador a la vegada, però amb \textit{multiprocessing} pots emprar múltiples nuclis amb un mateix arxiu, d'aquesta manera executant diverses línies de codi al mateix temps. Per poder executar diversos models a la mateixa vegada i d'una forma simple, vaig fer servir aquest mòdul de Python per executar els models dels quals he agafat les dades que he presentat en aquest treball. Aquest codi es pot trobar al \href{https://github.com/tomiock/qGAN}{repositori del treball} en l'arxiu \code{test\_multi.py}.
+\begin{lstlisting}[language=Python, caption=Executar els models amb multiprocessing]
+	import multiprocessing
+	import time
+	import numpy as np
+	
+	from quantumGAN.discriminator import ClassicalDiscriminator
+	from quantumGAN.qgan import Quantum_GAN
+	from quantumGAN.quantum_generator import QuantumGenerator
+	
+	batch_size = 10
+	
+	train_data = []
+	# generacio de les dades
+	for _ in range(800):
+		x2 = np.random.uniform(.55, .46, (2,))
+		fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
+		real_datapoint = np.array([x2[0], 0, x2[0], 0])
+		train_data.append((real_datapoint, fake_datapoint))
+	list_epochs = [550, 550, 550]
+	
+	example_generator_ancilla = QuantumGenerator(num_qubits=4,
+												 generator_circuit=None,
+												 num_qubits_ancilla=2,
+												 shots=4096)
+	example_generator = QuantumGenerator(num_qubits=2,
+										 generator_circuit=None,
+										 num_qubits_ancilla=0,
+										 shots=4096)
+	
+	# generem els parametres inicials d'acord amb el circuit amb un mayor nombre de parametres
+	circuit_ancilla = example_generator_ancilla.construct_circuit(None, False)
+	circuit_not_ancilla = example_generator_ancilla.construct_circuit(None, False)
+	
+	init_parameters_ancilla = np.random.normal(np.pi / 2, .1, circuit_ancilla.num_parameters)
+	
+	# canviem les dimensions dels parametres perque coincideixin amb les dimensions necessaries pel circuit
+	# sense qubits ancilla
+	not_ancilla_list = init_parameters_ancilla.tolist()[
+	circuit_ancilla.num_parameters - circuit_not_ancilla.num_parameters:]
+	init_parameters_not_ancilla = np.array(not_ancilla_list)
+	
+	example_discriminator = discriminator_ancilla = \
+		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+	
+	init_biases_discriminator, init_weights_discriminator = example_discriminator.init_parameters()
+	
+	
+	def to_train(num_epochs):
+		# definicio d'un discriminador pel model amb la funcio no-lineal i una altre pel model que no la te
+		discriminator_ancilla = \
+			ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+		discriminator_not_ancilla = \
+			ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
+	
+		# es defineix un generador que te la funcio no-lienal integrada en el circuit
+		generator_ancilla = \
+			QuantumGenerator(num_qubits=4,
+						  	 generator_circuit=None,
+							 num_qubits_ancilla=2,  # IMPORTANT
+						 	 shots=4096)
+		# i un altre generador que no te la funcio no-lineal
+		generator_not_ancilla = \
+			QuantumGenerator(num_qubits=2,
+	                         generator_circuit=None,
+							 num_qubits_ancilla=0,  # IMPORTANT
+							 shots=4096)
+	
+		quantum_gan_ancilla = \
+			Quantum_GAN(generator_ancilla, discriminator_ancilla)
+		time.sleep(1)
+		quantum_gan_not_ancilla = \
+			Quantum_GAN(generator_not_ancilla, discriminator_not_ancilla)
+		print(quantum_gan_not_ancilla.path)
+		print(quantum_gan_ancilla.path)
+	
+		# abans de comencar a entrenar el model s'ha de canviar els parametres als definits anteriorment
+		quantum_gan_ancilla.generator.parameter_values = init_parameters_ancilla
+		quantum_gan_ancilla.discriminator.weights = init_weights_discriminator
+		quantum_gan_ancilla.discriminator.biases = init_biases_discriminator
+		quantum_gan_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+	
+		quantum_gan_not_ancilla.generator.parameter_values = init_parameters_not_ancilla
+		quantum_gan_not_ancilla.discriminator.weights = init_weights_discriminator
+		quantum_gan_not_ancilla.discriminator.biases = init_biases_discriminator
+		quantum_gan_not_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+	
+		# una vegada ha acabat l'optimitzacio es creen els grafics per compara l'eficiencia del models
+		quantum_gan_not_ancilla.plot()
+	quantum_gan_ancilla.plot()
+	
+	
+	def main():
+		# Crear una queue para compartir les dades entre els processos
+		# Crear i iniciar el proces de simulacio
+		jobs = []
+		for epoch in list_epochs:
+			simulate = multiprocessing.Process(None, to_train, args=(epoch,))
+			jobs.append(simulate)
+			time.sleep(2)
+			simulate.start()
+	
+	
+	if __name__ == '__main__':
+		main()
+\end{lstlisting}
