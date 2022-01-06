@@ -3,12 +3,11 @@ Una vegada havia implementat la distància de Férchet per poder avaluar el rend
 
 Els models que tenen implementada la funció no-lienal són més eficients. 
 
-Arribo a aquesta conclusió, ja que els models sense la funció no arriben a estabilitzar-se, és a dir, no arriben al punt d'equilibri. En canvi, els models que si la presenten si ho fan. Arribar al punt d'equilibri ens garanteix que les imatges que generen seguin òptimes indefinidament. Per molt més que el model segueixi optimitzant-se, sempre donarà els mateixos resultats.
+Afirmo això perquè els models sense la funció no arriben a estabilitzar-se, és a dir, no arriben al punt d'equilibri. En canvi, els models que si la presenten arriben a aquest punt. El punt d'equilibri ens garanteix que les imatges que generen seguin òptimes indefinidament. Per molt més que el model segueixi optimitzant-se, sempre donarà els mateixos resultats.
 
+Els models que no presenten la funció, no assoleixen aquest punt a causa que la fidelitat de les imatges oscil·la, és a dir, poden arribar a generar imatges correctament, però no ho fan indefinidament, al cap d'unes interaccions la semblança de les imatges generades amb les reals no és significativa. Simplement, la qualitat de les imatges generades va oscil·lant entre bona i dolenta.
 
-Els models que no presenten la funció, no assoleixen el punt d'equilibri, com que la fidelitat de les imatges oscil·la És a dir, poden arribar a generar imatges correctament, però no ho fan indefinidament, al cap d'unes interaccions la semblança de les imatges generades amb les reals no és significativa.
-
-Aquest problema no és causat pel discriminador, això és veritat perquè la variable independent de l'experiment, és el circuit quàntic del generador. Per tant, és el factor que té més possibilitat de ser el causant d'aquest comportament. No sé molt bé la causa exacta, però està clar que el mesurament parcial té un impacte. Tot i que hi ha excepcions, a vegades els models sense la funció no experimenten aquesta oscil·lació. Però cal remarcar que les vegades que passa són notablement més altes que les que no passa. Com es pot veure amb les dades de la taula \ref{tab:oscilations}
+Aquest problema no és causat pel discriminador, això és veritat perquè la variable independent de l'experiment és el circuit quàntic del generador, per tant, és el factor que té més possibilitat de ser el causant d'aquest comportament. No sé molt bé la causa exacta, però està clar que el mesurament parcial té un impacte. Tot i que hi ha excepcions, a vegades els models sense la funció no experimenten aquesta oscil·lació. Però cal remarcar que les vegades que passa són notablement més altes que les que no passa. Com es pot veure amb les dades de la taula \ref{tab:oscilations}.
 
 \begin{table}[]
 	\resizebox{\textwidth}{!}{%
@@ -85,6 +84,12 @@ Aquest problema no és causat pel discriminador, això és veritat perquè la va
 	\caption{Aquestes gràfiques corresponen a models que s'han executat al llarg de $700$ iteracions. Estan organitzades igual que les gràfiques de la figura \ref{fig:550_SD_score}. En aquests casos, com es pot observar tots els models sense la funció no-lineal presenten les oscil·lacions. No obstant en la gràfica \textbf{A}, aquesta es molt feble. Per veure com afecten les oscil·lacions es pot veure la figura, on estan representades les últimes imatges que han generat els models que corresponen les gràfiques d'aquesta figura.}\todo{aquestes figures tenen el terme [H], veure si es útil}
 	\label{fig:700_SD_score}
 \end{figure}
+
+En les gràfiques \ref{fig:550_SD_score} i \ref{fig:700_SD_score} es pot veure perfectament l'oscil·lació en la Distància de Fréchet, que en aquest cas es pot interpretar com la semblança entre les imatges generades i les reals. Si aquesta distància convergeix a zero, es pot dir que el model a arribat al seu punt d'equilibri. Es pot veure com tots els models que tenen el mesurament parcial assoleixen aquest punt. D'aquesta manera demostrant l'eficàcia de la funció no-lienal.
+
+Per poder veure la diferència entre les imatges directament, es pot veure la figura \ref{fig:700_images}, en la qual es mostren les 10 últimes imatges generades pels models optimitzats al llarg de 700 iteracions.
+
+A partir de la Distància de Fréchet es pot apreciar l'efecte que té el measurament parcial en la generació de les imatge, fent que aquest procés sigui més eficient i evitant una oscil·lació entre la generació d'imatges de bona i dolenta qualitat. Per tant, es pot afirmar que el measurament té un efecte positiu en el model, corrovorant la tesis exposada en INSERT PAPER.
 
 \begin{figure}[H]
 	\begin{subfigure}[b]{.32\linewidth}
