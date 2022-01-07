@@ -91,6 +91,10 @@ Per poder veure la diferència entre les imatges directament, es pot veure la fi
 
 A partir de la Distància de Fréchet es pot apreciar l'efecte que té el measurament parcial en la generació de les imatge, fent que aquest procés sigui més eficient i evitant una oscil·lació entre la generació d'imatges de bona i dolenta qualitat. Per tant, es pot afirmar que el measurament té un efecte positiu en el model, corrovorant la tesis exposada en INSERT PAPER.
 
+No obstant això, es podria desenvolupar aquest experiment en major profunditat. No he tingut en compte el temps en el qual es tarden a generar les imatges, els models amb el mesurament parcial implementat són més eficients, però en tenir més qubits és més costos simular-los i, per tant, tarden més temps per cada interacció. He fallat en mirar exactament quina és la diferència en termes de temps, tanmateix, ja que els models sense la funció no-lineal no arriben a assolir el punt d'equilibri la gran majoria de les vegades, des d'un punt pràctic és recomanable utilitzar els models que si tenen la funció. 
+
+A més a més es podria investigar la causa de l'oscil·lació en major profunditat. Deixant de banda la investigació teòrica de per què passa, es podria variar el nombre de qubits en els circuits, tant els ancilla, com el total de qubits del circuit, per veure quin és l'efecte que té tenir més qubits en el sistema ancilla. Potser investigaré pel meu compte aquesta qüestió. 
+
 \begin{figure}[H]
 	\begin{subfigure}[b]{.32\linewidth}
 		\includegraphics[width=\linewidth]{figures/data/scatter_plot_4.png}
