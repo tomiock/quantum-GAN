@@ -1,3 +1,15 @@
+\chapter{Que podria fer en un futur?}
+M'agradaria parlar sobre que és el que vull fer en el futur, gaudeixo massa aprendre sobre aquest camp i programar experiment per a deixar-ho de banda.
+
+La primera opció seria investigar en major profunditat com afecta aquest mesurament parcial a l'eficiència del model, i veure per què la funció de pèrdua oscil·la d'aquesta manera quan el mesurament parcial no està implementat en el circuit. Aquesta opció és la més fàcil, ja que, no he de desenvolupar més codi per donar-la a terme.
+
+Pel que fa a la segona opció, en aquesta entraria tot el que té a veure amb generar imatges amb la qGAN que he fet. Podria posar-me a generar imatges més complexes com dígits escrits a mà, igual que han fet els autors de l'article en el qual he basat aquest treball. També podria provar de generar imatges a color, ja m'he llegit uns quants articles que donen a terme aquesta fita i em sembla molt interessat. A més de tot això s'ha m'acudeix implementar el meu codi en un ordinador quàntic de veritat, però no crec que no faci perquè el meu model requereix moltes avaluacions de diversos circuits quàntics i no penso que IBM Quantum Experience em deixaria fer-les totes.
+
+Com a última opció he pensat fer una cosa completament diferent de la generació d'imatges. Exiteix models generatius que es basen en el que s'anomena \textit{feature encoding}, és a dir, trobar les característiques d'un objecte i a partir d'elles sintetitzar nous objectes. Un gran exemple d'aquests models és Juxebox desenvolupat per OpenAI https://arxiv.org/abs/2005.00341. Aquest model serveix per a la generació de música, i consisteix per exemple treure les característiques de l'estil i música d'un artista, i partir d'una gravació d'una veu cantant, transformar la gravació en una cançó amb l'estil d'aquest artista.
+
+Aquests tipus de models tenen una arquitectura anomenada \textit{autoencoder}, la qual ja ha sigut implementada en models quàntics https://arxiv.org/pdf/1612.02806.pdf. Vull veure si és possible fer alguna cosa semblant a \textit{Jukebox}, no necessàriament per generar dades, sinó per veure si és possible fer \textit{feature encoding} en un circuit quàntic. No penso que sigui probable fer-ho, però serà divertit intentar-ho. 
+
+
 \chapter{Més àlgebra lineal}
 Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren les suficients perquè estic content amb el treball\footnote{Hi ha moltes coses guais i interessants que vull explicar.}, així que aquí hi ha més àlgebra lineal.
 
