@@ -1,15 +1,15 @@
 \chapter{Que podria fer en un futur?}
-M'agradaria parlar sobre que és el que vull fer en el futur, gaudeixo massa aprendre sobre aquest camp i programar experiment per a deixar-ho de banda.
+M'agradaria parlar sobre que és el que vull fer en el futur. Gaudeixo massa aprendre sobre aquests camps i programar experiments, com per a deixar tot això de banda.
 
-La primera opció seria investigar en major profunditat com afecta aquest mesurament parcial a l'eficiència del model, i veure per què la funció de pèrdua oscil·la d'aquesta manera quan el mesurament parcial no està implementat en el circuit. Aquesta opció és la més fàcil, ja que, no he de desenvolupar més codi per donar-la a terme.
+La primera opció seria investigar en major profunditat com afecta aquest mesurament parcial a l'eficiència dels models, i veure per què la funció de pèrdua oscil·la d'aquesta manera.
 
 Pel que fa a la segona opció, en aquesta entraria tot el que té a veure amb generar imatges amb la qGAN que he fet. Podria posar-me a generar imatges més complexes com dígits escrits a mà, igual que han fet els autors de l'article en el qual he basat aquest treball. També podria provar de generar imatges a color, ja m'he llegit uns quants articles que donen a terme aquesta fita i em sembla molt interessat. A més de tot això s'ha m'acudeix implementar el meu codi en un ordinador quàntic de veritat, però no crec que no faci perquè el meu model requereix moltes avaluacions de diversos circuits quàntics i no penso que IBM Quantum Experience em deixaria fer-les totes.
 
-Com a última opció he pensat fer una cosa completament diferent de la generació d'imatges. Existeixen models generatius que es basen en el que s'anomena \textit{feature encoding}, és a dir, trobar les característiques d'un objecte i a partir d'elles sintetitzar nous objectes. Un gran exemple d'aquests models és Juxebox desenvolupat per OpenAI \cite{jukebox}. Aquest model serveix per a la generació de música, i consisteix per exemple treure les característiques de l'estil i música d'un artista, i partir d'una gravació d'una veu cantant, transformar la gravació en una cançó amb l'estil d'aquest artista.
+Com a última opció he pensat fer una cosa completament diferent de la generació d'imatges. Existeixen models generatius que es basen en el que s'anomena \textit{feature encoding}, és a dir, trobar les característiques d'un objecte i a partir d'elles sintetitzar nous objectes. Un gran exemple d'aquests models és Juxebox desenvolupat per OpenAI \cite{jukebox}. Aquest model serveix per a la generació de música. Consisteix a treure les característiques de l'estil i música d'un artista, i partir d'una gravació d'una veu que canta, transformar la gravació en una cançó amb l'estil de l'artista analitzat.
 
-Aquests tipus de models tenen una arquitectura anomenada \textit{autoencoder}, la qual ja ha sigut implementada en models quàntics \cite{q_autoencoder}. Vull veure si és possible fer alguna cosa semblant a \textit{Jukebox}, no necessàriament per generar dades, sinó per veure si és possible fer \textit{feature encoding} en un circuit quàntic. No penso que sigui probable fer-ho, però serà divertit intentar-ho. 
+Aquests tipus de models tenen una arquitectura anomenada \textit{autoencoder}, la qual ja ha sigut implementada en models quàntics \cite{q_autoencoder}. Vull veure si és possible fer alguna cosa semblant a \textit{Jukebox}, no necessàriament per generar dades, sinó per veure si és possible fer \textit{feature encoding} en un circuit quàntic. No penso que sigui probable fer-ho, però serà divertit intentar-ho.
 
-Tanmateix, l'opció més intel·ligent seria centrar-me en les bases de la computació quàntica i aprendre les subrutines que existeixen com la transformada de Fourier quàntica i l'estimació de fase, els pilars dels algoritmes quàntics. A més a més hi ha algoritmes molt interessants i útils que he d'aprendre a utilitzar i encara més important, comprendre'ls; he de desenvolupar més intuïció.
+Tanmateix, l'opció més intel·ligent seria centrar-me en les bases de la computació quàntica i aprendre les subrutines que existeixen com la transformada de Fourier quàntica i l'estimació de fase, els pilars dels algoritmes quàntics. A més a més hi ha algoritmes molt interessants i útils que he d'aprendre a utilitzar i encara més important, comprendre'ls; he de desenvolupar més intuïció. Aquesta última opció és que segur que faré en algun moment, possiblement en l'estiu abans d'entrar en la universitat.
 
 \chapter{Més àlgebra lineal}
 
@@ -28,8 +28,7 @@ Cal notar que l'\textit{span} de del conjunt base és la definició del espai. E
 
 
 \section{Curs ràpid de la notació de Dirac}
-A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac\footnote{La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.} \cite{QCandQI:dirac_notation}.
-
+A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac \cite{QCandQI:dirac_notation}:
 \begin{tabular}{ p{2cm}|p{12cm} }
 	\hline
 	Notació & Descripció\\
@@ -50,14 +49,12 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 	$ \mathbb{C}_1$ o $\mathbb{C} $ & Espai dels nombres complexos \\
 	
 \end{tabular}
-
-
-
+La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.
 
 \chapter{Computació Quàntica vs Mecànica Quàntica}
-En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil, en aquest apèndix explicaré exactament a què em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè si ho és, si es compara la computació quàntica amb la mecànica quàntica. Presentaré un exemple pràctic per il·lustrar-lo.
+En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil. En aquest apèndix explicaré exactament a què em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè ho és si es compara amb la mecànica quàntica.
 
-En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen és a través de \textit{wavefunctions} o funcions d'ona, no se solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant això, treballar amb elles és molt més complicat, ja que són funcions que depenen del temps, no són vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre com es preserva la normalització d'una funció d'ona i la d'un vector d'estat quan aquests objectes evolucionen en el temps, per mostrar un exemple de com la mecànica quàntica més bàsica em sembla més complicada que la computació quàntica més bàsica.
+En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen és a través de \textit{wavefunctions} o funcions d'ona, no se solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant això, treballar amb elles és molt més complicat, ja que són funcions que depenen del temps, no són vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre com es preserva la normalització d'una funció d'ona i la d'un vector d'estat quan aquests objectes evolucionen en el temps per poder mostrar un exemple de com la mecànica quàntica més bàsica em sembla més complicada que la computació quàntica més bàsica.
 
 \section{Normalitzar}
 A causa de la interpretació probabilística dels vectors d'estat i de les funcions d'ona, aquests objectes han de ser normalitzats perquè la suma de les probabilitats dels possibles estats de mesura sigui $1$.
@@ -106,7 +103,7 @@ Degut a que $\Psi(x,t)$ ha de convergir a zero quan $x$ va cap a infinit, es ver
 $$
 \dv{t} \int_{-\infty}^{+\infty}\abs{\Psi(x,t)}^2\, dx\ = 0
 $$
-Es pot veure que l'integral és constant i, per tant, quan $\Psi$ és normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu és clar), i la normalització d'una funció d'ona és constant si aquesta evoluciona d'acord amb l'equació de Schrödinger.
+Es pot veure que l'integral és constant, per tant, quan $\Psi$ és normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu és clar), i la normalització d'una funció d'ona és constant si aquesta evoluciona d'acord amb l'equació de Schrödinger.
 
 Mentre que amb un vector d'estat és molt més simple: al evolucionar a partir de matrius unitàries, les quals preserven la norma del vector a la qual s'apliquen; si el vector al qual s'aplica una porta quàntica té una norma de $1$, aquesta norma es preservarà.
 
@@ -139,9 +136,9 @@ En l'equació \ref{eq:photon_state} he exclòs el concepte de fase, que determin
 
 \chapter{Complexitat i algoritmes quàntics}
 \label{complexity}
-En ciències de la computació existeix el concepte de \textit{Big-O Notation}, una forma de quantificar l'eficiència dels algoritmes, la qual s'anomena la complexitat algorítmica. Bàsicament, és una forma de classificar-los segon la rapidesa que tenen en fer la tasca que els correspon, aquesta rapidesa no és mesura en segons, ja que aquesta mètrica pot variar d'ordinador a ordinador per les diferències en hardware que aquests poden tindre. En canvi, es mesura segons nombre d'operacions o temps directament, però sense unitats.
+En ciències de la computació existeix el concepte de \textit{Big-O Notation}, una forma de quantificar l'eficiència dels algoritmes, la qual s'anomena la complexitat algorítmica. Bàsicament, és una forma de classificar-los segon la rapidesa que tenen en fer la tasca que els correspon, aquesta rapidesa no és mesura en segons, ja que aquesta mètrica pot variar d'ordinador a ordinador per les diferències en hardware que aquests poden tindre. En canvi, es mesura segons el nombre d'operacions que són necessàries, sense unitats.
 
-La \textit{Big-O Notation} consisteix a definir el temps màxim que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida de l'input a l'algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. A continuació parlo d'un exemple en concret; l'algoritme de cerca de cadenes binàries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. La notació $O(\cdot)$ es diu que és el \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la qual es trobaria la cadena. Això vol dir que és possible que a la primera comprovació es trobi la cadena que se cerca, llavors l'algoritme acabaria en un temps $O(1)$. Simplement, aquesta notació és una manera d'avaluar lo eficients que són els algoritmes amb relació a la mida de l'input que tenen.
+La \textit{Big-O Notation} consisteix a definir el nombre màxim d'operacions que necessita un algoritme, es denota com $O(\cdot)$ on l'argument usualment depèn de $n$ que és la mida de l'input a l'algoritme, per exemple un algoritme de cerca ha de cercar a través de $n$ coses. A continuació parlo d'un exemple en concret; l'algoritme de cerca de cadenes binàries corre en un temps $O(\log_{2} n)$, on $n$ és el nombre de cadenes entre les quals ha de cercar. La notació $O(\cdot)$ es diu que és el \textit{upper bounded}, això significa que $\log_{2} n$ és la quantitat de temps més gran en la qual es trobaria la cadena. Això vol dir que és possible que a la primera comprovació es trobi la cadena que se cerca, llavors l'algoritme acabaria en un temps $O(1)$. Simplement, aquesta notació és una manera d'avaluar com d'eficients són els algoritmes amb relació a la mida de l'input que tenen. Cal notar que les operacions especifiques que es quantifiquen varien entre els tipus d'algoritmes. Cada grup de ciruits que tenen la mateixa tasca, tenen una operació a quantificar diferent. 
 
 Amb aquesta notació tenim una manera de comparar l'eficiència que tenen els algoritmes quàntics amb la dels clàssics que tenen la mateixa funció. Per il·lustrar aquest avantatge en eficiència que presenten els algoritmes quàntics, presentaré a continuació els dos algoritmes quàntics més famosos, el de Grover, i el de Shor. Que serveixen per la cerca d'un element en una llista desordenada, i per la factorització en nombres primers; respectivament.
 
