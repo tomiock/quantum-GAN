@@ -5,60 +5,30 @@ La primera opció seria investigar en major profunditat com afecta aquest mesura
 
 Pel que fa a la segona opció, en aquesta entraria tot el que té a veure amb generar imatges amb la qGAN que he fet. Podria posar-me a generar imatges més complexes com dígits escrits a mà, igual que han fet els autors de l'article en el qual he basat aquest treball. També podria provar de generar imatges a color, ja m'he llegit uns quants articles que donen a terme aquesta fita i em sembla molt interessat. A més de tot això s'ha m'acudeix implementar el meu codi en un ordinador quàntic de veritat, però no crec que no faci perquè el meu model requereix moltes avaluacions de diversos circuits quàntics i no penso que IBM Quantum Experience em deixaria fer-les totes.
 
-Com a última opció he pensat fer una cosa completament diferent de la generació d'imatges. Exiteix models generatius que es basen en el que s'anomena \textit{feature encoding}, és a dir, trobar les característiques d'un objecte i a partir d'elles sintetitzar nous objectes. Un gran exemple d'aquests models és Juxebox desenvolupat per OpenAI https://arxiv.org/abs/2005.00341. Aquest model serveix per a la generació de música, i consisteix per exemple treure les característiques de l'estil i música d'un artista, i partir d'una gravació d'una veu cantant, transformar la gravació en una cançó amb l'estil d'aquest artista.
+Com a última opció he pensat fer una cosa completament diferent de la generació d'imatges. Existeix models generatius que es basen en el que s'anomena \textit{feature encoding}, és a dir, trobar les característiques d'un objecte i a partir d'elles sintetitzar nous objectes. Un gran exemple d'aquests models és Juxebox desenvolupat per OpenAI \cite{jukebox}. Aquest model serveix per a la generació de música, i consisteix per exemple treure les característiques de l'estil i música d'un artista, i partir d'una gravació d'una veu cantant, transformar la gravació en una cançó amb l'estil d'aquest artista.
 
-Aquests tipus de models tenen una arquitectura anomenada \textit{autoencoder}, la qual ja ha sigut implementada en models quàntics https://arxiv.org/pdf/1612.02806.pdf. Vull veure si és possible fer alguna cosa semblant a \textit{Jukebox}, no necessàriament per generar dades, sinó per veure si és possible fer \textit{feature encoding} en un circuit quàntic. No penso que sigui probable fer-ho, però serà divertit intentar-ho. 
+Aquests tipus de models tenen una arquitectura anomenada \textit{autoencoder}, la qual ja ha sigut implementada en models quàntics \cite{q_autoencoder}. Vull veure si és possible fer alguna cosa semblant a \textit{Jukebox}, no necessàriament per generar dades, sinó per veure si és possible fer \textit{feature encoding} en un circuit quàntic. No penso que sigui probable fer-ho, però serà divertit intentar-ho. 
 
 Tanmateix, l'opció més intel·ligent seria centrar-me en les bases de la computació quàntica i aprendre les subrutines que existeixen com la transformada de Fourier quàntica i l'estimació de fase, els pilars dels algoritmes quàntics. A més a més hi ha algoritmes molt interessants i útils que he d'aprendre a utilitzar i encara més important, comprendre'ls; he de desenvolupar més intuïció.
 
 \chapter{Més àlgebra lineal}
-Ja he escrit bastants pàgines sobre àlgebra lineal, però aparentment no eren les suficients perquè estic content amb el treball\footnote{Hi ha moltes coses guais i interessants que vull explicar.}, així que aquí hi ha més àlgebra lineal.
-
 
 \section{Procediment de Gram–Schmidt}\label{gram}
-El procediment de Gram-Schmidt és un mètode utilitzat per produir bases per a espais vectorials\cite{QCandQI:GramSchmidt}. Per un espai $V$ amb producte interior de $d$ dimensions amb el set de vectors ${\ket{v_1}, \cdots, \ket{v_d}}$, podem definir una nova base de vectors ortonormals $\{\ket{u}\}$. El primer element d'aquest set és $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, amb el següent element $\ket{v_{k+1}}$ sent:
+El procediment de Gram-Schmidt és un mètode utilitzat per produir bases per a espais vectorials \cite{QCandQI:GramSchmidt}. Per un espai $V$ amb producte interior de $d$ dimensions amb el conjunt de vectors ${\ket{v_1}, \cdots, \ket{v_d}}$, podem definir una nova base de vectors ortonormals $\{\ket{u}\}$. El primer element d'aquest conjunt és $\ket{u_1} = \ket{v_1}/\norm{\ket{v_1}}$, amb el següent element $\ket{v_{k+1}}$ sent:
 $$
 \ket{u_{k+1}} = \frac{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}{\norm{\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}}}
 $$
 Per $k$ en el interval $1 \leq k \leq d-1$.
 
-Si seguim per $k$ en $1 \leq k \leq d-1$, obtenim el set de vectors ${\ket{u_1}, \cdots , \ket{u_d}}$ que és una base vàlida per l'espai ortonormal per l'estai $V$. Els vectors creats han de tindre el mateix \textit{span}\footnote{L'\textit{span} d'un set de vectors són totes les combinacions lineals possibles amb aquests vectors.} que el dels vectors que originalment eren la base per $V$:
+Si seguim per $k$ en $1 \leq k \leq d-1$, obtenim el conjunt de vectors ${\ket{u_1}, \cdots , \ket{u_d}}$ que és una base vàlida per l'espai ortonormal per l'estai $V$. Els vectors creats han de tindre el mateix \textit{span}\footnote{L'\textit{span} d'un conjunt de vectors són totes les combinacions lineals possibles amb aquests vectors.} que el dels vectors que originalment eren la base per $V$:
 $$
-\text{span}(\{\ket{v}\}) = \text{span}(\{\ket{v}\}) = V
+\text{span}(\{\ket{v}\}) = \text{span}(\{\ket{u}\}) = V
 $$
-Cal notar que l'\textit{span} de del set base és la definició del espai. En altres paraules, cada vector en $V$ pot ser representat per una combinació del vectors base. 
+Cal notar que l'\textit{span} de del conjunt base és la definició del espai. En altres paraules, cada vector en $V$ pot ser representat per una combinació del vectors base. 
 
-La prova de que és una base ortonormal és bastant simple:
-Podem veure immediatament que els elements de $\{ \ket{u} \}$ són vectors unitaris perquè estan normalitzats (els vectors $\ket{v_{k+1}} - \sum_{i=1}^{k} \bra{u_i}\ket{v_{k+1}}\ket{u_i}$ estan dividits per la seva norma). També podem veure que són ortogonals els uns als altres mirant que el producte interior entre els dona 0:
-
-Per $k=1$:
-$$
-\ket{u_2} = \frac{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}{\norm{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}}
-$$
-Per tant, el producte interior amb $\ket{v_1}$ és:
-$$
-\begin{aligned}
-\bra{u_1}\ket{u_2} 
-&= \bra{u_1} \left( \frac{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}{\norm{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}} \right) \\
-&= \frac{\bra{u_1}\ket{v_2} - \bra{u_1}\ket{v_2}\bra{u_1}\ket{u_1}}{\norm{\ket{v_2} - \bra{u_1}\ket{v_2}\ket{u_1}}} \\
-&= 0
-\end{aligned}
-$$
-Per inducció podem veure que per $j \leq d$, amb $d$ sent la dimensió de l'espai vectorial:
-$$
-\begin{aligned}
-	\bra{u_j}\ket{u_{n+1}} 
-	& = \bra{u_j} \left( \frac{\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}}\ket{u_i}}{\norm{\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}}\ket{u_i}}} \right) \\
-	& = \frac{\bra{u_j}\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}} \bra{u_j}\ket{u_i}}{\norm{\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}} \ket{u_i}}} \\
-	& = \frac{\bra{u_j}\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}} \delta_{ij}}{\norm{\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}} \ket{u_i}}} \\
-	& = \frac{\bra{u_j}\ket{v_{n+1}} - \bra{u_j}\ket{v_{n+1}}}{\norm{\ket{v_{n+1}} - \sum_{i=1}^{n} \bra{u_i}\ket{v_{n+1}} \ket{u_i}}} \\
-	& = 0	\\
-\end{aligned}
-$$
-Tot això no es veu molt clar al principi, però cal recordar que el producte interior de dos vectors ortonormals és zero, i que el producte interior entre el mateix vector unitari és un.
 
 \section{Curs ràpid de la notació de Dirac}
-A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac\footnote{La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.} \cite{QCandQI:dirac_notation}
+A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal importants expressats en la notació de Dirac\footnote{La notació utilitzada per un espai vectorial complex i l'espai dels nombres complex no són de la notació de Dirac estàndard, però les poso per explicar el que signifiquen.} \cite{QCandQI:dirac_notation}.
 
 \begin{tabular}{ p{2cm}|p{12cm} }
 	\hline
@@ -87,7 +57,7 @@ A la taula següent hi ha un resum de conceptes matemàtics de l'àlgebra lineal
 \chapter{Computació Quàntica vs Mecànica Quàntica}
 En la introducció havia mencionat que una de les raons per les quals havia començat a aprendre i recercar sobre computació quàntica era perquè era fàcil, en aquest apèndix explicaré exactament a què em refereixo per això amb un exemple pràctic. Dic que és fàcil, perquè si ho és, si es compara la computació quàntica amb la mecànica quàntica. Presentaré un exemple pràctic per il·lustrar-lo.
 
-En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen, és a través de \textit{wavefunctions} o funcions d'ona, no es solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant això, treballar amb elles és molt més complicat, ja que són funcions que depenen del temps, no són vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre com es preserva la normalització d'una funció d'ona i la d'un vector d'estat quan aquests objectes evolucionen en el temps, per mostrar un exemple de com la mecànica quàntica més bàsica em sembla més complicada que la computació quàntica més bàsica.
+En mecànica quàntica la manera més usual de representar els estats quàntics, com els orbitals d'un àtom d'hidrogen és a través de \textit{wavefunctions} o funcions d'ona, no se solen representar mitjançant vectors d'estat. Aquestes funcions d'ona són molt útils i poden representar casos més generals que els vectors d'estat. No obstant això, treballar amb elles és molt més complicat, ja que són funcions que depenen del temps, no són vectors. Això implica que s'han d'utilitzar altres operacions per normalitzar les funcions, determinar com evolucionen en el temps o per fer mesures. A continuació faré una comparació entre com es preserva la normalització d'una funció d'ona i la d'un vector d'estat quan aquests objectes evolucionen en el temps, per mostrar un exemple de com la mecànica quàntica més bàsica em sembla més complicada que la computació quàntica més bàsica.
 
 \section{Normalitzar}
 A causa de la interpretació probabilística dels vectors d'estat i de les funcions d'ona, aquests objectes han de ser normalitzats perquè la suma de les probabilitats dels possibles estats de mesura sigui $1$.
@@ -98,7 +68,8 @@ Per una funció d'ona $\Psi(x,t)$ que representa una partícula, la probabilitat
 \label{eq:norm_wave}
 \end{equation}
 
-Ja que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger, veure la figura \ref{fig:schro}, qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
+Ja que la funció d'ona evoluciona a través del temps d'acord amb l'equació de Schrödinger
+ (veure la figura \ref{fig:schro}) qualsevol solució d'aquesta equació ha d'estar també normalitzada. En altres paraules, aquesta equació ha de preservar la normalització de les funcions d'ona \cite{IntroQM:normalizing}.
 \begin{figure}[H]
 	$$
 	i\hslash \pdv{\Psi}{t} = -\frac{\hslash^2}{2m}\pdv[2]{\Psi}{x}+V\Psi
@@ -137,7 +108,7 @@ $$
 $$
 Es pot veure que l'integral és constant i, per tant, quan $\Psi$ és normalitzada a $t=0$, es queda d'aquesta manera per qualsevol $t$ (positiu és clar), i la normalització d'una funció d'ona és constant si aquesta evoluciona d'acord amb l'equació de Schrödinger.
 
-Mentre que amb un vector d'estat és molt més simple: al evolucionar a partir de matrius unitàries les quals preserven la norma del vector a la qual s'apliquen; si el vector al qual s'aplica una porta quàntica té una norma de $1$, aquesta norma es preservarà.
+Mentre que amb un vector d'estat és molt més simple: al evolucionar a partir de matrius unitàries, les quals preserven la norma del vector a la qual s'apliquen; si el vector al qual s'aplica una porta quàntica té una norma de $1$, aquesta norma es preservarà.
 
 \chapter{Polarització d'un fotó}
 \label{appendix:optics}
@@ -208,7 +179,7 @@ En encriptació es busca el que es diu \textit{one way operations}, és a dir, u
 
 Ara és quan l'algoritme de Shor juga la seva part, com ja he dit s'utilitza per a la factorització de nombres primers, i és extremadament eficient en comparació als seus anàlegs clàssics. En termes de complexitat, aquest algoritme pot factoritzar un nombre de $N$ dígits en un temps polinomi de $O(\log N)$ \footnote{Concretament la seva complexitat mesurada mitjançant la quantitat de portes quàntiques seria de $O((\log n)^2 (\log \log n) (\log \log \log n))$, per factoritzar un nombre $n$ amb una longitud de $\log n$ bits.}. Mentre que el millor algoritme clàssic per factoritzar en nombres primers té una complexitat de $O(e^{c(\log N)^\frac{1}{3} (\log \log N)^\frac{2}{3}})$ per una constant $c$. És a dir, que clàssicament es pot factoritzar en un temps exponencial \cite{Shor_97}, o com a mínim en un temps sub-exponencial. Un algoritme que s'executa en temps sub-exponencial segueix sent més ineficient que un que s'executa en temps polinomi, però significativament més eficient que un que s'executa en temps exponencial. De totes maneres només cal tenir en compte que l'algoritme de Shor és molt més eficient que el millor algoritme clàssic que dona a terme la mateixa tasca.
 
-S'estima que amb un ordinador quàntic prou avançat es podrien arribar a factoritzar nombres els quals tenen una mida que actualment utilitzem\footnote{D'uns 2048 o 1024 dígits per exemple.}, però amb la tecnologia actual aquesta fita és impossible. El record pel nombre més gran factoritzat per un ordinador quàntic en l'actualitat el posseeix un equip de la Universitat de Bristol al Regne Unit. En 2021 van aconseguir factoritzar 21 amb un ordinador quàntic que funciona a partir d'un sistema fotònic \cite{21_factoritzation}.
+S'estima que amb un ordinador quàntic prou avançat es podrien arribar a factoritzar nombres els quals tenen una mida que actualment utilitzem\footnote{D'uns 2048 o 1024 dígits per exemple.}, però amb la tecnologia actual aquesta fita és impossible. El record pel nombre més gran factoritzat per un ordinador quàntic en l'actualitat el posseeix un equip de la Universitat de Bristol al Regne Unit. En 2021 van aconseguir factoritzar 21 amb un ordinador quàntic que funciona a partir d'un sistema fotònic \cite{21_factor}.
 
 \section{Ordinadors quàntics actuals}
 El només ser capaços de poder factoritzar 21 il·lustra lo nova que és la tecnologia que està al darrere dels ordinadors quàntics. És un camp que té pocs anys de vida, i en el qual és difícil fer grans avanços. Al moment només es pot utilitzar el millor algoritme que ofereix la computació quàntica per poder fer una tasca extremadament simple\footnote{$3 \times 7 = 21$}.
@@ -224,9 +195,9 @@ IMPORTANT: Si hi ha text en català dintre del codi (n'hi ha en forma de comenta
 \section{Part I}
 \subsection{Capítol 3}
 
-\paragraph{Regressió lienal}
+\paragraph{Regressió lineal}
 \label{lst:linear_regression}
-Codi per efectuar una regressió lineal a dades que es generen a l'atzar en el mateix arxiu, l'utilitzo per poder generar un gràfic per il·lustrar un exemple de regressió lienal. Aquest tros de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{enllaç}}.
+Codi per efectuar una regressió lineal a dades que es generen a l'atzar en el mateix arxiu, l'utilitzo per poder generar un gràfic per il·lustrar un exemple de regressió lineal. Aquest tros de codi l'he tret de GitHub\footnote{Gist realitzat per l'usuari \textit{jimimvp}: \href{https://gist.github.com/jimimvp/05ece11fec25d5c8c009af9ba469d6c2}{enllaç}}.
 
 \begin{lstlisting}[language=Python, caption=Regressió lineal]
 	import numpy as np
@@ -1379,7 +1350,7 @@ Per poder ser més eficient a l'hora d'executar els models, vaig decidir utilitz
 		discriminator_not_ancilla = \
 			ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
 	
-		# es defineix un generador que te la funcio no-lienal integrada en el circuit
+		# es defineix un generador que te la funcio no-lineal integrada en el circuit
 		generator_ancilla = \
 			QuantumGenerator(num_qubits=4,
 						  	 generator_circuit=None,

@@ -1,11 +1,11 @@
 \chapter{Plantejament de l'hipòtesi}
 
-Podria haver anat per altres vies com la generació d'imatges amb color o la implementació d'un d'una porta $X$ en una part específica del circuit quàntic que genera les imatges, que al posar-la o no, el model generes dos tipus d'imatge a través del mateix circuit. Tanmateix, les dues propostes requerien desenvolupar nous conceptes, ja que són idees meves pròpies, però com que no tenia els coneixements necessaris vaig descartar-les.
+Podria haver anat per altres vies com la generació d'imatges amb color o la implementació d'un d'una porta $X$ en una part específica del circuit quàntic que genera les imatges, que al posar-la o no, el model generes dos tipus d'imatges a través del mateix circuit. Tanmateix, les dues propostes requerien desenvolupar nous conceptes, ja que són idees meves pròpies, però com que no tenia els coneixements necessaris vaig descartar-les.
 
-Llavors, al ser la implementació de les funcions no-lineals un assumpte lleugerament conflictiu entre els diversos models de xarxes neuronals quàntiques, com ja he comentat en la secció \ref{qcircuits}, havia decidit des d'un principi centrar-me en aquesta qüestió en concret.
+Llavors, al ser la implementació de les funcions no lineals un assumpte lleugerament conflictiu entre els diversos models de xarxes neuronals quàntiques, com ja he comentat en la secció \ref{qcircuits}, havia decidit des d'un principi centrar-me en aquesta qüestió en concret.
 
 La pregunta a investigar és la següent: \\
-La incorporació d'una funció no-lineal en el circuit quàntic del model, a partir d'una mesura parcial, causa que el model arribi més ràpidament al punt òptim?}
+La incorporació d'una funció no lineal en el circuit quàntic generacional, a partir d'una mesura parcial; causa que el model arribi més ràpidament al punt òptim?
 
 En altres paraules, volia veure si la mesura parcial afectaria positivament en l'eficiència del model, fent que la generació de les imatges desitjades es donés a terme en un menor temps.
 
@@ -13,7 +13,9 @@ Sembla una qüestió senzilla, però la dificultat de l'experiment radica en cre
 
 \chapter{Programació del model}
 
-Posteriorment a començar a programar el model, jo ja sabia que ho havia de realitzar en Python, ja havia creat alguns algoritmes abans de començar aquest treball i tenia experiència construint i executant circuits quàntics amb Cirq \cite{cirq}, una eina desenvolupada per Google. A més a més, sabia de l'existència de TensorFlow Quantum \cite{tfq}, una altra eina desenvolupada per Google destinada a la creació de xarxes neuronals quàntiques i algoritmes de \textit{quantum mechine learning} en general. També tenia experiència en aquest \textit{framework}. Per tant, TensorFlow Quantum va ser la meva primera opció, tenia pensat basar el meu codi en el tutorial de TensorFlow sobre una xarxa convolucional generativa adverbial. Havia de canviar el generador per un circuit quàntic que s'optimitza a partir d'un diferenciador\footnote{Objecte que calcula el gradient d'un circuit quàntic.} automàtic provinent de TensorFlow Quantum. Els canvis que corresponien al discriminador simplement havien de ser un canvi d'arquitectura, passar d'una xarxa més complexa a una de més simple que només consistiria en unes poques capes totalment connectades.
+Posteriorment a començar a programar el model, jo ja sabia que ho havia de realitzar en Python, ja havia creat alguns algoritmes abans de començar aquest treball i tenia experiència construint i executant circuits quàntics amb Cirq \cite{cirq}, una eina desenvolupada per Google. A més a més, sabia de l'existència de TensorFlow Quantum \cite{tfq}, una altra eina desenvolupada per Google destinada a la creació de xarxes neuronals quàntiques i algoritmes de \textit{quantum mechine learning} en general. També tenia experiència en aquest \textit{framework}. Per tant, TensorFlow Quantum va ser la meva primera opció. 
+
+Tenia pensat basar el meu codi en el tutorial de TensorFlow sobre una xarxa convolucional generativa adversària. Havia de canviar el generador per un circuit quàntic que s'optimitza a partir d'un diferenciador\footnote{Objecte que calcula el gradient d'un circuit quàntic.} automàtic provinent de TensorFlow Quantum. Els canvis que corresponien al discriminador simplement havien de ser un canvi d'arquitectura, passar d'una xarxa més complexa a una de més simple que només consistiria en unes poques capes totalment connectades.
 
 El primer problema que em vaig trobar va ser la creació del \textit{dataset} que alimenta a la xarxa discriminativa. A causa de la peculiaritat de les imatges que volia generar, havia de crear-lo manualment. Usualment les imatges que componen els \textit{datasets} utilitzats en \textit{deep machine learning} són extretes de bancs d'informació amb mides enormes. En el meu cas, havien de ser generades per mi, per tant havia de convertir matrius de Numpy en \textit{datasets} de TensorFlow. Recordo que en va costar arribar a tindre la solució a aquest problema. 
 
@@ -27,25 +29,25 @@ Igual que Cirq té un \textit{framework} per poder desenvolupar xarxes neuronals
 
 Per tant, en canviar de Cirq a Qiskit, també havia de canviar de TensorFlow a PyTorch, però no tenia res d'experiencia amb PyTorch, sabia que la transició seria complicada, i tenia raó. No vaig ni aconseguir crear el \textit{dataset} que contenia les imatges per alimentar al discriminador.
 
-Després d'intentar-lo amb TensorFlow Quantum i amb PyTorch, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. El discriminador, al ser una xarxa tan simple, el podria crear des de zero. Llavors vaig començar a buscar codi, volia una xarxa neuronal que feta amb Numpy, una llibreria de Python per fer càlculs amb vectors i matrius amb la qual tenia bastant experiència.
+Després d'intentar-lo amb TensorFlow Quantum i amb PyTorch, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. El discriminador, al ser una xarxa tan simple, la podria crear des de zero. Llavors vaig començar a buscar codi a internet que pogués utilitzar. Volia una xarxa neuronal feta amb Numpy, una llibreria de Python per fer càlculs amb vectors i matrius amb la qual tenia bastant experiència.
 
-Després de provar dues opcions que més o menys m'agradaven\footnote{Buscava codi estructurat d'una forma en concret, que estigui dissenyat amb la filosofia de \textit{Object Oriented Programming}, una forma d'escriure codi en el qual tot s'implementa en un sol objecte.}, va aparèixer un repositori\footnote{\href{https://github.com/mnielsen/neural-networks-and-deep-learning}{enllaç del respositori}} de Michael Nielsen, un dels autors de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} que em va salvar. 
+Després de provar dues opcions que més o menys m'agradaven\footnote{Buscava codi estructurat d'una forma en concret, que estigui dissenyat amb la filosofia de \textit{Object Oriented Programming}, una forma d'escriure codi en el qual tot s'implementa en un sol objecte.}, va aparèixer un repositori\footnote{\href{https://github.com/mnielsen/neural-networks-and-deep-learning}{Enllaç del respositori de Michael Nielsen}, la persona que més m'ha ajudat a fer aquest treball. Però no m'ha ajudat directament, ho dic perquè és el coautor de \textit{QC i QI} \cite{QCandQI} i de la xarxa neuronal que va fer que progressés amb la programació. } de Michael Nielsen, un dels autors de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} que em va salvar. 
 
 El repositori tenia codi per xarxes neuronals que estava estructurat d'una forma que m'agradava i encara més important, que entenia. Inclús tènia diverses versions d'una mateixa xarxa neuronal, amb un nivell de complexitat diferent. Llavors, a partir del model més simple que hi havia en el repositori \footnote{Es pot veure el codi original a l'apèndix \ref{lst:disc_original}.}, vaig començar a desenvolupar el discriminador.
 
 Com es pot veure al codi final pel discriminador a l'apèndix \ref{lst:disc_final}, he fet bastants canvis, però no he canviat l'estructura o el funcionament teòric. La majoria dels canvis són per afegir més funcionalitat al model, com per exemple l'emmagatzematge de les dades per poder al final veure-les en un gràfic.
 
-El canvi més important és que inclou les dues formes d'optimitzar el model, amb dues funcions de pèrdua que funcionen de manera diferent, però que són la mateixa, la \textit{Binary Cross Entropy} i la \textit{MinMax}. Ja he parlat d'aquestes dues funcions en la part teòrica del treball. Això en el codi està materialitzat en dues funcions\footnote{Funcions de Python.} diferents, \code{backprop\_bce()} i \code{backprop\_minimax()}. No fa falta entrar en detall sobre que va cadascuna de les funcions, perquè fan el mateix i no tenen cap diferència en termes d'eficàcia o rapidesa. Les vaig fer tan sols per comprovar que no hi hauria cap diferència. El codi final del discriminador es pot veure a l'apèndix \ref{lst:disc_final}. També en el repositori del treball hi ha un altre arxiu anomenat \code{discriminator.py}, que conté una altra versió en la qual intentava implementar diverses funcions d'activació en el model, però no ho vaig aconseguir, tanmateix, no em preocupa perquè no és una part vital del treball, no passa res per tindre el discriminador només amb la sigmoide.
+El canvi més important és que inclou les dues formes d'optimitzar el model, amb dues funcions de pèrdua que funcionen de manera diferent, però que són la mateixa, la \textit{Binary Cross Entropy} i la \textit{MinMax}.. Això en el codi està materialitzat en dues funcions\footnote{Funcions de Python.} diferents, \code{backprop\_bce()} i \code{backprop\_minimax()}. No tenen cap diferència en termes d'eficàcia o rapidesa i les vaig fer tan sols per comprovar aquest fet. El codi final del discriminador es pot veure a l'apèndix \ref{lst:disc_final}. També en el repositori d'aquest treball hi ha un altre arxiu que conté una altra versió en la qual intentava implementar diverses funcions d'activació en el model, però no ho vaig aconseguir, tanmateix, no em preocupa perquè no és una part vital del treball, no passa res per tindre el discriminador només amb la funció sigmoide com a funció d'activació.
 
 \section{Generador}
 
-El desenvolupament de l'altra part del model, el generador, va ser molt diferent. Després de provar de fer-ho amb TensorFlow, sense obtenir bons resultats, no tenia altra opció que fer-ho tot manualment i jo mateix\footnote{No em vaig ni plantejar buscar codi per internet perquè pensava que els autors dels papers que vaig llegir, les úniques persones que sabia que podien tindre el codi, no el penjarien.}, això no obstant, ja tenia experiència en fer pseudoxarxes neuronals quàntiques i això em tranquil·litzava. Sabia perfectament el que havia de fer, i com ho havia de fer: Implementar el mètode de \textit{parameter shift} en els circuits quàntics dels quals vaig parlar en la secció \ref{qcircuits}.
+El desenvolupament de l'altra part del model, el generador, va ser molt diferent. Després de provar de fer-ho amb TensorFlow, sense obtenir bons resultats, no tenia altra opció que fer-ho tot manualment i jo mateix\footnote{No em vaig ni plantejar buscar codi per internet perquè pensava que els autors dels papers que vaig llegir, les úniques persones que sabia que podien tindre el codi, no el penjarien.}, això no obstant, ja tenia experiència en fer petites xarxes neuronals quàntiques i això em tranquil·litzava. Sabia perfectament el que havia de fer, i com ho havia de fer: Implementar el mètode de \textit{parameter shift} en els circuits quàntics dels quals vaig parlar en la secció \ref{qcircuits}.
 
 Una vegada vaig crear els circuits quàntics amb una funció fins a un punt en el qual sentia que ja estava tot perfecte, em vaig posar amb l'optimització, de la qual parlaré a continuació.
 
 Primer de tot cal remarcar que el model s'optimitza a partir d'un \textit{batch}, és a dir, un grup d'imatges, en aquest cas, un grup de dades. S'agafa la mitjana dels errors de cada \textit{batch}, i s'actualitzen els paràmetres a partir d'aquesta. La motivació per treball en \textit{batch} i no dades individuals és perquè s'ha de mirar l'error d'unes quantes dades a la vegada, d'aquesta manera l'optimització és més robusta.
 
-Tornant al funcionament del procediment, per començar s'han d'agafar els paràmetres a optimitzar, que estaran en forma d'un vector $\theta$, escollir un d'ells que anomenaré $\theta_{i}\,$, que és el paràmetre que s'optimitzarà, i crear un vector de pertubació $\Delta_{i}\,$. Aquest vector consisteix en un vector amb la mateixa mida que $\theta\,$, però amb tot de zeros, menys a la posició del paràmetre que es vol optimitzar, en la qual tindrà un $1$.
+Tornant al funcionament del procediment, l'explicaré tal i com està implementat en el codi. Per començar s'han d'agafar els paràmetres a optimitzar, que estaran en forma d'un vector $\theta$, escollir un d'ells que anomenaré $\theta_{i}\,$, que és el paràmetre que s'optimitzarà, i crear un vector de pertubació $\Delta_{i}\,$. 
 
 Llavors es creen dos vectors de paràmetres nous, $\theta^{+}_{i}$ i $\theta^{+}_{i}$, multiplicant $\pm\frac{\pi}{4}$ pel vector de pertubació, i sumant el resultat al vector de paràmetres original\footnote{Cada un d'aquests vectors de paràmetres té una petita variació en un paràmetre, i cada vector té una variació en un sentit.}. A continuació, es creen dues imatges, cadascuna corresponent a un dels vectors de paràmetres creats, una amb $\theta^{+}_{i}$ i l'altra amb $\theta^{-}_{i}\,$. Per últim, s'avalua la funció de pèrdua per a cada imatge generada i es treu la diferència entre elles, d'aquesta manera calculant una derivada $\pdv{\mathcal{L}}{\theta_i}$ respecte al paràmetre $\theta_{i}\,$.
 Una vegada es té una derivada per a cada paràmetre de $\theta$ es pot construir el vector gradient $\nabla_\theta$. He de dir aquest vector, ha de tenir la mateixa mida que el vector $\theta\,$, com que cada element en el gradient correspon a la derivada d'un paràmetre de $\theta$.
@@ -56,7 +58,9 @@ Amb el gradient $\nabla_{\theta}$ resultat es poden finalment optimitzar tots el
  
  
 \begin{figure}
-	\HRule \\[-.5cm]
+	\HRule \\
+	\textbf{Algorithm 2 Pseudocodi per una xarxa generativa adversària quàntica} \\
+	\HRule \\
 	\begin{algorithmic}
 		\State{$\nabla = 0$} \Comment{Creació del vector  $\nabla$ que te la mateixa mida que $\theta$}
 		\For{soroll en batch}
@@ -81,7 +85,7 @@ Amb el gradient $\nabla_{\theta}$ resultat es poden finalment optimitzar tots el
 		\EndFor
 	\end{algorithmic}
 	\HRule \\[-.4cm]
-	\caption{\textbf{Pseudocodi per una xarxa generativa adversativa.} Em refereixo a l'input de la xarxa generacional com a soroll, ja que és més encertat d'aquesta manera. El vector $\nabla$ té la mateixa mida que el vector de paràmetres $\theta$, cal notar que també té la mateixa mida els vectors $\theta^\pm_i$, ja que aquests vectors són $\theta$ amb una alteració al paràmetre $\theta_i$. Les paraules \textit{generador} i \textit{discriminador} denoten els respectius models, per tant, \textit{Imatge\textsubscript{$i$}} i \textit{Predicció\textsubscript{$i$}} són els outputs dels models.}
+	\caption{ Em refereixo a l'input de la xarxa generacional com a soroll, ja que és més encertat d'aquesta manera. El vector $\nabla$ té la mateixa mida que el vector de paràmetres $\theta$, cal notar que també té la mateixa mida els vectors $\theta^\pm_i$, ja que aquests vectors són $\theta$ amb una alteració al paràmetre $\theta_i$. Les paraules \textit{generador} i \textit{discriminador} denoten els respectius models, per tant, \textit{Imatge\textsubscript{$i$}} i \textit{Predicció\textsubscript{$i$}} són els outputs dels models.}
 	\label{fig:alg_gen}
 \end{figure}
 
@@ -89,31 +93,51 @@ El pseudocodi per aquest procediment es pot trobar en la figura \ref{fig:alg_gen
 
 \section{Creació del model}
 
-Quan ja es tenen les dues parts del model, aquestes s'han d'ajuntar d'alguna manera. El que jo he fet és posar-ho tot en una classe de Python anomenada \code{Quantum\_GAN}, que conté les funcions per definir el model, per executar-lo, per guardar les seves dades i per crear els gràfics que serveixen per avaluar l'eficiència del model. No fa falta entrar en detall sobre aquesta part en particular del codi. Només cal mencionar que és el tros de codi que junta tot, tant el discriminador i el generador, i les altres funcions que són necessàries, com per exemple la sigmoide. Aquestes funcions que no estan tant en l'arxiu del generador com el discriminador es troben en \code{functions.py}.
+Quan ja es tenen les dues parts del model, aquestes s'han d'ajuntar d'alguna manera. El que jo he fet és posar-ho tot en una classe de Python anomenada \code{Quantum\_GAN}, que conté les funcions per definir el model, per executar-lo, per guardar les seves dades i per crear els gràfics que serveixen per avaluar l'eficiència del model. No fa falta entrar en detall sobre aquesta part en particular del codi. Només cal mencionar que és el tros de codi que junta tot, tant el discriminador i el generador. També agafa altres funcions que són necessàries, com per exemple la sigmoide. Aquestes funcions que no estan tant en l'arxiu del generador com el discriminador es troben en \code{functions.py}.
 
-Tanmateix, s'han de tenir en compte algunes de les funcionalitats d'aquesta classe, com la creació de les gràfiques i com circulen les dades del generador als discriminadors. D'aquesta última qüestió parlaré a continuació.
+Tanmateix, s'han de tenir en compte algunes de les funcionalitats d'aquesta classe, com circulen les dades del generador als discriminadors i com es creen les gràfiques amb les quals valoro l'eficiència dels models.
 
 A la funció de la classe \code{Quantum\_GAN} que s'utilitza per entrenar, \code{Quantum\_GAN.train()} se li dona, entre altres inputs, un dataset amb imatges reals i el soroll per poder entrenar el generador. Aquest dataset es divideix en grups d'imatges (els \textit{batchs}), cada \textit{batch} conté tant imatges reals, com soroll en la mateixa quantitat.
 
-En una iteració primer s'optimitza el generador, que substitueix el soroll del \textit{batch} amb les imatges que genera. Llavors es passa el \textit{batch} al discriminador que s'optimitza tant amb les imatges reals com amb les imatges falses. Aquest és el procés pel qual s'optimitzen els dos models. Tanmateix, aquesta funció dona a terme altres coses que són necessàries per a la creació dels gràfics, per exemple, selecciona una imatge real aleatòria i una de falsa per avaluar la funció de pèrdua en la iteració, també crea les etiquetes utilitzades en aquesta l'avaluació. Totes aquestes dades s'usen per a la creació de diversos gràfics que mostren l'evolució d'aquestes dades a través de tota l'optimització.
+En una iteració primer s'optimitza el generador, que substitueix el soroll del \textit{batch} amb les imatges que genera. Llavors es passa el \textit{batch} al discriminador que s'optimitza tant amb les imatges reals com amb les imatges falses. Aquest és el procés pel qual s'optimitzen els dos models. Pel que fa a la creació de les gràfiques, aquesta classe selecciona una imatge real aleatòria i una de falsa per avaluar la funció de pèrdua en la iteració, també crea les etiquetes utilitzades en aquesta l'avaluació. Totes aquestes dades s'usen per a la creació de diversos gràfics que mostren l'evolució d'aquestes dades a través de tota l'optimització.
 
 \section{Execució del model}
 
-No obstant en l'arxiu \code{qgan.py}, no es troba l'execució del model, només està la definició de la classe \code{Quantum\_GAN}. Això és perquè el codi realment s'executa en l'arxiu \code{main.py}\footnote{Veure apèndix \ref{lst:main}}. Aquest és l'únic arxiu que té codi que realment s'executa, els altres arxius només tenen definicions. Per projectes relativament grans, com aquest, convé tenir un arxiu que fa tot el treball, el qual crida a totes les funcions definides en altres arxius i les executa d'una manera ordenada. 
+No obstant en l'arxiu \code{qgan.py}, no es troba l'execució del model, només està la definició de la classe \code{Quantum\_GAN}. Això és perquè el codi realment s'executa en l'arxiu \code{main.py}. Aquest és l'únic arxiu que té codi que realment s'executa, els altres arxius només tenen definicions. Per projectes relativament grans, com aquest, convé tenir un arxiu que fa tot el treball, el qual crida a totes les funcions definides en altres arxius i les executa d'una manera ordenada. 
 
 Com es pot veure en l'apèndix, \ref{lst:main}, aquest arxiu té molt poc codi. En ell només es crea amb Numpy el dataset, es defineix el discriminador i el generador, amb els quals es crea el model amb \code{Quantum\_GAN}. Finalment, es crida a la funció \code{Quantum\_GAN.train()} per optimitzar el model. En acabar l'optimització es criden les funcions \code{Quantum\_GAN.plot()}, \code{Quantum\_GAN.create\_gif()} i \code{Quantum\_GAN.save()}, les quals donen a terme funcions complementàries com la creació de les gràfiques, la creació d'un GIF que mostra com les imatges vam evolucionar al llarg de l'optimització, i l'emmagatzematge de les dades rellevants que s'han creat durant l'optimització.
 
-Les imatges que vaig escollir per generar són les mateixes que van generar en l'article en el qual vaig basar el treball. No entraré molt en detall sobre les distribucions concretes que formen les imatges, però per tindre una imatge general sobre com són, es pot veure la figura. \todo{falta la figura}
+Les imatges que vaig escollir per generar són les mateixes que van generar en l'article en el qual vaig basar el treball. No entraré molt en detall sobre les distribucions concretes que formen les imatges, però per tindre una imatge general sobre com són es pot veure la figura \ref{fig:test_images}.
+
+\begin{figure}
+	\begin{subfigure}{0.5\textwidth}
+		\begin{centering}
+			\includegraphics[width=0.65\linewidth]{Figures/test_images}
+			\caption{}
+			\label{fig:fake_image}
+		\end{centering}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\begin{centering}
+			\includegraphics[width=0.65\linewidth]{Figures/fake_image}
+			\caption{} 
+			\label{fig:real_image}
+		\end{centering}
+	\end{subfigure}
+	\caption{\textbf{A)} Aquest és un exemple d'una imatge del \textit{dataset} amb el qual s'entrena el model que he creat. És simplement una imatge en blanc i negre de 4 píxels, en la qual hi ha dos píxels amb un valor de $0.5$ i els altres dos amb un valor de $0$. Les imatges es creen a partir d'una \textit{array} de Numpy, per exemple \code{np.array([[0.47804505, 0.], [0.47804505, 0.]])} . \textbf{B)} Aquest és un exemple d'una imatge generada que tracta de ser el més semblant possible a les imatges del \textit{dataset}. Es pot veure que són indistingibles a simple vista, però al veure els valors es pot apreciar com els nombres no són els mateixos: \code{np.array([[0.504324, 0], [0.495676, 0]])} . Això és perquè només pel valor de $0.5$ és possible tenir els dos píxels amb el mateix valor, sempre que els valors dels altres píxels sigui zero. Cal recordar que els valors dels píxels han de sumar $1$, per tant, les imatges del dataset com la que he mostrat no són possibles de crear. He pensat fer-ho d'aquesta manera per veure si es generaria les imatges correctament amb aquesta limitació, el resultat ha sigut que les imatges que es generen són com la mitjana dels valors de les imatges del \textit{dataset}, tal com es pot apreciar en la figura \label{fig:700_images.}. }
+	\label{fig:test_images}
+\end{figure}
+
 
 Si executen el model, amb una mida de \textit{batch} de $10$, tant el \textit{learning rate} del discriminador com del generador a $0.1$, i un total d'iteracions de $400$, hi ha una garantia d'arribar a la convergència desitjada, és dir que, que els dos models arriben a l'equilibri de Nash i no poden continuar l'optimització. En aquest punt és quan les imatges falses i les reals són iguals.
 \begin{figure}[H]
 	\label{fig:labels_loss_400}
-	\begin{subfigure}{0.45\textwidth}
+	\begin{subfigure}{0.5\textwidth}
 		\includegraphics[width=\linewidth]{figures/model/loss_plot.png}
 		\caption{}
 		\label{fig:loss_400}
 	\end{subfigure}
-	\begin{subfigure}{0.45\textwidth}
+	\begin{subfigure}{0.5\textwidth}
 		\includegraphics[width=\linewidth]{figures/model/labels_plot.png}
 		\caption{} \label{fig:labels_400}
 	\end{subfigure}
@@ -147,7 +171,7 @@ Abans he especificat que al cap de $400$ iteracions podem tenir la garantia d'ar
 
 Una vegada havia confirmat el correcte funcionament del model, vaig alterar el generador per poder acomodar els dos tipus de circuits quàntics que necessitava, uns amb un sistema ancilla, i uns altres sense.
 
-Un sistema ancilla, són un grup de qubits sobre els quals es donen a terme operacions, però que no es mesuren per treure l'output del circuit. Aquests qubits es pot veure molt clar en la figura, \todo{poner figura}.
+Un sistema ancilla, és un grup de qubits sobre els quals es donen a terme operacions, però que no es mesuren per treure l'output del circuit. Aquests qubits es pot veure clarament en la figura \ref{fig:qcircuit}. 
 
 \begin{figure}
 	\begin{quantikz}
@@ -158,6 +182,7 @@ Un sistema ancilla, són un grup de qubits sobre els quals es donen a terme oper
 		&&\lstick{$\ket{0}$} &  \gate{R_y(\alpha_5)} & \gate{U_{\theta_{5, l}}} & \qw & \qw & \qw & \control{} & \gate{U_{\theta_{5, l-1}}} & \qw & \qw & \qw & \control{}  & \meter{}
 	\end{quantikz}
 	\caption{Aquí he marcat els qubits ancilla amb $\mathcal{A}$, són els dos primers. També al final del circuit he afegit mesures als qubits que s'han de mesurar.}
+	\label{fig:qcircuit}
 \end{figure}
 
 Primer de tot he de mencionar que havia de fer alguns canvis al generador per acomodar aquests qubits ancilla. 
@@ -173,14 +198,44 @@ L'alternativa que he fet servir són els mesuraments de Qiskit, al definir el ci
 
 L'arxiu que utilitzo per fer els experiments és \code{experiment.py}. En ell es pot veure com defineixo dos discriminadors\footnote{Que tenen les mateixes característiques.} i dos generadors, que es diferencien pels circuits que fan servir, un amb qubits ancilla i l'altre sense. Aquests models s'agrupen en parelles per definir dues qGANs.
 
-Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{enllaç per veure una imatge amb totes les gràfiques} (perdó per la informalitat)} comencen amb els mateixos paràmetres, per tant, exactament les mateixes condicions, menys els circuits quàntics és clar. També s'utilitza el mateix dataset i altres hiperparàmetres.
+Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{enllaç per veure una imatge amb totes les gràfiques} (perdó per la informalitat)} comencen amb els mateixos paràmetres, per tant, exactament les mateixes condicions, menys els circuits quàntics és clar. També s'utilitza el mateix \text{dataset}.
 
 \section{Anàlisi dels resultats}
-Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia: Els models que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen. Això no vol dir necessàriament que siguin més eficients, però l'estabilitat és un factor que es busca en les GANs.
+Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia: Els models que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen, tal i com es pot veure en la figura \ref{fig:700_labels}. Això no vol dir necessàriament que siguin més eficients, però l'estabilitat és un factor que es busca en les GANs.
 
-També es pot observar una clara diferència en les imatges generades en la primera iteració. En les primeres imatges d'un generador amb la funció no-lienal es pot veure un píxel amb un valor de $1$ mentre que els altres estan al $0$. Mentre que en l'altre tipus de generador es pot veure que els píxels tenen més o menys el mateix valor, d'aquesta manera formant una distribució uniforme. Aquest fet probablement és causat per l'estructura del circuit que té els qubits ancilla. Tanmateix, perquè exactament passa això està fora dels meus coneixements sobre la matèria\footnote{Saber com es comporten sistemes quàntics que tenen parts entrellaçades com aquest està fora del meu àmbit.}.
+També es pot observar una clara diferència en les imatges generades en la primera iteració. En les primeres imatges d'un generador amb la funció no lineal es pot veure un píxel amb un valor de $1$ mentre que els altres estan al $0$. Mentre que en l'altre tipus de generador es pot veure que els píxels tenen més o menys el mateix valor, d'aquesta manera formant una distribució uniforme. Aquest fet probablement és causat per l'estructura del circuit que té els qubits ancilla. Tanmateix, perquè exactament passa això està fora dels meus coneixements sobre la matèria\footnote{Saber com es comporten sistemes quàntics que tenen parts entrellaçades com aquest està fora del meu àmbit.}.
 
-La part que realment m'intriga és que a partir de les primeres iteracions, en els circuits amb els qubits ancilla. El píxel que té el valor de $1$, passa d'un a un altre. Aquest comportament succeeix a absolutament cada vegada que he executat el codi. Igual que he dit abans, arribar a comprendre això està fora del meu nivell de coneixement.
+\begin{figure}[H]
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_4.png}
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_5.png}
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_6.png}
+		\caption{}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_A4.png}
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_A5.png}
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}[b]{.32\linewidth}
+		\includegraphics[width=\linewidth]{figures/data/L_A6.png}
+		\caption{}
+	\end{subfigure}
+	\caption{Es pot apreciar com els models sense la funció no lineal (\textbf{A}, \textbf{C}, \textbf{B}) tenen una major estabilitat en les etiquetes comparats amb els models que sí tenen la funció no lineal (\textbf{D}, \textbf{E} i \textbf{F}).}
+	\label{fig:700_labels}
+\end{figure}
+
+La part que realment m'intriga és que durant les primeres iteracions, en els circuits amb els qubits ancilla el píxel que té el valor de $1$, passa d'un a un altre. Aquest comportament succeeix a absolutament cada vegada que he executat el codi. Igual que he dit abans, arribar a comprendre la causa d'aquest fet està fora del meu nivell de coneixement.
 
 Estic bastant segur que aquesta fluctuació dels píxels és el factor que causa la inestabilitat que es pot observar en les etiquetes.
 
@@ -195,4 +250,4 @@ $$
 
 On $\mu$ és la mitjana\footnote{Jo he utilitzat la mitjana aritmètica.} i $\Sigma$ és la covariància d'una distribució. Aquesta equació l'he implementat en Python mitjançant matrius, és a dir les imatges. Només em feia falta trobar una funció per poder calcular la covariància d'una matriu, afortunadament Numpy en té una, on cada fila representa una variable d'una distribució. No puc estar 100\% segur de què he implementat aquesta mètrica correctament, ja que no sé el funcionament exacte de la covariància, ni de la funció de Numpy. No obstant això, sembla que funciona correctament.
 
-Cal notar que si les dues imatges són exactament iguals, la distancia dona pràcticament zero\footnote{Python diu que és d'un ordre de magnitud de $10^{-16}$ aproximadament.}. Per considerar que dues imatges són «acceptablement semblants», han de tenir una distància entre elles de $10^{-3}$ aproximadament, i ha resultat molt útil.
+Cal notar que si les dues imatges són exactament iguals, la distancia dona pràcticament zero\footnote{Python diu que és d'un ordre de magnitud de $10^{-16}$ aproximadament.}. Per considerar que dues imatges són «acceptablement semblants», han de tenir una distància entre elles de $10^{-3}$ aproximadament.

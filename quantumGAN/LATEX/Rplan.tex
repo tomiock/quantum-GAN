@@ -62,6 +62,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{setspace}
+\usepackage{tabto}
 
 
 \usepackage[colorinlistoftodos,textwidth=2.7cm]{todonotes}
@@ -185,10 +186,6 @@
 		
 		\begin{center}
 		\begin{singlespace}%Center everything on the page
-		
-		%----------------------------------------------------------------------------------------
-		%	TITLE SECTION
-		%----------------------------------------------------------------------------------------
 
 		
 		\HRule \\[0.4cm]
@@ -198,10 +195,6 @@
 		\textsc{\Large \textbf{Treball de Recerca de Batxillerat}}\\[.5cm]
 		
 		\textsc{\large \textbf{IES Miquel Tarradell}}\\[2cm]
-		
-		%----------------------------------------------------------------------------------------
-		%	AUTHOR & ADVISOR(S) SECTION
-		%----------------------------------------------------------------------------------------
 		
 		\vspace{8.5cm}
 		\begin{minipage}{0.48\textwidth}
@@ -257,32 +250,20 @@
 	
 	\section*{Abstract}
 	Quantum Machine Learning is one of the most promising applications of Quantum Computing. In this work, I present a Quantum Generative Adversarial Network (qGAN) for generating gray-scale bar images. Through the Fréchet Distance score, I evaluate the effectiveness of a partial measurement on the simulated quantum circuit that generates the images. This score shows that the measurement improves qGAN performance by avoiding an oscillation on the resemblance between the generated and the real images, that is, an alternation of good and poor quality generated images that occurs through optimization of the qGAN. 
-
-	El Aprendizaje Automático Cuántico es una de las aplicaciones más prometedoras de la Computació Cuántica. En este trabajo, presento una Red Generacional Adversativa Cuántica (gGAN en inglés) para generar imagenes de barras en una escala de grises. A través de la puntuación de la  Distance de Fréchet, evaluo la efectividad de una medida parcial en el circuito cuántico que genera las images. Esta puntuación muestra que esta medida mejora el rendimiento de la qGAN al evitar una oscilación en el parecido entre las imagenes generadas y las reales, es decir, una alternancia entre imagenes generades de buena y mala calidad que se da a cabo a través de tota la optimizació de la qGAN.
 	
+	\vspace{1cm}
+	\hrule
+	\vspace{1cm}
+
+	El Aprendizaje Automático Cuántico es una de las aplicaciones más prometedoras de la Computación Cuántica. En este trabajo, presento una Red Generacional Adversaria Cuántica (qGAN en inglés) para generar imagenes de barras en una escala de grises. A través de la puntuación de la Distance de Fréchet, evaluo la efectividad de una medida parcial en el circuito cuántico que genera las images. Esta puntuación muestra que esta medida mejora el rendimiento de la qGAN al evitar una oscilación en el parecido entre las imagenes generadas y las reales, es decir, una alternancia entre imagenes generades de buena y mala calidad que se da a cabo a través de toda la optimización de la qGAN.
 	\clearpage
 	
 	\thispagestyle{plain}
 	
-	\section*{El camí que he recorregut}
-	Abans de començar amb el treball vull dedicar un petit espai per poder parlar que significa aquest treball per a mi, del tot l'esforç que he posat en aquest i finalment comentar tot el que he après al llarg d'aquest llarg camí.
-
-	Va dos anys que vaig començar a aprendre conceptes de computació quàntica, ha sigut un camí molt llarg, però que m'ha encant de recórrer. Aprendre tot l'ho que he après ha sigut una gran alegria, perquè sento que estic aprenent conceptes d'un camp que realment m'encanten. A més a més, m'ajuda pel meu futur en cas que estudiï una carrera en física, que és el meu objectiu.
-
-	Deixant, d'una banda, els evidents beneficis d'avançar temari d'una carrera que vols fer en un futur, fent aquest treball he après altres coses extremadament útils.
-
-	Primer de tot, aquest treball està redactat en \LaTeX\footnote{\href{https://www.latex-project.org/}{La web oficial de \LaTeX}}, una espècie de llenguatge de programació per escriure equacions matemàtiques i documents de text. És àmpliament utilitzat per escriure articles científics en el món acadèmic, però més important és utilitzat en l'ambient educatiu de les ciències exactes per poder entregar deures i reports del laboratori. Tots els meus amics que estudien física ho fan servir.
-
-	A continuació tenim el fet de crear un gran projecte científic en Python, he après a programar fins al punt que crec que soc bastant bo, és en allò que soc millor. Programar en Python també és una habilitat que em serà útil a la universitat, perquè és el llenguatge de programació que es fa servir en la carrera de Física a la UB per realitzar experiments computacionals. Així mateix, vull mencionar que al llarg del procés de la creació del model van sorgir moltíssims problemes, en aquest document només he esmenat una part petita de la totalitat dels problemes que em vaig trobar al llarg del camí. Al darrere d'aquest model estan molts mesos de treball, definitivament ha sigut la part més dura de tot el treball.
-
-	Per últim, he après a llegir articles científics sobre computació quàntics. Soc familiar amb la notació que s'empra en el camp i també el llenguatge específic que s'utilitza en els articles, amb això em refereixo a expressions en anglès. Tanmateix, no vull dir que puc interpretar els articles i valorar-los d'alguna manera, tan sols puc comprendre'ls, no obstant hi ha coses que no puc arribar a comprendre és clar, òbviament no tinc els mateixos coneixements d'un estudiant de postgrau.
+	\subsection*{Nota al tribunal}
+	Aquest document ha estat pensat per llegir-lo en un PDF, tot el text que està marcat en blau és hipertext que apunta a un enllaç web o a una altra part del treball. No obstant això, tots els documents referenciats no són accessibles immediatament, però si es vol accedir a un d'ell només, fa falta preguntar-me. Si el lector vol accedir als enllaços web ho pot fer a partir del PDF, que el trobarà a: \href{https://github.com/tomiock/qGAN}{https://github.com/tomiock/qGAN}	
 	
-	
-	Penso que aquest treball és el millor que he en la meva vida acadèmica, sigui en termes d'utilitat o en termes de realització personal, m'ha encantat fer-ho.
-	
-	\subsection{Nota al tribunal}
-	Aquest document ha estat pensat per llegir-lo en un PDF, tot el text que està marcat en blau és hipertext que apunta a un enllaç web o a una altra part del treball. No obstant això, tots els documents referenciats no són accessibles immediatament, però si es vol accedir a un d'ell només, fa falta preguntar-me. Si el lector vol accedir als enllaços web ho pot fer a partir del PDF, que el trobarà a: \href{https://github.com/tomiock/qGAN}
-	
+	També vull demanar disculpes perquè hi ha algunes paraules que estan escrites en anglès al llarg del treball. Tot el que hi ha en aquest document ho he après en anglès (com es pot veure en tots els recursos de la bibliografia) i a vegades m'és molt difícil traduir el nombre dels conceptes que he après. A més a més aquest document està redactat en \LaTeX{} una espècie de llenguatge de programació que s'utilitza per redactar documents que continguin expressions matemàtiques complexes, per aquesta raó hi ha paraules soltes en anglès en la bibliografia i altres llocs. Un altre error que no puc corregir és que els nombres que s'assignen a les seccions es repeteixen, això es pot veure molt clarament en l'índex.
 	
 	\afterpage{\blankpage}
 	
@@ -301,16 +282,14 @@
 	\part{Conclusions}
 	\label{part:conclusions}
 	\input{conclusions}
-	
-	%\balance
-	\printglossaries
-	
-	%\chapter{appendix}
-	\part{Apèndix}
-	\begin{appendices}
-		\input{appendices}
-	\end{appendices}
 
+	\setcounter{chapter}{0}
+	\renewcommand{\thechapter}{\Alph{chapter}}
+	\part{Apèndixs}
+	\label{part:appendices}
+	\input{appendices}
+
+	\typeout{}
 	\bibliography{ref}
 	
 	
