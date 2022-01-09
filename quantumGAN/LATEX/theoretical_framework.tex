@@ -229,7 +229,7 @@ El producte exterior és una funció (expressada com $\ket{a}\bra{b}$, amb $\ket
 
 Pels vectors $\ket{v}$ i $\ket{v'}$ amb dimensions $m$ i el vector $\ket{w}$ de dimensions $n$. El producte exterior és l'aplicació lineal $A$ de dimensions $m \times n$ en l'espai $\mathrm{Mat}_{m\times n}$:
 $$
-\ket{v}\bra{w} = A \text{ with } A\in \mathrm{Mat}_{m\times n} .
+\ket{v}\bra{w} = A \text{ amb } A\in \mathrm{Mat}_{m\times n} .
 $$ 
 %In other words, that takes a vector from $\mathbb{C}_i$ to $\mathbb{C}_j$. 
 Amb la seva acció definida per \cite{QCandQI:inner}: 
@@ -251,6 +251,7 @@ La utilitat d'aquest producte es mostrarà més endavant.
 
 \section{Producte tensorial}
 L'últim producte que mencionaré és el tensorial, representat pel símbol $\otimes$. Aquest producte s'utilitza per crear espais vectorials més grans combinant espais vectorials més petits. La definició formal és bastant complicada, per tant, en centraré a explicar la manera amb la qual es computa fent ús de la representació matricial d'aquest producte, anomenada el producte de Kronecker.
+\vspace{11cm}
 
 Per una matriu $m \times n$, $A$, i una $p \times q$ matriu $B$, el seu producte de Kronecker \cite{QCandQI:kronecker} és la matriu de mida $pm \times qn$: 
 \begin{multline*}
@@ -810,7 +811,7 @@ Amb la matriu de la porta $Z$ a la cantonada inferior dreta. Aquesta porta en un
 	\end{quantikz}
 \end{center}
 
-No obstant això, una operació controlada de qualsevol matriu unitària $U$ es forma a través del següent circuit \cite{QCandQI:controlled}:
+Una operació controlada de qualsevol matriu unitària $U$ es pot formar a través del següent circuit \cite{QCandQI:controlled}:
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
@@ -893,17 +894,17 @@ $$
 
 Igual que es fan mesures en els \textit{statevectors}, les podem fer en els operadors de densitat. Per un operador de mesura $M_m$, tenim que la probabilitat de tindre l'estat $m$ al mesurar un vector $\ket{\psi}$ o una matriu de densitat $\rho$, és:
 \begin{align*}
-	\mathrm{prob}(m) &= \bra{\psi_i}M_m^\dagger M_m\ket{\psi_i} = \tr(M_m^\dagger M_m \ket{\psi_i}\bra{\psi_i})\\ &= \tr(M_m^\dagger M_m \rho)
+	\mathrm{prob}(m) &= \bra{\psi}M_m^\dagger M_m\ket{\psi} = \tr(M_m^\dagger M_m \ket{\psi}\bra{\psi})\\ &= \tr(M_m^\dagger M_m \rho)
 \end{align*}
-També tenim que l'estat $\ket{\psi_i}$ després de la mesura $m$ és \cite{QCandQI:density_matrix}:
+També tenim que l'estat $\ket{\psi}$ després de la mesura $m$ és \cite{QCandQI:density_matrix}:
 \begin{equation}
-	\ket{\psi_i} = \frac{M_m\ket{\psi_i}}{\sqrt{\bra{\psi_i}M_m^\dagger M_m \ket{\psi_i}}} = \frac{M_m\ket{\psi_i}}{\sqrt{\tr(M_m^\dagger M_m \rho)}}
+	\ket{\psi_{m}} = \frac{M_m\ket{\psi}}{\sqrt{\bra{\psi}M_m^\dagger M_m \ket{\psi}}} = \frac{M_m\ket{\psi}}{\sqrt{\tr(M_m^\dagger M_m \rho)}}
 	\label{eq:post_state_rho}
 \end{equation}
 
 L'equació \ref{eq:post_state_rho} es pot reescriure en termes d'una matriu de densitat després d'una mesura $m$:
 \begin{align*}
-	\rho_m &= \sum_i p_i \frac{M_m\ket{\psi_i}\bra{\psi_i}M_m^\dagger}{\tr(M_m^\dagger M_m \rho)} \\
+	\rho_m &= \sum_i p_i \frac{M_m\ket{\psi}\bra{\psi}M_m^\dagger}{\tr(M_m^\dagger M_m \rho)} \\
 	&= \frac{M_m\rho M_m^\dagger }{\tr(M_m^\dagger M_m\rho)}
 \end{align*}
 Perquè això sigui cert els operadors de mesura $M_m$, han de satisfer:
@@ -965,6 +966,8 @@ $$
 $$
 Al igual que amb l'altra equació, no sé com computar-la.
 
+
+\vspace{4cm}
 \section{Ordinadors quàntics}
 Tota aquesta teoria és aplicada a través de qubits físics que s'ubiquen als ordinadors quàntics. Hi ha diversos tipus d'ordinadors quàntics, a causa del fet que els qubits poden ser diversos sistemes. Poden ser fotons, xips de silici superconductors o ions atrapats per imants. No elaboraré més sobre aquest tema, ja que no és el tema central d'aquest treball, m'he centrat molt més en la teoria.
 
