@@ -141,7 +141,7 @@ En la secció actual, exposaré els tipus bàsics d'aplicacions lineals que són
 \section{Producte interior i producte exterior}
 
 \subsection{Producte interior}
-Un vector dual $\bra{a}$ i un vector $\ket{b}$ combinats formen el producte interior $\bra{\psi}\ket{\varphi}$, el qual efectua una operació que agafa els dos vectors com a input i produeix un nombre complex com a output:
+Un vector dual $\bra{a}$ i un vector $\ket{b}$ combinats formen el producte interior $\bra{\psi}\ket{\varphi}$, el qual efectua una operació que agafa els dos vectors com a input i produeix un nombre complex com a output \cite{QCandQI:inner}:
 $$
 \bra{a}\ket{b} = a_1 b_1 + a_2 b_2 + ... + a_{n-1} b_{n-1} + a_n b_n = z
 $$
@@ -169,7 +169,7 @@ Tanmateix, la definició més comuna es basa en el producte interior. Com es pot
 $$
 \bra{a}\ket{a} = a_1 a_1 + \cdots + a_n a_n = a_1^2 + \cdots +  a_n^2 \\= \sum_{i} \abs{a_i}^2
 $$
-Per tant, la norma pot ser definida com l'arrel quadrada del producte interior d'un vector:
+Per tant, la norma pot ser definida com l'arrel quadrada del producte interior d'un vector \cite{LR_done_right:norm}:
 \begin{equation}
 \norm{\ket{a}}_2 = \sqrt{\bra{a}\ket{a}}
 \label{eq:norm}
@@ -179,7 +179,7 @@ Quan la norma és aplicada a un vector bidimensional, es pot veure que és el ma
 Segons el que he vist, algunes propietats de la longitud d'un vector bidimensional no es mantenen amb la norma d'un vector que té més de 2 dimensions. En altres paraules, la norma es comporta en certes maneres com la distancia des de l'origen (que és la definició de la longitud), però són exactament el mateix. A més d'això, hi ha diferents tipus de normes que s'utilitzen en diversos escenaris. Aquesta és la raó per la qual em refereixo a la norma; com la norma $\ell^2$. A aquesta norma també se li diu norma Euclidiana \cite{wolfram:2norm}.
 
 \subsubsection{Propietats del producte interior}
-Les propietats bàsiques del producte interior són les següents:
+Les propietats bàsiques del producte interior són les següents \cite{QCandQI:intro}:
 \begin{enumerate}
 	\item És lineal en el segon argument $ (z_1\bra{a}+ z_2\bra{c})\ket{b} = z_1\bra{a}\ket{b} + z_2\bra{c}\ket{b}$
 	\item Té simetria en el conjugat $\bra{a}\ket{b} = (\bra{b}\ket{a})^*$
@@ -199,7 +199,7 @@ Dos vectors diferents de zero són ortogonals si el seu producte interior és ze
 	 \text{Per tant el terme que falta } \cos\theta \text{ ha de ser igual a zero.} \\
 	 \text{D'aquesta manera, l'angle $\theta$ ha de ser } \frac{\pi}{2}. \\
 \end{multline*}
-No obstant això, pensar que la perpendicularitat i l'ortogonalitat són els mateixos conceptes és un error, això només és veritat pels vectors bidimensionals. Perquè com en el cas de la norma i la longitud, l'ortogonalitat és el concepte de perpendicularitat però generalitzat.
+No obstant això, pensar que la perpendicularitat i l'ortogonalitat són els mateixos conceptes és un error, això només és veritat pels vectors bidimensionals. Perquè com en el cas de la norma i la longitud, l'ortogonalitat és el concepte de perpendicularitat però generalitzat \cite{LR_done_right:norm}.
 
 Quan barregem els conceptes de vector unitari i vectors ortogonals arribem a l'ortonormalitat \cite{QCandQI:GramSchmidt}. Un parell de vectors que no són zero, són ortonormals quan els dos vectors són unitaris i també són ortogonals entre ells:
 
@@ -232,7 +232,7 @@ $$
 \ket{v}\bra{w} = A \text{ with } A\in \mathrm{Mat}_{m\times n} .
 $$ 
 %In other words, that takes a vector from $\mathbb{C}_i$ to $\mathbb{C}_j$. 
-Amb la seva acció definida per: 
+Amb la seva acció definida per \cite{QCandQI:inner}: 
 \begin{equation}
 	(\ket{v}\bra{w})\ket{v'} \equiv \ket{w}\bra{v}\ket{v'} = \bra{v}\ket{v'}\ket{w}
 	\label{eq:outer_def}
@@ -399,7 +399,7 @@ $$
 \Tr[A] = \sum_{i=1}^{n} a_{ii} = a_{11} + a_{22} + \cdots + a_{nn}
 $$
 
-La traça d'una matriu té les propietats següents:
+La traça d'una matriu té les propietats següents  \cite{QCandQI:trace}:
 \begin{enumerate}
 	\item És una aplicació lineal: \\
 	Degut a que la traça és un aplicació lineal, es compleix que:\\
@@ -414,7 +414,7 @@ La traça d'una matriu té les propietats següents:
 \end{enumerate}
 
 Una altra manera molt útil d'avaluar la traça d'un operador és a través del procediment de Gram-Schmidt\footnote{Mirar \ref{gram} per una definició del procediment de Gram-Schmidt el qual s'utilitza per poder generar bases ortonormals a partir d'un conjunt de vectors.} i el producte exterior.
-Utilitzant Gram-Schmidt per representar el vector unitat $\ket{\psi}$ en una base ortonormal $\ket{i}$ que inclou $\ket{\psi}$ com el seu primer element, es compleix que:
+Utilitzant Gram-Schmidt per representar el vector unitat $\ket{\psi}$ en una base ortonormal $\ket{i}$ que inclou $\ket{\psi}$ com el seu primer element, es compleix que \cite{QCandQI:trace}:
 $$
 \Tr[A\ket{\psi}\bra{\psi}] = \sum_i \bra{i}A\ket{\psi}\bra{\psi}\ket{i} = \bra{\psi}A\ket{\psi}
 $$
@@ -535,7 +535,7 @@ No obstant això, la polarització dels fotons són un sistema físic concret, q
 \section{Qubits i operacions quàntiques}
 Els ordinadors moderns representen la informació a través de cadenes de zeros i uns, anomenades bits; des d'imatges a lletres o instruccions electròniques. Per exemple, la lletra t és representada per la cadena de bits $01110100$, codificada a través de codi binari. Tot el que fas en un ordinador es codifica i representa en codi binari.
 
-Gràcies al fet que estem molt acostumats al codi binari, en el camp de la computació quàntica també s'utilitza, no obstant això, en comptes de bits s'utilitzen qubits. Un qubit és l'anàleg d'un bit, en altres paraules, és la unitat mínima d'informació utilitzada pels ordinadors quàntics. En els qubits podem aplicar propietats quàntiques com la superposició o l'entrellaçament\footnote{Ja he parlat de la primera amb la polarització dels fotons, de l'entrellaçament parlaré més endavant.}. Si un bit pot estar en l'estat $0$ o en l'estat $1$, un qubit pot estar en una combinació d'aquests estats, en un estat enmig del $1$ i del $0$. Un qubit és una combinació lineal dels vectors que representen aquests estats, $\ket{0}$ i $\ket{1}$:
+Gràcies al fet que estem molt acostumats al codi binari, en el camp de la computació quàntica també s'utilitza, no obstant això, en comptes de bits s'utilitzen qubits. Un qubit és l'anàleg d'un bit, en altres paraules, és la unitat mínima d'informació utilitzada pels ordinadors quàntics. En els qubits podem aplicar propietats quàntiques com la superposició o l'entrellaçament\footnote{Ja he parlat de la primera amb la polarització dels fotons, de l'entrellaçament parlaré més endavant.}. Si un bit pot estar en l'estat $0$ o en l'estat $1$, un qubit pot estar en una combinació d'aquests estats, en un estat enmig del $1$ i del $0$. Un qubit és una combinació lineal dels vectors que representen aquests estats \cite{QCandQI:qubit}, $\ket{0}$ i $\ket{1}$:
 $$
 \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
 $$
@@ -577,7 +577,7 @@ Llavors:
 Definir un qubit com una «combinació lineal dels estats fonamentals» no és de molta ajuda, per això, elaboraré més sobre aquesta definició:
 Una cadena de $n$-bit només pot representar una única combinació d'uns i zeros, mentre que una cadena de $n$-qubits representa una combinació concreta de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
 
-Una cosa molt interessant passa quan s'augmenta el nombre qubits, la «quantitat d'informació» creix exponencialment. Per una cadena de $n$ qubits la «quantitat d'informació» que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres són els coeficients que corresponen a les combinacions lineals . Això és perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant, es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació es necessita només saber quina combinació és. No passa res si això no s'entén perfectament, el que és important és saber que es necessiten $2^n$ nombres complexos\footnote{Són complexos, ja que els coeficients de la combinació lineal són nombres complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits.
+Una cosa molt interessant passa quan s'augmenta el nombre qubits, la «quantitat d'informació» creix exponencialment. Per una cadena de $n$ qubits la «quantitat d'informació» que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres són els coeficients que corresponen a les combinacions lineals . Això és perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant, es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació es necessita només saber quina combinació és. No passa res si això no s'entén perfectament, el que és important és saber que es necessiten $2^n$ nombres complexos\footnote{Són complexos, ja que els coeficients de la combinació lineal són nombres complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits \cite{QCandQI:qubits}.
 
 Per il·lustrar tot això, 2 qubits es representen amb el \textit{statevector}:
 \begin{align*}
@@ -590,7 +590,7 @@ Cal remarcar que els vectors de la base computacional serien les columnes d'una 
 Per poder representar informació amb qubits simplement es codifica aquesta informació en els qubits, això es pot fer per exemple mitjançant codi binari: Els números $0$, $1$, $2$ i $3$ són els bits $00$, $01$, $10$ i $11$ respectivament, per tant, es poden representar amb dos qubits en els estats $\ket{00}, \ket{01}, \ket{10}, \ket{11}$, respectivament.
 
 \subsection{Representació geomètrica d'un qubit}
-Un aspecte que sempre m'ha agradat del qubits és la seva representació geomètrica, l'esfera de Bloch \ref{fig:677px-blochsphere}. Si agafem una esfera unitària\footnote{Una esfera que té radi $1$ i que qualsevol punt en la seva superfície correspon a un vector en $\mathbb{R}^3$ unitari. } que té els seus pols nord i sur definits pels vectors $\ket{0}$ i $\ket{1}$, respectivament. Cada punt de la seva superfície és un estat quàntic vàlid on les seves bases computacionals són $\ket{0}$ i $\ket{1}$.
+Un aspecte que sempre m'ha agradat del qubits és la seva representació geomètrica, l'esfera de Bloch \ref{fig:677px-blochsphere} \cite{QCandQI:bloch}. Si agafem una esfera unitària\footnote{Una esfera que té radi $1$ i que qualsevol punt en la seva superfície correspon a un vector en $\mathbb{R}^3$ unitari. } que té els seus pols nord i sur definits pels vectors $\ket{0}$ i $\ket{1}$, respectivament. Cada punt de la seva superfície és un estat quàntic vàlid on les seves bases computacionals són $\ket{0}$ i $\ket{1}$.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.4\linewidth]{Figures/677px-Bloch_Sphere.svg}
@@ -634,9 +634,9 @@ $$
 	 X = \begin{bmatrix} 0 & 1\\ 1 & 0\\ \end{bmatrix} \; Y = \begin{bmatrix} 0 & i\\ -i & 0\\ \end{bmatrix} \; Z = \begin{bmatrix} 1 & 0\\ 0 & -1\\ \end{bmatrix} 
 $$
 
-Aquestes matrius són molt importants en la mecànica quàntica\footnote{Al ser Hermitianes són uns observables, concretament són els observables que corresponen al spin d'una partícula amb spin $\frac{1}{2}$ bàsicament estan relacionades amb els operadors del moment angular.} i són utilitzades àmpliament per descompondre portes lògiques quàntiques \cite{QCandQI:density_matrix}.
+Aquestes matrius són molt importants en la mecànica quàntica\footnote{Al ser Hermitianes són uns observables, concretament són els observables que corresponen al spin d'una partícula amb spin $\frac{1}{2}$ bàsicament estan relacionades amb els operadors del moment angular.} i són utilitzades àmpliament per descompondre portes lògiques quàntiques \cite{QCandQI:pauli}.
 
-A partir d'elles podem elaborar matrius que facin una rotació d'un angle $\theta$ qualsevol en un dels eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}:
+A partir d'elles podem elaborar matrius que facin una rotació d'un angle $\theta$ \cite{QCandQI:pauli} qualsevol en un dels eixos de la representació geomètrica d'un qubit \ref{fig:677px-blochsphere}:
 \begin{align}
 	& R_x(\theta) =  e^{-i\theta X/2} = \cos \frac{\theta}{2}I -i \sin \frac{\theta}{2}X = 
 	\begin{bmatrix}
@@ -748,7 +748,7 @@ On el qubit \textit{control} és el primer i el segon és el \textit{target}, el
 
 
 \subsubsection{Entrellaçament quàntic}
-L'exemple més senzill d'un entrellaçament quàntic en la computació quàntica són els parells de Bell, que es creen al aplicar a dos qubits una porta $H$ al primer i després una porta $\mathrm{CNOT}$ als dos creant l'estat:
+L'exemple més senzill d'un entrellaçament quàntic en la computació quàntica són els parells de Bell, que es creen al aplicar a dos qubits una porta $H$ al primer i després una porta $\mathrm{CNOT}$ als dos creant l'estat \cite{QCandQI:entangle}:
 $$
 \frac{\ket{00}+\ket{11}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}
 $$
@@ -759,7 +759,7 @@ Matemàticament, un sistema quàntic, i.e. un conjunt de qubits, està entrella�
 A partir de l'entrellaçament i la superposició és com els ordinadors quàntics arribem a tenir avantatges en complexitat sobre els ordinadors clàssics, per més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques i el concepte de complexitat algorítmica veure l'annex \ref{complexity}.
 
 \subsubsection{Operacions controlades}
-A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment es pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot podem haver-hi diversos qubits \textit{control} i \textit{target}.
+A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment es pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot podem haver-hi diversos qubits \textit{control} i \textit{target} \cite{QCandQI:controlled}.
 
 Per exemple existeix la porta Toffoli:
 \begin{center}
@@ -810,7 +810,7 @@ Amb la matriu de la porta $Z$ a la cantonada inferior dreta. Aquesta porta en un
 	\end{quantikz}
 \end{center}
 
-No obstant això, una operació controlada de qualsevol matriu unitària $U$ es forma a través del següent circuit:
+No obstant això, una operació controlada de qualsevol matriu unitària $U$ es forma a través del següent circuit \cite{QCandQI:controlled}:
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
@@ -833,7 +833,7 @@ Com ja s'ha esmentat a la secció \ref{only_one_qubit} al elevar al quadrat el c
 
 Aquesta és la forma més simple de poder predir el mesurament d'un estat quàntic. Però hi ha altres mètodes que a vegades resulten més útils.
 
-Els mesuraments quàntics també es ponen pensar com un conjunt d'operadors de mesura ${M_m}$. On la probabilitat d'obtenir l'estat $m$ associat a un operador $M_m$ al mesurar un $\ket{\psi}$ és:
+Els mesuraments quàntics també es ponen pensar com un conjunt d'operadors de mesura ${M_m}$. On la probabilitat d'obtenir l'estat $m$ associat a un operador $M_m$ al mesurar un $\ket{\psi}$ és \cite{QCandQI:measure}:
 \begin{equation}
 	\label{eq:Mm}
 	\mathrm{prob}(m)=\bra{\psi}M_{m}^\dagger M_{m}\ket{\psi}
@@ -975,7 +975,7 @@ Però si vull generar imatges amb un ordinador quàntic, no necessito un? No nec
 
 Segurament has sentit parlar de l'intel·ligènica artificial o de les xarxes neuronals, són conceptes que semblen abstractes, però jo penso que són bastant intuïtius i els intentaré explicar de la millor manera possible.
 
-Intel·ligència artificial és un mot una mica ambigu, que es refereix a qualsevol algoritme que entra dintre del camp del \textit{machine learning} o aprenentatge automàtic\footnote{Tanmateix, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'ha els ha designat, no importa quin és l'objectiu o com ho aconsegueix, el que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria una intel·ligència artificial o un algoritme de \textit{machine learning}.
+Intel·ligència artificial és un mot una mica ambigu, que es refereix a qualsevol algoritme que entra dintre del camp del \textit{machine learning} o aprenentatge automàtic\footnote{Tanmateix, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'ha els ha designat, no importa quin és l'objectiu o com ho aconsegueix, el que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria una intel·ligència artificial o un algoritme de \textit{machine learning} \cite{deeplearning}.
 
 La manera que tenen aquests algoritmes d'alterar-se a si mateixos és canviant els paràmetres de les operacions dels quals estan compostos. Per exemple, en una regressió lineal, s'actualitzen els paràmetres de la recta que representa la tendència de les dades, com es pot veure a la figura \ref{fig:leastsquares}.
 
@@ -991,7 +991,7 @@ Hi ha diversos mètodes per ajustar els paràmetres, el més comú és ajustar-l
 Degut a que es poden realitzar molts tipus de funcions de pèrdua, ja sigui per la forma de la funció en si o pels paràmetres de la funció, el programes de \textit{machine learning} són extremadament versàtils, la màxima expressió d'això es pot veure en les xarxes neuronals o \textit{neural networks}. Aquests algoritmes són els més potents, complexos i polivalents, dintre de l'aprenentatge automàtic. Precisament utilitzo un d'aquests algoritmes d'aquests per generar les imatges. Reconeixement d'imatges, la traducció i sintetització de textos, la conducció automàtica, els algoritmes de recomanació, i és clar, la generació d'imatges.
 
 \section{Xarxes neuronals}
-Aquests tipus d'algoritmes no tenen un nombre que fa recordar a les xarxes de neuronals dels nostres cervells per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa, la qual s'organitza a partir de capes. Segons la variació del tipus de neurona i l'estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. Aquests models d'intel·ligència artificial constitueixen el camp del \textit{deep learning} o aprenentatge profund. S'anomenen d'aquesta forma per referenciar la gran profunditat d'aquests algoritmes, és a dir el gran nombre de capes que tenen.
+Aquests tipus d'algoritmes no tenen un nombre que fa recordar a les xarxes de neuronals dels nostres cervells per casualitat, estan directament inspirades en els nostres cervells. Són uns programes que consisteixen en la connexió de diverses operacions anomenades neurones, que conjuntament formen una xarxa, la qual s'organitza a partir de capes. Segons la variació del tipus de neurona i l'estructura que aquestes formen podem tindre algoritmes destinats a fer diferents tasques. Això juntament amb els diversos tipus de funció de pèrdua contribueix a la versatilitat de les xarxes neuronals. Aquests models d'intel·ligència artificial constitueixen el camp del \textit{deep learning} o aprenentatge profund. S'anomenen d'aquesta forma per referenciar la gran profunditat d'aquests algoritmes, és a dir el gran nombre de capes que tenen \cite{DL:feedforward}.
 
 Una neurona consisteix simplement en una suma ponderada, a la qual se li suma un altre número, i finalment una funció no lineal que s'aplica al resultat. Les neurones tenen vectors com input i output. Per tant, una neurona es pot definir com:
 $$
@@ -1006,7 +1006,7 @@ Una vegada especificada la interconnectivitat de les neurones puc parlar de la i
 
 Tornant a l'arquitectura, usualment aquesta es divideix en tres parts la capa d'input, les capes ocultes i la capa d'output. La quantitat de neurones que hi ha a la capa d'inputs és la que defineix la mida del vector que es dona com input a la xarxa, ja que cada element del vector es dona a cada neurona amb la capa. El mateix passa amb la capa d'outputs, cada output de cada neurona de la capa acaba sent un element en el vector que surt de la xarxa. Per tant, el nombre de neurones que té cadascuna d'aquestes dues capes, especifica la mida dels vectors d'input i d'output de la xarxa respectivament. Per exemple, si es vol donar com input a una xarxa una imatge de 16 per 16 píxels en blanc i negre calen 256 neurones en la capa d'inputs, una per cada píxel.
 
-En canvi, les \textit{hidden layers}, és a dir les capes ocultes, no tenen una mida determinada, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb els diversos tipus de capes és el que dona la versatilitat d'aquests algoritmes.
+En canvi, les \textit{hidden layers}, és a dir les capes ocultes, no tenen una mida determinada, el mateix passa amb el nombre d'aquestes que té la xarxa. Depenen de cada cas la quantitat de neurones que tenen aquestes capes i també el nombre d'aquestes, varia. Això, juntament amb els diversos tipus de capes és el que dona la versatilitat d'aquests algoritmes \cite{DL:feedforward}.
 
 Entre els diferents tipus de capes que ponen tindre les xarxes neuronals, la més comuna i simple d'aquestes és la \textit{fully connected layer}, o una capa completament connectada, com les que es poden veure en la figura \ref{fig:560px-artificialneuralnetwork}. Les neurones que formen aquesta capa estan connectades a totes les neurones de la capa anterior i així mateix, a totes les neurones de la capa següent. L'única forma que aquestes capes tenen de variar és a partir de canviar el nombre de neurones, ja que no es pot alterar el funcionament de les neurones.
 \begin{figure}[H]
@@ -1028,12 +1028,12 @@ Aquest procés comença amb la funció de pèrdua, que esmenta els objectius de 
 
  Per explicar-lo utilitzaré un exemple pràctic, primer de tot parlaré sobre la funció de pèrdua que s'utilitza i a continuació de l'actualització dels paràmetres. 
  
-Parlaré de la classificació d'imatges, si es volen classificar imatges de gats i gossos, s'assignen dues etiquetes a aquestes, per exemple, $1$ als gats i $0$ als gossos. A continuació s'escull una funció de pèrdua\footnote{Una que funcioni per la classificació d'imatges, és clar.} com \textit{binary cross entropy} o \textit{log loss}. La funció \textit{binary cross entropy} és la següent:
+Parlaré de la classificació d'imatges, si es volen classificar imatges de gats i gossos, s'assignen dues etiquetes a aquestes, per exemple, $1$ als gats i $0$ als gossos. A continuació s'escull una funció de pèrdua\footnote{Una que funcioni per la classificació d'imatges, és clar.} com \textit{binary cross entropy} o \textit{log loss}. La funció \textit{binary cross entropy} és la següent \cite{crossentropy}:
 \begin{equation}
 	\mathcal{L} = - t\log(y) - (1 - t)\log(1 - y) 
 	\label{eq:BCE}
 \end{equation}
-Amb $t$ sent l'etiqueta que ha de tenir la imatge, anomenada etiqueta real, i $y$ sent l'etiqueta que el model assigna a la imatge. Per tant, si l'etiqueta real és $1$, l'equació acaba sent:
+Amb $t$ sent l'etiqueta que ha de tenir la imatge, anomenada etiqueta real, i $y$ sent l'etiqueta que el model assigna a la imatge. Per tant, si l'etiqueta real és $1$, l'equació acaba sent \cite{crossentropy}:
 $$
 \mathcal{L}_1 = - \log(y)
 $$
@@ -1055,7 +1055,7 @@ Es pot veure que si l'etiqueta que posa el model s'allunya més de l'etiqueta re
 	\mathcal{L} &= - 0\cdot\log(0.89) - (1 - 0)\cdot\log(1 - 0.89) = - \log(1- 0.89) \simeq 2.207 \\
 	\mathcal{L} &= - 0\cdot\log(0.08) - (1 - 0)\cdot\log(1 - 0.08) = - \log(1- 0.08)\simeq 0.0834
 \end{align*}
-Per tant, com més pròximes estén les prediccions (els outputs del model) a les etiquetes ideals, menor serà la pèrdua. Llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes.
+Per tant, com més pròximes estén les prediccions (els outputs del model) a les etiquetes ideals, menor serà la pèrdua. Llavors al minimitzar la funció es trobarà el punt òptim on totes les prediccions seran iguals a les etiquetes \cite{DL:minmax}.
 
 A aquests punts òptims s'arriben actualitzant els paràmetres a partir de la derivada de la funció, concretament a través del seu gradient. El gradient d'una funció és un vector on els seus elements són la derivada parcial respecte a cada paràmetre (per aclarir, una entrada per paràmetre). El gradient d'una funció $f(\theta)$ es representa com $\nabla f(\theta)$, i es pot escriure en forma de vector com:
 $$
@@ -1067,7 +1067,7 @@ $$
 	\pdv{f}{\theta_{n}}
 \end{bmatrix}
 $$
-No fa falta fixar-se en el que és exactament un gradient, només s'ha de saber que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar d'acord amb la derivada respecte al paràmetre. Això es pot entendre com canviar lleugerament un paràmetre d'acord amb la direcció de la derivada respecte a ell. L'objecte que s'encarrega d'actualitzar-los s'anomena optimitzador. L'optimitzador més senzill que hi ha és el següent:
+No fa falta fixar-se en el que és exactament un gradient, només s'ha de saber que cada paràmetre de la xarxa neuronal\footnote{Cada \textit{weight} i cada \textit{bias}.} s'ha d'actualitzar d'acord amb la derivada respecte al paràmetre. Això es pot entendre com canviar lleugerament un paràmetre d'acord amb la direcció de la derivada respecte a ell. L'objecte que s'encarrega d'actualitzar-los s'anomena optimitzador. L'optimitzador més senzill que hi ha és el següent \cite{3b1b}:
 \begin{equation}
 	\theta_{i}^t = \theta_{i}^{t-1} \pm \eta\pdv{\mathcal{L}(\theta)}{\theta_{i}^{t-1}}
 	\label{eq:optimizator}
@@ -1132,7 +1132,7 @@ Finalment, he d'esmentar la derivada de la funció de pèrdua respecte a un \tex
 	\pdv{\mathcal{L}}{b^L_k} = \pdv{z^L_{k}}{b^L_{k}}\pdv{a^L_{k}}{z^L_{k}}\pdv{\mathcal{L}}{a^L_{k}}
 \end{equation*}
 
-Al veure l'equació \ref{eq:neuron_definition} es pot veure que la derivada $ \pdv{z^{L}_{k}}{b^{L}_{k}}$ serà $1$. Les altres derivades de l'equació ja les he esmentat anteriorment. Per tant, finalment tenim que:
+Al veure l'equació \ref{eq:neuron_definition} es pot veure que la derivada $ \pdv{z^{L}_{k}}{b^{L}_{k}}$ serà $1$. Les altres derivades de l'equació ja les he esmentat anteriorment. Per tant, finalment tenim que \cite{3b1b}:
 \begin{align*}
 	\pdv{\mathcal{L}}{w_{jk}^L} &= a^{L-1}_k \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L} \\
 	\pdv{\mathcal{L}}{b^L_k} &= \sigma'(z_j^L)\pdv{\mathcal{L}}{a_j^L}
