@@ -1,14 +1,10 @@
-%\documentclass{report}
-%\documentclass{book}
 
-\documentclass[a4paper,12pt,arial,numbered,print,index,oneside]{book}
+\documentclass[a4paper,12pt,arial,numbered,print,oneside]{book}
 
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
 \usepackage{fancyhdr}
-\fancypagestyle{empty}{%
-	\fancyhf{}% removes h/f
-}
+\pagestyle{plain}
 \renewcommand{\headrulewidth}{0pt}% removes header line
 
 
@@ -18,7 +14,6 @@
 \renewcommand{\familydefault}{\sfdefault}
 
 \usepackage[catalan]{babel}
-\usepackage{mathtools}
 
 %	TIKZ PACKAGE
 \usepackage{tikz}
@@ -35,10 +30,16 @@
 		\node[highlight,fit=(left.north west) (right.south east)] (#1) {};}
 }
 
+\newcommand{\tikzmarktrace}[2]{
+	\tikz[overlay,remember picture,baseline] 
+	\node[anchor=base] (#1) {$#2$};
+}
+
 %\usepackage{balance}
 \usepackage{epsfig}
 %\usepackage[all]{xy}
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{array}
 \usepackage{float}
 \usepackage{subcaption}
@@ -63,29 +64,46 @@
 \usepackage{algpseudocode}
 \usepackage{setspace}
 \usepackage{tabto}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{algorithmicx}
 
 
+ % cambiar formato del texto
 \usepackage[colorinlistoftodos,textwidth=2.7cm]{todonotes}
-
 \newcommand{\todoCITE}[1]{\todo[color=blue!25]{CITE: #1}}
 \newcommand{\todoIMPORTANT}[1]{\todo[color=red!25]{IMPORTANT: #1}}
 \newcommand{\todoREV}[1]{\todo[color=green!25]{REVIEWED: #1}}
 
-\usepackage{afterpage}
+\newcommand{\toask}[1]{\textcolor{red}{(Q): #1}}
+\newcommand{\tocite}{\textcolor{blue}{[citation]}}
+\newcommand{\rpm}{\raisebox{.2ex}{$\scriptstyle\pm$}}
 
+\newcommand{\dc}{\textcolor{red}{DC:}\textcolor{red}}
+\newcommand{\mm}{\textcolor{blue}{}\textcolor{blue}}
+\newcommand{\mc}{\textcolor{green}{}\textcolor{green}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage{tcolorbox}
+\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=4pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
+
+
+% paginas en blanco
+\usepackage{afterpage}
 \newcommand\blankpage{%
 	\null
 	\thispagestyle{empty}%
 	\addtocounter{page}{-1}%
 	\newpage}
 
-
+% colorines
 \definecolor{codegreen}{rgb}{.24,.52,.03}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{.85,.79,.08}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 \definecolor{codefuctions}{rgb}{1, 0, .24}
 
+%estilo de codigo
 \lstdefinestyle{mystyle}{
 	backgroundcolor=\color{backcolour},   
 	commentstyle=\color{codegreen},
@@ -105,9 +123,9 @@
 	tabsize=4,
 	rulecolor=\color{black}
 }
-
 \lstset{style=mystyle}
 
+% colores de los links
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks,
@@ -117,68 +135,28 @@
 	urlcolor=blue
 }
 
-\onecolumn
+% subcaption
 \usepackage[labelfont=sc, font={footnotesize, singlespacing}]{caption}
 \usepackage{subcaption}
 
-\renewcommand\thesection{%
-	\ifnum\value{section}<1{\thechapter.\arabic{section}}%
-	\else{\thechapter.\arabic{section}}\fi}
-
-\renewcommand\thesubsection{%
-	\ifnum\value{subsection}<1{\thechapter.\arabic{subsection}}%
-	\else{\thechapter.\arabic{subsection}}\fi}
-
+% paragraph def
 \newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\\\}
 \newcommand{\mysubparagraph}[1]{\subparagraph{#1}\mbox{}\\\\}
 
-
-\newcommand{\toask}[1]{\textcolor{red}{(Q): #1}}
-%\newcommand{\todo_old}[1]{\textcolor{red}{(ToDo): #1}}
-\newcommand{\tocite}{\textcolor{blue}{[citation]}}
-\newcommand{\rpm}{\raisebox{.2ex}{$\scriptstyle\pm$}}
-
-\newcommand{\dc}{\textcolor{red}{DC:}\textcolor{red}}
-\newcommand{\mm}{\textcolor{blue}{}\textcolor{blue}}
-\newcommand{\mc}{\textcolor{green}{}\textcolor{green}}
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
-
-%\newcommand{\tikzmark}[2]{
-%	\tikz[overlay,remember picture,baseline]
-\usepackage{tcolorbox}
-\newtcbox{\code}{on line, boxrule=0pt, boxsep=0pt, top=4pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
-
-\newcommand{\tikzmarktrace}[2]{
-	\tikz[overlay,remember picture,baseline] 
-	\node[anchor=base] (#1) {$#2$};
-}
-
-%\let\LaTeXStandardTableOfContents\tableofcontents
-%\renewcommand{\contentsname}{Index}
-%\renewcommand{\tableofcontents}{%
-%	\begingroup%
-%	\renewcommand{\bfseries}{\relax}%
-%	\LaTeXStandardTableOfContents%
-%	\endgroup%
-%}
-\usepackage{titlesec}
-\usepackage{xparse}
-\NewDocumentCommand{\DIV}{om}{%
-	\IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
-	\csname #2\endcsname
-}
-
-\usepackage{xcolor}
-\usepackage[T1]{fontenc}
-\usepackage{algorithmicx}
-\bibliographystyle{unsrt}
-
-%\onehalfspacing
+% indentation 
 \setlength{\parindent}{1cm}	
 \setlength{\parskip}{.2cm plus4mm minus3mm}
 \renewcommand{\baselinestretch}{1.5}
 
+% formato de los títulos
+\usepackage{titlesec}
+\usepackage[titles]{tocloft}
 
+\titleformat{name=\chapter,numberless}[display]
+{}{\hfill\rule{.7\textwidth}{3pt}}{0pt}
+{\hspace*{.3\textwidth}\huge\bfseries}[\addvspace{-1pt}]
+ 
+ % END
 
 \begin{document}
 
@@ -194,20 +172,20 @@
 		
 		\textsc{\Large \textbf{Treball de Recerca de Batxillerat}}\\[.5cm]
 		
-		\textsc{\large \textbf{IES Miquel Tarradell}}\\[2cm]
+		\textsc{\large \textbf{IES [REDACTED]}}\\[2cm]
 		
 		\vspace{8.5cm}
 		\begin{minipage}{0.48\textwidth}
 			\begin{flushleft} \large
 				\Large \textbf{Autor:}\\
-				\Large Tomàs Ockier Poblet \\ 2n Batxillerat \\ \href{mailto:ockier1@gmail.com}{ockier1@gmail.com}
+				\Large tominabo \\ 2n Batxillerat \\ 
 			\end{flushleft}
 		\end{minipage}
 		~
 		\begin{minipage}{0.48\textwidth}
 			\begin{flushright} \large
 				\Large \textbf{Tutor:} \\
-				\Large Montserrat Parcet Bertran 
+				\Large [REDACTED]
 			\end{flushright}
 		\end{minipage}\\
 		
@@ -217,7 +195,7 @@
 		\vspace{1.5cm}
 		\begin{minipage}{0.85\textwidth}
 			\begin{center}
-								\includegraphics[scale=0.2]{Figures/Cover/logo-tarradell.jpg}
+								\includegraphics[scale=0.2]{Figures/Cover/logo-REDACTED.png}
 			\end{center}
 		\end{minipage}
 		
@@ -227,7 +205,7 @@
 		%	DATE SECTION
 		%----------------------------------------------------------------------------------------
 		
-		{\large \today} \\
+		{\large 9 de gener de 2022} \\
 		\large Barcelona, Barcelona  
 		
 		%----------------------------------------------------------------------------------------
@@ -237,37 +215,33 @@
 		\end{center}
 		
 	\end{titlepage}
-	
+
+	\afterpage{\blankpage}
+
+	\tableofcontents
 	
 	\afterpage{\blankpage}
-	\begin{onehalfspacing}
-		\tableofcontents
-	\end{onehalfspacing}
-	
-	\clearpage
-	
-	\thispagestyle{plain}
 	
 	\section*{Abstract}
-	Quantum Machine Learning is one of the most promising applications of Quantum Computing. In this work, I present a Quantum Generative Adversarial Network (qGAN) for generating gray-scale bar images. Through the Fréchet Distance score, I evaluate the effectiveness of a partial measurement on the simulated quantum circuit that generates the images. This score shows that the measurement improves qGAN performance by avoiding an oscillation on the resemblance between the generated and the real images, that is, an alternation of good and poor quality generated images that occurs through optimization of the qGAN. 
+	\tab Quantum Machine Learning is one of the most promising applications of Quantum Computing. In this work, I present a Quantum Generative Adversarial Network (qGAN) for generating gray-scale bar images. Through the Fréchet Distance score, I evaluate the effectiveness of a partial measurement on the simulated quantum circuit that generates the images. This score shows that the measurement improves qGAN performance by avoiding an oscillation on the resemblance between the generated and the real images, that is, an alternation of good and poor quality generated images that occurs through optimization of the qGAN. 
 	
 	\vspace{1cm}
 	\hrule
 	\vspace{1cm}
 
-	El Aprendizaje Automático Cuántico es una de las aplicaciones más prometedoras de la Computación Cuántica. En este trabajo, presento una Red Generacional Adversaria Cuántica (qGAN en inglés) para generar imagenes de barras en una escala de grises. A través de la puntuación de la Distance de Fréchet, evaluo la efectividad de una medida parcial en el circuito cuántico que genera las images. Esta puntuación muestra que esta medida mejora el rendimiento de la qGAN al evitar una oscilación en el parecido entre las imagenes generadas y las reales, es decir, una alternancia entre imagenes generades de buena y mala calidad que se da a cabo a través de toda la optimización de la qGAN.
-	\clearpage
+	El Aprendizaje Automático Cuántico es una de las aplicaciones más prometedoras de la Computación Cuántica. En este trabajo, presento una Red Generacional Adversaria Cuántica (qGAN en inglés) para generar imagenes de barras en una escala de grises. A través de la puntuación de la Distance de Fréchet, evalúo la efectividad de una medida parcial en el circuito cuántico que genera las imagenes. Esta puntuación muestra que esta medida mejora el rendimiento de la qGAN al evitar una oscilación en el parecido entre las imagenes generadas y las reales, es decir, una alternancia entre imagenes generades de buena y mala calidad que se da a cabo a través de toda la optimización de la qGAN.
 	
+	\clearpage
 	\thispagestyle{plain}
 	
 	\subsection*{Nota al tribunal}
-	Aquest document ha estat pensat per llegir-lo en un PDF, tot el text que està marcat en blau és hipertext que apunta a un enllaç web o a una altra part del treball. No obstant això, tots els documents referenciats no són accessibles immediatament, però si es vol accedir a un d'ell només, fa falta preguntar-me. Si el lector vol accedir als enllaços web ho pot fer a partir del PDF, que el trobarà a: \href{https://github.com/tomiock/qGAN}{https://github.com/tomiock/qGAN}	
+	Aquest document ha estat pensat per llegir-lo en un PDF, tot el text que està marcat en blau és hipertext que apunta a un enllaç web o a una altra part del treball. No obstant això, tots els documents referenciats no són accessibles immediatament, però si es vol accedir a un d'aquests només fa falta preguntar-me. Si el lector vol accedir als enllaços web ho pot fer a partir del PDF, que el trobarà a: \href{https://github.com/tomiock/qGAN}{https://github.com/tomiock/qGAN}	
 	
-	També vull demanar disculpes perquè hi ha algunes paraules que estan escrites en anglès al llarg del treball. Tot el que hi ha en aquest document ho he après en anglès (com es pot veure en tots els recursos de la bibliografia) i a vegades m'és molt difícil traduir el nombre dels conceptes que he après. A més a més aquest document està redactat en \LaTeX{} una espècie de llenguatge de programació que s'utilitza per redactar documents que continguin expressions matemàtiques complexes, per aquesta raó hi ha paraules soltes en anglès en la bibliografia i altres llocs. Un altre error que no puc corregir és que els nombres que s'assignen a les seccions es repeteixen, això es pot veure molt clarament en l'índex.
+	També vull demanar disculpes perquè hi ha algunes paraules que estan escrites en anglès al llarg del treball. Tot el que hi ha en aquest document ho he après en anglès (com es pot veure en tots els recursos de la bibliografia) i a vegades m'és molt difícil traduir el nombre dels conceptes que he après. A més a més aquest document està redactat en \LaTeX{} una espècie de llenguatge de programació que s'utilitza per redactar documents que continguin expressions matemàtiques complexes. A causa de\texttt{} que la implementació del català en aquest programa no és excel·lent hi ha paraules soltes en anglès en la bibliografia i altres llocs.
 	
 	\afterpage{\blankpage}
 	
-	\part*{Introducció}
+	\part{Introducció}
 	\label{part:intro}
 	\input{introduction}
 	
@@ -275,7 +249,7 @@
 	\label{part:theoretical_framework}
 	\input{theoretical_framework}
 	
-	\part{Part Experimental}
+	\part{Marc Experimental}
 	\label{part:experimental_work}
 	\input{experimental_work}
 	

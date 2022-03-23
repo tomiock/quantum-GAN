@@ -4,7 +4,6 @@ import math
 import numpy as np
 from matplotlib import pyplot as plt
 
-
 # DATA PROCESSING
 from scipy import linalg
 
@@ -63,7 +62,8 @@ def images_to_scatter(batch_image):
 
     return y_axis, x_axis
 
-def fechet_distance(image1: np.array, 
+
+def fechet_distance(image1: np.array,
                     image2: np.array):
     assert image1.shape == image2.shape
     y = np.arange(0, image1.flatten().shape[0])
@@ -71,7 +71,8 @@ def fechet_distance(image1: np.array,
     matrix_a_cov = np.cov(np.stack((y, image1.flatten()), axis=0))
     matrix_b_cov = np.cov(np.stack((y, image2.flatten()), axis=0))
 
-    to_trace = matrix_a_cov + matrix_b_cov - 2*(linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
+    to_trace = matrix_a_cov + matrix_b_cov - 2 * (
+        linalg.fractional_matrix_power(np.dot(matrix_a_cov, matrix_b_cov), .5))
     return np.abs(image1.mean() - image2.mean())**2 + np.trace(to_trace)
 
 
@@ -103,7 +104,7 @@ def MSE_derivative(prediction, y):
 
 
 def MSE(prediction, y):
-    return (y - prediction) ** 2
+    return (y - prediction)**2
 
 
 def BCE_derivative(prediction, target):
@@ -148,8 +149,8 @@ class Partial_Trace:
         self.total_dim = self.state.shape[0]
 
         self.num_qubits = int(np.log2(self.total_dim))
-        self.a_dim = 2 ** (self.num_qubits - self.qubits_out)
-        self.b_dim = 2 ** self.qubits_out
+        self.a_dim = 2**(self.num_qubits - self.qubits_out)
+        self.b_dim = 2**self.qubits_out
 
         # if self.side == "bot":
         self.basis_b = [_ for _ in np.identity(int(self.b_dim))]

@@ -2,10 +2,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib
 
-font = {'family': 'Helvetica',
-        'size': 18}
-
-matplotlib.rc('font', **font)
+#font = {'family': 'Helvetica',
+#        'size': 18}
+#
+#matplotlib.rc('font', **font)
 
 # generate the data
 np.random.seed(222)
@@ -22,7 +22,6 @@ y_estimate = X @ w_estimate
 plt.figure(figsize=(15, 10))
 plt.scatter(X.flat, y_estimate.flat, label="Predicció")
 plt.scatter(X.flat, y.flat, color='red', alpha=0.4, label="Dades")
-plt.tight_layout()
 plt.title("Regressió per diferencia de quadrats")
 plt.legend()
 plt.savefig("least_squares.png")

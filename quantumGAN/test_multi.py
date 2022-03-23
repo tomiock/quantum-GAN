@@ -1,5 +1,6 @@
 import multiprocessing
 import time
+
 import numpy as np
 
 from quantumGAN.discriminator import ClassicalDiscriminator
@@ -45,7 +46,7 @@ init_biases_discriminator, init_weights_discriminator = example_discriminator.in
 
 
 def to_train(num_epochs):
-	# definició d'un discriminador pel model amb la funció no-lineal i una altre pel model que no la té
+	# definició d'un discriminador pel model amb la funció no-lineal i una altra pel model que no la té
 	discriminator_ancilla = \
 		ClassicalDiscriminator(sizes=[4, 16, 8, 1], type_loss="minimax")
 	discriminator_not_ancilla = \

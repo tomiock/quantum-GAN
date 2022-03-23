@@ -1,3 +1,7 @@
+import sys
+print(sys.path)
+
+
 import numpy as np
 
 from quantumGAN.discriminator import ClassicalDiscriminator

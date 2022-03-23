@@ -52,14 +52,13 @@ class Quantum_GAN:
 			.format(self.discriminator.sizes, self.example_g_circuit)
 
 	def store_info(self, epoch, loss, real_label, fake_label):
-		file = open(os.path.join(self.path, self.filename), "a")
-		file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {} \n"
-		           .format(epoch,
-		                   loss,
-		                   self.generator.parameter_values,
-		                   real_label,
-		                   fake_label))
-		file.close()
+		with open(os.path.join(self.path, self.filename), "a") as file:
+			file.write("{} epoch LOSS {} Parameters {} REAL {} FAKE {} \n"
+		                .format(epoch,
+		                        loss,
+		                        self.generator.parameter_values,
+		                        real_label,
+		                        fake_label))
 
 	def plot(self):
 		# save data for plotting
@@ -199,8 +198,9 @@ class Quantum_GAN:
 			print(label_real[-1], label_fake[-1])
 			self.store_info(o, loss_final, label_real, label_fake)
 
-		time_now = datetime.now()
-		print((time_now - time_init).total_seconds(), "seconds")
+		time_to_store = (datetime.now() - time_init).total_seconds()
+		with open(os.path.join(self.path, self.filename), "a") as file:
+			file.write(f"TOTAL TIME: {time_to_store}")
 
 	def save_images(self, image, epoch):
 		image_shape = int(image.shape[0] / 2)
@@ -240,9 +240,8 @@ class Quantum_GAN:
 		        "fake_labels": self.label_fake_series,
 		        "loss_series": self.loss_series
 		        }
-		f = open(os.path.join(self.path, "data.txt"), "a")
-		json.dump(data, f)
-		f.close()
+		with open(os.path.join(self.path, "data.txt"), "a") as f:
+			json.dump(data, f)
 
 
 def create_mini_batches(training_data, mini_batch_size):
@@ -255,9 +254,9 @@ def create_mini_batches(training_data, mini_batch_size):
 
 
 def load_gan(filename):
-	f = open(filename, "r")
-	data = json.load(f)
-	f.close()
+	with open(filename, "r") as f:
+		data = json.load(f)
+		f.close()
 	discriminator = ClassicalDiscriminator(data["D_sizes"], data["D_loss"])
 
 	generator = QuantumGenerator(num_qubits=data["Q_num_qubits"],

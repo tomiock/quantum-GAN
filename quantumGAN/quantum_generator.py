@@ -105,7 +105,6 @@ class QuantumGenerator:
 		"""Retorna un output del generador quan se li dona un estat d'input i opcionalment uns paràmetres en
 		específic. Els píxels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant,
 		els píxels de l'imatge estan normalitzats amb la norma l-1."""
-		real_keys_set, real_keys_list = create_real_keys(self.num_qubits_total - self.num_qubits_ancilla)
 
 		# en cas de que no es donin paràmetres com a input, es treuen els paràmetres de la variable
 		# self.parameter_values. Es a dir els paràmetres que es creen automàticament al principi i que es van
@@ -128,6 +127,8 @@ class QuantumGenerator:
 		                              shots=self.shots,
 		                              optimization_level=0).result()
 		counts = result_ideal.get_counts()
+
+		real_keys_set, real_keys_list = create_real_keys(self.num_qubits_total - self.num_qubits_ancilla)
 
 		try:
 			# creació de l'imatge resultant
