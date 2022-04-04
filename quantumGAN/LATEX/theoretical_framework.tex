@@ -1,12 +1,14 @@
+
+
 \chapter{Àlgebra lineal}\label{algebra}
-Quan vaig començar a buscar informació sobre computació quàntica, en vaig ràpidament vaig adonarme'n que necessitava més coneixements matemàtics, com que no entenia gairebé res dels llibres sobre computació quàntica. Vaig tindre la que sort que durant aquell temps em van captar l'atenció una sèrie de vídeos sobre àlgebra lineal, que és justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Aquests vídeos són les lliçons que dona el professor Gilbert Strang a l'Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos.
+Quan vaig començar a buscar informació sobre computació quàntica, vaig ràpidament vaig adonarme'n que necessitava més coneixements matemàtics, com que no entenia gairebé res dels llibres sobre computació quàntica. Durant aquell temps em van captar l'atenció una sèrie de vídeos sobre àlgebra lineal, que és justament la branca de les matemàtiques sobre la qual es basa la computació quàntica. Aquests vídeos són les lliçons que dona el professor Gilbert Strang a l'Institut Tecnològic de Massachusetts (MIT en anglès) \cite{LA_OCW_strang, LA2_OCW_strang}. Una vegada havia vist gairebé tots els vídeos, ja tenia bastants conceptes apresos.
 
 Aquelles lliçons em van ajudar a entendre les matemàtiques de \textit{Quantum Computation and Quantum Information} \cite{QCandQI} i \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro}. A poc a poc, vaig anar aprenent els fonaments matemàtics de la computació quàntica i mecànica quàntica.
 
-En aquesta secció aniré explicant els conceptes bàsics de l'àlgebra lineal amb la finalitat de formar els coneixements en matemàtiques necessaris per poder comprendre aquest treball.
+En aquesta secció explicaré els conceptes bàsics de l'àlgebra lineal amb la finalitat de situar els antecedents teòrics d'aquesta recerca. 
 
 \section{Vectors i espais vectorials}
-Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial és el conjunt de tots els vectors amb les mateixes dimensions i amb certes propietats en comú. Per exemple $\mathbb{R}^{3}$ seria l'espai vectorial de tots els vectors de 3 dimensions els quals normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica es fan servir uns espais vectorials anomenats espais de Hilbert, que són aquells en els que hi ha definit un producte interior \cite{QCandQI:GramSchmidt}. En els espais de Hilbert es defineixen un conjunt d'operacions amb certes propietats, les quals explicaré a continuació. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball, i que d'aquí en endavant, quan mencioni espai vectorial, em referiré a un espai de Hilbert.
+Els objectes fonamentals de l'àlgebra lineal són els espais vectorials. Un espai vectorial és el conjunt de tots els vectors amb les mateixes dimensions i amb certes propietats en comú. Per exemple $\mathbb{R}^{3}$ seria l'espai vectorial de tots els vectors de 3 dimensions els quals normalment s'utilitzen per representar punts en un espai tridimensional. En computació quàntica es fan servir uns espais vectorials anomenats espais de Hilbert, que són aquells en els que hi ha definit un producte interior \cite{QCandQI:GramSchmidt}. En els espais de Hilbert es defineixen un conjunt d'operacions amb certes propietats, les quals explicaré a continuació. S'ha de tenir en compte que els espais de Hilbert són molt més complicats que el que es representa en aquest treball. En endavant, quan mencioni espai vectorial, em referiré a un espai de Hilbert.
 
 Els espais vectorials estan definits per les seves bases, i.e. un conjunt de vectors independents $B = \{\ket{v_1}, \cdots, \ket{v_n}\}$. Posat d'una altra manera: el conjunt $B$ és una base pel l'espai $V$, si cada vector $\ket{v}$ en l'espai es pot escriure com $\ket{v} = \sum_i a_i \ket{v_i}$ per $\ket{v_i} \in B$.
 
@@ -356,18 +358,48 @@ $$
 
 S'ha de tenir en compte que el producte de Kronecker també es pot fer entre un vector i una matriu, o viceversa, no obstant això, no és molt comú fer-ho.
 
-Si a una matriu $A$ s'he li treu el producte tensorial de si mateixa $n$-vegades es pot escriure com a $A^{\otimes n}$, per exemple:  $\psi^{\otimes2} = \psi\otimes\psi$. 
+Si a una matriu $A$ s'he li treu el producte tensorial de si mateixa $n$-vegades es pot escriure com a $A^{\otimes n}$, per exemple:  $\ket{\psi}^{\otimes2} = \ket{\psi}\otimes\ket{\psi}$. 
 
 \subsection{Propietats del producte tensorial}
 Les propietats bàsiques del producte tensorial són les següents\footnote{Una cosa a notar és que $A \otimes B$ i $B \otimes A$ són 
 	permutativament equivalents: \\ $\exists P, Q \Rightarrow A \otimes B = P (  B \otimes A )Q$ on $P$ i $Q$ són matrius permutatives.}  \cite{QCandQI:tensor_product, wiki:tensor_product}:
+
+
+
+
 \begin{enumerate}
-	\item Associativitat: \\ $A \otimes (B + C) = A \otimes B + A \otimes C$ \\
-	$ (zA) \otimes B = A \otimes (zB) = z(A \otimes B)$\\
-	$ (A \otimes B) \otimes C = A \otimes (B\otimes C)$ \\
+	\item Amb un escalar $z$ i els vectors $\ket{v} \in V$ i $\ket{w} \in W$:
+\begin{equation*}
+	z(\ket{v} \otimes \ket{w}) = (z\ket{v}) \otimes \ket{w} = \ket{v} \otimes (z\ket{w})
+\end{equation*}
+
+	\item Per els vectors $\ket{v_{1}}, \ket{v_{2}} \in V$ i $\ket{w} \in W:$
+\begin{equation*}
+	(\ket{v_{1}} \ket{v_{2}}) \otimes\ket{w} = \ket{v_{1}}\otimes\ket{w} + \ket{v_{2}}\otimes\ket{w}
+\end{equation*}
+
+	\item Per els vectors $\ket{v}\in W$ i $\ket{w_{1}}, \ket{w_{2}} \in W:$
+\begin{equation*}
+	\ket{v}\otimes(\ket{w_{1}}\otimes\ket{w_{2}}) = \ket{v}\otimes\ket{w_{1}} + \ket{v}\otimes\ket{w_{2}}
+\end{equation*}
 \end{enumerate}
 
+Aleshores podem definir una aplicació lineal que actua en $V\otimes W$:
+\begin{equation*}
+	A\otimes B : V \otimes W \mapsto V' \otimes W'
+\end{equation*}
+On les matrius $A$ i $B$ són:
+\begin{align*}
+	A:V\mapsto V' \\
+	B:W\mapsto W' 
+\end{align*}
+Finalment l'aplicació $A\otimes B$ és definida com:
+\begin{equation*}
+	(A\otimes B)(\ket{v}\otimes\ket{w}) \equiv A\ket{v} \otimes B\ket{w}
+\end{equation*}
+Essent $\ket{v}$ un vector en $V$ i $\ket{w}$ en $W$.
 
+A més a més, és pot definir un producte interior en l'espai $V\otimes W$. Del qual no parlaré perquè és pot ús del producte de Kronecker per computar-lo considero que no és necessari. 
 
 %$$
 %f: \mathbb{R} \rightarrow \mathbb{R} \text{ or } \mathbb{R} \stackrel{f}{\to} \mathbb{R} 
@@ -420,9 +452,9 @@ $$
 $$
 
 \chapter{Computació quàntica}
-Després de la teoria matemàtica, ha arribat el moment de parlar sobre mecànica quàntica; en aquest capítol introduiré alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (IQ i CQ).
+Després de la teoria matemàtica, ha arribat el moment de parlar sobre mecànica quàntica. En aquest capítol introduiré alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (IQ i CQ).
 
-La mecànica quàntica és un marc matemàtic o conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent-hi la teoria d'informació quàntica. La manera correcta de definir la computació quàntica és a través dels postulats de la mecànica quàntica, perquè amb aquests, les afirmacions que es fan en computació quàntica no semblen venir d'enlloc \cite{QCandQI:QM_postulates}. No obstant això, per no complicar més aquesta secció, faré el millor possible per poder explicar els conceptes de la computació quàntica sense entrar en els conceptes més generals de la mecànica quàntica, a no ser que sigui estrictament necessari.
+La mecànica quàntica és un marc matemàtic o conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent-hi la teoria d'informació quàntica. Habitualment, aquest tema es tracta amb una profunditat que aquest treball no pot incloure. És a dir, la manera ideal de presentar aquest tema és a través dels postulats de la mecànica quàntica \cite{QCandQI:QM_postulates}, els quals no mencionaré. En canvi, intentaré explicar els conceptes més bàsics de quàntica breument.
 
 \section{Estats quàntics i superposicions}
 Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En computació quàntica els sistemes es representen per estats quàntics, els quals són un tipus de distribucions de probabilitat que representen els possibles resultats d'una mesura en un sistema quàntic \cite{QT_concepts:q_systems}.
