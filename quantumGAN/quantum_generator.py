@@ -13,6 +13,9 @@ from quantumGAN.functions import create_entangler_map, create_real_keys, minimax
 
 
 class QuantumGenerator:
+	"""
+
+	"""
 
 	def __init__(
 			self,
@@ -24,8 +27,8 @@ class QuantumGenerator:
 	) -> None:
 
 		super().__init__()
-		# passar els arguments de la classe a métodes en de classes
-		# d'aquesta manera son accessibles per qualsevol funció dintre de la classe
+		# converting the class' arguments to class' methods
+		# thus they can accesed by any function inhered from the class
 		self.num_qubits_total = num_qubits
 		self.num_qubits_ancilla = num_qubits_ancilla
 		self.generator_circuit = generator_circuit
@@ -36,17 +39,17 @@ class QuantumGenerator:
 		self.simulator = AerSimulator()
 
 	def init_parameters(self):
-		"""Inicia els paràmetres inicial i crea el circuit al qual se li posen els paràmetres"""
-		# iniciació dels paràmetres inicials i dels circuits al qual posar aquests paràmetres
+		"""Create the initial parameters and the creation of the quantum circuit"""
+
 		self.generator_circuit = self.construct_circuit(latent_space_noise=None,
 		                                                to_measure=False)
-		# s'ha de crear primer el circuit perquè d'aquesta manera es pot saber el nombre de paràmetres que es necessiten
+		# the circuit has to be created first so we can calculate the number of parameters needed
 		self.parameter_values = np.random.normal(np.pi / 2, .1, self.generator_circuit.num_parameters)
 
 	def construct_circuit(self,
 	                      latent_space_noise,
 	                      to_measure: bool):
-		"""Crea el circuit quàntic des de zero a partir de diversos registres de qubits"""
+		"""Create the quantum circuit from the different quantum registers"""
 		if self.num_qubits_ancilla == 0:
 			qr = QuantumRegister(self.num_qubits_total, 'q')
 			cr = ClassicalRegister(self.num_qubits_total, 'c')
@@ -57,13 +60,11 @@ class QuantumGenerator:
 			cr = ClassicalRegister(self.num_qubits_total - self.num_qubits_ancilla, 'c')
 			qc = QuantumCircuit(anc, qr, cr)
 
-		# creació de la part del circuit que conté la implantació dels paràmetres d'input. En cas que no es donin
-		# aquests paràmetres es creen automàticament
 		if latent_space_noise is None:
 			randoms = np.random.normal(-np.pi * .01, np.pi * .01, self.num_qubits_total)
 			init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
 
-			# es col·loca una porta RY en cada qubits i amb un paràmetre diferent cadascuna
+			# an RY in placed in every qubit
 			for index in range(self.num_qubits_total):
 				init_dist.ry(randoms[index], index)
 		else:
@@ -72,20 +73,18 @@ class QuantumGenerator:
 			for index in range(self.num_qubits_total):
 				init_dist.ry(latent_space_noise[index], index)
 
-		# la funció create_entagler_map crea les parelles de qubits a les qual col·locar les portes CZ
-		# en funció del nombre de qubits
+
+		# the output of ``create_entangler_map`` indicates how to CZ gates are placed
 		if self.num_qubits_ancilla == 0:
 			entangler_map = create_entangler_map(self.num_qubits_total)
 		else:
 			entangler_map = create_entangler_map(self.num_qubits_total - self.num_qubits_ancilla)
 
-		# creació final dels circuits a partir una funció integrada a Qiskit que va repetint les operacions
-		# que se li especifiquen
+		# ``TwoLocal``is the function that creates the rest of the circuit
 		ansatz = TwoLocal(int(self.num_qubits_total), 'ry', 'cz', entanglement=entangler_map, reps=1,
 		                  insert_barriers=True)
 
-		# aquí s'ajunten el circuit que funciona com a input amb el circuit que consisteix en la repetició
-		# de les portes RY i CZ
+		# the two different circuits are composed into a single one
 		qc = qc.compose(init_dist, front=True)
 		qc = qc.compose(ansatz, front=False)
 
@@ -102,6 +101,12 @@ class QuantumGenerator:
 			latent_space_noise,
 			parameters: Optional[np.ndarray] = None
 	):
+		"""
+		
+		:param latent_space_noise:
+		:param parameters:
+		:return:
+		"""
 		"""Retorna un output del generador quan se li dona un estat d'input i opcionalment uns paràmetres en
 		específic. Els píxels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant,
 		els píxels de l'imatge estan normalitzats amb la norma l-1."""

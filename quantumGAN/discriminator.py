@@ -20,7 +20,9 @@ def load(filename):
 
 
 class ClassicalDiscriminator:
-
+	"""
+	A simple fully connected neural network based on code from Michael Nielsen.
+	"""
 	def __init__(self,
 	             sizes: List[int],
 	             type_loss: str) -> None:
@@ -39,35 +41,27 @@ class ClassicalDiscriminator:
 		self.weights = None
 
 	def init_parameters(self):
+		"""Return random parameters based on the network's architecture"""
 		self.biases = [np.random.randn(y, ) for y in self.sizes[1:]]
 		self.weights = [np.random.randn(y, x)
 		                for x, y in zip(self.sizes[:-1], self.sizes[1:])]
 
 		return self.biases, self.weights
 
-	def feedforward(self, a):
-		"""Return the output of the network if ``a`` is input."""
-		for b, w in zip(self.biases, self.weights):
-			a = sigmoid(np.dot(w, a) + b)
-		return a
 
 	def predict(self, x):
-		# feedforward
+		"""Return a label for a given image input"""
 		activation = x
-		zs = []  # list to store all the z vectors, layer by layer
+		zs = []  # list to store all the ``z`` vectors, layer by layer
 		for b, w in zip(self.biases, self.weights):
 			z = np.dot(w, activation) + b
 			zs.append(z)
 			activation = sigmoid(z)
 		return activation
 
-	def evaluate(self, test_data):
-
-		test_results = [(np.argmax(self.feedforward(x)), y)
-		                for (x, y) in test_data]
-		return sum(int(x == y) for (x, y) in test_results)
 
 	def forwardprop(self, x: np.ndarray):
+		"""Return label and all activations over the hole network"""
 		activation = x
 		activations = [x]  # list to store all the activations, layer by layer
 		zs = []  # list to store all the z vectors, layer by layer
@@ -78,11 +72,10 @@ class ClassicalDiscriminator:
 			activations.append(activation)
 		return activation, activations, zs
 
+
 	def backprop_bce(self, image, label):
 		"""Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient for the cost function C_x.  ``nabla_b`` and
-        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-        to ``self.biases`` and ``self.weights``."""
+        gradient of ``self.biases`` and ``self.weights`` using Binary Cross Entropy as loss function."""
 		nabla_b = [np.zeros(b.shape) for b in self.biases]
 		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -102,11 +95,10 @@ class ClassicalDiscriminator:
 			                     activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
 		return nabla_b, nabla_w, activations[-1]
 
+
 	def backprop_minimax(self, real_image, fake_image, is_real):
 		"""Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient for the cost function C_x.  ``nabla_b`` and
-        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-        to ``self.biases`` and ``self.weights``."""
+        gradient for ``self.biases`` and ``self.weights`` using Minimax as loss function."""
 		nabla_b = [np.zeros(b.shape) for b in self.biases]
 		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -133,11 +125,23 @@ class ClassicalDiscriminator:
 			                     activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
 		return nabla_b, nabla_w, activations[-1]
 
+
 	def train_mini_batch(self, mini_batch, learning_rate):
+		"""Update the network's parameters with a mini batch of data. They can be updated using two diferent loss functions.
+		It doesn't give any output because this function updates the parameters updating the methods of the class that store them.
+
+		Inputs:
+			- ``mini_batch``: [np.ndarray]
+			list of images
+			- ``learning_rate``: int
+			number indicating the learning rate to train the network
+		"""
 		global label_real, label_fake
+		# initial arrays to store the derivatives values
 		nabla_b = [np.zeros(b.shape) for b in self.biases]
 		nabla_w = [np.zeros(w.shape) for w in self.weights]
 
+		# backpropagation of the network to store the derivatives onto ``nabla_b`` and ``nabla_w``
 		if self.type_loss == "binary cross entropy":
 			for real_image, fake_image in mini_batch:
 				delta_nabla_b, delta_nabla_w, label_real = self.backprop_bce(real_image, np.array([1.]))
@@ -161,8 +165,9 @@ class ClassicalDiscriminator:
 			raise Exception("type of loss function not valid")
 
 		# gradient descent
-		# nabla_w and nabla_b are multiplied by the learning rate
-		# and taken the mean of (dividing by the mini batch size)
+		# ``nabla_w`` and ``nabla_b`` are multiplied by the learning rate and taken the mean of (dividing by the mini batch size)
+
+		# update of the parameters
 		self.weights = [w - (learning_rate / len(mini_batch)) * nw
 		                for w, nw in zip(self.weights, nabla_w)]
 		self.biases = [b - (learning_rate / len(mini_batch)) * nb
