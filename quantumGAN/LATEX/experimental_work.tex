@@ -11,7 +11,7 @@ En altres paraules, volia veure si la mesura parcial afectaria positivament en l
 
 Sembla una qüestió senzilla, però la dificultat de l'experiment radica en crear la xarxa neuronal en si, amb totes les seves parts accessibles per poder fer els canvis que siguin necessaris. L'única manera de fer l'experiment seria programant el model, una tasca que tenia clar que faria des del principi.
 
-\chapter{Programació del model}
+\chapter{Desenvolupament del model}
 
 Posteriorment a començar a programar el model, ja tenia clar que ho havia de fer en \textit{Python}. En el passat creat alguns algoritmes i tenia experiència construint i executant circuits quàntics amb \textit{Cirq} \cite{cirq}, una eina desenvolupada per Google. A més a més, sabia de l'existència de \textit{TensorFlow Quantum} \cite{tfq}, una altra eina desenvolupada per Google destinada a la creació de xarxes neuronals quàntiques i algoritmes de \textit{quantum mechine learning} en general. També tenia una mica d'experiència en aquest \textit{framework}. Per tant, desenvolupar el model en \textit{TensorFlow Quantum} va ser la primera opció. 
 
@@ -31,7 +31,7 @@ Igual que \textit{Cirq} té un \textit{framework} per poder desenvolupar xarxes 
 
 Per tant, en canviar de \textit{Cirq} a \textit{Qiskit}, també havia de canviar de \textit{TensorFlow} a \textit{PyTorch}, però no tenia res d'experiencia amb PyTorch, sabia que la transició seria complicada, i tenia raó. No vaig ni aconseguir crear el \textit{dataset} d'imatges per alimentar al discriminador.
 
-Després d'intentar-lo amb \textit{TensorFlow Quantum} i amb \textit{PyTorch}, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. Crearia tant el discriminador com el generador manualment. 
+Després d'intentar-lo amb \textit{TensorFlow/TensorFlow Quantum} i amb \textit{PyTorch/Qiskit}, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. Crearia tant el discriminador com el generador manualment. 
 
 El discriminador, al ser una xarxa tan simple, la podria crear des de zero. Llavors vaig començar a buscar codi a internet que pogués utilitzar. Volia una xarxa neuronal feta amb \textit{Numpy}, una llibreria de \textit{Python} per fer càlculs amb vectors i matrius amb la qual tenia bastant experiència.
 
@@ -59,7 +59,7 @@ Primer de tot cal remarcar que el model s'optimitza a partir d'un \textit{batch}
 
 Tornant al funcionament de l¡optimització, ho explicaré tal i com està implementat en el codi. Per començar s'han d'agafar els paràmetres a optimitzar, que estaran en forma d'un vector $\theta$, escollir un d'ells que anomenaré $\theta_{i}\,$, que és el paràmetre que s'optimitzarà, i crear un vector de pertubació $\Delta_{i}\,$. 
 
-Llavors es creen dos vectors de paràmetres nous, $\theta^{+}_{i}$ i $\theta^{+}_{i}$: Es multiplica $\pm\frac{\pi}{4}$ pel vector de pertubació, i es suma el resultat al vector de paràmetres original\footnote{Cada un d'aquests vectors de paràmetres té una petita variació en un paràmetre, i cada vector té una variació en un sentit.}. 
+Llavors es creen dos vectors de paràmetres nous, $\theta^{+}_{i}$ i $\theta^{-}_{i}$: Es multiplica $\pm\frac{\pi}{4}$ pel vector de pertubació, i es suma el resultat al vector de paràmetres original\footnote{Cada un d'aquests vectors de paràmetres té una petita variació en un paràmetre, i cada vector té una variació en un sentit.}. 
 
 A continuació, es creen dues imatges, cadascuna corresponent a un dels vectors de paràmetres creats, una amb $\theta^{+}_{i}$ i l'altra amb $\theta^{-}_{i}\,$. 
 
@@ -148,7 +148,7 @@ Les imatges que vaig escollir per generar són les mateixes que van generar en l
 \end{figure}
 
 
-Si executen el model, amb una mida de \textit{batch} de $10$, tant el \textit{learning rate} del discriminador com del generador a $0.1$, i un total d'iteracions de $400$, hi ha una garantia d'arribar a la convergència desitjada, és dir que, que els dos models arriben a l'equilibri de Nash i no poden continuar l'optimització. En aquest punt és quan les imatges falses i les reals són iguals.
+Si executen el model, amb una mida de \textit{batch} de $10$, tant el \textit{learning rate} del discriminador com del generador a $0.1$, i un total d'iteracions de $400$, hi ha una garantia d'arribar a la convergència desitjada. En altres paraules, els dos models arriben a l'equilibri de Nash i no poden continuar l'optimització. En aquest punt és quan les imatges falses i les reals són iguals.
 \begin{figure}[H]
 	\label{fig:labels_loss_400}
 	\begin{subfigure}{0.5\textwidth}
@@ -217,7 +217,7 @@ L'alternativa que he fet servir són els mesuraments de \textit{Qiskit}, al defi
 
 L'arxiu que utilitzo per fer els experiments és \code{experiment.py}. En ell es pot veure com defineixo dos discriminadors\footnote{Que tenen les mateixes característiques.} i dos generadors, que es diferencien pels circuits que fan servir, un amb qubits ancilla i l'altre sense. Aquests models s'agrupen en parelles per definir dues qGANs.
 
-Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{enllaç per veure una imatge amb totes les gràfiques} (perdó per la informalitat)} comencen amb els mateixos paràmetres, per tant, tenen les mateixes condicions, menys els circuits quàntics és clar. També s'utilitza el mateix \text{dataset}.
+Cal notar que els generadors i els discriminadors\footnote{Al principi pensava no tenir els mateixos paràmetres inicials pels discriminadors, però al veure les gràfiques de les etiquetes, l'efecte que tenen aquests és molt notable. Es pot veure com a vegades les etiquetes comencen en uns valors de $1$ i en altres de $0$. \href{https://drive.google.com/file/d/1kYZ1vmNYU17sofNluXFYnoATLfY5B0jG/view?usp=sharing}{enllaç per veure una imatge amb totes les gràfiques}} comencen amb els mateixos paràmetres, per tant, tenen les mateixes condicions, menys els circuits quàntics és clar. També s'utilitza el mateix \text{dataset}.
 
 \section{Anàlisi dels resultats}
 Si comparem les gràfiques que mostren les etiquetes es pot veure una clara diferencia: Els models que tenen els circuits amb els qubits ancilla són més inestables que el que no els tenen, tal i com es pot veure en la figura \ref{fig:700_labels}. Tanmateix, això no vol dir necessàriament que siguin més eficients. 

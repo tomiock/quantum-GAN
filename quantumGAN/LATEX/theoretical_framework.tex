@@ -81,7 +81,7 @@ $$
 
 La composició d'un conjugat complex i la transposada s'anomena el conjugat Hermitià, la seva notació és una $\dagger$ superindexada. Per un vector $\ket{\psi}$ el seu conjugat Hermitià $\ket{\psi}^\dagger$ és:
 $$
-\ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \dots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
+\ket{\psi}^\dagger = (\ket{\psi}^*)^T =  \begin{bmatrix} \psi_{1}^* & \cdots & \psi_{n}^* \end{bmatrix} = \bra{\psi}
 $$
 El conjugat Hermitià compleix que $\ket{\psi}^\dagger = \bra{\psi}$ i $\bra{\psi}^\dagger = \ket{\psi}$.
 
@@ -125,14 +125,14 @@ En la secció actual, exposaré els tipus bàsics d'aplicacions lineals que són
 	Una matriu quadrada\footnote{Una matriu quadrada és una matriu amb dimensions $n\times n$, on $n \in \mathbb{N}$.} $A$ és invertible si existeix una matriu $A^{-1}$ de manera que $AA^{-1}=A^{-1}A = I$, on $A^{-1}$ seria la matriu inversa de $A$. La manera més ràpida de saber si una matriu és invertible és verificant si el seu determinant no és zero.
 
 	\item \textbf{Matriu Identitat} \\
-	Per a qualsevol espai vectorial $V$ existeix una matriu $I$ que és definida a partir de $I\ket{\psi} = \ket{\psi}$, aquesta matriu no fa cap canvi als vectors als quals opera, ni tampoc a les matrius amb les quals es multiplica.
+	Per a qualsevol espai vectorial $V$ existeix una matriu $I$ que és definida a partir de $I\ket{\psi} = \ket{\psi}$. Aquesta matriu no fa cap canvi als vectors als quals opera, ni tampoc a les matrius amb les quals es multiplica.
 	
 	\item \textbf{Matrius Hermitianes} \\
 	Una matriu Hermitiana compleix que: 
 	$$
 	\bra{\psi} (A \ket{\varphi}) = (A^\dagger\bra{\psi})\ket{\varphi}
 	$$
-	On $\ket{\psi}$ i $\ket{\varphi}$, són dos vectors de l'espai en el qual actua $A$. Aquestes matrius o operadors en mecànica quàntica són molt important, ja que són els observables d'un sistema quàntic. Per exemple l'operador del moviment lineal d'un electró és un operador hermitià. 
+	On $\ket{\psi}$ i $\ket{\varphi}$, són dos vectors de l'espai en el qual actua $A$. Aquestes matrius o operadors en mecànica quàntica són molt importants, ja que són els observables d'un sistema quàntic. Per exemple l'operador del moviment lineal d'un electró és un operador hermitià. 
 	
 	\item \textbf{Matriu Unitària} \\
 	Una matriu unitària és qualsevol matriu que no altera la norma\footnote{El concepte generalitzat de la longitud d'un vector. Usualment, parlaré de la norma $\ell_2$, esmentada com $\norm{\cdot}_2$, i definida com a $\norm{\ket{\psi}} = \sqrt{\psi^2_1 + \cdots + \psi^2_n}$.} o longitud dels vectors als quals és aplicada, per tant, una matriu és unitària si $A^\dagger A = I$
@@ -176,7 +176,7 @@ Per tant, la norma pot ser definida com l'arrel quadrada del producte interior d
 \norm{\ket{a}}_2 = \sqrt{\bra{a}\ket{a}}
 \label{eq:norm}
 \end{equation}
-Quan la norma és aplicada a un vector bidimensional, es pot veure que és el mateix que la longitud Euclidiana d'aquell vector, això és perquè realment són els mateixos conceptes, tot i això, la norma és el concepte de longitud però generalitzat a vectors de dimensions altes.
+Quan la norma és aplicada a un vector bidimensional, es pot veure que és el mateix que la longitud Euclidiana d'aquell vector, això és perquè realment són els mateixos conceptes. Tot i això, la norma és el concepte de longitud però generalitzat a vectors de dimensions altes.
 
 Segons el que he vist, algunes propietats de la longitud d'un vector bidimensional no es mantenen amb la norma d'un vector que té més de 2 dimensions. En altres paraules, la norma es comporta en certes maneres com la distancia des de l'origen (que és la definició de la longitud), però són exactament el mateix. A més d'això, hi ha diferents tipus de normes que s'utilitzen en diversos escenaris. Aquesta és la raó per la qual em refereixo a la norma; com la norma $\ell^2$. A aquesta norma també se li diu norma Euclidiana \cite{wolfram:2norm}.
 
@@ -411,16 +411,19 @@ A més a més, és pot definir un producte interior en l'espai $V\otimes W$. Del
 La traça d'una matriu és tal sols la suma dels seus elements en la diagonal principal, la diagonal que va de dalt a baix i d'esquerra a dreta. Cal notar que la matriu ha de ser quadrada. 
 
 Aquí hi ha una matriu $A$ amb la seva diagonal principal marcada:
-$$A = 
+
+\begin{equation*}
+	A = 
 	\begin{bmatrix}
 		\tikzmarktrace{top}{1} & \tikzmarktrace{top2}{1} & 0 \\
 		0 & 1 & \tikzmarktrace{bottom2}{1} \\
 		\tikzmarktrace{end}{1} & 0 & \tikzmarktrace{bottom}{1}\\
 	\end{bmatrix}
-$$
-\begin{tikzpicture}[overlay,remember picture]
-	\draw[opacity=.4,line width=3mm,line cap=round] (top.center) -- (bottom.center);
-\end{tikzpicture}
+	\begin{tikzpicture}[overlay,remember picture]%
+		\draw[opacity=.4,line width=3mm,line cap=round] (top.center) -- (bottom.center);
+	\end{tikzpicture}%
+\end{equation*}%
+
 
 I la seva traça, representada per $\Tr[A]$ és:
 $$
@@ -454,7 +457,7 @@ $$
 \chapter{Computació quàntica}
 Després de la teoria matemàtica, ha arribat el moment de parlar sobre mecànica quàntica. En aquest capítol introduiré alguns conceptes bàsics sobre Informació Quàntica i Computació Quàntica (IQ i CQ).
 
-La mecànica quàntica és un marc matemàtic o conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent-hi la teoria d'informació quàntica. La forma ideal de treballar la CQ es a través dels postulats de la mecànica quàntica \cite{QCandQI:QM_postulates}. Malauradament això requereix d'una profunditat que en aquest treball de recerca no es pot abastar. Per això he decidit explicar alguns conceptes de MQ a través d'una analogia.
+La Mecànica Quàntica (QM) és un marc matemàtic o conjunt de teories utilitzades per poder explicar les propietats físiques dels àtoms, molècules i partícules subatòmiques. És un marc que engloba tota la física quàntica, incloent-hi la teoria d'informació quàntica. La forma ideal de treballar la CQ es a través dels postulats de la mecànica quàntica \cite{QCandQI:QM_postulates}. Malauradament això requereix d'una profunditat que en aquest treball de recerca no es pot abastar. Per això he decidit explicar alguns conceptes de MQ a través d'una analogia.
 
 \section{Estats quàntics i superposicions}
 Per descriure com evolucionen els sistemes físics a través del temps, es necessita representar els sistemes d'alguna manera. En mecànica quàntica els sistemes es representen per estats quàntics, els quals són un tipus de distribucions de probabilitat que representen els possibles resultats d'una mesura en un sistema quàntic \cite{QT_concepts:q_systems}.
@@ -606,10 +609,11 @@ Llavors:
 	&\Rightarrow \abs{\alpha}^2 + \abs{\beta}^2 = 1
 \end{align*}
 
-Definir un qubit com una «combinació lineal dels estats fonamentals» no és de molta ajuda, per això, elaboraré més sobre aquesta definició:
+Parlar d'un qubit com una «combinació lineal dels estats fonamentals» no és de molta ajuda, per tant, elaboraré més aquesta qüestió:
+
 Una cadena de $n$-bits només pot representar una única combinació d'uns i zeros, mentre que una cadena de $n$-qubits representa una combinació concreta de totes les possibles combinacions. En el cas d'un qubit, aquest és una combinació del possible estats $\ket{0}$ i $\ket{1}$. Considera un qubit com una barreja dels estats possibles, amb cada coeficient de la combinació lineal sent el nombre que indica quant d'un estat forma part de la barreja. 
 
-Una cosa molt interessant passa quan s'augmenta el nombre qubits, la «quantitat d'informació» creix exponencialment. Per una cadena de $n$-qubits la «quantitat d'informació» que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres són els coeficients que corresponen a les combinacions lineals . Això és perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant, es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits que al ser només una combinació es necessita només saber quina combinació és. No passa res si això no s'entén perfectament, el que és important és saber que es necessiten $2^n$ nombres complexos\footnote{Són complexos, ja que els coeficients de la combinació lineal són nombres complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits \cite{QCandQI:qubits}.
+Una cosa molt interessant passa quan s'augmenta el nombre qubits, la «quantitat d'informació» creix exponencialment. Per una cadena de $n$-qubits la «quantitat d'informació» que té, en altres paraules la quantitat de nombres que representa és $2^n$, on aquests nombres són els coeficients que corresponen a les combinacions lineals . Això és perquè quan afegeixes un qubit el nombre de combinacions possibles creix exponencialment, per tant, es necessiten més coeficients per representar aquestes combinacions noves en la combinació lineal. El qubits necessiten molta més informació per poder representar-los\footnote{Informació que es manifesta amb els coeficients de la combinació lineal}, no com els bits són una única combinació. No passa res si això no s'entén perfectament, el que és important és saber que es necessiten $2^n$ nombres complexos\footnote{Són complexos, ja que els coeficients de la combinació lineal són nombres complexos.} per representar $n$-qubits i que es necessiten $n$ números binaris per representar $n$-bits \cite{QCandQI:qubits}.
 
 
 Cal remarcar que els vectors de la base computacional serien les columnes d'una matriu identitat amb dimensions $2^n\times 2^n$, on $n$ és el nombre de qubits. Per il·lustrar tot això, 2 qubits es representen amb el \textit{statevector}:
@@ -769,29 +773,29 @@ Però si el qubit $c$ està en superposició, aquesta superposició passa també
 
 El qubit al qual se li aplica la porta $X$ es diu \textit{target} (que en l'explicació anterior seria el qubit $t$) i el qubit sobre el qual depèn el \textit{target} és el \textit{control} (que seria el qubit $c$).
 
-Aquesta porta representada en un circuit s'escriu com:
+Aquesta porta representada en un circuit s'escriu com\footnote{A vegades escriuré els circuits quàntics sense especificar l'estat inicial, ja que no és necessari.}:
 \begin{center}
 	\begin{quantikz}
 		& \ctrl{1} & \qw \\
 		& \targ{} & \qw
 	\end{quantikz}
 \end{center}
-On el qubit \textit{control} és el primer i el segon és el \textit{target}, el qubit que té el símbol $\oplus$\footnote{A vegades escriuré els circuits quàntics sense especificar l'estat inicial, ja que no és necessari.}.
+On el qubit \textit{control} és el primer i el segon és el \textit{target}, el qubit que té el símbol $\oplus$.
 
 
 \subsubsection{Entrellaçament quàntic}
-L'exemple més senzill d'un entrellaçament quàntic en la computació quàntica són els parells de Bell, que es creen al aplicar a dos qubits una porta $H$ al primer i després una porta $\mathrm{CNOT}$ als dos creant l'estat \cite{QCandQI:entangle}:
+L'exemple més senzill d'un entrellaçament quàntic en la computació quàntica són els parells de Bell. Es creen al aplicar a dos qubits una porta $H$ al primer i després una porta $\mathrm{CNOT}$ als dos creant l'estat \cite{QCandQI:entangle}:
 $$
 \frac{\ket{00}+\ket{11}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}
 $$
-Es pot veure que només hi ha dos estats possibles $\ket{00}$ i $\ket{11}$ que tenen la mateixa probabilitat associada\footnote{Això es pot veure a l'elevar al quadrat els coeficients del dos, que donen $\frac{1}{2}$.}. S'afecten l'un a l'altre en el sentit que quan es mesura només un dels qubits i dona per exemple $\ket{1}$, al mesurar l'altre també dona $\ket{1}$, d'aquesta manera acabant amb l'estat $\ket{11}$. En altres paraules, la mesura d'una part del sistema determina el resultat d'una mesura en una altra part del sistema.
+Es pot veure que només hi ha dos estats possibles $\ket{00}$ i $\ket{11}$ que tenen la mateixa probabilitat associada\footnote{Això es pot veure a l'elevar al quadrat els coeficients del dos, que donen $\frac{1}{2}$.}. S'afecten l'un a l'altre en el sentit que quan es mesura només un dels qubits i dona per exemple $\ket{1}$, al mesurar l'altre també donaria $\ket{1}$. D'aquesta manera acabant amb l'estat $\ket{11}$. En altres paraules, la mesura d'una part del sistema determina el resultat d'una mesura en una altra part del sistema.
 
 Matemàticament, un sistema quàntic, i.e. un conjunt de qubits, està entrellaçant quan aquest sistema no es pot descriure amb un producte tensorial de les parts. Per exemple estat $\ket{00}$ es pot escriure com $\ket{0}\otimes\ket{0}$, mentre que l'estat $\frac{\ket{00} + \ket{11}}{\sqrt{2}}$, no. Per tant, el primer no és sistema amb qubits entrellaçats i el segon sí ho és.
 
 A partir de l'entrellaçament i la superposició és com els ordinadors quàntics arriben a tenir avantatges en complexitat sobre els ordinadors clàssics, per a més informació sobre els avantatges que presenten els algoritmes quàntics en certes tasques i el concepte de complexitat algorítmica veure l'annex \ref{complexity}.
 
 \subsubsection{Operacions controlades}
-A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment es pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot podnm haver-hi diversos qubits \textit{control} i \textit{target} \cite{QCandQI:controlled}.
+A part de la porta $\mathrm{CNOT}$ existeixen diverses portes quàntiques controlades. Realment es pot controlar qualsevol porta, en altres paraules, si l'estat del qubit \textit{control} és $\ket{0}$, s'aplica qualsevol porta al qubit \textit{target}. Fins i tot poden haver-hi diversos qubits \textit{control} i \textit{target} \cite{QCandQI:controlled}.
 
 Per exemple existeix la porta Toffoli:
 \begin{center}
@@ -801,7 +805,7 @@ Per exemple existeix la porta Toffoli:
 		& \targ{} & \qw
 	\end{quantikz}
 \end{center}
-Que en la seva forma matricial és:
+La seva forma matricial és:
 $$
 \begin{bmatrix}
 	1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -965,7 +969,7 @@ Amb $\ket{a_1}$ i $\bra{a_2}$ sent estats vàlids pel sistema $A$, i $\ket{b_1}$
 
 No obstant aquesta definició no es pot utilitzar quan no saps com representar la matriu de densitat $\rho$ com a un producte tensorial, en el qual un dels termes és l'estat que es traça a fora. En altres paraules, en l'equació \ref{eq:partial_trace} si no es coneix $\rho^A$ i $\rho^B$ per $\rho^{AB} = \rho^A\otimes\rho^B$, aquesta equació no serveix de res.
 
-A causa d'això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altra manera més general, on només s'ha de saber les bases dels sistemes $A$ i $B$ i un operador vàlid pel sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa el sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
+A causa d'això en el llibre de text \textit{Quantum Computing: A Gentle Introduction} \cite{QC_intro} els autors defineixen la traça parcial d'una altra manera més general, on només s'ha de saber les bases dels sistemes $A$ i $B$ i un operador vàlid pel sistema $AB$. Per una matriu de densitat $\rho^{AB}$ que representa un estat del sistema $A\otimes B$, la traça parcial de $\rho^{AB}$ sobre $B$ és:
 $$
 \Tr_B \rho^{AB} = \sum_i \bra{\beta_i}\rho^{AB}\ket{\beta_i}
 $$
@@ -1000,14 +1004,14 @@ $$
 Al igual que amb l'altra equació, no sé com computar-la\footnote{Un cop entregat el treball me pogut veure que si que la puc computar, no obstant això, no és pertinent fer canvis en la part experimental o les conclusions del treball amb aquesta nova informació. }.
 
 \section{Ordinadors quàntics}
-Tota aquesta teoria és aplicada a través de qubits físics que s'ubiquen als ordinadors quàntics. Hi ha diversos tipus d'ordinadors quàntics, a causa del fet que els qubits poden ser diversos sistemes. Poden ser fotons, xips de silici superconductors o ions atrapats per imants. No elaboraré més sobre aquest tema, ja que no és el tema central d'aquest treball, m'he centrat molt més en la teoria.
+Tota aquesta teoria es veu plasmada a la realitat als qubits físics dels ordinadors quàntics. Hi ha diversos tipus d'ordinadors quàntics, a causa del fet que els qubits poden ser diversos sistemes. Poden ser fotons, xips de silici superconductors o ions atrapats per imants. No elaboraré més sobre aquest tema, ja que no és el tema central d'aquest treball, m'he centrat molt més en la teoria.
 
-Però si vull generar imatges amb un ordinador quàntic, no en necessito un? No necessàriament, perquè puc simular l'evolució dels estats quàntics amb un ordinador, al cap i a la fi, és només àlgebra lineal, són operacions que es poden fer perfectament en un ordinador. No obstant això, quan s'intenta simular un sistema quàntic de molt qubits\footnote{Més de 50 per exemple.} un ordinador de sobretaula tardaria molt de temps i realment no és viable fer-ho.
+Però si vull generar imatges amb un ordinador quàntic, no en necessito un? No necessàriament, perquè puc simular l'evolució dels estats quàntics amb un ordinador, al cap i a la fi, és només àlgebra lineal, són operacions que es poden fer perfectament en un ordinador. No obstant això, quan s'intenta simular un sistema quàntic de molt qubits,\footnote{Més de 50 per exemple.} un ordinador de sobretaula tardaria molt de temps i realment no és viable fer-ho.
 
 
 \chapter{Intel·ligència artificial}
 \label{ML}
-Segurament has sentit parlar de les intel·ligències artificials o de les xarxes neuronals, són conceptes que semblen abstractes, però jo penso que són bastant intuïtius i els intentaré explicar de la millor manera possible.
+Segurament has sentit parlar de les intel·ligències artificials o de les xarxes neuronals, són conceptes que semblen abstractes, però jo penso que són bastant intuïtius i en aquest capítol els intentaré explicar de la millor manera possible.
 
 Intel·ligència artificial és un mot una mica ambigu, que es refereix a qualsevol algoritme que entra dintre del camp del \textit{machine learning} o aprenentatge automàtic\footnote{Tanmateix, col·loquialment s'utilitza per denominar a qualsevol algoritme o robot que és intel·ligent o sembla que és intel·ligent. }. Aquests algoritmes simplement s'alteren a ells mateixos per fer millor la tasca que s'els ha designat. No importa quin és l'objectiu o com s'ha aconsegueix, el que importa és si aprèn automàticament. Cal notar que els canvis que s'efectuen els algoritmes sobre si mateixos no han de ser predeterminats, si l'algoritme té una llista de les instruccions que va executant segon la situació no seria una intel·ligència artificial o un algoritme d'aprenentatge automàtic.  \cite{deeplearning}.
 
@@ -1240,7 +1244,7 @@ De moment tindré en consideració que una xarxa neuronal quàntica és un circu
 
 L'objectiu principal és avaluar la derivada respecte a un paràmetre. Sorprenentment, és dona a terme d'una manera més senzilla que amb una xarxa neuronal clàssica. Tan sols s'utilitza la definició de la derivada per poder avaluar-la: S'altera lleugerament un sol paràmetre i es treu la diferència entre dos outputs del circuit quàntic que tenen el paràmetre alterat. Aquest mètode per avaluar la derivada s'anomena \textit{parameter shift} \cite{tfq, shift_parameter_harrow_2019}.
 
-Si un circuit quàntic té un vector de paràmetres $\theta\,$, per un paràmetre $\theta_{i}\,$, es defineix un vector de pertubació $\Delta_i$ ple de zeros, d'igual mida que $\theta$, però que en la posició de $\theta_i$ té un $1$. He vist que per un vector de pertubació $\ket{\Delta_{i}}$, donat un vector de paràmetres $\ket{\theta}$ es compleix que:
+Si un circuit quàntic té un vector de paràmetres $\theta\,$, per un paràmetre $\theta_{i}\,$, es defineix un vector de pertubació $\Delta_i$ ple de zeros, d'igual mida que $\theta$, però que en la posició de $\theta_i$ té un $1$. He vist que per un vector de pertubació $\ket{\Delta_{i}}$, donat un vector de paràmetres $\ket{\theta}$ es compleix que\footnote{Utilitzo momentàniament la notació de Dirac perquè no se escriure aquesta equació d'una altra manera.}:
 \begin{equation*}
 	\exists \ket{\Delta_{i}} \iff \bra{\Delta_{i}}\ket{\theta} = \theta_i
 \end{equation*}
