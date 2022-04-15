@@ -31,7 +31,7 @@ Igual que \textit{Cirq} té un \textit{framework} per poder desenvolupar xarxes 
 
 Per tant, en canviar de \textit{Cirq} a \textit{Qiskit}, també havia de canviar de \textit{TensorFlow} a \textit{PyTorch}, però no tenia res d'experiencia amb PyTorch, sabia que la transició seria complicada, i tenia raó. No vaig ni aconseguir crear el \textit{dataset} d'imatges per alimentar al discriminador.
 
-Després d'intentar-lo amb \textit{TensorFlow/TensorFlow Quantum} i amb \textit{PyTorch/Qiskit}, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. Crearia tant el discriminador com el generador manualment. 
+Després d'intentar-lo amb \textit{PyTorch/Qiskit} i amb \textit{TensorFlow/TensorFlow Quantum}, vaig decidir prescindir de \textit{frameworks} per crear models de \textit{machine learning}. Crearia tant el discriminador com el generador manualment. 
 
 El discriminador, al ser una xarxa tan simple, la podria crear des de zero. Llavors vaig començar a buscar codi a internet que pogués utilitzar. Volia una xarxa neuronal feta amb \textit{Numpy}, una llibreria de \textit{Python} per fer càlculs amb vectors i matrius amb la qual tenia bastant experiència.
 
@@ -39,7 +39,7 @@ Després de provar dues opcions que més o menys m'agradaven\footnote{Buscava co
 
 El repositori tenia codi per xarxes neuronals que estava estructurat d'una forma que m'agradava i encara més important, que entenia. Inclús tènia diverses versions d'una mateixa xarxa neuronal, amb un nivell de complexitat diferent. Llavors, a partir del model més simple que hi havia en el repositori \footnote{Es pot veure el codi original a l'annex \ref{lst:disc_original}.}, vaig començar a desenvolupar el discriminador.
 
-Per verificar el correcte funcionament del discriminador, i per poder comprendre com funciona el codi, vaig utilitzar la teoria del capítol \ref{ML}. No obstant això, el principal problema que em vaig trobar va ser derivar la funció de pèrdua, per exemple la \textit{Minimax}, s'ha de derivar-la a partir de dues equacions, una per a cada etiqueta.
+Per verificar el correcte funcionament del discriminador, i per poder comprendre com funciona el codi, vaig utilitzar la teoria del capítol \ref{ML}. No obstant això, el principal problema que em vaig trobar va ser derivar la funció de pèrdua. Amb \textit{Minimax}, per exemple, s'ha de derivar-la a partir de dues equacions, una per a cada etiqueta.
 
 Com es pot veure al codi final pel discriminador a l'annex \ref{lst:disc_final}, he fet bastants canvis, però no he canviat l'estructura del codi. La majoria dels canvis són per afegir més funcionalitat al model, com per exemple l'emmagatzematge de les dades per poder al final veure-les en un gràfic. Tanmateix, si que vaig haver-hi de canviar la funció de pèrdua utilitzada, ja que originalment, era una MSE.
 
