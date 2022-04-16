@@ -11,7 +11,3 @@ Este repositorio forma parte de un proyecto de investigación de instituto sobre
 
 El Aprendizaje Automático Cuántico es una de las aplicaciones más prometedoras de la Computación Cuántica. En este trabajo, presento una Red Generacional Adversativa Cuántica (gGAN en inglés) para generar imagenes de barras en una escala de grises. A través de la puntuación de la  Distance de Fréchet, evaluo la efectividad de una medida parcial en el circuito cuántico que genera las images. Esta puntuación muestra que esta medida mejora el rendimiento de la qGAN al evitar una oscilación en el parecido entre las imagenes generadas y las reales, es decir, una alternancia entre imagenes generades de buena y mala calidad que se da a cabo a través de toda la optimización de la qGAN. 
 
-**Para consultas al autor abre un problema/issue** y comentámelo por ahí porque no puedo poner mi correo porque tengo miedo que me digan algo los del concurso porque presento este trabajo a un concurso y lo que tengo que hacer a través de un pseudonimo pero porque tengo unos principios sobre compartir mi codigo que son intocables pues tengo que tener un link a este repositorio en el PDF que voy presentar en el concurso :) 
-
-PD: si eres alguien del concurso no intentes averiguar mi identidad gracias <3
-
