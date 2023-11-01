@@ -4,7 +4,6 @@ import math
 import numpy as np
 from matplotlib import pyplot as plt
 
-# DATA PROCESSING
 from scipy import linalg
 
 
@@ -136,7 +135,7 @@ def minimax_generator(prediction_fake):
 
 # QUANTUM FUNCTIONS
 
-class Partial_Trace:
+class PartialTrace:
     def __init__(self, state: np.array, qubits_out: int, side: str):
 
         self.state = state

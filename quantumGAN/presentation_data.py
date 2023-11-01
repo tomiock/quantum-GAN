@@ -4,7 +4,7 @@ import time
 import numpy as np
 
 from quantumGAN.discriminator import ClassicalDiscriminator
-from quantumGAN.qgan import Quantum_GAN
+from quantumGAN.qgan import QuantumGAN
 from quantumGAN.quantum_generator import QuantumGenerator
 
 batch_size = 10
@@ -30,7 +30,7 @@ def to_train(arguments):
 	                             num_qubits_ancilla=num_qubits_ancilla,
 	                             shots=4096)
 
-	quantum_gan = Quantum_GAN(generator, discriminator)
+	quantum_gan = QuantumGAN(generator, discriminator)
 	print(quantum_gan)
 	print(num_epochs)
 	quantum_gan.discriminator.init_parameters()
@@ -40,8 +40,7 @@ def to_train(arguments):
 	quantum_gan.create_gif()
 
 
-# num_epoch, total_qubits, qubits_ancilla
-list_processes = [(700, 4, 2), (700, 2, 0)]  # DATA TO CREATE
+list_processes = [(700, 4, 2), (700, 2, 0)]
 
 
 def main():

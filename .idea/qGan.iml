@@ -16,7 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__21_04_00" />
       <excludeFolder url="file://$MODULE_DIR$/quantumGAN/performance_testing/data/run31_10_2021__21_07_27" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (qGAN)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
