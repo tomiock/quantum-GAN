@@ -1,17 +1,15 @@
-"""DISCRIMINATOR"""
 import json
 from typing import Dict, List
 
 import numpy as np
 
-from quantumGAN.functions import BCE_derivative, minimax_derivative_fake, minimax_derivative_real, sigmoid, \
-    sigmoid_prime
+from quantumGAN.functions import BCE_derivative, minimax_derivative_fake, \
+    minimax_derivative_real, sigmoid, sigmoid_prime
 
 
 def load(filename):
-    f = open(filename, "r")
-    data = json.load(f)
-    f.close()
+    with open(filename, "r") as file:
+        data = json.load(file)
     # cost = getattr(sys.modules[__name__], data["cost"])
     net = ClassicalDiscriminator(data["sizes"], data["loss"])
     net.weights = [np.array(w) for w in data["weights"]]
@@ -21,8 +19,8 @@ def load(filename):
 
 class ClassicalDiscriminator:
     """
-	A simple fully connected neural network based on code from Michael Nielsen.
-	"""
+    A simple fully connected neural network based on code from Michael Nielsen.
+    """
 
     def __init__(self,
                  sizes: List[int],
@@ -73,7 +71,8 @@ class ClassicalDiscriminator:
 
     def backprop_bce(self, image, label):
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient of ``self.biases`` and ``self.weights`` using Binary Cross Entropy as loss function."""
+        gradient of ``self.biases`` and ``self.weights`` using Binary
+        Cross Entropy as loss function."""
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -119,40 +118,49 @@ class ClassicalDiscriminator:
         return nabla_b, nabla_w, activations[-1]
 
     def train_mini_batch(self, mini_batch, learning_rate):
-        """Update the network's parameters with a mini batch of data. They can be updated using two diferent loss functions.
-		It doesn't give any output because this function updates the parameters updating the methods of the class that store them.
+        """Update the network's parameters with a mini batch of data. They can be
+        updated using two diferent loss functions. It doesn't give any output because
+        this function updates the parameters updating the methods of the class that store them.
 
-		Inputs:
-			- ``mini_batch``: [np.ndarray]
-			list of images
-			- ``learning_rate``: int
-			number indicating the learning rate to train the network
-		"""
+        Inputs:
+        - ``mini_batch``: [np.ndarray]
+        list of images
+        - ``learning_rate``: int
+        number indicating the learning rate to train the network
+        """
         global label_real, label_fake
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
         if self.type_loss == "binary cross entropy":
             for real_image, fake_image in mini_batch:
-                delta_nabla_b, delta_nabla_w, label_real = self.backprop_bce(real_image, np.array([1.]))
+                delta_nabla_b, delta_nabla_w, label_real = \
+                        self.backprop_bce(real_image, np.array([1.]))
+
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-                delta_nabla_b, delta_nabla_w, label_fake = self.backprop_bce(fake_image, np.array([0.]))
+                delta_nabla_b, delta_nabla_w, label_fake = \
+                        self.backprop_bce(fake_image, np.array([0.]))
+
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
         elif self.type_loss == "minimax":
             for real_image, fake_image in mini_batch:
-                delta_nabla_b, delta_nabla_w, label_real = self.backprop_minimax(real_image, fake_image, True)
+                delta_nabla_b, delta_nabla_w, label_real = \
+                        self.backprop_minimax(real_image, fake_image, True)
+
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-                delta_nabla_b, delta_nabla_w, label_fake = self.backprop_minimax(real_image, fake_image, False)
+                delta_nabla_b, delta_nabla_w, label_fake = \
+                        self.backprop_minimax(real_image, fake_image, False)
+
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
         else:
-            raise Exception("type of loss function not valid")
+            raise TypeError("type of loss function not valid")
 
         self.weights = [w - (learning_rate / len(mini_batch)) * nw
                         for w, nw in zip(self.weights, nabla_w)]

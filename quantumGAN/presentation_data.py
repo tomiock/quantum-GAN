@@ -11,10 +11,10 @@ batch_size = 10
 
 train_data = []
 for _ in range(800):
-	x2 = np.random.uniform(.55, .46, (2,))
-	fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
-	real_datapoint = np.array([x2[0], 0, x2[0], 0])
-	train_data.append((real_datapoint, fake_datapoint))
+    x2 = np.random.uniform(.55, .46, (2,))
+    fake_datapoint = np.random.uniform(-np.pi * .01, np.pi * .01, (4,))
+    real_datapoint = np.array([x2[0], 0, x2[0], 0])
+    train_data.append((real_datapoint, fake_datapoint))
 
 
 def to_train(arguments):
