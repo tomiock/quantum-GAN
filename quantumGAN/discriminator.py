@@ -146,8 +146,7 @@ class ClassicalDiscriminator:
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-                delta_nabla_b, delta_nabla_w, label_fake = \
-                        self.backprop_bce(fake_image, np.array([0.]))
+                delta_nabla_b, delta_nabla_w, label_fake = self.backprop_bce(fake_image, np.array([0.]))
 
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
@@ -160,8 +159,7 @@ class ClassicalDiscriminator:
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-                delta_nabla_b, delta_nabla_w, label_fake = \
-                        self.backprop_minimax(real_image, fake_image, False)
+                delta_nabla_b, delta_nabla_w, label_fake = self.backprop_minimax(real_image, fake_image, False)
 
                 nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
                 nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
