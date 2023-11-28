@@ -18,39 +18,35 @@ for _ in range(800):
 
 
 def to_train(arguments):
-	num_epochs, num_qubits, num_qubits_ancilla = arguments
+    num_epochs, num_qubits, num_qubits_ancilla = arguments
 
-	print(num_qubits, num_qubits_ancilla)
+    print(num_qubits, num_qubits_ancilla)
 
-	discriminator = ClassicalDiscriminator(sizes=[4, 16, 8, 1],
-	                                       type_loss="minimax"
-	                                       )
-	generator = QuantumGenerator(num_qubits=num_qubits,
-	                             generator_circuit=None,
-	                             num_qubits_ancilla=num_qubits_ancilla,
-	                             shots=4096)
+    discriminator = ClassicalDiscriminator(sizes=[4, 16, 8, 1],
+                                           type_loss="minimax"
+                                           )
+    generator = QuantumGenerator(num_qubits=num_qubits,
+                                 generator_circuit=None,
+                                 num_qubits_ancilla=num_qubits_ancilla,
+                                 shots=4096)
 
-	quantum_gan = QuantumGAN(generator, discriminator)
-	print(quantum_gan)
-	print(num_epochs)
-	quantum_gan.discriminator.init_parameters()
-	quantum_gan.train(num_epochs, train_data, batch_size, .1, .1, True)
+    quantum_gan = QuantumGAN(generator, discriminator)
+    print(quantum_gan)
+    print(num_epochs)
+    quantum_gan.discriminator.init_parameters()
+    quantum_gan.train(num_epochs, train_data, BATCH_SIZE, .1, .1, True)
 
-	quantum_gan.plot()
-	quantum_gan.create_gif()
-
-
-list_processes = [(700, 4, 2), (700, 2, 0)]
+    quantum_gan.plot()
+    quantum_gan.create_gif()
 
 
-def main():
-	jobs = []
-	for arguments in list_processes:
-		simulate = multiprocessing.Process(None, to_train, args=(arguments,))
-		jobs.append(simulate)
-		time.sleep(2)
-		simulate.start()
+LIST_PROCESSES = [(700, 4, 2), (700, 2, 0)]
 
 
 if __name__ == '__main__':
-	main()
+    jobs = []
+    for arguments in LIST_PROCESSES:
+        simulate = multiprocessing.Process(None, to_train, args=(arguments,))
+        jobs.append(simulate)
+        time.sleep(2)
+        simulate.start()
