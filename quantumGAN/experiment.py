@@ -6,7 +6,7 @@ from quantumGAN.discriminator import ClassicalDiscriminator
 from quantumGAN.qgan import QuantumGAN
 from quantumGAN.quantum_generator import QuantumGenerator
 
-batch_size = 10
+BATCH_SIZE = 10
 
 train_data = []
 for _ in range(800):
@@ -47,14 +47,15 @@ for num_epochs in list_epochs:
     time.sleep(1)
     quantum_gan_not_ancilla = \
         QuantumGAN(generator_not_ancilla, discriminator_not_ancilla)
+
     print(quantum_gan_not_ancilla.path)
     print(quantum_gan_ancilla.path)
 
     generator_ancilla.parameter_values = init_parameters_ancilla
-    quantum_gan_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+    quantum_gan_ancilla.train(num_epochs, train_data, BATCH_SIZE, .1, .1, False)
 
     generator_not_ancilla.parameter_values = init_parameters_not_ancilla
-    quantum_gan_not_ancilla.train(num_epochs, train_data, batch_size, .1, .1, False)
+    quantum_gan_not_ancilla.train(num_epochs, train_data, BATCH_SIZE, .1, .1, False)
 
     quantum_gan_ancilla.plot()
     quantum_gan_not_ancilla.plot()

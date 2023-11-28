@@ -7,7 +7,7 @@ from quantumGAN.discriminator import ClassicalDiscriminator
 from quantumGAN.qgan import QuantumGAN
 from quantumGAN.quantum_generator import QuantumGenerator
 
-batch_size = 10
+BATCH_SIZE = 10
 
 train_data = []
 for _ in range(800):

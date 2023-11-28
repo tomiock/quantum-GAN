@@ -94,13 +94,14 @@ class QuantumGenerator:
             parameters: Optional[np.ndarray] = None
     ):
         """
-		:param latent_space_noise:
-		:param parameters:
-		:return:
+        Inputs:
+            param latent_space_noise
+            param parameters
 
-        Retorna un output del generador quan se li dona un estat d'input i opcionalment uns paràmetres en
-	específic. Els píxels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant,
-	els píxels de l'imatge estan normalitzats amb la norma l-1."""
+        Returns:
+            Retorna un output del generador quan se li dona un estat d'input i opcionalment uns paràmetres en
+            específic. Els píxels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant,
+            els píxels de l'imatge estan normalitzats amb la norma l-1."""
 
         if parameters is None:
             parameters = cast(np.ndarray, self.parameter_values)
@@ -129,8 +130,7 @@ class QuantumGenerator:
             for key_missing in missing_keys:
                 counts[key_missing] = 0
 
-            pixels = np.array([counts[index] for
-                index in list(real_keys_list)])
+            pixels = np.array([counts[index] for index in list(real_keys_list)])
 
         pixels = pixels / self.shots
         return pixels
@@ -145,6 +145,7 @@ class QuantumGenerator:
         probabilitat de què un qubits resulti en l'estat ket_0, per tant, els
         valors cada píxel (que són independents entre si) es troba en
         l'interval (0, 1) """
+
         qc = QuantumCircuit(self.num_qubits_total)
 
         init_dist = qiskit.QuantumCircuit(self.num_qubits_total)
@@ -172,6 +173,7 @@ class QuantumGenerator:
         """Optimització del generador per una batch d'imatges.
         Retorna una batch de les imatges generades amb unes
         imatges reals que poder donar com a input al generador."""
+
         nabla_theta = np.zeros_like(self.parameter_values)
         new_images = []
 

@@ -134,6 +134,7 @@ def minimax_generator(prediction_fake):
 
 
 # QUANTUM FUNCTIONS
+#TODO fix partialtrace function
 
 class PartialTrace:
     def __init__(self, state: np.array, qubits_out: int, side: str):
@@ -151,16 +152,9 @@ class PartialTrace:
         self.a_dim = 2**(self.num_qubits - self.qubits_out)
         self.b_dim = 2**self.qubits_out
 
-        # if self.side == "bot":
         self.basis_b = [_ for _ in np.identity(int(self.b_dim))]
         self.basis_a = [_ for _ in np.identity(int(self.a_dim))]
 
-        # elif self.side == "top":
-        #	self.basis_a = [_ for _ in np.identity(int(self.b_dim))]
-        #	self.basis_b = [_ for _ in np.identity(int(self.a_dim))]
-        #
-        # else:
-        #	raise NameError("invalid side argument, enter \"bot\" or \"top\"")
         print(self.basis_a, self.basis_b)
 
     def get_entry(self, index_i, index_j):

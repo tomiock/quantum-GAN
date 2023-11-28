@@ -41,6 +41,7 @@ class ClassicalDiscriminator:
 
     def init_parameters(self):
         """Return random parameters based on the network's architecture"""
+
         self.biases = [np.random.randn(y, ) for y in self.sizes[1:]]
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(self.sizes[:-1], self.sizes[1:])]
@@ -49,6 +50,7 @@ class ClassicalDiscriminator:
 
     def predict(self, x):
         """Return a label for a given image input"""
+
         activation = x
         zs = []
         for b, w in zip(self.biases, self.weights):
@@ -59,6 +61,7 @@ class ClassicalDiscriminator:
 
     def forwardprop(self, x: np.ndarray):
         """Return label and all activations over the hole network"""
+
         activation = x
         activations = [x]
         zs = []
@@ -73,6 +76,7 @@ class ClassicalDiscriminator:
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient of ``self.biases`` and ``self.weights`` using Binary
         Cross Entropy as loss function."""
+
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -93,6 +97,7 @@ class ClassicalDiscriminator:
     def backprop_minimax(self, real_image, fake_image, is_real):
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for ``self.biases`` and ``self.weights`` using Minimax as loss function."""
+
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -128,6 +133,7 @@ class ClassicalDiscriminator:
         - ``learning_rate``: int
         number indicating the learning rate to train the network
         """
+
         global label_real, label_fake
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
