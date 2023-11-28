@@ -80,14 +80,10 @@ def to_train(num_epochs):
     quantum_gan_ancilla.plot()
 
 
-def main():
+if __name__ == '__main__':
     jobs = []
     for epoch in list_epochs:
         simulate = multiprocessing.Process(None, to_train, args=(epoch,))
         jobs.append(simulate)
         time.sleep(2)
         simulate.start()
-
-
-if __name__ == '__main__':
-    main()
