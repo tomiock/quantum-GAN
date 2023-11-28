@@ -86,12 +86,12 @@ class ClassicalDiscriminator:
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
 
-        for l in range(2, self.num_layers):
-            z = zs[-l]
-            delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
-            nabla_b[-l] = delta
-            nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
-                                 activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+        for layer_index in range(2, self.num_layers):
+            z = zs[layer_index]
+            delta = np.dot(self.weights[layer_index + 1].transpose(), delta) * sigmoid_prime(z)
+            nabla_b[layer_index] = delta
+            nabla_w[layer_index] = np.dot(delta.reshape(delta.shape[0], 1),
+                                 activations[layer_index - 1].reshape(1, activations[-layer_index - 1].shape[0]))
         return nabla_b, nabla_w, activations[-1]
 
     def backprop_minimax(self, real_image, fake_image, is_real):
@@ -114,12 +114,12 @@ class ClassicalDiscriminator:
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].reshape(1, activations[-2].shape[0]))
 
-        for l in range(2, self.num_layers):
-            z = zs[-l]
-            delta = np.dot(self.weights[-l + 1].transpose(), delta) * sigmoid_prime(z)
-            nabla_b[-l] = delta
-            nabla_w[-l] = np.dot(delta.reshape(delta.shape[0], 1),
-                                 activations[-l - 1].reshape(1, activations[-l - 1].shape[0]))
+        for layer_index in range(2, self.num_layers):
+            z = zs[layer_index]
+            delta = np.dot(self.weights[layer_index + 1].transpose(), delta) * sigmoid_prime(z)
+            nabla_b[layer_index] = delta
+            nabla_w[layer_index] = np.dot(delta.reshape(delta.shape[0], 1),
+                                 activations[layer_index - 1].reshape(1, activations[-layer_index - 1].shape[0]))
         return nabla_b, nabla_w, activations[-1]
 
     def train_mini_batch(self, mini_batch, learning_rate):
