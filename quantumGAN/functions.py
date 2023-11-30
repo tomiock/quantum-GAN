@@ -47,7 +47,16 @@ def images_to_distribution(batch_image):
     return keys, average_result
 
 
-def images_to_scatter(batch_image):
+def images_to_scatter(batch_image: list) -> (list[float], list[float]):
+    """ Given a batch of images return a scatter plot with all pixel values, they will form a 
+    discrete distribution.
+
+    Inputs:
+        `batch_images` list of images
+
+    Returns:
+        two list with the x values and y values to create the graph
+    """
     keys = create_real_keys(int(math.sqrt(batch_image[0].shape[0])))[1]
     x_axis = []
     y_axis = []
@@ -63,7 +72,16 @@ def images_to_scatter(batch_image):
 
 
 def fechet_distance(image1: np.array,
-                    image2: np.array):
+                    image2: np.array) -> float:
+    """Given two images returns the frechet distance between them.
+
+    Inputs:
+        `image1` image represented as ndarray
+        `image2` image represented as ndarray
+
+    Returns:
+        frechet distance: float 
+    """
     assert image1.shape == image2.shape
     y = np.arange(0, image1.flatten().shape[0])
 
@@ -77,36 +95,36 @@ def fechet_distance(image1: np.array,
 
 # ACTIVATION FUNCTIONS
 
-def sigmoid(z):
+def sigmoid(z) -> float:
     """The sigmoid function."""
     return 1.0 / (1.0 + np.exp(-z))
 
 
-def sigmoid_prime(z):
+def sigmoid_prime(z) -> float:
     """Derivative of the sigmoid function."""
     return sigmoid(z) * (1 - sigmoid(z))
 
 
-def relu(z):
+def relu(z) -> float:
     return np.maximum(0, z)
 
 
-def relu_prime(z):
+def relu_prime(z) -> float:
     z[z <= 0] = 0
     z[z > 0] = 1
     return z
 
 
 # LOSSES
-def MSE_derivative(prediction, y):
+def MSE_derivative(prediction, y) -> float:
     return 2 * (y - prediction)
 
 
-def MSE(prediction, y):
+def MSE(prediction, y) -> float:
     return (y - prediction)**2
 
 
-def BCE_derivative(prediction, target):
+def BCE_derivative(prediction, target) -> float:
     # return prediction - target
     return -target / prediction + (1 - target) / (1 - prediction)
 
@@ -137,7 +155,11 @@ def minimax_generator(prediction_fake):
 #TODO fix partialtrace function
 
 class PartialTrace:
-    def __init__(self, state: np.array, qubits_out: int, side: str):
+    """Partial trace calculataion. Returns a matrix"""
+    def __init__(self, 
+                 state: np.array, 
+                 qubits_out: int, 
+                 side: str):
 
         self.state = state
         self.qubits_out = qubits_out
@@ -157,7 +179,7 @@ class PartialTrace:
 
         print(self.basis_a, self.basis_b)
 
-    def get_entry(self, index_i, index_j):
+    def get_entry(self, index_i, index_j) -> float:
         sigma = 0
 
         if self.side == "bot":
@@ -186,7 +208,7 @@ class PartialTrace:
 
         return sigma
 
-    def compute_matrix(self):
+    def compute_matrix(self) -> np.ndarray:
         a = [_ for _ in range(self.a_dim)]
         b = [__ for __ in range(self.a_dim)]
 
