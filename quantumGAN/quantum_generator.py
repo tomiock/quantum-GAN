@@ -94,14 +94,18 @@ class QuantumGenerator:
             parameters: Optional[np.ndarray] = None
     ):
         """
+        For a given state, the output pixels are the probabilities of all the basis for a qubit.
+        Therefore the sum of all the pixels has to equal 1. Thus, we can say that they are normalized
+        by the l-1 norm.
+
         Inputs:
             param latent_space_noise
-            param parameters
+            param parameters [Optional]
 
         Returns:
-            Retorna un output del generador quan se li dona un estat d'input i opcionalment uns paràmetres en
-            específic. Els píxels estan compostos per la probabilitat que un qubit resulti en ket_0 en cada base. Per tant,
-            els píxels de l'imatge estan normalitzats amb la norma l-1."""
+            Output of the generator for a given state in the form of pixels. If given paramenters (optional), 
+            they parameterize the state, otherwise, the interal parameters stored in the class are used.
+        """
 
         if parameters is None:
             parameters = cast(np.ndarray, self.parameter_values)
@@ -170,14 +174,23 @@ class QuantumGenerator:
         return generated_samples
 
     def train_mini_batch(self, mini_batch, learning_rate):
-        """Optimització del generador per una batch d'imatges.
+        """
+        Optimization of the generator por a given batch of images (input noise).
+        Returns another batch of images, each image has a the datapoint from which was generated.
+
+        Returns tuple[ndarray, ndarray]:
+            
+
+        Optimització del generador per una batch d'imatges.
         Retorna una batch de les imatges generades amb unes
-        imatges reals que poder donar com a input al generador."""
+        imatges reals que poder donar com a input al generador.
+        ????????? wtf
+        """
 
         nabla_theta = np.zeros_like(self.parameter_values)
         new_images = []
 
-        for _, noise in mini_batch:
+        for _, noise in mini_batch: # ?????????
             for index, _ in enumerate(self.parameter_values):
                 perturbation_vector = np.zeros_like(self.parameter_values)
                 perturbation_vector[index] = 1
