@@ -1,7 +1,7 @@
 # QUANTUM GAN for image generation 
 # GAN CUÁNTICA para la generación de images
 
-[**LINK AL PDF DEL TREBAJO/LINK TO THE PDF**](https://github.com/tomiock/qGAN/blob/main/quantumGAN/LATEX/Rplan.pdf)
+[**LINK AL PDF DEL TREBAJO/LINK TO THE PDF**](https://github.com/tomiock/quantum-GAN/blob/latex/quantumGAN/LATEX/Rplan.pdf)
 
 This repository is part of an institute research project on Quantum Machine Learning, specifically on the generation of images through a quantum circuit.
 
